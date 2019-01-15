@@ -1,0 +1,33 @@
+{
+  "name": "governance-contract",
+  "version": "0.0.1",
+  "description": "governance contract for metadium ",
+  "main": "",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "scripts/test.sh",
+    "compile": "scripts/compile.sh",
+    "install_analyzer": "scripts/install_analyzer.sh",
+    "analyze": "scripts/analyze.sh",
+    "coverage": "scripts/coverage.sh",
+    "flatten": "scripts/flatten.sh"
+  },
+  "author": "Eric Shin",
+  "license": "MIT",
+  "dependencies": {
+    "truffle": "4.1.14"
+  },
+  "devDependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.2.0",
+    "ethereumjs-util": "^6.0.0",
+    "solidity-coverage": "^0.5.11",
+    "truffle-assertions": "^0.7.1"
+  }
+}
