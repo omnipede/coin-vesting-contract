@@ -1,7 +1,7 @@
 {
   "name": "governance-contract",
   "version": "0.0.1",
-  "description": "governance contract for metadium ",
+  "description": "governance contract for metadium",
   "main": "",
   "directories": {
     "test": "test"
@@ -26,6 +26,8 @@
     "babel-preset-stage-3": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-bignumber": "^3.0.0",
     "ethereumjs-util": "^6.0.0",
     "ganache-cli": "^6.2.5",
     "solidity-coverage": "^0.5.11",
