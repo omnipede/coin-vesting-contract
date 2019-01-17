@@ -27,6 +27,7 @@
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
     "ethereumjs-util": "^6.0.0",
+    "ganache-cli": "^6.2.5",
     "solidity-coverage": "^0.5.11",
     "truffle-assertions": "^0.7.1"
   }
