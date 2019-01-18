@@ -22,10 +22,10 @@ contract Impl is GovChecker {
     
     /**
     * @dev Allows the current Governance Contract to Change Implementation contract to a newImpl.
-    * @param newOwner The address to implement to.
+    * @param newImpl The address to implement to.
     */
     function ChangeImpl(address newImpl) public onlyGov {
-        _transferOwnership(newImpl);
+        transferOwnership(newImpl);
     }
 
     /**

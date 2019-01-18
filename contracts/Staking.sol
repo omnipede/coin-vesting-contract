@@ -1,8 +1,9 @@
 pragma solidity ^0.4.24;
-import "./GovChecker.sol";
+
 import "./Impl.sol";
 
-contract Staking is  Impl, GovChecker {
+
+contract Staking is  Impl {
 
     /**
      * @dev Fallback function for delegate call. This function will return whatever the implementaion call returns

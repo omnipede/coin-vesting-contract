@@ -1,9 +1,9 @@
 pragma solidity ^0.4.24;
-import "./GovChecker.sol";
+
 import "./Impl.sol";
 
 
-contract Gov is Impl, GovChecker {
+contract Gov is Impl {
   
     /**
      * @dev Fallback function for delegate call. This function will return whatever the implementaion call returns

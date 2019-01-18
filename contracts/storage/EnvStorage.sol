@@ -1,13 +1,14 @@
 pragma solidity ^0.4.24;
+
 import "./EternalStorage.sol";
-import "../GovChecker.sol";
 import "../Impl.sol";
-contract EnvStorage is Impl, EternalStorage, GovChecker {
+
+contract EnvStorage is Impl, EternalStorage {
     
     /**
      * @dev Fallback function for delegate call. This function will return whatever the implementaion call returns
      */
-    function () public payable onlyGov(){
+    function () public payable onlyGov() {
         
         address _impl = getImplementation();
         require(_impl != address(0), "Invalid Address");

@@ -20,7 +20,6 @@ Governance contract
 
 ```
 $ npm install
-$ truffle install zeppelin
 ```
 
 2. Analyzer
