@@ -35,6 +35,7 @@ contract Registry is Ownable {
         
 
     }
+
     /**
     * @dev Function to get contract(can be general address) address
     * Anyone can use this function
@@ -45,6 +46,7 @@ contract Registry is Ownable {
         require(contracts[_name] != address(0x0), "address should be non-zero");
         return contracts[_name];
     }
+    
     /**
     * @dev Function to set permission on contract
     * contract using modifier 'permissioned' references mapping variable 'permissions'
