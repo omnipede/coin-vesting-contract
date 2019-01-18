@@ -30,15 +30,6 @@
       "type": "function"
     },
     {
-      "constant": false,
-      "inputs": [],
-      "name": "renounceOwnership",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "constant": true,
       "inputs": [],
       "name": "owner",
@@ -46,20 +37,6 @@
         {
           "name": "",
           "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "isOwner",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
         }
       ],
       "payable": false,
@@ -222,7 +199,7 @@
         "contractDependencies": [
           77,
           125,
-          467
+          688
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -231,7 +208,7 @@
         "linearizedBaseContracts": [
           358,
           77,
-          467,
+          688,
           125
         ],
         "name": "Staking",
@@ -435,10 +412,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        759,
-                        760
+                        706,
+                        707
                       ],
-                      "referencedDeclaration": 760,
+                      "referencedDeclaration": 707,
                       "src": "341:7:6",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -621,7 +598,7 @@
         "contractDependencies": [
           77,
           125,
-          467
+          688
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -630,7 +607,7 @@
         "linearizedBaseContracts": [
           358,
           77,
-          467,
+          688,
           125
         ],
         "name": "Staking",
@@ -834,10 +811,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        759,
-                        760
+                        706,
+                        707
                       ],
-                      "referencedDeclaration": 760,
+                      "referencedDeclaration": 707,
                       "src": "341:7:6",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -941,5 +918,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-17T07:31:25.342Z"
+  "updatedAt": "2019-01-18T01:08:53.898Z"
 }

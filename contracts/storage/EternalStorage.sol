@@ -1,13 +1,14 @@
 pragma solidity ^0.4.24;
 
-import "../openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "installed_contracts/zeppelin/contracts/ownership/Ownable.sol";
+
 
 /**
  * @title EternalStorage
  * @dev An ownable contract that can be used as a storage where the variables
  * are stored in a set of mappings indexed by hash names.
  */
-contract EternalStorage is Ownable{
+contract EternalStorage is Ownable {
     struct Storage {
         mapping(bytes32 => bool) _bool;
         mapping(bytes32 => int) _int;

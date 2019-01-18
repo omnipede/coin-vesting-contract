@@ -25,15 +25,6 @@
       "type": "function"
     },
     {
-      "constant": false,
-      "inputs": [],
-      "name": "renounceOwnership",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "constant": true,
       "inputs": [],
       "name": "owner",
@@ -41,20 +32,6 @@
         {
           "name": "",
           "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "isOwner",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
         }
       ],
       "payable": false,
@@ -248,11 +225,11 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x6080604052336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16600073ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3610bd1806100cf6000396000f3006080604052600436106100a4576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806304af66ad146100a95780630d2020dd146101125780633ec50c6c14610183578063599e4c70146101ec57806360d6c7cf14610261578063715018a6146102ca5780638da5cb5b146102e15780638f32d59b14610338578063ec56a37314610367578063f2fde38b146103d8575b600080fd5b3480156100b557600080fd5b506100f86004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061041b565b604051808215151515815260200191505060405180910390f35b34801561011e57600080fd5b5061014160048036038101908080356000191690602001909291905050506105b8565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561018f57600080fd5b506101d26004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506106dc565b604051808215151515815260200191505060405180910390f35b3480156101f857600080fd5b506102476004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080351515906020019092919050505061070b565b604051808215151515815260200191505060405180910390f35b34801561026d57600080fd5b506102b06004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610897565b604051808215151515815260200191505060405180910390f35b3480156102d657600080fd5b506102df610907565b005b3480156102ed57600080fd5b506102f66109d9565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561034457600080fd5b5061034d610a02565b604051808215151515815260200191505060405180910390f35b34801561037357600080fd5b506103966004803603810190808035600019169060200190929190505050610a59565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156103e457600080fd5b50610419600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610a8c565b005b6000610425610a02565b151561043057600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168273ffffffffffffffffffffffffffffffffffffffff16141515156104d5576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601a8152602001807f616464726573732073686f756c64206265206e6f6e2d7a65726f00000000000081525060200191505060405180910390fd5b8160016000856000191660001916815260200190815260200160002060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055508173ffffffffffffffffffffffffffffffffffffffff1683600019167f37724a4a9968ac9654e6ee52f3d0c93e5ef8863e057254ee2e36e8ad3e8429db33604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390a36001905092915050565b60008073ffffffffffffffffffffffffffffffffffffffff1660016000846000191660001916815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1614151515610699576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601a8152602001807f616464726573732073686f756c64206265206e6f6e2d7a65726f00000000000081525060200191505060405180910390fd5b60016000836000191660001916815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050919050565b60026020528160005260406000206020528060005260406000206000915091509054906101000a900460ff1681565b6000610715610a02565b151561072057600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168373ffffffffffffffffffffffffffffffffffffffff16141515156107c5576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601a8152602001807f616464726573732073686f756c64206265206e6f6e2d7a65726f00000000000081525060200191505060405180910390fd5b8160026000866000191660001916815260200190815260200160002060008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff0219169083151502179055508273ffffffffffffffffffffffffffffffffffffffff1684600019167fe9f5231bbfb4b32867755b94562215cff6c8998489de8ba20926f8d0980e781884604051808215151515815260200191505060405180910390a3600190509392505050565b600060026000846000191660001916815260200190815260200160002060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16905092915050565b61090f610a02565b151561091a57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a360008060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614905090565b60016020528060005260406000206000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b610a94610a02565b1515610a9f57600080fd5b610aa881610aab565b50565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff1614151515610ae757600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505600a165627a7a723058202a7f606ec3a46bedbbe38c50941cafa51dad10649b705e5ee04d3fcf6478a3590029",
-  "deployedBytecode": "0x6080604052600436106100a4576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806304af66ad146100a95780630d2020dd146101125780633ec50c6c14610183578063599e4c70146101ec57806360d6c7cf14610261578063715018a6146102ca5780638da5cb5b146102e15780638f32d59b14610338578063ec56a37314610367578063f2fde38b146103d8575b600080fd5b3480156100b557600080fd5b506100f86004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061041b565b604051808215151515815260200191505060405180910390f35b34801561011e57600080fd5b5061014160048036038101908080356000191690602001909291905050506105b8565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561018f57600080fd5b506101d26004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506106dc565b604051808215151515815260200191505060405180910390f35b3480156101f857600080fd5b506102476004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080351515906020019092919050505061070b565b604051808215151515815260200191505060405180910390f35b34801561026d57600080fd5b506102b06004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610897565b604051808215151515815260200191505060405180910390f35b3480156102d657600080fd5b506102df610907565b005b3480156102ed57600080fd5b506102f66109d9565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561034457600080fd5b5061034d610a02565b604051808215151515815260200191505060405180910390f35b34801561037357600080fd5b506103966004803603810190808035600019169060200190929190505050610a59565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156103e457600080fd5b50610419600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610a8c565b005b6000610425610a02565b151561043057600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168273ffffffffffffffffffffffffffffffffffffffff16141515156104d5576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601a8152602001807f616464726573732073686f756c64206265206e6f6e2d7a65726f00000000000081525060200191505060405180910390fd5b8160016000856000191660001916815260200190815260200160002060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055508173ffffffffffffffffffffffffffffffffffffffff1683600019167f37724a4a9968ac9654e6ee52f3d0c93e5ef8863e057254ee2e36e8ad3e8429db33604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390a36001905092915050565b60008073ffffffffffffffffffffffffffffffffffffffff1660016000846000191660001916815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1614151515610699576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601a8152602001807f616464726573732073686f756c64206265206e6f6e2d7a65726f00000000000081525060200191505060405180910390fd5b60016000836000191660001916815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050919050565b60026020528160005260406000206020528060005260406000206000915091509054906101000a900460ff1681565b6000610715610a02565b151561072057600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168373ffffffffffffffffffffffffffffffffffffffff16141515156107c5576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601a8152602001807f616464726573732073686f756c64206265206e6f6e2d7a65726f00000000000081525060200191505060405180910390fd5b8160026000866000191660001916815260200190815260200160002060008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff0219169083151502179055508273ffffffffffffffffffffffffffffffffffffffff1684600019167fe9f5231bbfb4b32867755b94562215cff6c8998489de8ba20926f8d0980e781884604051808215151515815260200191505060405180910390a3600190509392505050565b600060026000846000191660001916815260200190815260200160002060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16905092915050565b61090f610a02565b151561091a57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a360008060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614905090565b60016020528060005260406000206000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b610a94610a02565b1515610a9f57600080fd5b610aa881610aab565b50565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff1614151515610ae757600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505600a165627a7a723058202a7f606ec3a46bedbbe38c50941cafa51dad10649b705e5ee04d3fcf6478a3590029",
-  "sourceMap": "403:2511:5:-;;;539:10:7;530:6;;:19;;;;;;;;;;;;;;;;;;597:6;;;;;;;;;;;564:40;;593:1;564:40;;;;;;;;;;;;403:2511:5;;;;;;",
-  "deployedSourceMap": "403:2511:5:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;982:377;;8:9:-1;5:2;;;30:1;27;20:12;5:2;982:377:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1545:198;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1545:198:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;491:59;;8:9:-1;5:2;;;30:1;27;20:12;5:2;491:59:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2160:334;;8:9:-1;5:2;;;30:1;27;20:12;5:2;2160:334:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2759:148;;8:9:-1;5:2;;;30:1;27;20:12;5:2;2759:148:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1349:137:7;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1349:137:7;;;;;;672:76;;8:9:-1;5:2;;;30:1;27;20:12;5:2;672:76:7;;;;;;;;;;;;;;;;;;;;;;;;;;;987:89;;8:9:-1;5:2;;;30:1;27;20:12;5:2;987:89:7;;;;;;;;;;;;;;;;;;;;;;;;;;;443:42:5;;8:9:-1;5:2;;;30:1;27;20:12;5:2;443:42:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1654:107:7;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1654:107:7;;;;;;;;;;;;;;;;;;;;;;;;;;;;982:377:5;1065:12;873:9:7;:7;:9::i;:::-;865:18;;;;;;;;1114:3:5;1097:21;;:5;:21;;;;1089:60;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1178:5;1159:9;:16;1169:5;1159:16;;;;;;;;;;;;;;;;;;:24;;;;;;;;;;;;;;;;;;1236:5;1199:43;;1229:5;1199:43;;;;1217:10;1199:43;;;;;;;;;;;;;;;;;;;;;;1260:4;1253:11;;982:377;;;;:::o;1545:198::-;1608:12;1668:3;1640:32;;:9;:16;1650:5;1640:16;;;;;;;;;;;;;;;;;;;;;;;;;;;:32;;;;1632:71;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1720:9;:16;1730:5;1720:16;;;;;;;;;;;;;;;;;;;;;;;;;;;1713:23;;1545:198;;;:::o;491:59::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;2160:334::-;2259:12;873:9:7;:7;:9::i;:::-;865:18;;;;;;;;2311:3:5;2291:24;;:8;:24;;;;2283:63;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2391:7;2356:11;:22;2368:9;2356:22;;;;;;;;;;;;;;;;;:32;2379:8;2356:32;;;;;;;;;;;;;;;;:42;;;;;;;;;;;;;;;;;;2439:8;2414:43;;2428:9;2414:43;;;;2449:7;2414:43;;;;;;;;;;;;;;;;;;;;;;2483:4;2476:11;;2160:334;;;;;:::o;2759:148::-;2839:10;2868:11;:22;2880:9;2868:22;;;;;;;;;;;;;;;;;:32;2891:8;2868:32;;;;;;;;;;;;;;;;;;;;;;;;;2861:39;;2759:148;;;;:::o;1349:137:7:-;873:9;:7;:9::i;:::-;865:18;;;;;;;;1447:1;1410:40;;1431:6;;;;;;;;;;;1410:40;;;;;;;;;;;;1477:1;1460:6;;:19;;;;;;;;;;;;;;;;;;1349:137::o;672:76::-;709:7;735:6;;;;;;;;;;;728:13;;672:76;:::o;987:89::-;1026:4;1063:6;;;;;;;;;;;1049:20;;:10;:20;;;1042:27;;987:89;:::o;443:42:5:-;;;;;;;;;;;;;;;;;;;;;;:::o;1654:107:7:-;873:9;:7;:9::i;:::-;865:18;;;;;;;;1726:28;1745:8;1726:18;:28::i;:::-;1654:107;:::o;1902:183::-;1995:1;1975:22;;:8;:22;;;;1967:31;;;;;;;;2042:8;2013:38;;2034:6;;;;;;;;;;;2013:38;;;;;;;;;;;;2070:8;2061:6;;:17;;;;;;;;;;;;;;;;;;1902:183;:::o",
-  "source": "pragma solidity ^0.4.24;\n\nimport \"./openzeppelin-solidity/contracts/ownership/Ownable.sol\";\n\n/**\n * @title Registry\n * @dev Registry Contract used to set domain and permission\n * The contracts used by the permissioned user in ShowMe references permission in this contract.\n * Not only contract address but also general address can be set in this contract.\n * Owner should set domain and permission.\n */\ncontract Registry is Ownable {\n    \n    mapping(bytes32=>address) public contracts;\n    mapping(bytes32=>mapping(address=>bool)) public permissions;\n\n    event SetContractDomain(address setter, bytes32 indexed name, address indexed addr);\n    event SetPermission(bytes32 indexed _contract, address indexed granted, bool status);\n\n\n    /**\n    * @dev Function to set contract(can be general address) domain\n    * Only owner can use this function\n    * @param _name name\n    * @param _addr address\n    * @return A boolean that indicates if the operation was successful.\n    */\n    function setContractDomain(bytes32 _name, address _addr) public onlyOwner returns (bool success) {\n        require(_addr != address(0x0), \"address should be non-zero\");\n        contracts[_name] = _addr;\n\n        emit SetContractDomain(msg.sender, _name, _addr);\n\n        return true;\n        //TODO should decide whether to set 0x00 to destoryed contract or not\n        \n\n    }\n    /**\n    * @dev Function to get contract(can be general address) address\n    * Anyone can use this function\n    * @param _name _name\n    * @return An address of the _name\n    */\n    function getContractAddress(bytes32 _name) public view returns(address addr) {\n        require(contracts[_name] != address(0x0), \"address should be non-zero\");\n        return contracts[_name];\n    }\n    /**\n    * @dev Function to set permission on contract\n    * contract using modifier 'permissioned' references mapping variable 'permissions'\n    * Only owner can use this function\n    * @param _contract contract name\n    * @param _granted granted address\n    * @param _status true = can use, false = cannot use. default is false\n    * @return A boolean that indicates if the operation was successful.\n    */\n    function setPermission(bytes32 _contract, address _granted, bool _status) public onlyOwner returns(bool success) {\n        require(_granted != address(0x0), \"address should be non-zero\");\n        permissions[_contract][_granted] = _status;\n\n        emit SetPermission(_contract, _granted, _status);\n        \n        return true;\n    }\n\n    /**\n    * @dev Function to get permission on contract\n    * contract using modifier 'permissioned' references mapping variable 'permissions'\n    * @param _contract contract name\n    * @param _granted granted address\n    * @return permission result\n    */\n    function getPermission(bytes32 _contract, address _granted) public view returns(bool found) {\n        return permissions[_contract][_granted];\n    }\n    \n}",
+  "bytecode": "0x6080604052336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550610b14806100536000396000f30060806040526004361061008e576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806304af66ad146100935780630d2020dd146100fc5780633ec50c6c1461016d578063599e4c70146101d657806360d6c7cf1461024b5780638da5cb5b146102b4578063ec56a3731461030b578063f2fde38b1461037c575b600080fd5b34801561009f57600080fd5b506100e26004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506103bf565b604051808215151515815260200191505060405180910390f35b34801561010857600080fd5b5061012b60048036038101908080356000191690602001909291905050506105a4565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561017957600080fd5b506101bc6004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506106c8565b604051808215151515815260200191505060405180910390f35b3480156101e257600080fd5b506102316004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035151590602001909291905050506106f7565b604051808215151515815260200191505060405180910390f35b34801561025757600080fd5b5061029a6004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506108cb565b604051808215151515815260200191505060405180910390f35b3480156102c057600080fd5b506102c961093b565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561031757600080fd5b5061033a6004803603810190808035600019169060200190929190505050610960565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561038857600080fd5b506103bd600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610993565b005b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561041c57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168273ffffffffffffffffffffffffffffffffffffffff16141515156104c1576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601a8152602001807f616464726573732073686f756c64206265206e6f6e2d7a65726f00000000000081525060200191505060405180910390fd5b8160016000856000191660001916815260200190815260200160002060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055508173ffffffffffffffffffffffffffffffffffffffff1683600019167f37724a4a9968ac9654e6ee52f3d0c93e5ef8863e057254ee2e36e8ad3e8429db33604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390a36001905092915050565b60008073ffffffffffffffffffffffffffffffffffffffff1660016000846000191660001916815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1614151515610685576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601a8152602001807f616464726573732073686f756c64206265206e6f6e2d7a65726f00000000000081525060200191505060405180910390fd5b60016000836000191660001916815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050919050565b60026020528160005260406000206020528060005260406000206000915091509054906101000a900460ff1681565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561075457600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168373ffffffffffffffffffffffffffffffffffffffff16141515156107f9576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601a8152602001807f616464726573732073686f756c64206265206e6f6e2d7a65726f00000000000081525060200191505060405180910390fd5b8160026000866000191660001916815260200190815260200160002060008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff0219169083151502179055508273ffffffffffffffffffffffffffffffffffffffff1684600019167fe9f5231bbfb4b32867755b94562215cff6c8998489de8ba20926f8d0980e781884604051808215151515815260200191505060405180910390a3600190509392505050565b600060026000846000191660001916815260200190815260200160002060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16905092915050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60016020528060005260406000206000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156109ee57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff1614151515610a2a57600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505600a165627a7a72305820634f659689c5c438dd667ab49889b4d00a22a13f26527d41a219841356322ea30029",
+  "deployedBytecode": "0x60806040526004361061008e576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806304af66ad146100935780630d2020dd146100fc5780633ec50c6c1461016d578063599e4c70146101d657806360d6c7cf1461024b5780638da5cb5b146102b4578063ec56a3731461030b578063f2fde38b1461037c575b600080fd5b34801561009f57600080fd5b506100e26004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506103bf565b604051808215151515815260200191505060405180910390f35b34801561010857600080fd5b5061012b60048036038101908080356000191690602001909291905050506105a4565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561017957600080fd5b506101bc6004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506106c8565b604051808215151515815260200191505060405180910390f35b3480156101e257600080fd5b506102316004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035151590602001909291905050506106f7565b604051808215151515815260200191505060405180910390f35b34801561025757600080fd5b5061029a6004803603810190808035600019169060200190929190803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506108cb565b604051808215151515815260200191505060405180910390f35b3480156102c057600080fd5b506102c961093b565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561031757600080fd5b5061033a6004803603810190808035600019169060200190929190505050610960565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561038857600080fd5b506103bd600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610993565b005b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561041c57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168273ffffffffffffffffffffffffffffffffffffffff16141515156104c1576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601a8152602001807f616464726573732073686f756c64206265206e6f6e2d7a65726f00000000000081525060200191505060405180910390fd5b8160016000856000191660001916815260200190815260200160002060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055508173ffffffffffffffffffffffffffffffffffffffff1683600019167f37724a4a9968ac9654e6ee52f3d0c93e5ef8863e057254ee2e36e8ad3e8429db33604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390a36001905092915050565b60008073ffffffffffffffffffffffffffffffffffffffff1660016000846000191660001916815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1614151515610685576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601a8152602001807f616464726573732073686f756c64206265206e6f6e2d7a65726f00000000000081525060200191505060405180910390fd5b60016000836000191660001916815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050919050565b60026020528160005260406000206020528060005260406000206000915091509054906101000a900460ff1681565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561075457600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168373ffffffffffffffffffffffffffffffffffffffff16141515156107f9576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601a8152602001807f616464726573732073686f756c64206265206e6f6e2d7a65726f00000000000081525060200191505060405180910390fd5b8160026000866000191660001916815260200190815260200160002060008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff0219169083151502179055508273ffffffffffffffffffffffffffffffffffffffff1684600019167fe9f5231bbfb4b32867755b94562215cff6c8998489de8ba20926f8d0980e781884604051808215151515815260200191505060405180910390a3600190509392505050565b600060026000846000191660001916815260200190815260200160002060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16905092915050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60016020528060005260406000206000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156109ee57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff1614151515610a2a57600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505600a165627a7a72305820634f659689c5c438dd667ab49889b4d00a22a13f26527d41a219841356322ea30029",
+  "sourceMap": "409:2505:5:-;;;502:10:11;494:5;;:18;;;;;;;;;;;;;;;;;;409:2505:5;;;;;;",
+  "deployedSourceMap": "409:2505:5:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;982:377;;8:9:-1;5:2;;;30:1;27;20:12;5:2;982:377:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1545:198;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1545:198:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;492:59;;8:9:-1;5:2;;;30:1;27;20:12;5:2;492:59:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2160:334;;8:9:-1;5:2;;;30:1;27;20:12;5:2;2160:334:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2759:148;;8:9:-1;5:2;;;30:1;27;20:12;5:2;2759:148:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;238:20:11;;8:9:-1;5:2;;;30:1;27;20:12;5:2;238:20:11;;;;;;;;;;;;;;;;;;;;;;;;;;;444:42:5;;8:9:-1;5:2;;;30:1;27;20:12;5:2;444:42:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;827:169:11;;8:9:-1;5:2;;;30:1;27;20:12;5:2;827:169:11;;;;;;;;;;;;;;;;;;;;;;;;;;;;982:377:5;1065:12;647:5:11;;;;;;;;;;;633:19;;:10;:19;;;625:28;;;;;;;;1114:3:5;1097:21;;:5;:21;;;;1089:60;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1178:5;1159:9;:16;1169:5;1159:16;;;;;;;;;;;;;;;;;;:24;;;;;;;;;;;;;;;;;;1236:5;1199:43;;1229:5;1199:43;;;;1217:10;1199:43;;;;;;;;;;;;;;;;;;;;;;1260:4;1253:11;;982:377;;;;:::o;1545:198::-;1608:12;1668:3;1640:32;;:9;:16;1650:5;1640:16;;;;;;;;;;;;;;;;;;;;;;;;;;;:32;;;;1632:71;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1720:9;:16;1730:5;1720:16;;;;;;;;;;;;;;;;;;;;;;;;;;;1713:23;;1545:198;;;:::o;492:59::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;2160:334::-;2259:12;647:5:11;;;;;;;;;;;633:19;;:10;:19;;;625:28;;;;;;;;2311:3:5;2291:24;;:8;:24;;;;2283:63;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2391:7;2356:11;:22;2368:9;2356:22;;;;;;;;;;;;;;;;;:32;2379:8;2356:32;;;;;;;;;;;;;;;;:42;;;;;;;;;;;;;;;;;;2439:8;2414:43;;2428:9;2414:43;;;;2449:7;2414:43;;;;;;;;;;;;;;;;;;;;;;2483:4;2476:11;;2160:334;;;;;:::o;2759:148::-;2839:10;2868:11;:22;2880:9;2868:22;;;;;;;;;;;;;;;;;:32;2891:8;2868:32;;;;;;;;;;;;;;;;;;;;;;;;;2861:39;;2759:148;;;;:::o;238:20:11:-;;;;;;;;;;;;;:::o;444:42:5:-;;;;;;;;;;;;;;;;;;;;;;:::o;827:169:11:-;647:5;;;;;;;;;;;633:19;;:10;:19;;;625:28;;;;;;;;923:1;903:22;;:8;:22;;;;895:31;;;;;;;;960:8;932:37;;953:5;;;;;;;;;;;932:37;;;;;;;;;;;;983:8;975:5;;:16;;;;;;;;;;;;;;;;;;827:169;:::o",
+  "source": "pragma solidity ^0.4.24;\n\nimport \"installed_contracts/zeppelin/contracts/ownership/Ownable.sol\";\n\n\n/**\n * @title Registry\n * @dev Registry Contract used to set domain and permission\n * The contracts used by the permissioned user in ShowMe references permission in this contract.\n * Not only contract address but also general address can be set in this contract.\n * Owner should set domain and permission.\n */\ncontract Registry is Ownable {\n    mapping(bytes32=>address) public contracts;\n    mapping(bytes32=>mapping(address=>bool)) public permissions;\n\n    event SetContractDomain(address setter, bytes32 indexed name, address indexed addr);\n    event SetPermission(bytes32 indexed _contract, address indexed granted, bool status);\n\n    /**\n    * @dev Function to set contract(can be general address) domain\n    * Only owner can use this function\n    * @param _name name\n    * @param _addr address\n    * @return A boolean that indicates if the operation was successful.\n    */\n    function setContractDomain(bytes32 _name, address _addr) public onlyOwner returns (bool success) {\n        require(_addr != address(0x0), \"address should be non-zero\");\n        contracts[_name] = _addr;\n\n        emit SetContractDomain(msg.sender, _name, _addr);\n\n        return true;\n        //TODO should decide whether to set 0x00 to destoryed contract or not\n        \n\n    }\n    /**\n    * @dev Function to get contract(can be general address) address\n    * Anyone can use this function\n    * @param _name _name\n    * @return An address of the _name\n    */\n    function getContractAddress(bytes32 _name) public view returns(address addr) {\n        require(contracts[_name] != address(0x0), \"address should be non-zero\");\n        return contracts[_name];\n    }\n    /**\n    * @dev Function to set permission on contract\n    * contract using modifier 'permissioned' references mapping variable 'permissions'\n    * Only owner can use this function\n    * @param _contract contract name\n    * @param _granted granted address\n    * @param _status true = can use, false = cannot use. default is false\n    * @return A boolean that indicates if the operation was successful.\n    */\n    function setPermission(bytes32 _contract, address _granted, bool _status) public onlyOwner returns(bool success) {\n        require(_granted != address(0x0), \"address should be non-zero\");\n        permissions[_contract][_granted] = _status;\n\n        emit SetPermission(_contract, _granted, _status);\n        \n        return true;\n    }\n\n    /**\n    * @dev Function to get permission on contract\n    * contract using modifier 'permissioned' references mapping variable 'permissions'\n    * @param _contract contract name\n    * @param _granted granted address\n    * @return permission result\n    */\n    function getPermission(bytes32 _contract, address _granted) public view returns(bool found) {\n        return permissions[_contract][_granted];\n    }\n    \n}",
   "sourcePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/Registry.sol",
   "ast": {
     "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/Registry.sol",
@@ -276,13 +253,13 @@
         "src": "0:24:5"
       },
       {
-        "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/openzeppelin-solidity/contracts/ownership/Ownable.sol",
-        "file": "./openzeppelin-solidity/contracts/ownership/Ownable.sol",
+        "absolutePath": "installed_contracts/zeppelin/contracts/ownership/Ownable.sol",
+        "file": "installed_contracts/zeppelin/contracts/ownership/Ownable.sol",
         "id": 185,
         "nodeType": "ImportDirective",
         "scope": 329,
-        "sourceUnit": 468,
-        "src": "26:65:5",
+        "sourceUnit": 689,
+        "src": "26:70:5",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -295,20 +272,20 @@
               "id": 186,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 467,
-              "src": "424:7:5",
+              "referencedDeclaration": 688,
+              "src": "430:7:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$467",
+                "typeIdentifier": "t_contract$_Ownable_$688",
                 "typeString": "contract Ownable"
               }
             },
             "id": 187,
             "nodeType": "InheritanceSpecifier",
-            "src": "424:7:5"
+            "src": "430:7:5"
           }
         ],
         "contractDependencies": [
-          467
+          688
         ],
         "contractKind": "contract",
         "documentation": "@title Registry\n@dev Registry Contract used to set domain and permission\nThe contracts used by the permissioned user in ShowMe references permission in this contract.\nNot only contract address but also general address can be set in this contract.\nOwner should set domain and permission.",
@@ -316,7 +293,7 @@
         "id": 328,
         "linearizedBaseContracts": [
           328,
-          467
+          688
         ],
         "name": "Registry",
         "nodeType": "ContractDefinition",
@@ -327,7 +304,7 @@
             "name": "contracts",
             "nodeType": "VariableDeclaration",
             "scope": 328,
-            "src": "443:42:5",
+            "src": "444:42:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -340,14 +317,14 @@
                 "id": 188,
                 "name": "bytes32",
                 "nodeType": "ElementaryTypeName",
-                "src": "451:7:5",
+                "src": "452:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_bytes32",
                   "typeString": "bytes32"
                 }
               },
               "nodeType": "Mapping",
-              "src": "443:25:5",
+              "src": "444:25:5",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_bytes32_$_t_address_$",
                 "typeString": "mapping(bytes32 => address)"
@@ -356,7 +333,7 @@
                 "id": 189,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
-                "src": "460:7:5",
+                "src": "461:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_address",
                   "typeString": "address"
@@ -372,7 +349,7 @@
             "name": "permissions",
             "nodeType": "VariableDeclaration",
             "scope": 328,
-            "src": "491:59:5",
+            "src": "492:59:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -385,14 +362,14 @@
                 "id": 192,
                 "name": "bytes32",
                 "nodeType": "ElementaryTypeName",
-                "src": "499:7:5",
+                "src": "500:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_bytes32",
                   "typeString": "bytes32"
                 }
               },
               "nodeType": "Mapping",
-              "src": "491:40:5",
+              "src": "492:40:5",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_address_$_t_bool_$_$",
                 "typeString": "mapping(bytes32 => mapping(address => bool))"
@@ -403,14 +380,14 @@
                   "id": 193,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "516:7:5",
+                  "src": "517:7:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
                     "typeString": "address"
                   }
                 },
                 "nodeType": "Mapping",
-                "src": "508:22:5",
+                "src": "509:22:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
                   "typeString": "mapping(address => bool)"
@@ -419,7 +396,7 @@
                   "id": 194,
                   "name": "bool",
                   "nodeType": "ElementaryTypeName",
-                  "src": "525:4:5",
+                  "src": "526:4:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bool",
                     "typeString": "bool"
@@ -447,7 +424,7 @@
                   "name": "setter",
                   "nodeType": "VariableDeclaration",
                   "scope": 205,
-                  "src": "581:14:5",
+                  "src": "582:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -458,7 +435,7 @@
                     "id": 198,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "581:7:5",
+                    "src": "582:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -474,7 +451,7 @@
                   "name": "name",
                   "nodeType": "VariableDeclaration",
                   "scope": 205,
-                  "src": "597:20:5",
+                  "src": "598:20:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -485,7 +462,7 @@
                     "id": 200,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "597:7:5",
+                    "src": "598:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -501,7 +478,7 @@
                   "name": "addr",
                   "nodeType": "VariableDeclaration",
                   "scope": 205,
-                  "src": "619:20:5",
+                  "src": "620:20:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -512,7 +489,7 @@
                     "id": 202,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "619:7:5",
+                    "src": "620:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -522,9 +499,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "580:60:5"
+              "src": "581:60:5"
             },
-            "src": "557:84:5"
+            "src": "558:84:5"
           },
           {
             "anonymous": false,
@@ -543,7 +520,7 @@
                   "name": "_contract",
                   "nodeType": "VariableDeclaration",
                   "scope": 213,
-                  "src": "666:25:5",
+                  "src": "667:25:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -554,7 +531,7 @@
                     "id": 206,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "666:7:5",
+                    "src": "667:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -570,7 +547,7 @@
                   "name": "granted",
                   "nodeType": "VariableDeclaration",
                   "scope": 213,
-                  "src": "693:23:5",
+                  "src": "694:23:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -581,7 +558,7 @@
                     "id": 208,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "693:7:5",
+                    "src": "694:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -597,7 +574,7 @@
                   "name": "status",
                   "nodeType": "VariableDeclaration",
                   "scope": 213,
-                  "src": "718:11:5",
+                  "src": "719:11:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -608,7 +585,7 @@
                     "id": 210,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "718:4:5",
+                    "src": "719:4:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -618,9 +595,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "665:65:5"
+              "src": "666:65:5"
             },
-            "src": "646:85:5"
+            "src": "647:85:5"
           },
           {
             "body": {
@@ -754,10 +731,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        759,
-                        760
+                        706,
+                        707
                       ],
-                      "referencedDeclaration": 760,
+                      "referencedDeclaration": 707,
                       "src": "1089:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -867,7 +844,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 756,
+                          "referencedDeclaration": 703,
                           "src": "1217:3:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -1000,7 +977,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 401,
+                  "referencedDeclaration": 662,
                   "src": "1046:9:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1271,10 +1248,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        759,
-                        760
+                        706,
+                        707
                       ],
-                      "referencedDeclaration": 760,
+                      "referencedDeclaration": 707,
                       "src": "1632:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1560,10 +1537,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        759,
-                        760
+                        706,
+                        707
                       ],
-                      "referencedDeclaration": 760,
+                      "referencedDeclaration": 707,
                       "src": "2283:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1817,7 +1794,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 401,
+                  "referencedDeclaration": 662,
                   "src": "2241:9:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -2145,7 +2122,7 @@
           }
         ],
         "scope": 329,
-        "src": "403:2511:5"
+        "src": "409:2505:5"
       }
     ],
     "src": "0:2914:5"
@@ -2172,13 +2149,13 @@
         "src": "0:24:5"
       },
       {
-        "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/openzeppelin-solidity/contracts/ownership/Ownable.sol",
-        "file": "./openzeppelin-solidity/contracts/ownership/Ownable.sol",
+        "absolutePath": "installed_contracts/zeppelin/contracts/ownership/Ownable.sol",
+        "file": "installed_contracts/zeppelin/contracts/ownership/Ownable.sol",
         "id": 185,
         "nodeType": "ImportDirective",
         "scope": 329,
-        "sourceUnit": 468,
-        "src": "26:65:5",
+        "sourceUnit": 689,
+        "src": "26:70:5",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -2191,20 +2168,20 @@
               "id": 186,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 467,
-              "src": "424:7:5",
+              "referencedDeclaration": 688,
+              "src": "430:7:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$467",
+                "typeIdentifier": "t_contract$_Ownable_$688",
                 "typeString": "contract Ownable"
               }
             },
             "id": 187,
             "nodeType": "InheritanceSpecifier",
-            "src": "424:7:5"
+            "src": "430:7:5"
           }
         ],
         "contractDependencies": [
-          467
+          688
         ],
         "contractKind": "contract",
         "documentation": "@title Registry\n@dev Registry Contract used to set domain and permission\nThe contracts used by the permissioned user in ShowMe references permission in this contract.\nNot only contract address but also general address can be set in this contract.\nOwner should set domain and permission.",
@@ -2212,7 +2189,7 @@
         "id": 328,
         "linearizedBaseContracts": [
           328,
-          467
+          688
         ],
         "name": "Registry",
         "nodeType": "ContractDefinition",
@@ -2223,7 +2200,7 @@
             "name": "contracts",
             "nodeType": "VariableDeclaration",
             "scope": 328,
-            "src": "443:42:5",
+            "src": "444:42:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -2236,14 +2213,14 @@
                 "id": 188,
                 "name": "bytes32",
                 "nodeType": "ElementaryTypeName",
-                "src": "451:7:5",
+                "src": "452:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_bytes32",
                   "typeString": "bytes32"
                 }
               },
               "nodeType": "Mapping",
-              "src": "443:25:5",
+              "src": "444:25:5",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_bytes32_$_t_address_$",
                 "typeString": "mapping(bytes32 => address)"
@@ -2252,7 +2229,7 @@
                 "id": 189,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
-                "src": "460:7:5",
+                "src": "461:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_address",
                   "typeString": "address"
@@ -2268,7 +2245,7 @@
             "name": "permissions",
             "nodeType": "VariableDeclaration",
             "scope": 328,
-            "src": "491:59:5",
+            "src": "492:59:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -2281,14 +2258,14 @@
                 "id": 192,
                 "name": "bytes32",
                 "nodeType": "ElementaryTypeName",
-                "src": "499:7:5",
+                "src": "500:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_bytes32",
                   "typeString": "bytes32"
                 }
               },
               "nodeType": "Mapping",
-              "src": "491:40:5",
+              "src": "492:40:5",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_bytes32_$_t_mapping$_t_address_$_t_bool_$_$",
                 "typeString": "mapping(bytes32 => mapping(address => bool))"
@@ -2299,14 +2276,14 @@
                   "id": 193,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "516:7:5",
+                  "src": "517:7:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
                     "typeString": "address"
                   }
                 },
                 "nodeType": "Mapping",
-                "src": "508:22:5",
+                "src": "509:22:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
                   "typeString": "mapping(address => bool)"
@@ -2315,7 +2292,7 @@
                   "id": 194,
                   "name": "bool",
                   "nodeType": "ElementaryTypeName",
-                  "src": "525:4:5",
+                  "src": "526:4:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bool",
                     "typeString": "bool"
@@ -2343,7 +2320,7 @@
                   "name": "setter",
                   "nodeType": "VariableDeclaration",
                   "scope": 205,
-                  "src": "581:14:5",
+                  "src": "582:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2354,7 +2331,7 @@
                     "id": 198,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "581:7:5",
+                    "src": "582:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2370,7 +2347,7 @@
                   "name": "name",
                   "nodeType": "VariableDeclaration",
                   "scope": 205,
-                  "src": "597:20:5",
+                  "src": "598:20:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2381,7 +2358,7 @@
                     "id": 200,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "597:7:5",
+                    "src": "598:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2397,7 +2374,7 @@
                   "name": "addr",
                   "nodeType": "VariableDeclaration",
                   "scope": 205,
-                  "src": "619:20:5",
+                  "src": "620:20:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2408,7 +2385,7 @@
                     "id": 202,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "619:7:5",
+                    "src": "620:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2418,9 +2395,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "580:60:5"
+              "src": "581:60:5"
             },
-            "src": "557:84:5"
+            "src": "558:84:5"
           },
           {
             "anonymous": false,
@@ -2439,7 +2416,7 @@
                   "name": "_contract",
                   "nodeType": "VariableDeclaration",
                   "scope": 213,
-                  "src": "666:25:5",
+                  "src": "667:25:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2450,7 +2427,7 @@
                     "id": 206,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "666:7:5",
+                    "src": "667:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2466,7 +2443,7 @@
                   "name": "granted",
                   "nodeType": "VariableDeclaration",
                   "scope": 213,
-                  "src": "693:23:5",
+                  "src": "694:23:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2477,7 +2454,7 @@
                     "id": 208,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "693:7:5",
+                    "src": "694:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2493,7 +2470,7 @@
                   "name": "status",
                   "nodeType": "VariableDeclaration",
                   "scope": 213,
-                  "src": "718:11:5",
+                  "src": "719:11:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2504,7 +2481,7 @@
                     "id": 210,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "718:4:5",
+                    "src": "719:4:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -2514,9 +2491,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "665:65:5"
+              "src": "666:65:5"
             },
-            "src": "646:85:5"
+            "src": "647:85:5"
           },
           {
             "body": {
@@ -2650,10 +2627,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        759,
-                        760
+                        706,
+                        707
                       ],
-                      "referencedDeclaration": 760,
+                      "referencedDeclaration": 707,
                       "src": "1089:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2763,7 +2740,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 756,
+                          "referencedDeclaration": 703,
                           "src": "1217:3:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -2896,7 +2873,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 401,
+                  "referencedDeclaration": 662,
                   "src": "1046:9:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -3167,10 +3144,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        759,
-                        760
+                        706,
+                        707
                       ],
-                      "referencedDeclaration": 760,
+                      "referencedDeclaration": 707,
                       "src": "1632:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -3456,10 +3433,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        759,
-                        760
+                        706,
+                        707
                       ],
-                      "referencedDeclaration": 760,
+                      "referencedDeclaration": 707,
                       "src": "2283:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -3713,7 +3690,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 401,
+                  "referencedDeclaration": 662,
                   "src": "2241:9:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -4041,7 +4018,7 @@
           }
         ],
         "scope": 329,
-        "src": "403:2511:5"
+        "src": "409:2505:5"
       }
     ],
     "src": "0:2914:5"
@@ -4052,5 +4029,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-17T07:31:25.341Z"
+  "updatedAt": "2019-01-18T01:08:53.898Z"
 }

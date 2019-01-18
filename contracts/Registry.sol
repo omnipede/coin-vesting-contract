@@ -1,6 +1,7 @@
 pragma solidity ^0.4.24;
 
-import "./openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "installed_contracts/zeppelin/contracts/ownership/Ownable.sol";
+
 
 /**
  * @title Registry
@@ -10,13 +11,11 @@ import "./openzeppelin-solidity/contracts/ownership/Ownable.sol";
  * Owner should set domain and permission.
  */
 contract Registry is Ownable {
-    
     mapping(bytes32=>address) public contracts;
     mapping(bytes32=>mapping(address=>bool)) public permissions;
 
     event SetContractDomain(address setter, bytes32 indexed name, address indexed addr);
     event SetPermission(bytes32 indexed _contract, address indexed granted, bool status);
-
 
     /**
     * @dev Function to set contract(can be general address) domain

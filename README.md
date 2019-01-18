@@ -1,50 +1,56 @@
 # governance-contract
 Governance contract
 
-### Requirements
-Truffle v4.1.14
-solc v 0.4.24
-nodejs v 8.9.3
-
-### Preequiste
+## Preequiste
 
 1. Docker
    
    Install at https://docs.docker.com/install
 
 2. Install solc 0.4.24
+
 ``` 
     $ docker pull ethereum/solc:0.4.24
     $ cp dockers/solc /usr/local/bin/solc
 ```
 
-### Install 
+## Install 
 
-#### to install libraries
+1. Libraries
+
 ```
-$ npm install 
+$ npm install
+$ truffle install zeppelin
 ```
 
-#### to install analyzer 
+2. Analyzer
+
 ```
 $ npm run install_analyzer
 ```
 
-### Run
+## Run
 
-#### to compile Solidity Codes 
+### Compile
+
 ```
 $ npm run compile
 ```
-#### to run test
+
+### Test
+
 ```
 $ npm run test
 ```
-#### to run code coverage 
+
+### Coverage
+
 ```
 $ npm run coverage
 ```
-#### To flatten a Solidity files
+
+### Flatten
+
 ```
 $ npm run flatten
 ```
