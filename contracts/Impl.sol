@@ -1,15 +1,21 @@
 pragma solidity ^0.4.24;
+
 import "./GovChecker.sol";
+
+
 contract Impl is GovChecker {
     address internal implementation;
+
     event ImplementationChanged(
       address indexed previousImpl,
       address indexed newImpl
     );
-    function getImplementation() public view returns (address){
+    
+    function getImplementation() public view returns (address) {
         return implementation;
     }
-    constructor (address _implAddress) public{
+
+    constructor (address _implAddress) public {
         require(_implAddress != address(0), "Invalid Address");
         implementation = _implAddress;
     }
