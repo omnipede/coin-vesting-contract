@@ -1,29 +1,11 @@
 pragma solidity ^0.4.24;
+
 import "./EternalStorage.sol";
-import "../GovChecker.sol";
-import "../Impl.sol";
-contract EnvStorage is Impl, EternalStorage, GovChecker {
-    
-    /**
-     * @dev Fallback function for delegate call. This function will return whatever the implementaion call returns
-     */
-    function () public payable onlyGov(){
-        
-        address _impl = getImplementation();
-        require(_impl != address(0), "Invalid Address");
+import "../proxy/UpgradeabilityProxy.sol";
 
-        assembly {
-            let ptr := mload(0x40)
-            calldatacopy(ptr, 0, calldatasize)
 
-            let result := delegatecall(gas, _impl, ptr, calldatasize, 0, 0)
-            let size := returndatasize
-            returndatacopy(ptr, 0, size)
-
-            switch result
-            case 0 { revert(ptr, size) }
-            default { return(ptr, size) }
-
-        }
+contract EnvStorage is UpgradeabilityProxy, EternalStorage {
+    constructor(address implementation) public {
+        setImplementation(implementation);
     }
 }

@@ -18,6 +18,20 @@
     {
       "constant": true,
       "inputs": [],
+      "name": "implementation",
+      "outputs": [
+        {
+          "name": "impl",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
       "name": "GOV_NAME",
       "outputs": [
         {
@@ -30,6 +44,15 @@
       "type": "function"
     },
     {
+      "constant": false,
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "constant": true,
       "inputs": [],
       "name": "owner",
@@ -37,6 +60,20 @@
         {
           "name": "",
           "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "isOwner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
         }
       ],
       "payable": false,
@@ -58,20 +95,6 @@
       "type": "function"
     },
     {
-      "constant": true,
-      "inputs": [],
-      "name": "getImplementation",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "constant": false,
       "inputs": [
         {
@@ -89,6 +112,18 @@
       "payable": true,
       "stateMutability": "payable",
       "type": "fallback"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "implementation",
+          "type": "address"
+        }
+      ],
+      "name": "Upgraded",
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -118,14 +153,14 @@
     "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/GovImp.sol",
     "exportedSymbols": {
       "GovImp": [
-        93
+        81
       ]
     },
-    "id": 94,
+    "id": 82,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 79,
+        "id": 67,
         "literals": [
           "solidity",
           "^",
@@ -138,10 +173,10 @@
       {
         "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/Gov.sol",
         "file": "./Gov.sol",
-        "id": 80,
+        "id": 68,
         "nodeType": "ImportDirective",
-        "scope": 94,
-        "sourceUnit": 28,
+        "scope": 82,
+        "sourceUnit": 16,
         "src": "26:19:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -152,47 +187,49 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 81,
+              "id": 69,
               "name": "Gov",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 27,
+              "referencedDeclaration": 15,
               "src": "67:3:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Gov_$27",
+                "typeIdentifier": "t_contract$_Gov_$15",
                 "typeString": "contract Gov"
               }
             },
-            "id": 82,
+            "id": 70,
             "nodeType": "InheritanceSpecifier",
             "src": "67:3:2"
           }
         ],
         "contractDependencies": [
-          27,
-          77,
-          125,
-          688
+          15,
+          65,
+          321,
+          512,
+          881
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 93,
+        "id": 81,
         "linearizedBaseContracts": [
-          93,
-          27,
-          77,
-          688,
-          125
+          81,
+          15,
+          512,
+          321,
+          65,
+          881
         ],
         "name": "GovImp",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": true,
-            "id": 87,
+            "id": 75,
             "name": "OWNER",
             "nodeType": "VariableDeclaration",
-            "scope": 93,
+            "scope": 81,
             "src": "77:52:2",
             "stateVariable": true,
             "storageLocation": "default",
@@ -201,7 +238,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 83,
+              "id": 71,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "77:7:2",
@@ -216,7 +253,7 @@
                 {
                   "argumentTypes": null,
                   "hexValue": "6f776e6572",
-                  "id": 85,
+                  "id": 73,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -239,18 +276,18 @@
                     "typeString": "literal_string \"owner\""
                   }
                 ],
-                "id": 84,
+                "id": 72,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 697,
+                "referencedDeclaration": 890,
                 "src": "111:9:2",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
                   "typeString": "function () pure returns (bytes32)"
                 }
               },
-              "id": 86,
+              "id": 74,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -268,10 +305,10 @@
           },
           {
             "constant": true,
-            "id": 92,
+            "id": 80,
             "name": "OWNER2",
             "nodeType": "VariableDeclaration",
-            "scope": 93,
+            "scope": 81,
             "src": "135:53:2",
             "stateVariable": true,
             "storageLocation": "default",
@@ -280,7 +317,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 88,
+              "id": 76,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "135:7:2",
@@ -295,7 +332,7 @@
                 {
                   "argumentTypes": null,
                   "hexValue": "6f776e6572",
-                  "id": 90,
+                  "id": 78,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -318,18 +355,18 @@
                     "typeString": "literal_string \"owner\""
                   }
                 ],
-                "id": 89,
+                "id": 77,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 697,
+                "referencedDeclaration": 890,
                 "src": "170:9:2",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
                   "typeString": "function () pure returns (bytes32)"
                 }
               },
-              "id": 91,
+              "id": 79,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -346,7 +383,7 @@
             "visibility": "internal"
           }
         ],
-        "scope": 94,
+        "scope": 82,
         "src": "48:144:2"
       }
     ],
@@ -356,14 +393,14 @@
     "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/GovImp.sol",
     "exportedSymbols": {
       "GovImp": [
-        93
+        81
       ]
     },
-    "id": 94,
+    "id": 82,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 79,
+        "id": 67,
         "literals": [
           "solidity",
           "^",
@@ -376,10 +413,10 @@
       {
         "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/Gov.sol",
         "file": "./Gov.sol",
-        "id": 80,
+        "id": 68,
         "nodeType": "ImportDirective",
-        "scope": 94,
-        "sourceUnit": 28,
+        "scope": 82,
+        "sourceUnit": 16,
         "src": "26:19:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -390,47 +427,49 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 81,
+              "id": 69,
               "name": "Gov",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 27,
+              "referencedDeclaration": 15,
               "src": "67:3:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Gov_$27",
+                "typeIdentifier": "t_contract$_Gov_$15",
                 "typeString": "contract Gov"
               }
             },
-            "id": 82,
+            "id": 70,
             "nodeType": "InheritanceSpecifier",
             "src": "67:3:2"
           }
         ],
         "contractDependencies": [
-          27,
-          77,
-          125,
-          688
+          15,
+          65,
+          321,
+          512,
+          881
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 93,
+        "id": 81,
         "linearizedBaseContracts": [
-          93,
-          27,
-          77,
-          688,
-          125
+          81,
+          15,
+          512,
+          321,
+          65,
+          881
         ],
         "name": "GovImp",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": true,
-            "id": 87,
+            "id": 75,
             "name": "OWNER",
             "nodeType": "VariableDeclaration",
-            "scope": 93,
+            "scope": 81,
             "src": "77:52:2",
             "stateVariable": true,
             "storageLocation": "default",
@@ -439,7 +478,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 83,
+              "id": 71,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "77:7:2",
@@ -454,7 +493,7 @@
                 {
                   "argumentTypes": null,
                   "hexValue": "6f776e6572",
-                  "id": 85,
+                  "id": 73,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -477,18 +516,18 @@
                     "typeString": "literal_string \"owner\""
                   }
                 ],
-                "id": 84,
+                "id": 72,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 697,
+                "referencedDeclaration": 890,
                 "src": "111:9:2",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
                   "typeString": "function () pure returns (bytes32)"
                 }
               },
-              "id": 86,
+              "id": 74,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -506,10 +545,10 @@
           },
           {
             "constant": true,
-            "id": 92,
+            "id": 80,
             "name": "OWNER2",
             "nodeType": "VariableDeclaration",
-            "scope": 93,
+            "scope": 81,
             "src": "135:53:2",
             "stateVariable": true,
             "storageLocation": "default",
@@ -518,7 +557,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 88,
+              "id": 76,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "135:7:2",
@@ -533,7 +572,7 @@
                 {
                   "argumentTypes": null,
                   "hexValue": "6f776e6572",
-                  "id": 90,
+                  "id": 78,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -556,18 +595,18 @@
                     "typeString": "literal_string \"owner\""
                   }
                 ],
-                "id": 89,
+                "id": 77,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 697,
+                "referencedDeclaration": 890,
                 "src": "170:9:2",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
                   "typeString": "function () pure returns (bytes32)"
                 }
               },
-              "id": 91,
+              "id": 79,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -584,7 +623,7 @@
             "visibility": "internal"
           }
         ],
-        "scope": 94,
+        "scope": 82,
         "src": "48:144:2"
       }
     ],
@@ -596,5 +635,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-18T01:08:53.897Z"
+  "updatedAt": "2019-01-18T05:01:35.013Z"
 }
