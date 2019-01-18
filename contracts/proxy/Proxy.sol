@@ -1,18 +1,16 @@
 pragma solidity ^0.4.24;
 
-import "../GovChecker.sol";
-
 
 /**
- * @title GovProxy
+ * @title Proxy
  * @dev Gives the possibility to delegate any call to a foreign implementation.
  */
-contract GovProxy is GovChecker {
+contract Proxy {
     /**
     * @dev Fallback function allowing to perform a delegatecall to the given implementation.
     * This function will return whatever the implementation call returns
     */
-    function () payable public onlyGov {
+    function () payable public {
         address _impl = implementation();
         require(_impl != address(0));
 

@@ -1,8 +1,11 @@
 pragma solidity ^0.4.24;
 
-import "./proxy/OwnedUpgradeabilityProxy.sol";
+import "./GovChecker.sol";
 
 
-contract Staking is OwnedUpgradeabilityProxy {
+contract Staking is GovChecker {
+    mapping(address => uint256) public balance;
     
+    function () payable public {}
+    function withdraw() payable public {}
 }
