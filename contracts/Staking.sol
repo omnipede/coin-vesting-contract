@@ -10,7 +10,8 @@ contract Staking is GovChecker, ReentrancyGuard {
 
     mapping(address => uint256) public balance;
     
-    event TestEvent();
+    event Staked(address user, uint256 amount, uint256 total);
+    event Unstaked(address user, uint256 amount, uint256 total);
 
     constructor(address _registry) public {
         setRegistry(_registry);
@@ -21,11 +22,19 @@ contract Staking is GovChecker, ReentrancyGuard {
     }
 
     function deposit() public nonReentrant payable {
-        require(msg.value > 0);
-        
+        require(msg.value > 0, "Deposit amount should be greater than zero");
+
         balance[msg.sender] = balance[msg.sender].add(msg.value);
-        emit TestEvent();
+
+        emit Staked(msg.sender, msg.value, balance[msg.sender]);
     }
 
-    function withdraw() public payable {}
+    function withdraw(uint256 amount) public nonReentrant payable {
+        require(amount <= balance[msg.sender], "Withdraw amount should be equal or less than balance");
+
+        balance[msg.sender] = balance[msg.sender].sub(amount);
+        msg.sender.transfer(amount);
+
+        emit Unstaked(msg.sender, amount, balance[msg.sender]);
+    }
 }
