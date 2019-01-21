@@ -1,9 +1,4 @@
-import assertRevert from './helpers/assertRevert';
-import EVMRevert from './helpers/EVMRevert';
-
-const BigNumber = web3.BigNumber;
-
-require('chai').use(require('chai-as-promised')).use(require('chai-bignumber')(BigNumber)).should();
+const { reverting } = require('openzeppelin-solidity/test/helpers/shouldFail');
 
 const Registry = artifacts.require('Registry.sol');
 const Staking = artifacts.require('Staking.sol');
@@ -32,11 +27,11 @@ contract('Registry', function ([deployer, admin, user]) {
 
   describe('Other users ', function () {
     it('cannot set Contract Domain', async() => {
-        await assertRevert(registry.setContractDomain("Staking", staking.address, { from : user }))
+        await reverting(registry.setContractDomain("Staking", staking.address, { from : user }))
     });
 
     it('cannot set permission', async() => {
-        await assertRevert(registry.setPermission("Staking", user, "true", { from : user }))
+        await reverting(registry.setPermission("Staking", user, "true", { from : user }))
     });
   });
 

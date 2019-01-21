@@ -44,8 +44,8 @@
       "type": "event"
     }
   ],
-  "bytecode": "0x608060405234801561001057600080fd5b506040516020806102638339810180604052810190808051906020019092919050505061004b81610051640100000000026401000000009004565b506100b8565b600060405180807f6f72672e6d6574616469756d2e70726f78792e696d706c656d656e746174696f81526020017f6e000000000000000000000000000000000000000000000000000000000000008152506021019050604051809103902090508181555050565b61019c806100c76000396000f300608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635c60da1b146100b0575b600061004b610107565b9050600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561008957600080fd5b60405136600082376000803683855af43d806000843e81600081146100ac578184f35b8184fd5b3480156100bc57600080fd5b506100c5610107565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60008060405180807f6f72672e6d6574616469756d2e70726f78792e696d706c656d656e746174696f81526020017f6e000000000000000000000000000000000000000000000000000000000000008152506021019050604051809103902090508054915050905600a165627a7a72305820cc87414f4c7091d6611f3fa47fa47a25d65fc26b46244fbe88d2fbe7f5253a180029",
-  "deployedBytecode": "0x608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635c60da1b146100b0575b600061004b610107565b9050600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561008957600080fd5b60405136600082376000803683855af43d806000843e81600081146100ac578184f35b8184fd5b3480156100bc57600080fd5b506100c5610107565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60008060405180807f6f72672e6d6574616469756d2e70726f78792e696d706c656d656e746174696f81526020017f6e000000000000000000000000000000000000000000000000000000000000008152506021019050604051809103902090508054915050905600a165627a7a72305820cc87414f4c7091d6611f3fa47fa47a25d65fc26b46244fbe88d2fbe7f5253a180029",
+  "bytecode": "0x608060405234801561001057600080fd5b506040516020806102638339810180604052810190808051906020019092919050505061004b81610051640100000000026401000000009004565b506100b8565b600060405180807f6f72672e6d6574616469756d2e70726f78792e696d706c656d656e746174696f81526020017f6e000000000000000000000000000000000000000000000000000000000000008152506021019050604051809103902090508181555050565b61019c806100c76000396000f300608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635c60da1b146100b0575b600061004b610107565b9050600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561008957600080fd5b60405136600082376000803683855af43d806000843e81600081146100ac578184f35b8184fd5b3480156100bc57600080fd5b506100c5610107565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60008060405180807f6f72672e6d6574616469756d2e70726f78792e696d706c656d656e746174696f81526020017f6e000000000000000000000000000000000000000000000000000000000000008152506021019050604051809103902090508054915050905600a165627a7a723058204dfcedf2e4978a355adb69cecac7410d3b6e7c76443687992738e6106366a84c0029",
+  "deployedBytecode": "0x608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635c60da1b146100b0575b600061004b610107565b9050600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561008957600080fd5b60405136600082376000803683855af43d806000843e81600081146100ac578184f35b8184fd5b3480156100bc57600080fd5b506100c5610107565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60008060405180807f6f72672e6d6574616469756d2e70726f78792e696d706c656d656e746174696f81526020017f6e000000000000000000000000000000000000000000000000000000000000008152506021019050604051809103902090508054915050905600a165627a7a723058204dfcedf2e4978a355adb69cecac7410d3b6e7c76443687992738e6106366a84c0029",
   "sourceMap": "70:137:0:-;;;112:93;8:9:-1;5:2;;;30:1;27;20:12;5:2;112:93:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;165:33;183:14;165:17;;;:33;;;:::i;:::-;112:93;70:137;;1207:194:8;1280:16;600:46;;;;;;;;;;;;;;;;;;;;;;;;1280:37;;1367:17;1357:8;1350:35;1336:59;;:::o;70:137:0:-;;;;;;;",
   "deployedSourceMap": "70:137:0:-;;;;;;;;;;;;;;;;;;;;;370:13:7;386:16;:14;:16::i;:::-;370:32;;437:1;420:19;;:5;:19;;;;412:28;;;;;;;;491:4;485:11;530:12;527:1;522:3;509:34;617:1;614;600:12;595:3;588:5;583:3;570:49;644:14;694:4;691:1;686:3;671:28;720:6;744:1;739:28;;;;802:4;797:3;790:17;739:28;760:4;755:3;748:17;860:180:8;;8:9:-1;5:2;;;30:1;27;20:12;5:2;860:180:8;;;;;;;;;;;;;;;;;;;;;;;;;;;;907:12;931:16;600:46;;;;;;;;;;;;;;;;;;;;;;;;931:37;;1015:8;1009:15;1001:23;;987:47;;:::o",
   "source": "pragma solidity ^0.4.24;\n\nimport \"./proxy/UpgradeabilityProxy.sol\";\n\n\ncontract Gov is UpgradeabilityProxy {\n    constructor(address implementation) public {\n        setImplementation(implementation);\n    }\n}",
@@ -77,7 +77,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 16,
-        "sourceUnit": 553,
+        "sourceUnit": 575,
         "src": "26:41:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -91,10 +91,10 @@
               "id": 3,
               "name": "UpgradeabilityProxy",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 552,
+              "referencedDeclaration": 574,
               "src": "86:19:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_UpgradeabilityProxy_$552",
+                "typeIdentifier": "t_contract$_UpgradeabilityProxy_$574",
                 "typeString": "contract UpgradeabilityProxy"
               }
             },
@@ -104,8 +104,8 @@
           }
         ],
         "contractDependencies": [
-          486,
-          552
+          508,
+          574
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -113,8 +113,8 @@
         "id": 15,
         "linearizedBaseContracts": [
           15,
-          552,
-          486
+          574,
+          508
         ],
         "name": "Gov",
         "nodeType": "ContractDefinition",
@@ -154,7 +154,7 @@
                       "name": "setImplementation",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 526,
+                      "referencedDeclaration": 548,
                       "src": "165:17:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
@@ -269,7 +269,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 16,
-        "sourceUnit": 553,
+        "sourceUnit": 575,
         "src": "26:41:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -283,10 +283,10 @@
               "id": 3,
               "name": "UpgradeabilityProxy",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 552,
+              "referencedDeclaration": 574,
               "src": "86:19:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_UpgradeabilityProxy_$552",
+                "typeIdentifier": "t_contract$_UpgradeabilityProxy_$574",
                 "typeString": "contract UpgradeabilityProxy"
               }
             },
@@ -296,8 +296,8 @@
           }
         ],
         "contractDependencies": [
-          486,
-          552
+          508,
+          574
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -305,8 +305,8 @@
         "id": 15,
         "linearizedBaseContracts": [
           15,
-          552,
-          486
+          574,
+          508
         ],
         "name": "Gov",
         "nodeType": "ContractDefinition",
@@ -346,7 +346,7 @@
                       "name": "setImplementation",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 526,
+                      "referencedDeclaration": 548,
                       "src": "165:17:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
@@ -436,9 +436,9 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "2.0.2",
-  "updatedAt": "2019-01-21T00:19:06.454Z"
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2019-01-21T01:07:04.571Z"
 }

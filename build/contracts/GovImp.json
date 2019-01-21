@@ -234,9 +234,9 @@
         "contractDependencies": [
           15,
           65,
-          486,
-          552,
-          927
+          508,
+          574,
+          1077
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -245,10 +245,10 @@
         "linearizedBaseContracts": [
           84,
           65,
-          927,
+          1077,
           15,
-          552,
-          486
+          574,
+          508
         ],
         "name": "GovImp",
         "nodeType": "ContractDefinition",
@@ -309,7 +309,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 936,
+                "referencedDeclaration": 1117,
                 "src": "150:9:2",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -388,7 +388,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 936,
+                "referencedDeclaration": 1117,
                 "src": "209:9:2",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -503,9 +503,9 @@
         "contractDependencies": [
           15,
           65,
-          486,
-          552,
-          927
+          508,
+          574,
+          1077
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -514,10 +514,10 @@
         "linearizedBaseContracts": [
           84,
           65,
-          927,
+          1077,
           15,
-          552,
-          486
+          574,
+          508
         ],
         "name": "GovImp",
         "nodeType": "ContractDefinition",
@@ -578,7 +578,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 936,
+                "referencedDeclaration": 1117,
                 "src": "150:9:2",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -657,7 +657,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 936,
+                "referencedDeclaration": 1117,
                 "src": "209:9:2",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -689,9 +689,9 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.25+commit.59dbf8f1.Emscripten.clang"
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "2.0.2",
-  "updatedAt": "2019-01-21T00:19:06.455Z"
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2019-01-21T01:07:04.572Z"
 }
