@@ -77,7 +77,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 16,
-        "sourceUnit": 523,
+        "sourceUnit": 575,
         "src": "26:41:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -91,10 +91,10 @@
               "id": 3,
               "name": "UpgradeabilityProxy",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 522,
+              "referencedDeclaration": 574,
               "src": "86:19:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_UpgradeabilityProxy_$522",
+                "typeIdentifier": "t_contract$_UpgradeabilityProxy_$574",
                 "typeString": "contract UpgradeabilityProxy"
               }
             },
@@ -104,8 +104,8 @@
           }
         ],
         "contractDependencies": [
-          456,
-          522
+          508,
+          574
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -113,8 +113,8 @@
         "id": 15,
         "linearizedBaseContracts": [
           15,
-          522,
-          456
+          574,
+          508
         ],
         "name": "Gov",
         "nodeType": "ContractDefinition",
@@ -154,7 +154,7 @@
                       "name": "setImplementation",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 496,
+                      "referencedDeclaration": 548,
                       "src": "165:17:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
@@ -269,7 +269,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 16,
-        "sourceUnit": 523,
+        "sourceUnit": 575,
         "src": "26:41:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -283,10 +283,10 @@
               "id": 3,
               "name": "UpgradeabilityProxy",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 522,
+              "referencedDeclaration": 574,
               "src": "86:19:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_UpgradeabilityProxy_$522",
+                "typeIdentifier": "t_contract$_UpgradeabilityProxy_$574",
                 "typeString": "contract UpgradeabilityProxy"
               }
             },
@@ -296,8 +296,8 @@
           }
         ],
         "contractDependencies": [
-          456,
-          522
+          508,
+          574
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -305,8 +305,8 @@
         "id": 15,
         "linearizedBaseContracts": [
           15,
-          522,
-          456
+          574,
+          508
         ],
         "name": "Gov",
         "nodeType": "ContractDefinition",
@@ -346,7 +346,7 @@
                       "name": "setImplementation",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 496,
+                      "referencedDeclaration": 548,
                       "src": "165:17:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
@@ -440,5 +440,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-18T06:42:09.687Z"
+  "updatedAt": "2019-01-21T01:07:04.571Z"
 }
