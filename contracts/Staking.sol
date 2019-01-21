@@ -6,6 +6,20 @@ import "./GovChecker.sol";
 contract Staking is GovChecker {
     mapping(address => uint256) public balance;
     
-    function () payable public {}
-    function withdraw() payable public {}
+    event TestEvent();
+
+    constructor(address _registry) public {
+        setRegistry(_registry);
+    }
+
+    function () external payable {
+        deposit();
+    }
+
+    function deposit() public payable {
+        balance[msg.sender] = msg.value;
+        emit TestEvent();
+    }
+
+    function withdraw() public payable {}
 }

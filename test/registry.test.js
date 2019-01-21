@@ -8,12 +8,12 @@ require('chai').use(require('chai-as-promised')).use(require('chai-bignumber')(B
 const Registry = artifacts.require('Registry.sol');
 const Staking = artifacts.require('Staking.sol');
 
-contract('Registry', function ([admin, user]) {
+contract('Registry', function ([deployer, admin, user]) {
   let registry, staking;
   
   beforeEach(async () => {
     registry = await Registry.new();
-    staking = await Staking.new();
+    staking = await Staking.new(registry.address);
   });
 
   describe('Owner ', function () {
