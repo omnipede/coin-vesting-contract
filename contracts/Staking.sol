@@ -73,8 +73,8 @@ contract Staking is GovChecker, ReentrancyGuard {
     * @param lockAmount The amount of funds will be locked.
     */
     function lock(address payee, uint256 lockAmount) external onlyGov {
-        require(_balance[payee] >= lockAmount, "Lock amount should be less than balance");
-        require(_balance[payee].sub(_lockedBalance[payee]) >= lockAmount, "Insufficient lockable balance");
+        require(_balance[payee] >= lockAmount, "Lock amount should be equal or less than balance");
+        require(availableBalance(payee) >= lockAmount, "Insufficient balance that can be locked");
 
         _lockedBalance[payee] = _lockedBalance[payee].add(lockAmount);
         _totalLockedBalance = _totalLockedBalance.add(lockAmount);
@@ -88,7 +88,7 @@ contract Staking is GovChecker, ReentrancyGuard {
     * @param unlockAmount The amount of funds will be unlocked.
     */
     function unlock(address payee, uint256 unlockAmount) external onlyGov {
-        require(_lockedBalance[payee] >= unlockAmount, "Unlock amount should be less than locked");
+        require(_lockedBalance[payee] >= unlockAmount, "Unlock amount should be equal or less than balance locked");
 
         _lockedBalance[payee] = _lockedBalance[payee].sub(unlockAmount);
         _totalLockedBalance = _totalLockedBalance.sub(unlockAmount);
