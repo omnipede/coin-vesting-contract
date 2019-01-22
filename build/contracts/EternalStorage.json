@@ -302,14 +302,14 @@
     "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/storage/EternalStorage.sol",
     "exportedSymbols": {
       "EternalStorage": [
-        840
+        1122
       ]
     },
-    "id": 841,
+    "id": 1123,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 623,
+        "id": 905,
         "literals": [
           "solidity",
           "^",
@@ -322,10 +322,10 @@
       {
         "absolutePath": "openzeppelin-solidity/contracts/ownership/Ownable.sol",
         "file": "openzeppelin-solidity/contracts/ownership/Ownable.sol",
-        "id": 624,
+        "id": 906,
         "nodeType": "ImportDirective",
-        "scope": 841,
-        "sourceUnit": 1078,
+        "scope": 1123,
+        "sourceUnit": 1360,
         "src": "26:63:12",
         "symbolAliases": [],
         "unitAlias": ""
@@ -336,45 +336,45 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 625,
+              "id": 907,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1077,
+              "referencedDeclaration": 1359,
               "src": "288:7:12",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$1077",
+                "typeIdentifier": "t_contract$_Ownable_$1359",
                 "typeString": "contract Ownable"
               }
             },
-            "id": 626,
+            "id": 908,
             "nodeType": "InheritanceSpecifier",
             "src": "288:7:12"
           }
         ],
         "contractDependencies": [
-          1077
+          1359
         ],
         "contractKind": "contract",
         "documentation": "@title EternalStorage\n@dev An ownable contract that can be used as a storage where the variables\nare stored in a set of mappings indexed by hash names.",
         "fullyImplemented": true,
-        "id": 840,
+        "id": 1122,
         "linearizedBaseContracts": [
-          840,
-          1077
+          1122,
+          1359
         ],
         "name": "EternalStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "EternalStorage.Storage",
-            "id": 651,
+            "id": 933,
             "members": [
               {
                 "constant": false,
-                "id": 630,
+                "id": 912,
                 "name": "_bool",
                 "nodeType": "VariableDeclaration",
-                "scope": 651,
+                "scope": 933,
                 "src": "327:30:12",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -383,9 +383,9 @@
                   "typeString": "mapping(bytes32 => bool)"
                 },
                 "typeName": {
-                  "id": 629,
+                  "id": 911,
                   "keyType": {
-                    "id": 627,
+                    "id": 909,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "335:7:12",
@@ -401,7 +401,7 @@
                     "typeString": "mapping(bytes32 => bool)"
                   },
                   "valueType": {
-                    "id": 628,
+                    "id": 910,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "346:4:12",
@@ -416,10 +416,10 @@
               },
               {
                 "constant": false,
-                "id": 634,
+                "id": 916,
                 "name": "_int",
                 "nodeType": "VariableDeclaration",
-                "scope": 651,
+                "scope": 933,
                 "src": "367:28:12",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -428,9 +428,9 @@
                   "typeString": "mapping(bytes32 => int256)"
                 },
                 "typeName": {
-                  "id": 633,
+                  "id": 915,
                   "keyType": {
-                    "id": 631,
+                    "id": 913,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "375:7:12",
@@ -446,7 +446,7 @@
                     "typeString": "mapping(bytes32 => int256)"
                   },
                   "valueType": {
-                    "id": 632,
+                    "id": 914,
                     "name": "int",
                     "nodeType": "ElementaryTypeName",
                     "src": "386:3:12",
@@ -461,10 +461,10 @@
               },
               {
                 "constant": false,
-                "id": 638,
+                "id": 920,
                 "name": "_uint",
                 "nodeType": "VariableDeclaration",
-                "scope": 651,
+                "scope": 933,
                 "src": "405:33:12",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -473,9 +473,9 @@
                   "typeString": "mapping(bytes32 => uint256)"
                 },
                 "typeName": {
-                  "id": 637,
+                  "id": 919,
                   "keyType": {
-                    "id": 635,
+                    "id": 917,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "413:7:12",
@@ -491,7 +491,7 @@
                     "typeString": "mapping(bytes32 => uint256)"
                   },
                   "valueType": {
-                    "id": 636,
+                    "id": 918,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "424:7:12",
@@ -506,10 +506,10 @@
               },
               {
                 "constant": false,
-                "id": 642,
+                "id": 924,
                 "name": "_string",
                 "nodeType": "VariableDeclaration",
-                "scope": 651,
+                "scope": 933,
                 "src": "448:34:12",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -518,9 +518,9 @@
                   "typeString": "mapping(bytes32 => string)"
                 },
                 "typeName": {
-                  "id": 641,
+                  "id": 923,
                   "keyType": {
-                    "id": 639,
+                    "id": 921,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "456:7:12",
@@ -536,7 +536,7 @@
                     "typeString": "mapping(bytes32 => string)"
                   },
                   "valueType": {
-                    "id": 640,
+                    "id": 922,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "467:6:12",
@@ -551,10 +551,10 @@
               },
               {
                 "constant": false,
-                "id": 646,
+                "id": 928,
                 "name": "_address",
                 "nodeType": "VariableDeclaration",
-                "scope": 651,
+                "scope": 933,
                 "src": "492:36:12",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -563,9 +563,9 @@
                   "typeString": "mapping(bytes32 => address)"
                 },
                 "typeName": {
-                  "id": 645,
+                  "id": 927,
                   "keyType": {
-                    "id": 643,
+                    "id": 925,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "500:7:12",
@@ -581,7 +581,7 @@
                     "typeString": "mapping(bytes32 => address)"
                   },
                   "valueType": {
-                    "id": 644,
+                    "id": 926,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "511:7:12",
@@ -596,10 +596,10 @@
               },
               {
                 "constant": false,
-                "id": 650,
+                "id": 932,
                 "name": "_bytes",
                 "nodeType": "VariableDeclaration",
-                "scope": 651,
+                "scope": 933,
                 "src": "538:32:12",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -608,9 +608,9 @@
                   "typeString": "mapping(bytes32 => bytes)"
                 },
                 "typeName": {
-                  "id": 649,
+                  "id": 931,
                   "keyType": {
-                    "id": 647,
+                    "id": 929,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "546:7:12",
@@ -626,7 +626,7 @@
                     "typeString": "mapping(bytes32 => bytes)"
                   },
                   "valueType": {
-                    "id": 648,
+                    "id": 930,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "557:5:12",
@@ -642,32 +642,32 @@
             ],
             "name": "Storage",
             "nodeType": "StructDefinition",
-            "scope": 840,
+            "scope": 1122,
             "src": "302:275:12",
             "visibility": "public"
           },
           {
             "constant": false,
-            "id": 653,
+            "id": 935,
             "name": "s",
             "nodeType": "VariableDeclaration",
-            "scope": 840,
+            "scope": 1122,
             "src": "583:18:12",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_struct$_Storage_$651_storage",
+              "typeIdentifier": "t_struct$_Storage_$933_storage",
               "typeString": "struct EternalStorage.Storage"
             },
             "typeName": {
               "contractScope": null,
-              "id": 652,
+              "id": 934,
               "name": "Storage",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 651,
+              "referencedDeclaration": 933,
               "src": "583:7:12",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_Storage_$651_storage_ptr",
+                "typeIdentifier": "t_struct$_Storage_$933_storage_ptr",
                 "typeString": "struct EternalStorage.Storage"
               }
             },
@@ -676,14 +676,14 @@
           },
           {
             "body": {
-              "id": 670,
+              "id": 952,
               "nodeType": "Block",
               "src": "839:31:12",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 668,
+                    "id": 950,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -694,39 +694,39 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 662,
+                          "id": 944,
                           "name": "s",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 653,
+                          "referencedDeclaration": 935,
                           "src": "849:1:12",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Storage_$651_storage",
+                            "typeIdentifier": "t_struct$_Storage_$933_storage",
                             "typeString": "struct EternalStorage.Storage storage ref"
                           }
                         },
-                        "id": 665,
+                        "id": 947,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "_bool",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 630,
+                        "referencedDeclaration": 912,
                         "src": "849:7:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_bytes32_$_t_bool_$",
                           "typeString": "mapping(bytes32 => bool)"
                         }
                       },
-                      "id": 666,
+                      "id": 948,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 664,
+                        "id": 946,
                         "name": "h",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 655,
+                        "referencedDeclaration": 937,
                         "src": "857:1:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -748,11 +748,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 667,
+                      "id": 949,
                       "name": "v",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 657,
+                      "referencedDeclaration": 939,
                       "src": "862:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -765,28 +765,28 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 669,
+                  "id": 951,
                   "nodeType": "ExpressionStatement",
                   "src": "849:14:12"
                 }
               ]
             },
             "documentation": "@dev Allows the owner to set a value for a boolean variable.\n@param h The keccak256 hash of the variable name\n@param v The value to be stored",
-            "id": 671,
+            "id": 953,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 660,
+                "id": 942,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 659,
+                  "id": 941,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1011,
+                  "referencedDeclaration": 1293,
                   "src": "829:9:12",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -800,15 +800,15 @@
             "name": "setBoolean",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 658,
+              "id": 940,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 655,
+                  "id": 937,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 671,
+                  "scope": 953,
                   "src": "803:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -817,7 +817,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 654,
+                    "id": 936,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "803:7:12",
@@ -831,10 +831,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 657,
+                  "id": 939,
                   "name": "v",
                   "nodeType": "VariableDeclaration",
-                  "scope": 671,
+                  "scope": 953,
                   "src": "814:6:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -843,7 +843,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 656,
+                    "id": 938,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "814:4:12",
@@ -860,12 +860,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 661,
+              "id": 943,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "839:0:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "783:87:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -873,14 +873,14 @@
           },
           {
             "body": {
-              "id": 688,
+              "id": 970,
               "nodeType": "Block",
               "src": "1098:30:12",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 686,
+                    "id": 968,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -891,39 +891,39 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 680,
+                          "id": 962,
                           "name": "s",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 653,
+                          "referencedDeclaration": 935,
                           "src": "1108:1:12",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Storage_$651_storage",
+                            "typeIdentifier": "t_struct$_Storage_$933_storage",
                             "typeString": "struct EternalStorage.Storage storage ref"
                           }
                         },
-                        "id": 683,
+                        "id": 965,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "_int",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 634,
+                        "referencedDeclaration": 916,
                         "src": "1108:6:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_bytes32_$_t_int256_$",
                           "typeString": "mapping(bytes32 => int256)"
                         }
                       },
-                      "id": 684,
+                      "id": 966,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 682,
+                        "id": 964,
                         "name": "h",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 673,
+                        "referencedDeclaration": 955,
                         "src": "1115:1:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -945,11 +945,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 685,
+                      "id": 967,
                       "name": "v",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 675,
+                      "referencedDeclaration": 957,
                       "src": "1120:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_int256",
@@ -962,28 +962,28 @@
                       "typeString": "int256"
                     }
                   },
-                  "id": 687,
+                  "id": 969,
                   "nodeType": "ExpressionStatement",
                   "src": "1108:13:12"
                 }
               ]
             },
             "documentation": "@dev Allows the owner to set a value for a int variable.\n@param h The keccak256 hash of the variable name\n@param v The value to be stored",
-            "id": 689,
+            "id": 971,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 678,
+                "id": 960,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 677,
+                  "id": 959,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1011,
+                  "referencedDeclaration": 1293,
                   "src": "1088:9:12",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -997,15 +997,15 @@
             "name": "setInt",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 676,
+              "id": 958,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 673,
+                  "id": 955,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 689,
+                  "scope": 971,
                   "src": "1063:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1014,7 +1014,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 672,
+                    "id": 954,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1063:7:12",
@@ -1028,10 +1028,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 675,
+                  "id": 957,
                   "name": "v",
                   "nodeType": "VariableDeclaration",
-                  "scope": 689,
+                  "scope": 971,
                   "src": "1074:5:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1040,7 +1040,7 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 674,
+                    "id": 956,
                     "name": "int",
                     "nodeType": "ElementaryTypeName",
                     "src": "1074:3:12",
@@ -1057,12 +1057,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 679,
+              "id": 961,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1098:0:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "1047:81:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1070,14 +1070,14 @@
           },
           {
             "body": {
-              "id": 706,
+              "id": 988,
               "nodeType": "Block",
               "src": "1365:31:12",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 704,
+                    "id": 986,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1088,39 +1088,39 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 698,
+                          "id": 980,
                           "name": "s",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 653,
+                          "referencedDeclaration": 935,
                           "src": "1375:1:12",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Storage_$651_storage",
+                            "typeIdentifier": "t_struct$_Storage_$933_storage",
                             "typeString": "struct EternalStorage.Storage storage ref"
                           }
                         },
-                        "id": 701,
+                        "id": 983,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "_uint",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 638,
+                        "referencedDeclaration": 920,
                         "src": "1375:7:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_bytes32_$_t_uint256_$",
                           "typeString": "mapping(bytes32 => uint256)"
                         }
                       },
-                      "id": 702,
+                      "id": 984,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 700,
+                        "id": 982,
                         "name": "h",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 691,
+                        "referencedDeclaration": 973,
                         "src": "1383:1:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -1142,11 +1142,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 703,
+                      "id": 985,
                       "name": "v",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 693,
+                      "referencedDeclaration": 975,
                       "src": "1388:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1159,28 +1159,28 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 705,
+                  "id": 987,
                   "nodeType": "ExpressionStatement",
                   "src": "1375:14:12"
                 }
               ]
             },
             "documentation": "@dev Allows the owner to set a value for a boolean variable.\n@param h The keccak256 hash of the variable name\n@param v The value to be stored",
-            "id": 707,
+            "id": 989,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 696,
+                "id": 978,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 695,
+                  "id": 977,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1011,
+                  "referencedDeclaration": 1293,
                   "src": "1355:9:12",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1194,15 +1194,15 @@
             "name": "setUint",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 694,
+              "id": 976,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 691,
+                  "id": 973,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 707,
+                  "scope": 989,
                   "src": "1326:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1211,7 +1211,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 690,
+                    "id": 972,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1326:7:12",
@@ -1225,10 +1225,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 693,
+                  "id": 975,
                   "name": "v",
                   "nodeType": "VariableDeclaration",
-                  "scope": 707,
+                  "scope": 989,
                   "src": "1337:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1237,7 +1237,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 692,
+                    "id": 974,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1337:7:12",
@@ -1254,12 +1254,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 697,
+              "id": 979,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1365:0:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "1309:87:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1267,14 +1267,14 @@
           },
           {
             "body": {
-              "id": 724,
+              "id": 1006,
               "nodeType": "Block",
               "src": "1636:34:12",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 722,
+                    "id": 1004,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1285,39 +1285,39 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 716,
+                          "id": 998,
                           "name": "s",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 653,
+                          "referencedDeclaration": 935,
                           "src": "1646:1:12",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Storage_$651_storage",
+                            "typeIdentifier": "t_struct$_Storage_$933_storage",
                             "typeString": "struct EternalStorage.Storage storage ref"
                           }
                         },
-                        "id": 719,
+                        "id": 1001,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "_address",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 646,
+                        "referencedDeclaration": 928,
                         "src": "1646:10:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_bytes32_$_t_address_$",
                           "typeString": "mapping(bytes32 => address)"
                         }
                       },
-                      "id": 720,
+                      "id": 1002,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 718,
+                        "id": 1000,
                         "name": "h",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 709,
+                        "referencedDeclaration": 991,
                         "src": "1657:1:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -1339,11 +1339,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 721,
+                      "id": 1003,
                       "name": "v",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 711,
+                      "referencedDeclaration": 993,
                       "src": "1662:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -1356,28 +1356,28 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 723,
+                  "id": 1005,
                   "nodeType": "ExpressionStatement",
                   "src": "1646:17:12"
                 }
               ]
             },
             "documentation": "@dev Allows the owner to set a value for a address variable.\n@param h The keccak256 hash of the variable name\n@param v The value to be stored",
-            "id": 725,
+            "id": 1007,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 714,
+                "id": 996,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 713,
+                  "id": 995,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1011,
+                  "referencedDeclaration": 1293,
                   "src": "1626:9:12",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1391,15 +1391,15 @@
             "name": "setAddress",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 712,
+              "id": 994,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 709,
+                  "id": 991,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 725,
+                  "scope": 1007,
                   "src": "1597:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1408,7 +1408,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 708,
+                    "id": 990,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1597:7:12",
@@ -1422,10 +1422,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 711,
+                  "id": 993,
                   "name": "v",
                   "nodeType": "VariableDeclaration",
-                  "scope": 725,
+                  "scope": 1007,
                   "src": "1608:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1434,7 +1434,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 710,
+                    "id": 992,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1608:7:12",
@@ -1451,12 +1451,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 715,
+              "id": 997,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1636:0:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "1577:93:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1464,14 +1464,14 @@
           },
           {
             "body": {
-              "id": 742,
+              "id": 1024,
               "nodeType": "Block",
               "src": "1907:33:12",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 740,
+                    "id": 1022,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1482,39 +1482,39 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 734,
+                          "id": 1016,
                           "name": "s",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 653,
+                          "referencedDeclaration": 935,
                           "src": "1917:1:12",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Storage_$651_storage",
+                            "typeIdentifier": "t_struct$_Storage_$933_storage",
                             "typeString": "struct EternalStorage.Storage storage ref"
                           }
                         },
-                        "id": 737,
+                        "id": 1019,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "_string",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 642,
+                        "referencedDeclaration": 924,
                         "src": "1917:9:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_bytes32_$_t_string_storage_$",
                           "typeString": "mapping(bytes32 => string storage ref)"
                         }
                       },
-                      "id": 738,
+                      "id": 1020,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 736,
+                        "id": 1018,
                         "name": "h",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 727,
+                        "referencedDeclaration": 1009,
                         "src": "1927:1:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -1536,11 +1536,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 739,
+                      "id": 1021,
                       "name": "v",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 729,
+                      "referencedDeclaration": 1011,
                       "src": "1932:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_memory_ptr",
@@ -1553,28 +1553,28 @@
                       "typeString": "string storage ref"
                     }
                   },
-                  "id": 741,
+                  "id": 1023,
                   "nodeType": "ExpressionStatement",
                   "src": "1917:16:12"
                 }
               ]
             },
             "documentation": "@dev Allows the owner to set a value for a string variable.\n@param h The keccak256 hash of the variable name\n@param v The value to be stored",
-            "id": 743,
+            "id": 1025,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 732,
+                "id": 1014,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 731,
+                  "id": 1013,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1011,
+                  "referencedDeclaration": 1293,
                   "src": "1897:9:12",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1588,15 +1588,15 @@
             "name": "setString",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 730,
+              "id": 1012,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 727,
+                  "id": 1009,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 743,
+                  "scope": 1025,
                   "src": "1869:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1605,7 +1605,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 726,
+                    "id": 1008,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1869:7:12",
@@ -1619,10 +1619,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 729,
+                  "id": 1011,
                   "name": "v",
                   "nodeType": "VariableDeclaration",
-                  "scope": 743,
+                  "scope": 1025,
                   "src": "1880:8:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1631,7 +1631,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 728,
+                    "id": 1010,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1880:6:12",
@@ -1648,12 +1648,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 733,
+              "id": 1015,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1907:0:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "1850:90:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1661,14 +1661,14 @@
           },
           {
             "body": {
-              "id": 760,
+              "id": 1042,
               "nodeType": "Block",
               "src": "2174:32:12",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 758,
+                    "id": 1040,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1679,39 +1679,39 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 752,
+                          "id": 1034,
                           "name": "s",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 653,
+                          "referencedDeclaration": 935,
                           "src": "2184:1:12",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Storage_$651_storage",
+                            "typeIdentifier": "t_struct$_Storage_$933_storage",
                             "typeString": "struct EternalStorage.Storage storage ref"
                           }
                         },
-                        "id": 755,
+                        "id": 1037,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "_bytes",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 650,
+                        "referencedDeclaration": 932,
                         "src": "2184:8:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_bytes32_$_t_bytes_storage_$",
                           "typeString": "mapping(bytes32 => bytes storage ref)"
                         }
                       },
-                      "id": 756,
+                      "id": 1038,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 754,
+                        "id": 1036,
                         "name": "h",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 745,
+                        "referencedDeclaration": 1027,
                         "src": "2193:1:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -1733,11 +1733,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 757,
+                      "id": 1039,
                       "name": "v",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 747,
+                      "referencedDeclaration": 1029,
                       "src": "2198:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes_memory_ptr",
@@ -1750,28 +1750,28 @@
                       "typeString": "bytes storage ref"
                     }
                   },
-                  "id": 759,
+                  "id": 1041,
                   "nodeType": "ExpressionStatement",
                   "src": "2184:15:12"
                 }
               ]
             },
             "documentation": "@dev Allows the owner to set a value for a bytes variable.\n@param h The keccak256 hash of the variable name\n@param v The value to be stored",
-            "id": 761,
+            "id": 1043,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 750,
+                "id": 1032,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 749,
+                  "id": 1031,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1011,
+                  "referencedDeclaration": 1293,
                   "src": "2164:9:12",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1785,15 +1785,15 @@
             "name": "setBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 748,
+              "id": 1030,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 745,
+                  "id": 1027,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 761,
+                  "scope": 1043,
                   "src": "2137:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1802,7 +1802,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 744,
+                    "id": 1026,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "2137:7:12",
@@ -1816,10 +1816,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 747,
+                  "id": 1029,
                   "name": "v",
                   "nodeType": "VariableDeclaration",
-                  "scope": 761,
+                  "scope": 1043,
                   "src": "2148:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1828,7 +1828,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 746,
+                    "id": 1028,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "2148:5:12",
@@ -1845,12 +1845,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 751,
+              "id": 1033,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2174:0:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "2119:87:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1858,7 +1858,7 @@
           },
           {
             "body": {
-              "id": 773,
+              "id": 1055,
               "nodeType": "Block",
               "src": "2410:34:12",
               "statements": [
@@ -1869,39 +1869,39 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 768,
+                        "id": 1050,
                         "name": "s",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 653,
+                        "referencedDeclaration": 935,
                         "src": "2427:1:12",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Storage_$651_storage",
+                          "typeIdentifier": "t_struct$_Storage_$933_storage",
                           "typeString": "struct EternalStorage.Storage storage ref"
                         }
                       },
-                      "id": 769,
+                      "id": 1051,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "_bool",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 630,
+                      "referencedDeclaration": 912,
                       "src": "2427:7:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes32_$_t_bool_$",
                         "typeString": "mapping(bytes32 => bool)"
                       }
                     },
-                    "id": 771,
+                    "id": 1053,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 770,
+                      "id": 1052,
                       "name": "h",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 763,
+                      "referencedDeclaration": 1045,
                       "src": "2435:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -1919,15 +1919,15 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 767,
-                  "id": 772,
+                  "functionReturnParameters": 1049,
+                  "id": 1054,
                   "nodeType": "Return",
                   "src": "2420:17:12"
                 }
               ]
             },
             "documentation": "@dev Get the value stored of a boolean variable by the hash name\n@param h The keccak256 hash of the variable name",
-            "id": 774,
+            "id": 1056,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -1935,15 +1935,15 @@
             "name": "getBoolean",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 764,
+              "id": 1046,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 763,
+                  "id": 1045,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 774,
+                  "scope": 1056,
                   "src": "2373:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1952,7 +1952,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 762,
+                    "id": 1044,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "2373:7:12",
@@ -1969,15 +1969,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 767,
+              "id": 1049,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 766,
+                  "id": 1048,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 774,
+                  "scope": 1056,
                   "src": "2405:4:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1986,7 +1986,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 765,
+                    "id": 1047,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "2405:4:12",
@@ -2001,7 +2001,7 @@
               ],
               "src": "2404:6:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "2353:91:12",
             "stateMutability": "view",
             "superFunction": null,
@@ -2009,7 +2009,7 @@
           },
           {
             "body": {
-              "id": 786,
+              "id": 1068,
               "nodeType": "Block",
               "src": "2639:33:12",
               "statements": [
@@ -2020,39 +2020,39 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 781,
+                        "id": 1063,
                         "name": "s",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 653,
+                        "referencedDeclaration": 935,
                         "src": "2656:1:12",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Storage_$651_storage",
+                          "typeIdentifier": "t_struct$_Storage_$933_storage",
                           "typeString": "struct EternalStorage.Storage storage ref"
                         }
                       },
-                      "id": 782,
+                      "id": 1064,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "_int",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 634,
+                      "referencedDeclaration": 916,
                       "src": "2656:6:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes32_$_t_int256_$",
                         "typeString": "mapping(bytes32 => int256)"
                       }
                     },
-                    "id": 784,
+                    "id": 1066,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 783,
+                      "id": 1065,
                       "name": "h",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 776,
+                      "referencedDeclaration": 1058,
                       "src": "2663:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -2070,15 +2070,15 @@
                       "typeString": "int256"
                     }
                   },
-                  "functionReturnParameters": 780,
-                  "id": 785,
+                  "functionReturnParameters": 1062,
+                  "id": 1067,
                   "nodeType": "Return",
                   "src": "2649:16:12"
                 }
               ]
             },
             "documentation": "@dev Get the value stored of a int variable by the hash name\n@param h The keccak256 hash of the variable name",
-            "id": 787,
+            "id": 1069,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -2086,15 +2086,15 @@
             "name": "getInt",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 777,
+              "id": 1059,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 776,
+                  "id": 1058,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 787,
+                  "scope": 1069,
                   "src": "2603:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2103,7 +2103,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 775,
+                    "id": 1057,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "2603:7:12",
@@ -2120,15 +2120,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 780,
+              "id": 1062,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 779,
+                  "id": 1061,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 787,
+                  "scope": 1069,
                   "src": "2635:3:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2137,7 +2137,7 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 778,
+                    "id": 1060,
                     "name": "int",
                     "nodeType": "ElementaryTypeName",
                     "src": "2635:3:12",
@@ -2152,7 +2152,7 @@
               ],
               "src": "2634:5:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "2587:85:12",
             "stateMutability": "view",
             "superFunction": null,
@@ -2160,7 +2160,7 @@
           },
           {
             "body": {
-              "id": 799,
+              "id": 1081,
               "nodeType": "Block",
               "src": "2873:34:12",
               "statements": [
@@ -2171,39 +2171,39 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 794,
+                        "id": 1076,
                         "name": "s",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 653,
+                        "referencedDeclaration": 935,
                         "src": "2890:1:12",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Storage_$651_storage",
+                          "typeIdentifier": "t_struct$_Storage_$933_storage",
                           "typeString": "struct EternalStorage.Storage storage ref"
                         }
                       },
-                      "id": 795,
+                      "id": 1077,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "_uint",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 638,
+                      "referencedDeclaration": 920,
                       "src": "2890:7:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes32_$_t_uint256_$",
                         "typeString": "mapping(bytes32 => uint256)"
                       }
                     },
-                    "id": 797,
+                    "id": 1079,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 796,
+                      "id": 1078,
                       "name": "h",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 789,
+                      "referencedDeclaration": 1071,
                       "src": "2898:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -2221,15 +2221,15 @@
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 793,
-                  "id": 798,
+                  "functionReturnParameters": 1075,
+                  "id": 1080,
                   "nodeType": "Return",
                   "src": "2883:17:12"
                 }
               ]
             },
             "documentation": "@dev Get the value stored of a uint variable by the hash name\n@param h The keccak256 hash of the variable name",
-            "id": 800,
+            "id": 1082,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -2237,15 +2237,15 @@
             "name": "getUint",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 790,
+              "id": 1072,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 789,
+                  "id": 1071,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 800,
+                  "scope": 1082,
                   "src": "2833:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2254,7 +2254,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 788,
+                    "id": 1070,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "2833:7:12",
@@ -2271,15 +2271,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 793,
+              "id": 1075,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 792,
+                  "id": 1074,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 800,
+                  "scope": 1082,
                   "src": "2865:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2288,7 +2288,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 791,
+                    "id": 1073,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2865:7:12",
@@ -2303,7 +2303,7 @@
               ],
               "src": "2864:9:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "2816:91:12",
             "stateMutability": "view",
             "superFunction": null,
@@ -2311,7 +2311,7 @@
           },
           {
             "body": {
-              "id": 812,
+              "id": 1094,
               "nodeType": "Block",
               "src": "3114:37:12",
               "statements": [
@@ -2322,39 +2322,39 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 807,
+                        "id": 1089,
                         "name": "s",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 653,
+                        "referencedDeclaration": 935,
                         "src": "3131:1:12",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Storage_$651_storage",
+                          "typeIdentifier": "t_struct$_Storage_$933_storage",
                           "typeString": "struct EternalStorage.Storage storage ref"
                         }
                       },
-                      "id": 808,
+                      "id": 1090,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "_address",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 646,
+                      "referencedDeclaration": 928,
                       "src": "3131:10:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes32_$_t_address_$",
                         "typeString": "mapping(bytes32 => address)"
                       }
                     },
-                    "id": 810,
+                    "id": 1092,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 809,
+                      "id": 1091,
                       "name": "h",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 802,
+                      "referencedDeclaration": 1084,
                       "src": "3142:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -2372,15 +2372,15 @@
                       "typeString": "address"
                     }
                   },
-                  "functionReturnParameters": 806,
-                  "id": 811,
+                  "functionReturnParameters": 1088,
+                  "id": 1093,
                   "nodeType": "Return",
                   "src": "3124:20:12"
                 }
               ]
             },
             "documentation": "@dev Get the value stored of a address variable by the hash name\n@param h The keccak256 hash of the variable name",
-            "id": 813,
+            "id": 1095,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -2388,15 +2388,15 @@
             "name": "getAddress",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 803,
+              "id": 1085,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 802,
+                  "id": 1084,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 813,
+                  "scope": 1095,
                   "src": "3074:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2405,7 +2405,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 801,
+                    "id": 1083,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "3074:7:12",
@@ -2422,15 +2422,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 806,
+              "id": 1088,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 805,
+                  "id": 1087,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 813,
+                  "scope": 1095,
                   "src": "3106:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2439,7 +2439,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 804,
+                    "id": 1086,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3106:7:12",
@@ -2454,7 +2454,7 @@
               ],
               "src": "3105:9:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "3054:97:12",
             "stateMutability": "view",
             "superFunction": null,
@@ -2462,7 +2462,7 @@
           },
           {
             "body": {
-              "id": 825,
+              "id": 1107,
               "nodeType": "Block",
               "src": "3355:36:12",
               "statements": [
@@ -2473,39 +2473,39 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 820,
+                        "id": 1102,
                         "name": "s",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 653,
+                        "referencedDeclaration": 935,
                         "src": "3372:1:12",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Storage_$651_storage",
+                          "typeIdentifier": "t_struct$_Storage_$933_storage",
                           "typeString": "struct EternalStorage.Storage storage ref"
                         }
                       },
-                      "id": 821,
+                      "id": 1103,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "_string",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 642,
+                      "referencedDeclaration": 924,
                       "src": "3372:9:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes32_$_t_string_storage_$",
                         "typeString": "mapping(bytes32 => string storage ref)"
                       }
                     },
-                    "id": 823,
+                    "id": 1105,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 822,
+                      "id": 1104,
                       "name": "h",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 815,
+                      "referencedDeclaration": 1097,
                       "src": "3382:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -2523,15 +2523,15 @@
                       "typeString": "string storage ref"
                     }
                   },
-                  "functionReturnParameters": 819,
-                  "id": 824,
+                  "functionReturnParameters": 1101,
+                  "id": 1106,
                   "nodeType": "Return",
                   "src": "3365:19:12"
                 }
               ]
             },
             "documentation": "@dev Get the value stored of a string variable by the hash name\n@param h The keccak256 hash of the variable name",
-            "id": 826,
+            "id": 1108,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -2539,15 +2539,15 @@
             "name": "getString",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 816,
+              "id": 1098,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 815,
+                  "id": 1097,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 826,
+                  "scope": 1108,
                   "src": "3316:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2556,7 +2556,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 814,
+                    "id": 1096,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "3316:7:12",
@@ -2573,15 +2573,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 819,
+              "id": 1101,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 818,
+                  "id": 1100,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 826,
+                  "scope": 1108,
                   "src": "3348:6:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2590,7 +2590,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 817,
+                    "id": 1099,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "3348:6:12",
@@ -2605,7 +2605,7 @@
               ],
               "src": "3347:8:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "3297:94:12",
             "stateMutability": "view",
             "superFunction": null,
@@ -2613,7 +2613,7 @@
           },
           {
             "body": {
-              "id": 838,
+              "id": 1120,
               "nodeType": "Block",
               "src": "3592:35:12",
               "statements": [
@@ -2624,39 +2624,39 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 833,
+                        "id": 1115,
                         "name": "s",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 653,
+                        "referencedDeclaration": 935,
                         "src": "3609:1:12",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Storage_$651_storage",
+                          "typeIdentifier": "t_struct$_Storage_$933_storage",
                           "typeString": "struct EternalStorage.Storage storage ref"
                         }
                       },
-                      "id": 834,
+                      "id": 1116,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "_bytes",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 650,
+                      "referencedDeclaration": 932,
                       "src": "3609:8:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes32_$_t_bytes_storage_$",
                         "typeString": "mapping(bytes32 => bytes storage ref)"
                       }
                     },
-                    "id": 836,
+                    "id": 1118,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 835,
+                      "id": 1117,
                       "name": "h",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 828,
+                      "referencedDeclaration": 1110,
                       "src": "3618:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -2674,15 +2674,15 @@
                       "typeString": "bytes storage ref"
                     }
                   },
-                  "functionReturnParameters": 832,
-                  "id": 837,
+                  "functionReturnParameters": 1114,
+                  "id": 1119,
                   "nodeType": "Return",
                   "src": "3602:18:12"
                 }
               ]
             },
             "documentation": "@dev Get the value stored of a bytes variable by the hash name\n@param h The keccak256 hash of the variable name",
-            "id": 839,
+            "id": 1121,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -2690,15 +2690,15 @@
             "name": "getBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 829,
+              "id": 1111,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 828,
+                  "id": 1110,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 839,
+                  "scope": 1121,
                   "src": "3554:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2707,7 +2707,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 827,
+                    "id": 1109,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "3554:7:12",
@@ -2724,15 +2724,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 832,
+              "id": 1114,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 831,
+                  "id": 1113,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 839,
+                  "scope": 1121,
                   "src": "3586:5:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2741,7 +2741,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 830,
+                    "id": 1112,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "3586:5:12",
@@ -2756,14 +2756,14 @@
               ],
               "src": "3585:7:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "3536:91:12",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 841,
+        "scope": 1123,
         "src": "261:3369:12"
       }
     ],
@@ -2773,14 +2773,14 @@
     "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/storage/EternalStorage.sol",
     "exportedSymbols": {
       "EternalStorage": [
-        840
+        1122
       ]
     },
-    "id": 841,
+    "id": 1123,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 623,
+        "id": 905,
         "literals": [
           "solidity",
           "^",
@@ -2793,10 +2793,10 @@
       {
         "absolutePath": "openzeppelin-solidity/contracts/ownership/Ownable.sol",
         "file": "openzeppelin-solidity/contracts/ownership/Ownable.sol",
-        "id": 624,
+        "id": 906,
         "nodeType": "ImportDirective",
-        "scope": 841,
-        "sourceUnit": 1078,
+        "scope": 1123,
+        "sourceUnit": 1360,
         "src": "26:63:12",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2807,45 +2807,45 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 625,
+              "id": 907,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1077,
+              "referencedDeclaration": 1359,
               "src": "288:7:12",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$1077",
+                "typeIdentifier": "t_contract$_Ownable_$1359",
                 "typeString": "contract Ownable"
               }
             },
-            "id": 626,
+            "id": 908,
             "nodeType": "InheritanceSpecifier",
             "src": "288:7:12"
           }
         ],
         "contractDependencies": [
-          1077
+          1359
         ],
         "contractKind": "contract",
         "documentation": "@title EternalStorage\n@dev An ownable contract that can be used as a storage where the variables\nare stored in a set of mappings indexed by hash names.",
         "fullyImplemented": true,
-        "id": 840,
+        "id": 1122,
         "linearizedBaseContracts": [
-          840,
-          1077
+          1122,
+          1359
         ],
         "name": "EternalStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "EternalStorage.Storage",
-            "id": 651,
+            "id": 933,
             "members": [
               {
                 "constant": false,
-                "id": 630,
+                "id": 912,
                 "name": "_bool",
                 "nodeType": "VariableDeclaration",
-                "scope": 651,
+                "scope": 933,
                 "src": "327:30:12",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -2854,9 +2854,9 @@
                   "typeString": "mapping(bytes32 => bool)"
                 },
                 "typeName": {
-                  "id": 629,
+                  "id": 911,
                   "keyType": {
-                    "id": 627,
+                    "id": 909,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "335:7:12",
@@ -2872,7 +2872,7 @@
                     "typeString": "mapping(bytes32 => bool)"
                   },
                   "valueType": {
-                    "id": 628,
+                    "id": 910,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "346:4:12",
@@ -2887,10 +2887,10 @@
               },
               {
                 "constant": false,
-                "id": 634,
+                "id": 916,
                 "name": "_int",
                 "nodeType": "VariableDeclaration",
-                "scope": 651,
+                "scope": 933,
                 "src": "367:28:12",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -2899,9 +2899,9 @@
                   "typeString": "mapping(bytes32 => int256)"
                 },
                 "typeName": {
-                  "id": 633,
+                  "id": 915,
                   "keyType": {
-                    "id": 631,
+                    "id": 913,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "375:7:12",
@@ -2917,7 +2917,7 @@
                     "typeString": "mapping(bytes32 => int256)"
                   },
                   "valueType": {
-                    "id": 632,
+                    "id": 914,
                     "name": "int",
                     "nodeType": "ElementaryTypeName",
                     "src": "386:3:12",
@@ -2932,10 +2932,10 @@
               },
               {
                 "constant": false,
-                "id": 638,
+                "id": 920,
                 "name": "_uint",
                 "nodeType": "VariableDeclaration",
-                "scope": 651,
+                "scope": 933,
                 "src": "405:33:12",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -2944,9 +2944,9 @@
                   "typeString": "mapping(bytes32 => uint256)"
                 },
                 "typeName": {
-                  "id": 637,
+                  "id": 919,
                   "keyType": {
-                    "id": 635,
+                    "id": 917,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "413:7:12",
@@ -2962,7 +2962,7 @@
                     "typeString": "mapping(bytes32 => uint256)"
                   },
                   "valueType": {
-                    "id": 636,
+                    "id": 918,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "424:7:12",
@@ -2977,10 +2977,10 @@
               },
               {
                 "constant": false,
-                "id": 642,
+                "id": 924,
                 "name": "_string",
                 "nodeType": "VariableDeclaration",
-                "scope": 651,
+                "scope": 933,
                 "src": "448:34:12",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -2989,9 +2989,9 @@
                   "typeString": "mapping(bytes32 => string)"
                 },
                 "typeName": {
-                  "id": 641,
+                  "id": 923,
                   "keyType": {
-                    "id": 639,
+                    "id": 921,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "456:7:12",
@@ -3007,7 +3007,7 @@
                     "typeString": "mapping(bytes32 => string)"
                   },
                   "valueType": {
-                    "id": 640,
+                    "id": 922,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "467:6:12",
@@ -3022,10 +3022,10 @@
               },
               {
                 "constant": false,
-                "id": 646,
+                "id": 928,
                 "name": "_address",
                 "nodeType": "VariableDeclaration",
-                "scope": 651,
+                "scope": 933,
                 "src": "492:36:12",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -3034,9 +3034,9 @@
                   "typeString": "mapping(bytes32 => address)"
                 },
                 "typeName": {
-                  "id": 645,
+                  "id": 927,
                   "keyType": {
-                    "id": 643,
+                    "id": 925,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "500:7:12",
@@ -3052,7 +3052,7 @@
                     "typeString": "mapping(bytes32 => address)"
                   },
                   "valueType": {
-                    "id": 644,
+                    "id": 926,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "511:7:12",
@@ -3067,10 +3067,10 @@
               },
               {
                 "constant": false,
-                "id": 650,
+                "id": 932,
                 "name": "_bytes",
                 "nodeType": "VariableDeclaration",
-                "scope": 651,
+                "scope": 933,
                 "src": "538:32:12",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -3079,9 +3079,9 @@
                   "typeString": "mapping(bytes32 => bytes)"
                 },
                 "typeName": {
-                  "id": 649,
+                  "id": 931,
                   "keyType": {
-                    "id": 647,
+                    "id": 929,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "546:7:12",
@@ -3097,7 +3097,7 @@
                     "typeString": "mapping(bytes32 => bytes)"
                   },
                   "valueType": {
-                    "id": 648,
+                    "id": 930,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "557:5:12",
@@ -3113,32 +3113,32 @@
             ],
             "name": "Storage",
             "nodeType": "StructDefinition",
-            "scope": 840,
+            "scope": 1122,
             "src": "302:275:12",
             "visibility": "public"
           },
           {
             "constant": false,
-            "id": 653,
+            "id": 935,
             "name": "s",
             "nodeType": "VariableDeclaration",
-            "scope": 840,
+            "scope": 1122,
             "src": "583:18:12",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_struct$_Storage_$651_storage",
+              "typeIdentifier": "t_struct$_Storage_$933_storage",
               "typeString": "struct EternalStorage.Storage"
             },
             "typeName": {
               "contractScope": null,
-              "id": 652,
+              "id": 934,
               "name": "Storage",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 651,
+              "referencedDeclaration": 933,
               "src": "583:7:12",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_Storage_$651_storage_ptr",
+                "typeIdentifier": "t_struct$_Storage_$933_storage_ptr",
                 "typeString": "struct EternalStorage.Storage"
               }
             },
@@ -3147,14 +3147,14 @@
           },
           {
             "body": {
-              "id": 670,
+              "id": 952,
               "nodeType": "Block",
               "src": "839:31:12",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 668,
+                    "id": 950,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3165,39 +3165,39 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 662,
+                          "id": 944,
                           "name": "s",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 653,
+                          "referencedDeclaration": 935,
                           "src": "849:1:12",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Storage_$651_storage",
+                            "typeIdentifier": "t_struct$_Storage_$933_storage",
                             "typeString": "struct EternalStorage.Storage storage ref"
                           }
                         },
-                        "id": 665,
+                        "id": 947,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "_bool",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 630,
+                        "referencedDeclaration": 912,
                         "src": "849:7:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_bytes32_$_t_bool_$",
                           "typeString": "mapping(bytes32 => bool)"
                         }
                       },
-                      "id": 666,
+                      "id": 948,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 664,
+                        "id": 946,
                         "name": "h",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 655,
+                        "referencedDeclaration": 937,
                         "src": "857:1:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -3219,11 +3219,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 667,
+                      "id": 949,
                       "name": "v",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 657,
+                      "referencedDeclaration": 939,
                       "src": "862:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -3236,28 +3236,28 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 669,
+                  "id": 951,
                   "nodeType": "ExpressionStatement",
                   "src": "849:14:12"
                 }
               ]
             },
             "documentation": "@dev Allows the owner to set a value for a boolean variable.\n@param h The keccak256 hash of the variable name\n@param v The value to be stored",
-            "id": 671,
+            "id": 953,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 660,
+                "id": 942,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 659,
+                  "id": 941,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1011,
+                  "referencedDeclaration": 1293,
                   "src": "829:9:12",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -3271,15 +3271,15 @@
             "name": "setBoolean",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 658,
+              "id": 940,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 655,
+                  "id": 937,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 671,
+                  "scope": 953,
                   "src": "803:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3288,7 +3288,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 654,
+                    "id": 936,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "803:7:12",
@@ -3302,10 +3302,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 657,
+                  "id": 939,
                   "name": "v",
                   "nodeType": "VariableDeclaration",
-                  "scope": 671,
+                  "scope": 953,
                   "src": "814:6:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3314,7 +3314,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 656,
+                    "id": 938,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "814:4:12",
@@ -3331,12 +3331,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 661,
+              "id": 943,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "839:0:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "783:87:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -3344,14 +3344,14 @@
           },
           {
             "body": {
-              "id": 688,
+              "id": 970,
               "nodeType": "Block",
               "src": "1098:30:12",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 686,
+                    "id": 968,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3362,39 +3362,39 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 680,
+                          "id": 962,
                           "name": "s",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 653,
+                          "referencedDeclaration": 935,
                           "src": "1108:1:12",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Storage_$651_storage",
+                            "typeIdentifier": "t_struct$_Storage_$933_storage",
                             "typeString": "struct EternalStorage.Storage storage ref"
                           }
                         },
-                        "id": 683,
+                        "id": 965,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "_int",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 634,
+                        "referencedDeclaration": 916,
                         "src": "1108:6:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_bytes32_$_t_int256_$",
                           "typeString": "mapping(bytes32 => int256)"
                         }
                       },
-                      "id": 684,
+                      "id": 966,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 682,
+                        "id": 964,
                         "name": "h",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 673,
+                        "referencedDeclaration": 955,
                         "src": "1115:1:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -3416,11 +3416,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 685,
+                      "id": 967,
                       "name": "v",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 675,
+                      "referencedDeclaration": 957,
                       "src": "1120:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_int256",
@@ -3433,28 +3433,28 @@
                       "typeString": "int256"
                     }
                   },
-                  "id": 687,
+                  "id": 969,
                   "nodeType": "ExpressionStatement",
                   "src": "1108:13:12"
                 }
               ]
             },
             "documentation": "@dev Allows the owner to set a value for a int variable.\n@param h The keccak256 hash of the variable name\n@param v The value to be stored",
-            "id": 689,
+            "id": 971,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 678,
+                "id": 960,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 677,
+                  "id": 959,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1011,
+                  "referencedDeclaration": 1293,
                   "src": "1088:9:12",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -3468,15 +3468,15 @@
             "name": "setInt",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 676,
+              "id": 958,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 673,
+                  "id": 955,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 689,
+                  "scope": 971,
                   "src": "1063:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3485,7 +3485,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 672,
+                    "id": 954,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1063:7:12",
@@ -3499,10 +3499,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 675,
+                  "id": 957,
                   "name": "v",
                   "nodeType": "VariableDeclaration",
-                  "scope": 689,
+                  "scope": 971,
                   "src": "1074:5:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3511,7 +3511,7 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 674,
+                    "id": 956,
                     "name": "int",
                     "nodeType": "ElementaryTypeName",
                     "src": "1074:3:12",
@@ -3528,12 +3528,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 679,
+              "id": 961,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1098:0:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "1047:81:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -3541,14 +3541,14 @@
           },
           {
             "body": {
-              "id": 706,
+              "id": 988,
               "nodeType": "Block",
               "src": "1365:31:12",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 704,
+                    "id": 986,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3559,39 +3559,39 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 698,
+                          "id": 980,
                           "name": "s",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 653,
+                          "referencedDeclaration": 935,
                           "src": "1375:1:12",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Storage_$651_storage",
+                            "typeIdentifier": "t_struct$_Storage_$933_storage",
                             "typeString": "struct EternalStorage.Storage storage ref"
                           }
                         },
-                        "id": 701,
+                        "id": 983,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "_uint",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 638,
+                        "referencedDeclaration": 920,
                         "src": "1375:7:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_bytes32_$_t_uint256_$",
                           "typeString": "mapping(bytes32 => uint256)"
                         }
                       },
-                      "id": 702,
+                      "id": 984,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 700,
+                        "id": 982,
                         "name": "h",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 691,
+                        "referencedDeclaration": 973,
                         "src": "1383:1:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -3613,11 +3613,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 703,
+                      "id": 985,
                       "name": "v",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 693,
+                      "referencedDeclaration": 975,
                       "src": "1388:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -3630,28 +3630,28 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 705,
+                  "id": 987,
                   "nodeType": "ExpressionStatement",
                   "src": "1375:14:12"
                 }
               ]
             },
             "documentation": "@dev Allows the owner to set a value for a boolean variable.\n@param h The keccak256 hash of the variable name\n@param v The value to be stored",
-            "id": 707,
+            "id": 989,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 696,
+                "id": 978,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 695,
+                  "id": 977,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1011,
+                  "referencedDeclaration": 1293,
                   "src": "1355:9:12",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -3665,15 +3665,15 @@
             "name": "setUint",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 694,
+              "id": 976,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 691,
+                  "id": 973,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 707,
+                  "scope": 989,
                   "src": "1326:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3682,7 +3682,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 690,
+                    "id": 972,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1326:7:12",
@@ -3696,10 +3696,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 693,
+                  "id": 975,
                   "name": "v",
                   "nodeType": "VariableDeclaration",
-                  "scope": 707,
+                  "scope": 989,
                   "src": "1337:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3708,7 +3708,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 692,
+                    "id": 974,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1337:7:12",
@@ -3725,12 +3725,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 697,
+              "id": 979,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1365:0:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "1309:87:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -3738,14 +3738,14 @@
           },
           {
             "body": {
-              "id": 724,
+              "id": 1006,
               "nodeType": "Block",
               "src": "1636:34:12",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 722,
+                    "id": 1004,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3756,39 +3756,39 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 716,
+                          "id": 998,
                           "name": "s",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 653,
+                          "referencedDeclaration": 935,
                           "src": "1646:1:12",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Storage_$651_storage",
+                            "typeIdentifier": "t_struct$_Storage_$933_storage",
                             "typeString": "struct EternalStorage.Storage storage ref"
                           }
                         },
-                        "id": 719,
+                        "id": 1001,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "_address",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 646,
+                        "referencedDeclaration": 928,
                         "src": "1646:10:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_bytes32_$_t_address_$",
                           "typeString": "mapping(bytes32 => address)"
                         }
                       },
-                      "id": 720,
+                      "id": 1002,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 718,
+                        "id": 1000,
                         "name": "h",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 709,
+                        "referencedDeclaration": 991,
                         "src": "1657:1:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -3810,11 +3810,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 721,
+                      "id": 1003,
                       "name": "v",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 711,
+                      "referencedDeclaration": 993,
                       "src": "1662:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -3827,28 +3827,28 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 723,
+                  "id": 1005,
                   "nodeType": "ExpressionStatement",
                   "src": "1646:17:12"
                 }
               ]
             },
             "documentation": "@dev Allows the owner to set a value for a address variable.\n@param h The keccak256 hash of the variable name\n@param v The value to be stored",
-            "id": 725,
+            "id": 1007,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 714,
+                "id": 996,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 713,
+                  "id": 995,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1011,
+                  "referencedDeclaration": 1293,
                   "src": "1626:9:12",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -3862,15 +3862,15 @@
             "name": "setAddress",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 712,
+              "id": 994,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 709,
+                  "id": 991,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 725,
+                  "scope": 1007,
                   "src": "1597:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3879,7 +3879,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 708,
+                    "id": 990,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1597:7:12",
@@ -3893,10 +3893,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 711,
+                  "id": 993,
                   "name": "v",
                   "nodeType": "VariableDeclaration",
-                  "scope": 725,
+                  "scope": 1007,
                   "src": "1608:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3905,7 +3905,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 710,
+                    "id": 992,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1608:7:12",
@@ -3922,12 +3922,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 715,
+              "id": 997,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1636:0:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "1577:93:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -3935,14 +3935,14 @@
           },
           {
             "body": {
-              "id": 742,
+              "id": 1024,
               "nodeType": "Block",
               "src": "1907:33:12",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 740,
+                    "id": 1022,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3953,39 +3953,39 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 734,
+                          "id": 1016,
                           "name": "s",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 653,
+                          "referencedDeclaration": 935,
                           "src": "1917:1:12",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Storage_$651_storage",
+                            "typeIdentifier": "t_struct$_Storage_$933_storage",
                             "typeString": "struct EternalStorage.Storage storage ref"
                           }
                         },
-                        "id": 737,
+                        "id": 1019,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "_string",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 642,
+                        "referencedDeclaration": 924,
                         "src": "1917:9:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_bytes32_$_t_string_storage_$",
                           "typeString": "mapping(bytes32 => string storage ref)"
                         }
                       },
-                      "id": 738,
+                      "id": 1020,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 736,
+                        "id": 1018,
                         "name": "h",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 727,
+                        "referencedDeclaration": 1009,
                         "src": "1927:1:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -4007,11 +4007,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 739,
+                      "id": 1021,
                       "name": "v",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 729,
+                      "referencedDeclaration": 1011,
                       "src": "1932:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_memory_ptr",
@@ -4024,28 +4024,28 @@
                       "typeString": "string storage ref"
                     }
                   },
-                  "id": 741,
+                  "id": 1023,
                   "nodeType": "ExpressionStatement",
                   "src": "1917:16:12"
                 }
               ]
             },
             "documentation": "@dev Allows the owner to set a value for a string variable.\n@param h The keccak256 hash of the variable name\n@param v The value to be stored",
-            "id": 743,
+            "id": 1025,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 732,
+                "id": 1014,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 731,
+                  "id": 1013,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1011,
+                  "referencedDeclaration": 1293,
                   "src": "1897:9:12",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -4059,15 +4059,15 @@
             "name": "setString",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 730,
+              "id": 1012,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 727,
+                  "id": 1009,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 743,
+                  "scope": 1025,
                   "src": "1869:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4076,7 +4076,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 726,
+                    "id": 1008,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1869:7:12",
@@ -4090,10 +4090,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 729,
+                  "id": 1011,
                   "name": "v",
                   "nodeType": "VariableDeclaration",
-                  "scope": 743,
+                  "scope": 1025,
                   "src": "1880:8:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4102,7 +4102,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 728,
+                    "id": 1010,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1880:6:12",
@@ -4119,12 +4119,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 733,
+              "id": 1015,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1907:0:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "1850:90:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -4132,14 +4132,14 @@
           },
           {
             "body": {
-              "id": 760,
+              "id": 1042,
               "nodeType": "Block",
               "src": "2174:32:12",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 758,
+                    "id": 1040,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -4150,39 +4150,39 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 752,
+                          "id": 1034,
                           "name": "s",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 653,
+                          "referencedDeclaration": 935,
                           "src": "2184:1:12",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Storage_$651_storage",
+                            "typeIdentifier": "t_struct$_Storage_$933_storage",
                             "typeString": "struct EternalStorage.Storage storage ref"
                           }
                         },
-                        "id": 755,
+                        "id": 1037,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "_bytes",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 650,
+                        "referencedDeclaration": 932,
                         "src": "2184:8:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_bytes32_$_t_bytes_storage_$",
                           "typeString": "mapping(bytes32 => bytes storage ref)"
                         }
                       },
-                      "id": 756,
+                      "id": 1038,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 754,
+                        "id": 1036,
                         "name": "h",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 745,
+                        "referencedDeclaration": 1027,
                         "src": "2193:1:12",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -4204,11 +4204,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 757,
+                      "id": 1039,
                       "name": "v",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 747,
+                      "referencedDeclaration": 1029,
                       "src": "2198:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes_memory_ptr",
@@ -4221,28 +4221,28 @@
                       "typeString": "bytes storage ref"
                     }
                   },
-                  "id": 759,
+                  "id": 1041,
                   "nodeType": "ExpressionStatement",
                   "src": "2184:15:12"
                 }
               ]
             },
             "documentation": "@dev Allows the owner to set a value for a bytes variable.\n@param h The keccak256 hash of the variable name\n@param v The value to be stored",
-            "id": 761,
+            "id": 1043,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 750,
+                "id": 1032,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 749,
+                  "id": 1031,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1011,
+                  "referencedDeclaration": 1293,
                   "src": "2164:9:12",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -4256,15 +4256,15 @@
             "name": "setBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 748,
+              "id": 1030,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 745,
+                  "id": 1027,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 761,
+                  "scope": 1043,
                   "src": "2137:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4273,7 +4273,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 744,
+                    "id": 1026,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "2137:7:12",
@@ -4287,10 +4287,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 747,
+                  "id": 1029,
                   "name": "v",
                   "nodeType": "VariableDeclaration",
-                  "scope": 761,
+                  "scope": 1043,
                   "src": "2148:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4299,7 +4299,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 746,
+                    "id": 1028,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "2148:5:12",
@@ -4316,12 +4316,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 751,
+              "id": 1033,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2174:0:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "2119:87:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -4329,7 +4329,7 @@
           },
           {
             "body": {
-              "id": 773,
+              "id": 1055,
               "nodeType": "Block",
               "src": "2410:34:12",
               "statements": [
@@ -4340,39 +4340,39 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 768,
+                        "id": 1050,
                         "name": "s",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 653,
+                        "referencedDeclaration": 935,
                         "src": "2427:1:12",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Storage_$651_storage",
+                          "typeIdentifier": "t_struct$_Storage_$933_storage",
                           "typeString": "struct EternalStorage.Storage storage ref"
                         }
                       },
-                      "id": 769,
+                      "id": 1051,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "_bool",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 630,
+                      "referencedDeclaration": 912,
                       "src": "2427:7:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes32_$_t_bool_$",
                         "typeString": "mapping(bytes32 => bool)"
                       }
                     },
-                    "id": 771,
+                    "id": 1053,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 770,
+                      "id": 1052,
                       "name": "h",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 763,
+                      "referencedDeclaration": 1045,
                       "src": "2435:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -4390,15 +4390,15 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 767,
-                  "id": 772,
+                  "functionReturnParameters": 1049,
+                  "id": 1054,
                   "nodeType": "Return",
                   "src": "2420:17:12"
                 }
               ]
             },
             "documentation": "@dev Get the value stored of a boolean variable by the hash name\n@param h The keccak256 hash of the variable name",
-            "id": 774,
+            "id": 1056,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -4406,15 +4406,15 @@
             "name": "getBoolean",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 764,
+              "id": 1046,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 763,
+                  "id": 1045,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 774,
+                  "scope": 1056,
                   "src": "2373:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4423,7 +4423,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 762,
+                    "id": 1044,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "2373:7:12",
@@ -4440,15 +4440,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 767,
+              "id": 1049,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 766,
+                  "id": 1048,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 774,
+                  "scope": 1056,
                   "src": "2405:4:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4457,7 +4457,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 765,
+                    "id": 1047,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "2405:4:12",
@@ -4472,7 +4472,7 @@
               ],
               "src": "2404:6:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "2353:91:12",
             "stateMutability": "view",
             "superFunction": null,
@@ -4480,7 +4480,7 @@
           },
           {
             "body": {
-              "id": 786,
+              "id": 1068,
               "nodeType": "Block",
               "src": "2639:33:12",
               "statements": [
@@ -4491,39 +4491,39 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 781,
+                        "id": 1063,
                         "name": "s",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 653,
+                        "referencedDeclaration": 935,
                         "src": "2656:1:12",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Storage_$651_storage",
+                          "typeIdentifier": "t_struct$_Storage_$933_storage",
                           "typeString": "struct EternalStorage.Storage storage ref"
                         }
                       },
-                      "id": 782,
+                      "id": 1064,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "_int",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 634,
+                      "referencedDeclaration": 916,
                       "src": "2656:6:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes32_$_t_int256_$",
                         "typeString": "mapping(bytes32 => int256)"
                       }
                     },
-                    "id": 784,
+                    "id": 1066,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 783,
+                      "id": 1065,
                       "name": "h",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 776,
+                      "referencedDeclaration": 1058,
                       "src": "2663:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -4541,15 +4541,15 @@
                       "typeString": "int256"
                     }
                   },
-                  "functionReturnParameters": 780,
-                  "id": 785,
+                  "functionReturnParameters": 1062,
+                  "id": 1067,
                   "nodeType": "Return",
                   "src": "2649:16:12"
                 }
               ]
             },
             "documentation": "@dev Get the value stored of a int variable by the hash name\n@param h The keccak256 hash of the variable name",
-            "id": 787,
+            "id": 1069,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -4557,15 +4557,15 @@
             "name": "getInt",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 777,
+              "id": 1059,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 776,
+                  "id": 1058,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 787,
+                  "scope": 1069,
                   "src": "2603:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4574,7 +4574,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 775,
+                    "id": 1057,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "2603:7:12",
@@ -4591,15 +4591,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 780,
+              "id": 1062,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 779,
+                  "id": 1061,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 787,
+                  "scope": 1069,
                   "src": "2635:3:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4608,7 +4608,7 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 778,
+                    "id": 1060,
                     "name": "int",
                     "nodeType": "ElementaryTypeName",
                     "src": "2635:3:12",
@@ -4623,7 +4623,7 @@
               ],
               "src": "2634:5:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "2587:85:12",
             "stateMutability": "view",
             "superFunction": null,
@@ -4631,7 +4631,7 @@
           },
           {
             "body": {
-              "id": 799,
+              "id": 1081,
               "nodeType": "Block",
               "src": "2873:34:12",
               "statements": [
@@ -4642,39 +4642,39 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 794,
+                        "id": 1076,
                         "name": "s",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 653,
+                        "referencedDeclaration": 935,
                         "src": "2890:1:12",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Storage_$651_storage",
+                          "typeIdentifier": "t_struct$_Storage_$933_storage",
                           "typeString": "struct EternalStorage.Storage storage ref"
                         }
                       },
-                      "id": 795,
+                      "id": 1077,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "_uint",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 638,
+                      "referencedDeclaration": 920,
                       "src": "2890:7:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes32_$_t_uint256_$",
                         "typeString": "mapping(bytes32 => uint256)"
                       }
                     },
-                    "id": 797,
+                    "id": 1079,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 796,
+                      "id": 1078,
                       "name": "h",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 789,
+                      "referencedDeclaration": 1071,
                       "src": "2898:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -4692,15 +4692,15 @@
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 793,
-                  "id": 798,
+                  "functionReturnParameters": 1075,
+                  "id": 1080,
                   "nodeType": "Return",
                   "src": "2883:17:12"
                 }
               ]
             },
             "documentation": "@dev Get the value stored of a uint variable by the hash name\n@param h The keccak256 hash of the variable name",
-            "id": 800,
+            "id": 1082,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -4708,15 +4708,15 @@
             "name": "getUint",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 790,
+              "id": 1072,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 789,
+                  "id": 1071,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 800,
+                  "scope": 1082,
                   "src": "2833:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4725,7 +4725,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 788,
+                    "id": 1070,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "2833:7:12",
@@ -4742,15 +4742,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 793,
+              "id": 1075,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 792,
+                  "id": 1074,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 800,
+                  "scope": 1082,
                   "src": "2865:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4759,7 +4759,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 791,
+                    "id": 1073,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2865:7:12",
@@ -4774,7 +4774,7 @@
               ],
               "src": "2864:9:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "2816:91:12",
             "stateMutability": "view",
             "superFunction": null,
@@ -4782,7 +4782,7 @@
           },
           {
             "body": {
-              "id": 812,
+              "id": 1094,
               "nodeType": "Block",
               "src": "3114:37:12",
               "statements": [
@@ -4793,39 +4793,39 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 807,
+                        "id": 1089,
                         "name": "s",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 653,
+                        "referencedDeclaration": 935,
                         "src": "3131:1:12",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Storage_$651_storage",
+                          "typeIdentifier": "t_struct$_Storage_$933_storage",
                           "typeString": "struct EternalStorage.Storage storage ref"
                         }
                       },
-                      "id": 808,
+                      "id": 1090,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "_address",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 646,
+                      "referencedDeclaration": 928,
                       "src": "3131:10:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes32_$_t_address_$",
                         "typeString": "mapping(bytes32 => address)"
                       }
                     },
-                    "id": 810,
+                    "id": 1092,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 809,
+                      "id": 1091,
                       "name": "h",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 802,
+                      "referencedDeclaration": 1084,
                       "src": "3142:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -4843,15 +4843,15 @@
                       "typeString": "address"
                     }
                   },
-                  "functionReturnParameters": 806,
-                  "id": 811,
+                  "functionReturnParameters": 1088,
+                  "id": 1093,
                   "nodeType": "Return",
                   "src": "3124:20:12"
                 }
               ]
             },
             "documentation": "@dev Get the value stored of a address variable by the hash name\n@param h The keccak256 hash of the variable name",
-            "id": 813,
+            "id": 1095,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -4859,15 +4859,15 @@
             "name": "getAddress",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 803,
+              "id": 1085,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 802,
+                  "id": 1084,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 813,
+                  "scope": 1095,
                   "src": "3074:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4876,7 +4876,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 801,
+                    "id": 1083,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "3074:7:12",
@@ -4893,15 +4893,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 806,
+              "id": 1088,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 805,
+                  "id": 1087,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 813,
+                  "scope": 1095,
                   "src": "3106:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4910,7 +4910,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 804,
+                    "id": 1086,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3106:7:12",
@@ -4925,7 +4925,7 @@
               ],
               "src": "3105:9:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "3054:97:12",
             "stateMutability": "view",
             "superFunction": null,
@@ -4933,7 +4933,7 @@
           },
           {
             "body": {
-              "id": 825,
+              "id": 1107,
               "nodeType": "Block",
               "src": "3355:36:12",
               "statements": [
@@ -4944,39 +4944,39 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 820,
+                        "id": 1102,
                         "name": "s",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 653,
+                        "referencedDeclaration": 935,
                         "src": "3372:1:12",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Storage_$651_storage",
+                          "typeIdentifier": "t_struct$_Storage_$933_storage",
                           "typeString": "struct EternalStorage.Storage storage ref"
                         }
                       },
-                      "id": 821,
+                      "id": 1103,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "_string",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 642,
+                      "referencedDeclaration": 924,
                       "src": "3372:9:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes32_$_t_string_storage_$",
                         "typeString": "mapping(bytes32 => string storage ref)"
                       }
                     },
-                    "id": 823,
+                    "id": 1105,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 822,
+                      "id": 1104,
                       "name": "h",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 815,
+                      "referencedDeclaration": 1097,
                       "src": "3382:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -4994,15 +4994,15 @@
                       "typeString": "string storage ref"
                     }
                   },
-                  "functionReturnParameters": 819,
-                  "id": 824,
+                  "functionReturnParameters": 1101,
+                  "id": 1106,
                   "nodeType": "Return",
                   "src": "3365:19:12"
                 }
               ]
             },
             "documentation": "@dev Get the value stored of a string variable by the hash name\n@param h The keccak256 hash of the variable name",
-            "id": 826,
+            "id": 1108,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -5010,15 +5010,15 @@
             "name": "getString",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 816,
+              "id": 1098,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 815,
+                  "id": 1097,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 826,
+                  "scope": 1108,
                   "src": "3316:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -5027,7 +5027,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 814,
+                    "id": 1096,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "3316:7:12",
@@ -5044,15 +5044,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 819,
+              "id": 1101,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 818,
+                  "id": 1100,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 826,
+                  "scope": 1108,
                   "src": "3348:6:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -5061,7 +5061,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 817,
+                    "id": 1099,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "3348:6:12",
@@ -5076,7 +5076,7 @@
               ],
               "src": "3347:8:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "3297:94:12",
             "stateMutability": "view",
             "superFunction": null,
@@ -5084,7 +5084,7 @@
           },
           {
             "body": {
-              "id": 838,
+              "id": 1120,
               "nodeType": "Block",
               "src": "3592:35:12",
               "statements": [
@@ -5095,39 +5095,39 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 833,
+                        "id": 1115,
                         "name": "s",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 653,
+                        "referencedDeclaration": 935,
                         "src": "3609:1:12",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Storage_$651_storage",
+                          "typeIdentifier": "t_struct$_Storage_$933_storage",
                           "typeString": "struct EternalStorage.Storage storage ref"
                         }
                       },
-                      "id": 834,
+                      "id": 1116,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "_bytes",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 650,
+                      "referencedDeclaration": 932,
                       "src": "3609:8:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes32_$_t_bytes_storage_$",
                         "typeString": "mapping(bytes32 => bytes storage ref)"
                       }
                     },
-                    "id": 836,
+                    "id": 1118,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 835,
+                      "id": 1117,
                       "name": "h",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 828,
+                      "referencedDeclaration": 1110,
                       "src": "3618:1:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -5145,15 +5145,15 @@
                       "typeString": "bytes storage ref"
                     }
                   },
-                  "functionReturnParameters": 832,
-                  "id": 837,
+                  "functionReturnParameters": 1114,
+                  "id": 1119,
                   "nodeType": "Return",
                   "src": "3602:18:12"
                 }
               ]
             },
             "documentation": "@dev Get the value stored of a bytes variable by the hash name\n@param h The keccak256 hash of the variable name",
-            "id": 839,
+            "id": 1121,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -5161,15 +5161,15 @@
             "name": "getBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 829,
+              "id": 1111,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 828,
+                  "id": 1110,
                   "name": "h",
                   "nodeType": "VariableDeclaration",
-                  "scope": 839,
+                  "scope": 1121,
                   "src": "3554:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -5178,7 +5178,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 827,
+                    "id": 1109,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "3554:7:12",
@@ -5195,15 +5195,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 832,
+              "id": 1114,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 831,
+                  "id": 1113,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 839,
+                  "scope": 1121,
                   "src": "3586:5:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -5212,7 +5212,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 830,
+                    "id": 1112,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "3586:5:12",
@@ -5227,14 +5227,14 @@
               ],
               "src": "3585:7:12"
             },
-            "scope": 840,
+            "scope": 1122,
             "src": "3536:91:12",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 841,
+        "scope": 1123,
         "src": "261:3369:12"
       }
     ],
@@ -5246,5 +5246,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-21T01:07:04.574Z"
+  "updatedAt": "2019-01-22T07:50:18.597Z"
 }
