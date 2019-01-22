@@ -35,7 +35,7 @@ contract Staking is GovChecker, ReentrancyGuard {
     }
 
     function calcVotingWeight(address payee) public view returns (uint256) {
-        return 0;
+        return _lockedBalance[payee].mul(100).div(_totalLockedBalance);
     }
 
     function () external payable {
@@ -76,6 +76,7 @@ contract Staking is GovChecker, ReentrancyGuard {
         require(_balance[payee].sub(_lockedBalance[payee]) >= lockAmount, "Insufficient lockable balance");
 
         _lockedBalance[payee] = _lockedBalance[payee].add(lockAmount);
+        _totalLockedBalance = _totalLockedBalance.add(lockAmount);
 
         emit Locked(payee, lockAmount, _balance[payee], availableBalance(payee));
     }
@@ -89,6 +90,7 @@ contract Staking is GovChecker, ReentrancyGuard {
         require(_lockedBalance[payee] >= unlockAmount, "Unlock amount should be less than locked");
 
         _lockedBalance[payee] = _lockedBalance[payee].sub(unlockAmount);
+        _totalLockedBalance = _totalLockedBalance.sub(unlockAmount);
 
         emit Unlocked(payee, unlockAmount, _balance[payee], availableBalance(payee));
     }

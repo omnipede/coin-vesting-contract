@@ -9,9 +9,9 @@ require('chai')
 const Registry = artifacts.require('Registry.sol');
 const Staking = artifacts.require('Staking.sol');
 
-contract('Staking', function ([deployer, fakeGov, user, user2]) {
+contract('Staking', function ([deployer, fakeGov, user, user2, user3]) {
   let registry, staking;
-  const amount = ether(1);
+  const amount = ether(1e7);
   
   beforeEach(async () => {
     registry = await Registry.new();
@@ -121,7 +121,22 @@ contract('Staking', function ([deployer, fakeGov, user, user2]) {
   });
 
   describe('Voting weight ', function () {
+    beforeEach(async () => {
+      await staking.deposit({ value: amount, from: user });
+      await staking.deposit({ value: amount*2, from: user2 });
+      await staking.deposit({ value: amount*3, from: user3 });
+      await staking.lock(user, amount, { from: fakeGov });
+      await staking.lock(user2, amount, { from: fakeGov });
+      await staking.lock(user3, amount, { from: fakeGov });
+    });
+
     it('can be calculated', async () => {
+      const weight1 = await staking.calcVotingWeight(user);
+      weight1.should.be.bignumber.gt(0);
+
+      const weight2 = await staking.calcVotingWeight(user2);
+      const weight3 = await staking.calcVotingWeight(user3);
+      weight1.plus(weight2).plus(weight3).should.be.bignumber.gt(95);
     });
   });
 
