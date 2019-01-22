@@ -9,7 +9,7 @@ require('chai')
 const Registry = artifacts.require('Registry.sol');
 const Staking = artifacts.require('Staking.sol');
 
-contract('Staking', function ([deployer, fakeGov, user]) {
+contract('Staking', function ([deployer, fakeGov, user, user2]) {
   let registry, staking;
   const amount = ether(1);
   
@@ -73,6 +73,22 @@ contract('Staking', function ([deployer, fakeGov, user]) {
       const remain = await staking.balance(user);
       remain.should.be.bignumber.equal(0);
     });
+
+    it('cannot lock', async () => {
+      await reverting(staking.lock(user, amount, { from: user2 }));
+
+      await staking.deposit({ value: amount, from: user });
+      await reverting(staking.lock(user, amount, { from: user2 }));
+    });
+
+    it('cannot unlock', async () => {
+      await staking.deposit({ value: amount, from: user });
+      await reverting(staking.unlock(user, amount, { from: user2 }));
+
+      await staking.lock(user, amount, { from: fakeGov });
+      await reverting(staking.unlock(user, amount, { from: user2 }));
+    });
+
   });
 
   describe('Governance ', function () {
@@ -81,11 +97,19 @@ contract('Staking', function ([deployer, fakeGov, user]) {
       await staking.lock(user, amount, { from: fakeGov });
     });
 
-    it('can lock', async () => {
+    it('cannot lock over balance', async () => {
+      await reverting(staking.lock(user, amount, { from: fakeGov }));
+    });
+
+    it('can lock and user cannot withdraw after lock', async () => {
       const availBal = await staking.availBalance(user);
       availBal.should.be.bignumber.equal(0);
 
       await reverting(staking.withdraw(amount, { from: user }));
+    });
+
+    it('cannot unlock over balance locked', async () => {
+      await reverting(staking.unlock(user, amount*2, { from: fakeGov }));
     });
 
     it('can unlock', async () => {
@@ -93,6 +117,7 @@ contract('Staking', function ([deployer, fakeGov, user]) {
       const availBal = await staking.availBalance(user);
       availBal.should.be.bignumber.equal(amount);
     });
+
   });
 
 });

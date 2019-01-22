@@ -58,7 +58,7 @@ contract Staking is GovChecker, ReentrancyGuard {
         emit Unlocked(_addr, unlockAmount, balance[_addr], availBalance(_addr));
     }
 
-    function availBalance(address _addr) public view returns (uint256 availBal) {
+    function availBalance(address _addr) public view returns (uint256) {
         return balance[_addr].sub(lockedBalance[_addr]);
     }
 }
