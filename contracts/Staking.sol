@@ -35,6 +35,7 @@ contract Staking is GovChecker, ReentrancyGuard {
     }
 
     function calcVotingWeight(address payee) public view returns (uint256) {
+        if (_lockedBalance[payee] == 0) return 0;
         return _lockedBalance[payee].mul(100).div(_totalLockedBalance);
     }
 

@@ -9,7 +9,7 @@ require('chai')
 const Registry = artifacts.require('Registry.sol');
 const Staking = artifacts.require('Staking.sol');
 
-contract('Staking', function ([deployer, fakeGov, user, user2, user3]) {
+contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
   let registry, staking;
   const amount = ether(1e7);
   
@@ -130,14 +130,41 @@ contract('Staking', function ([deployer, fakeGov, user, user2, user3]) {
       await staking.lock(user3, amount, { from: fakeGov });
     });
 
-    it('can be calculated', async () => {
-      const weight1 = await staking.calcVotingWeight(user);
-      weight1.should.be.bignumber.gt(0);
+    it('can be zero when no lock', async () => {
+      const weightNolockUser = await staking.calcVotingWeight(user4);
+      weightNolockUser.should.be.bignumber.equal(0);
 
-      const weight2 = await staking.calcVotingWeight(user2);
-      const weight3 = await staking.calcVotingWeight(user3);
-      weight1.plus(weight2).plus(weight3).should.be.bignumber.gt(95);
+      const weightZeroAddr = await staking.calcVotingWeight(0);
+      weightZeroAddr.should.be.bignumber.equal(0);
     });
+
+    it('can be calculated when distributed evenly', async () => {
+      // user : user2 : user3 = 1 : 1 : 1
+      const weight1 = await staking.calcVotingWeight(user);
+      weight1.should.be.bignumber.equal(33);
+      const weight2 = await staking.calcVotingWeight(user2);
+      weight1.should.be.bignumber.equal(weight2);
+      const weight3 = await staking.calcVotingWeight(user3);
+      weight1.should.be.bignumber.equal(weight3);
+
+      weight1.plus(weight2).plus(weight3).should.be.bignumber.equal(99);
+    });
+
+    it('can be calculated when distributed differently', async () => {
+      // user : user2 : user3 = 1 : 2 : 3
+      await staking.lock(user2, amount, { from: fakeGov });
+      await staking.lock(user3, amount*2, { from: fakeGov });
+
+      const weight1 = await staking.calcVotingWeight(user);
+      weight1.should.be.bignumber.equal(16);
+      const weight2 = await staking.calcVotingWeight(user2);
+      weight2.should.be.bignumber.equal(33);
+      const weight3 = await staking.calcVotingWeight(user3);
+      weight3.should.be.bignumber.equal(50);
+
+      weight1.plus(weight2).plus(weight3).should.be.bignumber.equal(99);
+    });
+
   });
 
 });
