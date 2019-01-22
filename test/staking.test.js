@@ -32,7 +32,7 @@ contract('Staking', function ([deployer, fakeGov, user, user2]) {
       const post = await ethGetBalance(user);
       pre.minus(post).should.be.bignumber.gt(amount);
 
-      const bal = await staking.balance(user);
+      const bal = await staking.balanceOf(user);
       assert.equal(amount.toNumber(), bal.toNumber());
     });
 
@@ -42,14 +42,14 @@ contract('Staking', function ([deployer, fakeGov, user, user2]) {
       const post = await ethGetBalance(user);
       pre.minus(post).should.be.bignumber.gt(amount);
 
-      const bal = await staking.balance(user);
+      const bal = await staking.balanceOf(user);
       assert.equal(amount.toNumber(), bal.toNumber());
     });
 
     it('cannot withdraw over balance', async () => {
       await reverting(staking.withdraw(amount, { from: user }));
       await staking.deposit({ value: amount, from: user });
-      const bal = await staking.balance(user);
+      const bal = await staking.balanceOf(user);
       const bal2x = bal * 2;
       await reverting(staking.withdraw(bal2x, { from: user }));
     });
@@ -58,19 +58,19 @@ contract('Staking', function ([deployer, fakeGov, user, user2]) {
       await staking.deposit({ value: amount, from: user });
       const half = amount / 2;
       await staking.withdraw(half, { from: user });
-      const bal = await staking.balance(user);
+      const bal = await staking.balanceOf(user);
       bal.should.be.bignumber.equal(half);
     });
 
     it('can withdraw all', async () => {
       await staking.deposit({ value: amount, from: user });
-      const bal = await staking.balance(user);
+      const bal = await staking.balanceOf(user);
       const pre = await ethGetBalance(user);
       await staking.withdraw(bal, { from: user });
       const post = await ethGetBalance(user);
       post.should.be.bignumber.gt(pre);
 
-      const remain = await staking.balance(user);
+      const remain = await staking.balanceOf(user);
       remain.should.be.bignumber.equal(0);
     });
 
@@ -102,7 +102,7 @@ contract('Staking', function ([deployer, fakeGov, user, user2]) {
     });
 
     it('can lock and user cannot withdraw after lock', async () => {
-      const availBal = await staking.availBalance(user);
+      const availBal = await staking.availableBalance(user);
       availBal.should.be.bignumber.equal(0);
 
       await reverting(staking.withdraw(amount, { from: user }));
@@ -114,10 +114,15 @@ contract('Staking', function ([deployer, fakeGov, user, user2]) {
 
     it('can unlock', async () => {
       await staking.unlock(user, amount, { from: fakeGov });
-      const availBal = await staking.availBalance(user);
+      const availBal = await staking.availableBalance(user);
       availBal.should.be.bignumber.equal(amount);
     });
 
+  });
+
+  describe('Voting weight ', function () {
+    it('can be calculated', async () => {
+    });
   });
 
 });
