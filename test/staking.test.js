@@ -252,4 +252,3 @@ contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
   });
 
 });
-

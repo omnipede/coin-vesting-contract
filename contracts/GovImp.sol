@@ -11,4 +11,8 @@ contract GovImp is Gov, GovChecker {
     constructor(address _registry) public {
         setRegistry(_registry);
     }
+
+    function addProposal() external returns (bool) {
+        return true;
+    }
 }
