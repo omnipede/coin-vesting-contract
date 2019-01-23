@@ -34,14 +34,25 @@ contract Staking is GovChecker, ReentrancyGuard {
         return _balance[payee].sub(_lockedBalance[payee]);
     }
 
+    /**
+    * @dev Calculate voting weight which range between 0 and 100.
+    * @param payee The address whose funds were locked.
+    */
     function calcVotingWeight(address payee) public view returns (uint256) {
-        if (_lockedBalance[payee] == 0) return 0;
-        return _lockedBalance[payee].mul(100).div(_totalLockedBalance);
+        return calcVotingWeightWithScaleFactor(payee, 1e2);
     }
 
-    function calcVotingWeightByScaleFactor(address payee) public view returns (uint256) {
-        if (_lockedBalance[payee] == 0) return 0;
-        return _lockedBalance[payee].mul(100).div(_totalLockedBalance);
+    /**
+    * @dev Calculate voting weight with a scale factor.
+    * @param payee The address whose funds were locked.
+    * @param factor The scale factor for weight. For instance:
+    *               if 1e1, result range is between 0 ~ 10
+    *               if 1e2, result range is between 0 ~ 100
+    *               if 1e3, result range is between 0 ~ 1000
+    */
+    function calcVotingWeightWithScaleFactor(address payee, uint32 factor) public view returns (uint256) {
+        if (_lockedBalance[payee] == 0 || factor == 0) return 0;
+        return _lockedBalance[payee].mul(factor).div(_totalLockedBalance);
     }
 
     function () external payable {
