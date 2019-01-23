@@ -344,14 +344,14 @@
     "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/storage/BallotStorage.sol",
     "exportedSymbols": {
       "BallotsStorage": [
-        588
+        870
       ]
     },
-    "id": 589,
+    "id": 871,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 576,
+        "id": 858,
         "literals": [
           "solidity",
           "^",
@@ -364,10 +364,10 @@
       {
         "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/storage/EternalStorage.sol",
         "file": "./EternalStorage.sol",
-        "id": 577,
+        "id": 859,
         "nodeType": "ImportDirective",
-        "scope": 589,
-        "sourceUnit": 841,
+        "scope": 871,
+        "sourceUnit": 1123,
         "src": "26:30:9",
         "symbolAliases": [],
         "unitAlias": ""
@@ -375,9 +375,9 @@
       {
         "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/GovChecker.sol",
         "file": "../GovChecker.sol",
-        "id": 578,
+        "id": 860,
         "nodeType": "ImportDirective",
-        "scope": 589,
+        "scope": 871,
         "sourceUnit": 66,
         "src": "57:27:9",
         "symbolAliases": [],
@@ -389,17 +389,17 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 579,
+              "id": 861,
               "name": "EternalStorage",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 840,
+              "referencedDeclaration": 1122,
               "src": "114:14:9",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_EternalStorage_$840",
+                "typeIdentifier": "t_contract$_EternalStorage_$1122",
                 "typeString": "contract EternalStorage"
               }
             },
-            "id": 580,
+            "id": 862,
             "nodeType": "InheritanceSpecifier",
             "src": "114:14:9"
           },
@@ -407,7 +407,7 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 581,
+              "id": 863,
               "name": "GovChecker",
               "nodeType": "UserDefinedTypeName",
               "referencedDeclaration": 65,
@@ -417,35 +417,35 @@
                 "typeString": "contract GovChecker"
               }
             },
-            "id": 582,
+            "id": 864,
             "nodeType": "InheritanceSpecifier",
             "src": "130:10:9"
           }
         ],
         "contractDependencies": [
           65,
-          840,
-          1077
+          1122,
+          1359
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 588,
+        "id": 870,
         "linearizedBaseContracts": [
-          588,
+          870,
           65,
-          840,
-          1077
+          1122,
+          1359
         ],
         "name": "BallotsStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": true,
-            "id": 587,
+            "id": 869,
             "name": "OWNER",
             "nodeType": "VariableDeclaration",
-            "scope": 588,
+            "scope": 870,
             "src": "147:52:9",
             "stateVariable": true,
             "storageLocation": "default",
@@ -454,7 +454,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 583,
+              "id": 865,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "147:7:9",
@@ -469,7 +469,7 @@
                 {
                   "argumentTypes": null,
                   "hexValue": "6f776e6572",
-                  "id": 585,
+                  "id": 867,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -492,18 +492,18 @@
                     "typeString": "literal_string \"owner\""
                   }
                 ],
-                "id": 584,
+                "id": 866,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 1117,
+                "referencedDeclaration": 1399,
                 "src": "181:9:9",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
                   "typeString": "function () pure returns (bytes32)"
                 }
               },
-              "id": 586,
+              "id": 868,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -520,7 +520,7 @@
             "visibility": "internal"
           }
         ],
-        "scope": 589,
+        "scope": 871,
         "src": "87:115:9"
       }
     ],
@@ -530,14 +530,14 @@
     "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/storage/BallotStorage.sol",
     "exportedSymbols": {
       "BallotsStorage": [
-        588
+        870
       ]
     },
-    "id": 589,
+    "id": 871,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 576,
+        "id": 858,
         "literals": [
           "solidity",
           "^",
@@ -550,10 +550,10 @@
       {
         "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/storage/EternalStorage.sol",
         "file": "./EternalStorage.sol",
-        "id": 577,
+        "id": 859,
         "nodeType": "ImportDirective",
-        "scope": 589,
-        "sourceUnit": 841,
+        "scope": 871,
+        "sourceUnit": 1123,
         "src": "26:30:9",
         "symbolAliases": [],
         "unitAlias": ""
@@ -561,9 +561,9 @@
       {
         "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/GovChecker.sol",
         "file": "../GovChecker.sol",
-        "id": 578,
+        "id": 860,
         "nodeType": "ImportDirective",
-        "scope": 589,
+        "scope": 871,
         "sourceUnit": 66,
         "src": "57:27:9",
         "symbolAliases": [],
@@ -575,17 +575,17 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 579,
+              "id": 861,
               "name": "EternalStorage",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 840,
+              "referencedDeclaration": 1122,
               "src": "114:14:9",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_EternalStorage_$840",
+                "typeIdentifier": "t_contract$_EternalStorage_$1122",
                 "typeString": "contract EternalStorage"
               }
             },
-            "id": 580,
+            "id": 862,
             "nodeType": "InheritanceSpecifier",
             "src": "114:14:9"
           },
@@ -593,7 +593,7 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 581,
+              "id": 863,
               "name": "GovChecker",
               "nodeType": "UserDefinedTypeName",
               "referencedDeclaration": 65,
@@ -603,35 +603,35 @@
                 "typeString": "contract GovChecker"
               }
             },
-            "id": 582,
+            "id": 864,
             "nodeType": "InheritanceSpecifier",
             "src": "130:10:9"
           }
         ],
         "contractDependencies": [
           65,
-          840,
-          1077
+          1122,
+          1359
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 588,
+        "id": 870,
         "linearizedBaseContracts": [
-          588,
+          870,
           65,
-          840,
-          1077
+          1122,
+          1359
         ],
         "name": "BallotsStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": true,
-            "id": 587,
+            "id": 869,
             "name": "OWNER",
             "nodeType": "VariableDeclaration",
-            "scope": 588,
+            "scope": 870,
             "src": "147:52:9",
             "stateVariable": true,
             "storageLocation": "default",
@@ -640,7 +640,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 583,
+              "id": 865,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "147:7:9",
@@ -655,7 +655,7 @@
                 {
                   "argumentTypes": null,
                   "hexValue": "6f776e6572",
-                  "id": 585,
+                  "id": 867,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -678,18 +678,18 @@
                     "typeString": "literal_string \"owner\""
                   }
                 ],
-                "id": 584,
+                "id": 866,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 1117,
+                "referencedDeclaration": 1399,
                 "src": "181:9:9",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
                   "typeString": "function () pure returns (bytes32)"
                 }
               },
-              "id": 586,
+              "id": 868,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -706,7 +706,7 @@
             "visibility": "internal"
           }
         ],
-        "scope": 589,
+        "scope": 871,
         "src": "87:115:9"
       }
     ],
@@ -718,5 +718,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-21T01:07:04.574Z"
+  "updatedAt": "2019-01-22T07:50:18.596Z"
 }
