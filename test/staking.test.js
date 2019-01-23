@@ -36,22 +36,15 @@ contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
       assert.equal(amount.toNumber(), bal.toNumber());
     });
 
-    it('can stake through transfer', async () => {
-      const pre = await ethGetBalance(user);
-      await staking.sendTransaction({ value: amount, from: user, gas: 4e6 });
-      const post = await ethGetBalance(user);
-      pre.minus(post).should.be.bignumber.gt(amount);
-
-      const bal = await staking.balanceOf(user);
-      assert.equal(amount.toNumber(), bal.toNumber());
+    it('cannot stake through transfer', async () => {
+      await reverting(staking.sendTransaction({ value: amount, from: user, gas: 4e6 }));
     });
 
     it('cannot withdraw over balance', async () => {
       await reverting(staking.withdraw(amount, { from: user }));
       await staking.deposit({ value: amount, from: user });
       const bal = await staking.balanceOf(user);
-      const bal2x = bal * 2;
-      await reverting(staking.withdraw(bal2x, { from: user }));
+      await reverting(staking.withdraw(bal*2, { from: user }));
     });
 
     it('can withdraw partial', async () => {

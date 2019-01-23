@@ -39,14 +39,19 @@ contract Staking is GovChecker, ReentrancyGuard {
         return _lockedBalance[payee].mul(100).div(_totalLockedBalance);
     }
 
+    function calcVotingWeightByScaleFactor(address payee) public view returns (uint256) {
+        if (_lockedBalance[payee] == 0) return 0;
+        return _lockedBalance[payee].mul(100).div(_totalLockedBalance);
+    }
+
     function () external payable {
-        deposit();
+        revert();
     }
 
     /**
     * @dev Deposit from a sender.
     */
-    function deposit() public nonReentrant payable {
+    function deposit() external nonReentrant payable {
         require(msg.value > 0, "Deposit amount should be greater than zero");
 
         _balance[msg.sender] = _balance[msg.sender].add(msg.value);
