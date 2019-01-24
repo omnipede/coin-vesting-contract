@@ -1,11 +1,12 @@
 pragma solidity ^0.4.24;
 
-import "./EternalStorage.sol";
+import "./AEnvStorage.sol";
 import "../proxy/UpgradeabilityProxy.sol";
 
+contract EnvStorage is UpgradeabilityProxy, AEnvStorage {
 
-contract EnvStorage is UpgradeabilityProxy, EternalStorage {
-    constructor(address implementation) public {
+    constructor(address _registry, address implementation) public {
+        setRegistry(_registry);
         setImplementation(implementation);
     }
 }
