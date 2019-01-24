@@ -22,8 +22,7 @@
   "author": "Metadium",
   "license": "MIT",
   "dependencies": {
-    "openzeppelin-solidity": "^2.0.0",
-    "truffle": "^4.1.14"
+    "openzeppelin-solidity": "^2.0.0"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
@@ -46,6 +45,8 @@
     "ganache-cli": "^6.2.5",
     "solhint": "^1.5.0",
     "solidity-coverage": "^0.5.11",
-    "truffle-assertions": "^0.7.1"
+    "truffle": "^4.1.14",
+    "truffle-assertions": "^0.7.1",
+    "truffle-hdwallet-provider": "^1.0.2"
   }
 }
