@@ -10,23 +10,31 @@ const Gov = artifacts.require('Gov.sol');
 const GovImp = artifacts.require('GovImp.sol');
 
 contract('Governance', function ([deployer, govMem1, user1]) {
-  let registry, staking, govImp, gov;
+  let registry, staking, govImp, gov, govDelegator;
 
   beforeEach(async () => {
     registry = await Registry.new();
     staking = await Staking.new(registry.address);
     govImp = await GovImp.new({ from: deployer, gas: 10000000 });
-    gov = await Gov.new(registry.address, govImp.address);
-    gov = await GovImp.at(gov);
+    gov = await Gov.new();
+    await gov.init(registry.address, govImp.address);
+    govDelegator = await GovImp.at(gov.address);
     
     await registry.setContractDomain("Staking", staking.address);
     await registry.setContractDomain("GovernanceContract", gov.address);
   });
 
+  describe('Governance ', function () {
+    it('cannot init twice', async () => {
+        await reverting(gov.init(registry.address, govImp.address));
+    });
+
+  });
+
   describe('Member ', function () {
     it('can addProposal', async () => {
-      const ret = await gov.addProposal({ from: govMem1 });
-      assert.equal(ret, true);
+      const ret = await govDelegator.addProposal({ from: govMem1 });
+      assert.equal(ret.receipt.status, '0x1');
     });
 
     it('can vote', async () => {
