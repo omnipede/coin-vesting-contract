@@ -15,8 +15,9 @@ contract('Governance', function ([deployer, govMem1, user1]) {
   beforeEach(async () => {
     registry = await Registry.new();
     staking = await Staking.new(registry.address);
-    govImp = await GovImp.new(registry.address);
-    gov = await Gov.new(govImp.address);
+    govImp = await GovImp.new();
+    gov = await Gov.new(registry.address, govImp.address, { gas: 1e12 });
+    gov = await GovImp.at(gov);
 
     await registry.setContractDomain("Staking", staking.address);
     await registry.setContractDomain("GovernanceContract", gov.address);
@@ -24,7 +25,7 @@ contract('Governance', function ([deployer, govMem1, user1]) {
 
   describe('Member ', function () {
     it('can addProposal', async () => {
-      const ret = await govImp.addProposal({ from: govMem1 });
+      const ret = await gov.addProposal({ from: govMem1 });
       assert.equal(ret, true);
     });
 

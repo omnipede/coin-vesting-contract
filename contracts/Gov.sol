@@ -7,9 +7,10 @@ contract Gov is UpgradeabilityProxy {
     mapping(int => address) public member;
     uint public memberLength;
 
-
-    constructor(address implementation) public {
+    constructor(address registry, address implementation) public {
         memberLength = 0;
         setImplementation(implementation);
+        bool ret = implementation.delegatecall(bytes4(keccak256("setRegistry(address)")), registry);
+        if (!ret) revert();
     }
 }
