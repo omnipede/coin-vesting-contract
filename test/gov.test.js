@@ -15,7 +15,7 @@ contract('Governance', function ([deployer, govMem1, user1]) {
   beforeEach(async () => {
     registry = await Registry.new();
     staking = await Staking.new(registry.address);
-    govImp = await GovImp.new({ from: deployer, gas: 10000000 });
+    govImp = await GovImp.new();
     gov = await Gov.new();
     await gov.init(registry.address, govImp.address);
     govDelegator = await GovImp.at(gov.address);
@@ -32,9 +32,13 @@ contract('Governance', function ([deployer, govMem1, user1]) {
   });
 
   describe('Member ', function () {
-    it('can addProposal', async () => {
-      const ret = await govDelegator.addProposal({ from: govMem1 });
+    it('can addProposal if deployer', async () => {
+      const ret = await govDelegator.addProposal({ from: deployer });
       assert.equal(ret.receipt.status, '0x1');
+    });
+
+    it('cannot addProposal before member', async () => {
+      await reverting(govDelegator.addProposal({ from: govMem1 }));
     });
 
     it('can vote', async () => {

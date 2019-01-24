@@ -1,18 +1,24 @@
 pragma solidity ^0.4.24;
 
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "./proxy/UpgradeabilityProxy.sol";
 import "./GovChecker.sol";
 
 
 contract Gov is UpgradeabilityProxy, GovChecker {
+    using SafeMath for uint256;
+
     bool private initialized;
 
-    mapping(int => address) public member;
-    uint public memberLength;
+    mapping(uint256 => address) private idxToMember;
+    mapping(address => uint256) public memberToIdx;
+    uint256 public memberLength;
 
     constructor() {
         initialized = false;
-        memberLength = 0;
+        memberLength = memberLength.add(1);
+        idxToMember[memberLength] = msg.sender;
+        memberToIdx[msg.sender] = memberLength;
     }
 
     function init(address registry, address implementation) public onlyOwner {
