@@ -15,10 +15,10 @@ contract('Governance', function ([deployer, govMem1, user1]) {
   beforeEach(async () => {
     registry = await Registry.new();
     staking = await Staking.new(registry.address);
-    govImp = await GovImp.new();
-    gov = await Gov.new(registry.address, govImp.address, { gas: 1e12 });
+    govImp = await GovImp.new({ from: deployer, gas: 10000000 });
+    gov = await Gov.new(registry.address, govImp.address);
     gov = await GovImp.at(gov);
-
+    
     await registry.setContractDomain("Staking", staking.address);
     await registry.setContractDomain("GovernanceContract", gov.address);
   });
