@@ -2,6 +2,7 @@ pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./Registry.sol";
+import "./Gov.sol";
 
 
 /**
@@ -28,9 +29,9 @@ contract GovChecker is Ownable {
     }
 
     modifier onlyGovMem() {
-        // TODO: need to update
-        // require(isPermitted(msg.sender), "No Permission");
-        require(false, "No Permission");
+        address addr = REG.getContractAddress(GOV_NAME);
+        require(addr != address(0), "No Governance");
+        require(Gov(addr).memberToIdx(msg.sender) != 0, "No Permission");
         _;
     }
 
