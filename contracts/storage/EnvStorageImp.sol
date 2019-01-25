@@ -7,10 +7,9 @@ contract EnvStorageImp is AEnvStorage,EnumVariableTypes {
     bytes32 internal constant BLOCK_PER_NAME = keccak256("blockPer"); 
     uint256 internal constant BLOCK_PER_TYPE = uint256(VariableTypes.Uint);
 
-    function getBlockPer() public view returns (uint256 ttype, string tvalue) {
-        ttype = getBlockPerType();
-        tvalue = getBlockPerValue();
-       // return get(BLOCK_PER_NAME);
+    function getBlockPer() public view returns (uint256 varType, string varVal) {
+        varType = getBlockPerType();
+        varVal = getBlockPerValue();
     }
     function getBlockPerType() public view returns (uint256) {
         return getType(BLOCK_PER_NAME);
