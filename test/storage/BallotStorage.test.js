@@ -17,7 +17,7 @@ require('chai')
   .should();
 
 contract('BallotStorage', accounts => {
-    const [deployer, creator, addMem,govAddr,govAddr2] = accounts;
+    const [deployer, creator, addMem,addMem2,govAddr,govAddr2] = accounts;
     let registry, staking,ballotStorage;
 
   beforeEach(async () => {
@@ -30,14 +30,14 @@ contract('BallotStorage', accounts => {
   });
 
     describe('Ballot', function () {
-        //1. 투표 생성 - 멤버 추가 member 생성 ( onlyGov 체크)
-        //2. 투표 생성 - 멤버 삭제  ( onlyGov 체크)
-        //3. 투표 생성 - 멤버 교체  ( onlyGov 체크)
-        //4. 투표 생성 - 멤버 가버넌스 컨트렉트 교체  ( onlyGov 체크)
-        //5. 투표 생성 - 환경 변수 변경  ( onlyGov 체크)
-        //6. 생성시 체크 - onlyGov/ 이미 생성된 투표 체크
+        //1. 투표 생성 - 멤버 추가 member 생성 ( onlyGov 체크) - O
+        //2. 투표 생성 - 멤버 삭제  ( onlyGov 체크) - O
+        //3. 투표 생성 - 멤버 교체  ( onlyGov 체크) - O
+        //4. 투표 생성 - 멤버 가버넌스 컨트렉트 교체  ( onlyGov 체크) - O
+        //5. 투표 생성 - 환경 변수 변경  ( onlyGov 체크) - O
+        //6. 이미 생성된 투표 체크 (ballotId) - O
         //7. start<end time Error
-        //8. 
+
         it('Canot create Ballot for MemberAdd.(not govAddr', async () => {
             let _id = new web3.BigNumber(1);
             let _start_date = moment.utc().add(20, 'seconds').unix();
@@ -61,7 +61,154 @@ contract('BallotStorage', accounts => {
                 _nodePort, //newNodePort
                 { value: 0, from: creator }
             ));
+
+
         });
+        it('Canot create Ballot for MemberAdd by Invalid param(oldMemberAddress)', async () => {
+            let _id = new web3.BigNumber(1);
+            let _start_date = moment.utc().add(20, 'seconds').unix();
+            let _end_date = moment.utc().add(10, 'days').unix();
+            let _ballotType = new web3.BigNumber(1);
+            let _memo= "test message for ballot";
+            let _enodeid = web3Utils.hexToBytes('0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0');
+            let _nodeip = "123.11.111.111";
+            let _nodePort = 9545;
+            //case oldMemberAddress is set
+            await reverting(ballotStorage.createBallotForMemeber(
+                _id,  //ballot id 
+                _start_date, // start_date
+                _end_date,// end_date
+                _ballotType,  //ballot type
+                creator,  //creator
+                _memo, //memo
+                addMem, // oldMemberAddress
+                addMem2, // newMemberAddress
+                _enodeid, //newNodeId
+                _nodeip, //newNodeIp
+                _nodePort, //newNodePort
+                { value: 0, from: creator }
+            ));
+        });
+        it('Canot create Ballot for MemberAdd by Invalid param(mewMemberAddress)', async () => {
+            let _id = new web3.BigNumber(1);
+            let _start_date = moment.utc().add(20, 'seconds').unix();
+            let _end_date = moment.utc().add(10, 'days').unix();
+            let _ballotType = new web3.BigNumber(1);
+            let _memo= "test message for ballot";
+            let _enodeid = web3Utils.hexToBytes('0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0');
+            let _nodeip = "123.11.111.111";
+            let _nodePort = 9545;
+            //case mewMemberAddress is not set
+            await reverting(ballotStorage.createBallotForMemeber(
+                _id,  //ballot id 
+                _start_date, // start_date
+                _end_date,// end_date
+                _ballotType,  //ballot type
+                creator,  //creator
+                _memo, //memo
+                ZERO_ADDRESS, // oldMemberAddress
+                ZERO_ADDRESS, // newMemberAddress
+                _enodeid, //newNodeId
+                _nodeip, //newNodeIp
+                _nodePort, //newNodePort
+                { value: 0, from: creator }
+            ));
+            await reverting(ballotStorage.createBallotForMemeber(
+                _id,  //ballot id 
+                _start_date, // start_date
+                _end_date,// end_date
+                _ballotType,  //ballot type
+                creator,  //creator
+                _memo, //memo
+                '0xabbb12', // oldMemberAddress
+                ZERO_ADDRESS, // newMemberAddress
+                _enodeid, //newNodeId
+                _nodeip, //newNodeIp
+                _nodePort, //newNodePort
+                { value: 0, from: creator }
+            ));
+        });
+        it('Canot create Ballot for MemberAdd by null param(newNodeId)', async () => {
+            let _id = new web3.BigNumber(1);
+            let _start_date = moment.utc().add(20, 'seconds').unix();
+            let _end_date = moment.utc().add(10, 'days').unix();
+            let _ballotType = new web3.BigNumber(1);
+            let _memo= "test message for ballot";
+            let _enodeid ='';
+            let _nodeip = "123.11.111.111";
+            let _nodePort = 9545;
+            
+            //case newNodeId is not set
+            await reverting(ballotStorage.createBallotForMemeber(
+                _id,  //ballot id 
+                _start_date, // start_date
+                _end_date,// end_date
+                _ballotType,  //ballot type
+                creator,  //creator
+                _memo, //memo
+                ZERO_ADDRESS, // oldMemberAddress
+                addMem, // newMemberAddress
+                _enodeid, //newNodeId
+                _nodeip, //newNodeIp
+                _nodePort, //newNodePort
+                { value: 0, from: creator }
+            ));
+        });
+        it('Canot create Ballot for MemberAdd by null param(newNodeIp)', async () => {
+            let _id = new web3.BigNumber(1);
+            let _start_date = moment.utc().add(20, 'seconds').unix();
+            let _end_date = moment.utc().add(10, 'days').unix();
+            let _ballotType = new web3.BigNumber(1);
+            let _memo= "test message for ballot";
+            let _enodeid = web3Utils.hexToBytes('0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0');
+            let _nodeip = '';
+            let _nodePort = 9545;
+
+            //case newNodeIp is not set
+            await reverting(ballotStorage.createBallotForMemeber(
+                _id,  //ballot id 
+                _start_date, // start_date
+                _end_date,// end_date
+                _ballotType,  //ballot type
+                creator,  //creator
+                _memo, //memo
+                ZERO_ADDRESS, // oldMemberAddress
+                addMem, // newMemberAddress
+                _enodeid, //newNodeId
+                _nodeip, //newNodeIp
+                _nodePort, //newNodePort
+                { value: 0, from: creator }
+            ));
+        });
+        it('Canot create Ballot for MemberAdd by null param(newNodePort)', async () => {
+            let _id = new web3.BigNumber(1);
+            let _start_date = moment.utc().add(20, 'seconds').unix();
+            let _end_date = moment.utc().add(10, 'days').unix();
+            let _ballotType = new web3.BigNumber(1);
+            let _memo= "test message for ballot";
+            let _enodeid = web3Utils.hexToBytes('0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0');
+            let _nodeip = "123.11.111.111";
+            let _nodePort = 0;
+
+             //case newNodePort is not set
+             await reverting(ballotStorage.createBallotForMemeber(
+                _id,  //ballot id 
+                _start_date, // start_date
+                _end_date,// end_date
+                _ballotType,  //ballot type
+                creator,  //creator
+                _memo, //memo
+                ZERO_ADDRESS, // oldMemberAddress
+                addMem, // newMemberAddress
+                _enodeid, //newNodeId
+                _nodeip, //newNodeIp
+                _nodePort, //newNodePort
+                { value: 0, from: creator }
+            ));
+        });
+
+
+
         it('create Ballot for MemberAdd', async () => {
             let _id = 1;
             let _start_date = moment.utc().add(20, 'seconds').unix();
@@ -111,6 +258,79 @@ contract('BallotStorage', accounts => {
             assert.equal(ballotDetailInfo[5], _nodePort);
 
         });
+        it('cannot create Ballot by duplicated id ', async () => {
+            let _id = 1;
+            let _start_date = moment.utc().add(20, 'seconds').unix();
+            let _end_date = moment.utc().add(10, 'days').unix();
+            let _ballotType = 1; // new web3.BigNumber(1);
+            let _memo= "test message for ballot";
+            let _enodeid ='0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0';
+            //let _enodeid = web3Utils.hexToBytes(_enodidHexString);
+            let _nodeip = "123.11.111.111";
+            let _nodePort = 9545;
+            await ballotStorage.createBallotForMemeber(
+                _id,  //ballot id 
+                _start_date, // start_date
+                _end_date,// end_date
+                _ballotType,  //ballot type
+                creator,  //creator
+                _memo, //memo
+                ZERO_ADDRESS, // oldMemberAddress
+                addMem, // newMemberAddress
+                _enodeid, //newNodeId
+                _nodeip, //newNodeIp
+                _nodePort, //newNodePort
+                { value: 0, from: govAddr }
+            ); //.should.be.rejectedWith(ERROR_MSG);
+
+            let _start_date2 = moment.utc().add(20, 'seconds').unix();
+            let _end_date2 = moment.utc().add(10, 'days').unix();
+            let _ballotType2 = 1; // new web3.BigNumber(1);
+            let _memo2= "test message for ballot2";
+            let _enodeid2 ='0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92bb';
+            //let _enodeid = web3Utils.hexToBytes(_enodidHexString);
+            let _nodeip2 = "123.11.111.112";
+            let _nodePort2 = 9541;
+            await reverting( ballotStorage.createBallotForMemeber(
+                _id,  //ballot id 
+                _start_date2, // start_date
+                _end_date2,// end_date
+                _ballotType2,  //ballot type
+                creator,  //creator
+                _memo2, //memo
+                ZERO_ADDRESS, // oldMemberAddress
+                addMem2, // newMemberAddress
+                _enodeid2, //newNodeId
+                _nodeip2, //newNodeIp
+                _nodePort2, //newNodePort
+                { value: 0, from: govAddr }
+            )); //.should.be.rejectedWith(ERROR_MSG);
+
+            const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
+            //console.log(`MemberBallotBasic : ${ballotBasicInfo}`);
+            assert.equal(ballotBasicInfo[0], _id);
+            assert.equal(ballotBasicInfo[1], _start_date);
+            assert.equal(ballotBasicInfo[2], _end_date);
+            assert.equal(ballotBasicInfo[3], _ballotType);
+            assert.equal(ballotBasicInfo[4], creator);
+            assert.equal(ballotBasicInfo[5], _memo);
+            ballotBasicInfo[6].should.be.bignumber.equal(0);
+            ballotBasicInfo[7].should.be.bignumber.equal(0);
+            ballotBasicInfo[8].should.be.bignumber.equal(0);
+            ballotBasicInfo[9].should.be.bignumber.equal(1);
+            assert.equal(ballotBasicInfo[10], false);
+
+            const ballotDetailInfo = await ballotStorage.getBallotMember(_id);
+            //console.log(`MemberBallot : ${ballotDetailInfo}`);
+            assert.equal(ballotDetailInfo[0], _id);
+            // assert.equal(ballotDetailInfo[1], ZERO_ADDRESS);
+            assert.equal(ballotDetailInfo[2], addMem);
+            assert.equal(ballotDetailInfo[3], _enodeid);
+            assert.equal(ballotDetailInfo[4], _nodeip);
+            assert.equal(ballotDetailInfo[5], _nodePort);
+
+        });
+
         it('Canot create Ballot for Governance Address(not govAddr)', async () => {
             let _id = new web3.BigNumber(2);
             let _start_date = moment.utc().add(20, 'seconds').unix();
@@ -193,7 +413,7 @@ contract('BallotStorage', accounts => {
             let _id = new web3.BigNumber(4);
             let _start_date = moment.utc().add(20, 'seconds').unix();
             let _end_date = moment.utc().add(10, 'days').unix();
-            let _ballotType = new web3.BigNumber(4);
+            let _ballotType = new web3.BigNumber(5);
             let _memo= "test message for ballot";
             let _varName = web3.sha3('blockPer');
             let _varType = new web3.BigNumber(2);
@@ -230,14 +450,14 @@ contract('BallotStorage', accounts => {
             assert.equal(ballotBasicInfo[10], false);
 
             const ballotDetailInfo = await ballotStorage.getBallotVariable(_id);
-            console.log(`VariableBallot : ${ballotDetailInfo}`);
+            // console.log(`VariableBallot : ${ballotDetailInfo}`);
             //assert.equal(ballotDetailInfo[0], _id);
             ballotDetailInfo[0].should.be.bignumber.equal(_id);
             assert.equal(ballotDetailInfo[1], _varName);
             //assert.equal(ballotDetailInfo[2], _varType);
             ballotDetailInfo[2].should.be.bignumber.equal(_varType);
             let _val = web3Utils.hexToNumber(ballotDetailInfo[3]);
-            console.log(`Variable Value : ${_val}`);
+            // console.log(`Variable Value : ${_val}`);
             assert.equal(ballotDetailInfo[3], _varVal);
         });
     });
