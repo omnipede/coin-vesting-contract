@@ -49,4 +49,11 @@ contract('Governance', function ([deployer, govMem1, user1]) {
 
   });
 
+  describe('Others ', function () {
+    it('cannot addProposal', async () => {
+      await reverting(govDelegator.addProposal({ from: user1 }));
+    });
+
+  });
+
 });

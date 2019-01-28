@@ -344,14 +344,14 @@
     "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/storage/EnvStorage.sol",
     "exportedSymbols": {
       "EnvStorage": [
-        889
+        1007
       ]
     },
-    "id": 890,
+    "id": 1008,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 872,
+        "id": 990,
         "literals": [
           "solidity",
           "^",
@@ -364,10 +364,10 @@
       {
         "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/storage/EternalStorage.sol",
         "file": "./EternalStorage.sol",
-        "id": 873,
+        "id": 991,
         "nodeType": "ImportDirective",
-        "scope": 890,
-        "sourceUnit": 1123,
+        "scope": 1008,
+        "sourceUnit": 1241,
         "src": "26:30:10",
         "symbolAliases": [],
         "unitAlias": ""
@@ -375,10 +375,10 @@
       {
         "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/proxy/UpgradeabilityProxy.sol",
         "file": "../proxy/UpgradeabilityProxy.sol",
-        "id": 874,
+        "id": 992,
         "nodeType": "ImportDirective",
-        "scope": 890,
-        "sourceUnit": 857,
+        "scope": 1008,
+        "sourceUnit": 975,
         "src": "57:42:10",
         "symbolAliases": [],
         "unitAlias": ""
@@ -389,17 +389,17 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 875,
+              "id": 993,
               "name": "UpgradeabilityProxy",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 856,
+              "referencedDeclaration": 974,
               "src": "125:19:10",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_UpgradeabilityProxy_$856",
+                "typeIdentifier": "t_contract$_UpgradeabilityProxy_$974",
                 "typeString": "contract UpgradeabilityProxy"
               }
             },
-            "id": 876,
+            "id": 994,
             "nodeType": "InheritanceSpecifier",
             "src": "125:19:10"
           },
@@ -407,44 +407,44 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 877,
+              "id": 995,
               "name": "EternalStorage",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1122,
+              "referencedDeclaration": 1240,
               "src": "146:14:10",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_EternalStorage_$1122",
+                "typeIdentifier": "t_contract$_EternalStorage_$1240",
                 "typeString": "contract EternalStorage"
               }
             },
-            "id": 878,
+            "id": 996,
             "nodeType": "InheritanceSpecifier",
             "src": "146:14:10"
           }
         ],
         "contractDependencies": [
-          790,
-          856,
-          1122,
-          1359
+          908,
+          974,
+          1240,
+          1477
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 889,
+        "id": 1007,
         "linearizedBaseContracts": [
-          889,
-          1122,
-          1359,
-          856,
-          790
+          1007,
+          1240,
+          1477,
+          974,
+          908
         ],
         "name": "EnvStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 887,
+              "id": 1005,
               "nodeType": "Block",
               "src": "210:50:10",
               "statements": [
@@ -454,11 +454,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 884,
+                        "id": 1002,
                         "name": "implementation",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 880,
+                        "referencedDeclaration": 998,
                         "src": "238:14:10",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -473,18 +473,18 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 883,
+                      "id": 1001,
                       "name": "setImplementation",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 830,
+                      "referencedDeclaration": 948,
                       "src": "220:17:10",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 885,
+                    "id": 1003,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -498,14 +498,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 886,
+                  "id": 1004,
                   "nodeType": "ExpressionStatement",
                   "src": "220:33:10"
                 }
               ]
             },
             "documentation": null,
-            "id": 888,
+            "id": 1006,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
@@ -513,15 +513,15 @@
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 881,
+              "id": 999,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 880,
+                  "id": 998,
                   "name": "implementation",
                   "nodeType": "VariableDeclaration",
-                  "scope": 888,
+                  "scope": 1006,
                   "src": "179:22:10",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -530,7 +530,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 879,
+                    "id": 997,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "179:7:10",
@@ -547,19 +547,19 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 882,
+              "id": 1000,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "210:0:10"
             },
-            "scope": 889,
+            "scope": 1007,
             "src": "167:93:10",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 890,
+        "scope": 1008,
         "src": "102:160:10"
       }
     ],
@@ -569,14 +569,14 @@
     "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/storage/EnvStorage.sol",
     "exportedSymbols": {
       "EnvStorage": [
-        889
+        1007
       ]
     },
-    "id": 890,
+    "id": 1008,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 872,
+        "id": 990,
         "literals": [
           "solidity",
           "^",
@@ -589,10 +589,10 @@
       {
         "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/storage/EternalStorage.sol",
         "file": "./EternalStorage.sol",
-        "id": 873,
+        "id": 991,
         "nodeType": "ImportDirective",
-        "scope": 890,
-        "sourceUnit": 1123,
+        "scope": 1008,
+        "sourceUnit": 1241,
         "src": "26:30:10",
         "symbolAliases": [],
         "unitAlias": ""
@@ -600,10 +600,10 @@
       {
         "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/proxy/UpgradeabilityProxy.sol",
         "file": "../proxy/UpgradeabilityProxy.sol",
-        "id": 874,
+        "id": 992,
         "nodeType": "ImportDirective",
-        "scope": 890,
-        "sourceUnit": 857,
+        "scope": 1008,
+        "sourceUnit": 975,
         "src": "57:42:10",
         "symbolAliases": [],
         "unitAlias": ""
@@ -614,17 +614,17 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 875,
+              "id": 993,
               "name": "UpgradeabilityProxy",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 856,
+              "referencedDeclaration": 974,
               "src": "125:19:10",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_UpgradeabilityProxy_$856",
+                "typeIdentifier": "t_contract$_UpgradeabilityProxy_$974",
                 "typeString": "contract UpgradeabilityProxy"
               }
             },
-            "id": 876,
+            "id": 994,
             "nodeType": "InheritanceSpecifier",
             "src": "125:19:10"
           },
@@ -632,44 +632,44 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 877,
+              "id": 995,
               "name": "EternalStorage",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1122,
+              "referencedDeclaration": 1240,
               "src": "146:14:10",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_EternalStorage_$1122",
+                "typeIdentifier": "t_contract$_EternalStorage_$1240",
                 "typeString": "contract EternalStorage"
               }
             },
-            "id": 878,
+            "id": 996,
             "nodeType": "InheritanceSpecifier",
             "src": "146:14:10"
           }
         ],
         "contractDependencies": [
-          790,
-          856,
-          1122,
-          1359
+          908,
+          974,
+          1240,
+          1477
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 889,
+        "id": 1007,
         "linearizedBaseContracts": [
-          889,
-          1122,
-          1359,
-          856,
-          790
+          1007,
+          1240,
+          1477,
+          974,
+          908
         ],
         "name": "EnvStorage",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 887,
+              "id": 1005,
               "nodeType": "Block",
               "src": "210:50:10",
               "statements": [
@@ -679,11 +679,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 884,
+                        "id": 1002,
                         "name": "implementation",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 880,
+                        "referencedDeclaration": 998,
                         "src": "238:14:10",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -698,18 +698,18 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 883,
+                      "id": 1001,
                       "name": "setImplementation",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 830,
+                      "referencedDeclaration": 948,
                       "src": "220:17:10",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 885,
+                    "id": 1003,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -723,14 +723,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 886,
+                  "id": 1004,
                   "nodeType": "ExpressionStatement",
                   "src": "220:33:10"
                 }
               ]
             },
             "documentation": null,
-            "id": 888,
+            "id": 1006,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
@@ -738,15 +738,15 @@
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 881,
+              "id": 999,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 880,
+                  "id": 998,
                   "name": "implementation",
                   "nodeType": "VariableDeclaration",
-                  "scope": 888,
+                  "scope": 1006,
                   "src": "179:22:10",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -755,7 +755,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 879,
+                    "id": 997,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "179:7:10",
@@ -772,19 +772,19 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 882,
+              "id": 1000,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "210:0:10"
             },
-            "scope": 889,
+            "scope": 1007,
             "src": "167:93:10",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 890,
+        "scope": 1008,
         "src": "102:160:10"
       }
     ],
@@ -796,5 +796,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-22T07:50:18.596Z"
+  "updatedAt": "2019-01-28T01:31:24.627Z"
 }
