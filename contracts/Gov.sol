@@ -10,8 +10,8 @@ contract Gov is UpgradeabilityProxy, GovChecker {
     bool private initialized;
 
     // For member
-    mapping(uint256 => address) public idxToMember;
-    mapping(address => uint256) public memberToIdx;
+    mapping(uint256 => address) public members;
+    mapping(address => uint256) public memberIdx;
     uint256 public memberLength;
 
     // For enode
@@ -21,6 +21,8 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         uint port;
     }
     mapping(uint256 => Node) public nodes;
+    mapping(address => uint256) public nodeIdxFromMember;
+    mapping(uint256 => address) public nodeToMember;
     uint256 public nodeLength;
 
     // For ballot
@@ -33,7 +35,16 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         ballotLength = 0;
     }
 
-    function init(address registry, address implementation, uint256 lockAmount) public onlyOwner {
+    function init(
+        address registry,
+        address implementation,
+        uint256 lockAmount,
+        bytes enode,
+        bytes ip,
+        uint port
+    )
+        public onlyOwner
+    {
         require(initialized == false, "Already initialized");
         initialized = true;
         setRegistry(registry);
@@ -46,9 +57,16 @@ contract Gov is UpgradeabilityProxy, GovChecker {
 
         // Add member
         memberLength = 1;
-        idxToMember[memberLength] = msg.sender;
-        memberToIdx[msg.sender] = memberLength;
+        members[memberLength] = msg.sender;
+        memberIdx[msg.sender] = memberLength;
 
         // Add node
+        nodeLength = 1;
+        Node storage node = nodes[nodeLength];
+        node.enode = enode;
+        node.ip = ip;
+        node.port = port;
+        nodeIdxFromMember[msg.sender] = nodeLength;
+        nodeToMember[nodeLength] = msg.sender;
     }
 }
