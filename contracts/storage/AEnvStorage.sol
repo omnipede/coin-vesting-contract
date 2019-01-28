@@ -2,6 +2,7 @@ pragma solidity ^0.4.24;
 
 import "../GovChecker.sol";
 
+
 contract AEnvStorage is GovChecker {
     struct Variable {
         bytes32 _name;

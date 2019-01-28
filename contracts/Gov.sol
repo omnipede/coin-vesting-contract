@@ -46,7 +46,7 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         public onlyOwner
     {
         require(initialized == false, "Already initialized");
-        initialized = true;
+
         setRegistry(registry);
         setImplementation(implementation);
 
@@ -68,5 +68,7 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         node.port = port;
         nodeIdxFromMember[msg.sender] = nodeLength;
         nodeToMember[nodeLength] = msg.sender;
+
+        initialized = true;
     }
 }
