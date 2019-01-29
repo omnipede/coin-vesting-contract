@@ -1,8 +1,19 @@
 pragma solidity ^0.4.24;
 
 contract BallotEnums {
-    enum BallotStates {Invalid, InProgress, Accepted, Rejected}
-    enum DecisionTypes {Invalid, Accept, Reject}
+    enum BallotStates {
+        Invalid,
+        InProgress,
+        Accepted,
+        Rejected
+    }
+
+    enum DecisionTypes {
+        Invalid,
+        Accept,
+        Reject
+    }
+
     enum BallotTypes {
         Invalid,
         MemberAdd,  // new Member Address, new Node id, new Node ip, new Node port

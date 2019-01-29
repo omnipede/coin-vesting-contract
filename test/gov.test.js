@@ -17,7 +17,7 @@ const ip = '127.0.0.1';
 const port = 8542;
 const memo = 'memo';
 
-contract('Governance', function ([deployer, govMem1, user1]) {
+contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, govMem5, user1]) {
   let registry, staking, ballotStorage, govImp, gov, govDelegator;
   const amount = ether(1e2);
 
@@ -56,8 +56,18 @@ contract('Governance', function ([deployer, govMem1, user1]) {
       await reverting(gov.init(registry.address, govImp.address, amount, enode, ip, port));
     });
 
+    it('cannot addProposal for adding member self', async () => {
+      await reverting(govDelegator.addProposalToAddMember(deployer, enode, ip, port, memo, { from: deployer }));
+    });
+
     it('can addProposal for adding member', async () => {
-      await govDelegator.addProposalForAddMember(govMem1, enode, ip, port, memo, { from: deployer });
+      await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, memo, { from: deployer });
+      const len = await gov.ballotLength();
+      len.should.be.bignumber.equal(1);
+
+      await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, memo, { from: deployer });
+      const len2 = await gov.ballotLength();
+      len2.should.be.bignumber.equal(2);
     });
 
     it('can vote', async () => {
@@ -70,7 +80,7 @@ contract('Governance', function ([deployer, govMem1, user1]) {
     });
 
     it('cannot addProposal for adding member self', async () => {
-      await reverting(govDelegator.addProposalForAddMember(govMem1, enode, ip, port, memo, { from: govMem1 }));
+      await reverting(govDelegator.addProposalToAddMember(govMem1, enode, ip, port, memo, { from: govMem1 }));
     });
 
     it('can vote', async () => {
@@ -85,7 +95,9 @@ contract('Governance', function ([deployer, govMem1, user1]) {
     });
 
     it('cannot addProposal', async () => {
-      await reverting(govDelegator.addProposalForAddMember(govMem1, enode, ip, port, memo, { from: user1 }));
+      await reverting(govDelegator.addProposalToAddMember(govMem1, enode, ip, port, memo, { from: user1 }));
+      await reverting(govDelegator.addProposalToRemoveMember(govMem1, memo, { from: user1 }));
+      await reverting(govDelegator.addProposalToChangeMember(govMem1, govMem2, enode, ip, port, memo, { from: user1 }));
     });
 
   });

@@ -5,7 +5,9 @@ contract EnumVotingTypes {
     enum VotingTypes {
         Invalid,
         AddMember,
-        SubMember,
-        ReplaceMember
+        RemoveMember,
+        ChangeMember,
+        ChangeGovernance,
+        ChangeEnvironment
     }
 }
