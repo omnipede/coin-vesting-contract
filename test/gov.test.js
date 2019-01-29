@@ -1,4 +1,5 @@
 const { reverting } = require('openzeppelin-solidity/test/helpers/shouldFail');
+const { ether } = require('openzeppelin-solidity/test/helpers/ether');
 
 require('chai')
   .use(require('chai-bignumber')(web3.BigNumber))
@@ -6,45 +7,97 @@ require('chai')
 
 const Registry = artifacts.require('Registry.sol');
 const Staking = artifacts.require('Staking.sol');
+const BallotStorage = artifacts.require('BallotStorage.sol');
 const Gov = artifacts.require('Gov.sol');
 const GovImp = artifacts.require('GovImp.sol');
 
-contract('Governance', function ([deployer, govMem1, user1]) {
-  let registry, staking, govImp, gov, govDelegator;
+// eslint-disable-next-line max-len
+const enode = '0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0';
+const ip = '127.0.0.1';
+const port = 8542;
+const memo = 'memo';
+
+contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, govMem5, user1]) {
+  let registry, staking, ballotStorage, govImp, gov, govDelegator;
+  const amount = ether(1e2);
 
   beforeEach(async () => {
     registry = await Registry.new();
     staking = await Staking.new(registry.address);
+    ballotStorage = await BallotStorage.new(registry.address);
     govImp = await GovImp.new();
     gov = await Gov.new();
-    await gov.init(registry.address, govImp.address);
-    govDelegator = await GovImp.at(gov.address);
-    
+
+    await registry.setContractDomain("BallotStorage", ballotStorage.address);
     await registry.setContractDomain("Staking", staking.address);
     await registry.setContractDomain("GovernanceContract", gov.address);
+
+    // Initialize for staking
+    await staking.deposit({ value: amount, from: deployer });
+
+    // Initialize governance
+    await gov.init(registry.address, govImp.address, amount, enode, ip, port);
+    govDelegator = await GovImp.at(gov.address);
   });
 
-  describe('Governance ', function () {
+  describe('Deployer ', function () {
+    it('has enode and locked staking', async () => {
+      const locked = await staking.lockedBalanceOf(deployer);
+      locked.should.be.bignumber.equal(amount);
+      const idx = await gov.nodeIdxFromMember(deployer);
+      assert.notEqual(idx, 0);
+      const [ nEnode, nIp, nPort ] = await gov.nodes(idx);
+      nEnode.should.equal(enode);
+      web3.toUtf8(nIp).should.equal(ip);
+      nPort.should.be.bignumber.equal(port);
+    });
+
     it('cannot init twice', async () => {
-        await reverting(gov.init(registry.address, govImp.address));
+      await reverting(gov.init(registry.address, govImp.address, amount, enode, ip, port));
     });
 
-  });
-
-  describe('Member ', function () {
-    it('can addProposal if deployer', async () => {
-      const ret = await govDelegator.addProposal({ from: deployer });
-      assert.equal(ret.receipt.status, '0x1');
+    it('cannot addProposal for adding member self', async () => {
+      await reverting(govDelegator.addProposalToAddMember(deployer, enode, ip, port, memo, { from: deployer }));
     });
 
-    it('cannot addProposal before member', async () => {
-      await reverting(govDelegator.addProposal({ from: govMem1 }));
+    it('can addProposal for adding member', async () => {
+      await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, memo, { from: deployer });
+      const len = await gov.ballotLength();
+      len.should.be.bignumber.equal(1);
+
+      await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, memo, { from: deployer });
+      const len2 = await gov.ballotLength();
+      len2.should.be.bignumber.equal(2);
     });
 
     it('can vote', async () => {
+      await govDelegator.vote(0, false, { from: deployer });
+    });
+  });
+
+  describe('One Member ', function () {
+    beforeEach(async () => {
     });
 
-    it('cannot create ballot', async () => {
+    it('cannot addProposal for adding member self', async () => {
+      await reverting(govDelegator.addProposalToAddMember(govMem1, enode, ip, port, memo, { from: govMem1 }));
+    });
+
+    it('can vote', async () => {
+      // const ret = await govDelegator.vote(0, false, { from: govMem1 });
+    });
+
+  });
+
+  describe('Others ', function () {
+    it('cannot init', async () => {
+      await reverting(gov.init(registry.address, govImp.address, amount, enode, ip, port, { from: user1 }));
+    });
+
+    it('cannot addProposal', async () => {
+      await reverting(govDelegator.addProposalToAddMember(govMem1, enode, ip, port, memo, { from: user1 }));
+      await reverting(govDelegator.addProposalToRemoveMember(govMem1, memo, { from: user1 }));
+      await reverting(govDelegator.addProposalToChangeMember(govMem1, govMem2, enode, ip, port, memo, { from: user1 }));
     });
 
   });

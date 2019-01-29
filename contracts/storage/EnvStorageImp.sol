@@ -1,9 +1,10 @@
 pragma solidity ^0.4.24;
 
+import "../abstract/EnumVariableTypes.sol";
 import "./AEnvStorage.sol";
-import "./EnumVariableTypes.sol";
 
-contract EnvStorageImp is AEnvStorage,EnumVariableTypes {
+
+contract EnvStorageImp is AEnvStorage, EnumVariableTypes {
     bytes32 internal constant BLOCK_PER_NAME = keccak256("blockPer"); 
     uint256 internal constant BLOCK_PER_TYPE = uint256(VariableTypes.Uint);
 

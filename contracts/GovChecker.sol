@@ -31,7 +31,7 @@ contract GovChecker is Ownable {
     modifier onlyGovMem() {
         address addr = REG.getContractAddress(GOV_NAME);
         require(addr != address(0), "No Governance");
-        require(Gov(addr).memberToIdx(msg.sender) != 0, "No Permission");
+        require(Gov(addr).memberIdx(msg.sender) != 0, "No Permission");
         _;
     }
 

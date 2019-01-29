@@ -1,0 +1,189 @@
+{
+  "contractName": "EnumVotingTypes",
+  "abi": [],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a723058203fa9752e4de648b76c4d4067290b49557e5358880b7bb0435c96ec321db0b94c0029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a723058203fa9752e4de648b76c4d4067290b49557e5358880b7bb0435c96ec321db0b94c0029",
+  "sourceMap": "27:189:8:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;27:189:8;;;;;;;",
+  "deployedSourceMap": "27:189:8:-;;;;;",
+  "source": "pragma solidity ^0.4.24;\n\n\ncontract EnumVotingTypes {\n    enum VotingTypes {\n        Invalid,\n        AddMember,\n        RemoveMember,\n        ChangeMember,\n        ChangeGovernance,\n        ChangeEnvironment\n    }\n}",
+  "sourcePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/abstract/VotingTypes.sol",
+  "ast": {
+    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/abstract/VotingTypes.sol",
+    "exportedSymbols": {
+      "EnumVotingTypes": [
+        1152
+      ]
+    },
+    "id": 1153,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1144,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:8"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1152,
+        "linearizedBaseContracts": [
+          1152
+        ],
+        "name": "EnumVotingTypes",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "EnumVotingTypes.VotingTypes",
+            "id": 1151,
+            "members": [
+              {
+                "id": 1145,
+                "name": "Invalid",
+                "nodeType": "EnumValue",
+                "src": "85:7:8"
+              },
+              {
+                "id": 1146,
+                "name": "AddMember",
+                "nodeType": "EnumValue",
+                "src": "102:9:8"
+              },
+              {
+                "id": 1147,
+                "name": "RemoveMember",
+                "nodeType": "EnumValue",
+                "src": "121:12:8"
+              },
+              {
+                "id": 1148,
+                "name": "ChangeMember",
+                "nodeType": "EnumValue",
+                "src": "143:12:8"
+              },
+              {
+                "id": 1149,
+                "name": "ChangeGovernance",
+                "nodeType": "EnumValue",
+                "src": "165:16:8"
+              },
+              {
+                "id": 1150,
+                "name": "ChangeEnvironment",
+                "nodeType": "EnumValue",
+                "src": "191:17:8"
+              }
+            ],
+            "name": "VotingTypes",
+            "nodeType": "EnumDefinition",
+            "src": "58:156:8"
+          }
+        ],
+        "scope": 1153,
+        "src": "27:189:8"
+      }
+    ],
+    "src": "0:216:8"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/abstract/VotingTypes.sol",
+    "exportedSymbols": {
+      "EnumVotingTypes": [
+        1152
+      ]
+    },
+    "id": 1153,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1144,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:8"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1152,
+        "linearizedBaseContracts": [
+          1152
+        ],
+        "name": "EnumVotingTypes",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "EnumVotingTypes.VotingTypes",
+            "id": 1151,
+            "members": [
+              {
+                "id": 1145,
+                "name": "Invalid",
+                "nodeType": "EnumValue",
+                "src": "85:7:8"
+              },
+              {
+                "id": 1146,
+                "name": "AddMember",
+                "nodeType": "EnumValue",
+                "src": "102:9:8"
+              },
+              {
+                "id": 1147,
+                "name": "RemoveMember",
+                "nodeType": "EnumValue",
+                "src": "121:12:8"
+              },
+              {
+                "id": 1148,
+                "name": "ChangeMember",
+                "nodeType": "EnumValue",
+                "src": "143:12:8"
+              },
+              {
+                "id": 1149,
+                "name": "ChangeGovernance",
+                "nodeType": "EnumValue",
+                "src": "165:16:8"
+              },
+              {
+                "id": 1150,
+                "name": "ChangeEnvironment",
+                "nodeType": "EnumValue",
+                "src": "191:17:8"
+              }
+            ],
+            "name": "VotingTypes",
+            "nodeType": "EnumDefinition",
+            "src": "58:156:8"
+          }
+        ],
+        "scope": 1153,
+        "src": "27:189:8"
+      }
+    ],
+    "src": "0:216:8"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2019-01-29T01:43:14.782Z"
+}
