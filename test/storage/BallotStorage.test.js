@@ -50,7 +50,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         ZERO_ADDRESS, // oldMemberAddress
         addMem, // newMemberAddress
         _enodeid, // newNodeId
@@ -72,7 +71,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         addMem, // oldMemberAddress
         addMem2, // newMemberAddress
         _enodeid, // newNodeId
@@ -94,7 +92,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         ZERO_ADDRESS, // oldMemberAddress
         ZERO_ADDRESS, // newMemberAddress
         _enodeid, // newNodeId
@@ -107,7 +104,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         '0xabbb12', // oldMemberAddress
         ZERO_ADDRESS, // newMemberAddress
         _enodeid, // newNodeId
@@ -130,7 +126,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         ZERO_ADDRESS, // oldMemberAddress
         addMem, // newMemberAddress
         _enodeid, // newNodeId
@@ -153,7 +148,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         ZERO_ADDRESS, // oldMemberAddress
         addMem, // newMemberAddress
         _enodeid, // newNodeId
@@ -176,7 +170,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         ZERO_ADDRESS, // oldMemberAddress
         addMem, // newMemberAddress
         _enodeid, // newNodeId
@@ -200,7 +193,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         ZERO_ADDRESS, // oldMemberAddress
         addMem, // newMemberAddress
         _enodeid, // newNodeId
@@ -216,7 +208,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       assert.equal(ballotBasicInfo[2], _end_time);
       assert.equal(ballotBasicInfo[3], _ballotType);
       assert.equal(ballotBasicInfo[4], creator);
-      assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]), _memo);
       ballotBasicInfo[6].should.be.bignumber.equal(0);
       ballotBasicInfo[7].should.be.bignumber.equal(0);
       ballotBasicInfo[8].should.be.bignumber.equal(0);
@@ -247,7 +238,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         ZERO_ADDRESS, // oldMemberAddress
         addMem, // newMemberAddress
         _enodeid, // newNodeId
@@ -263,7 +253,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       assert.equal(ballotBasicInfo[2], 0);
       assert.equal(ballotBasicInfo[3], _ballotType);
       assert.equal(ballotBasicInfo[4], creator);
-      assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]), _memo);
       ballotBasicInfo[6].should.be.bignumber.equal(0);
       ballotBasicInfo[7].should.be.bignumber.equal(0);
       ballotBasicInfo[8].should.be.bignumber.equal(0);
@@ -291,7 +280,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         ZERO_ADDRESS, // oldMemberAddress
         addMem, // newMemberAddress
         _enodeid, // newNodeId
@@ -310,7 +298,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType2, // ballot type
         creator, // creator
-        _memo2, // memo
         ZERO_ADDRESS, // oldMemberAddress
         addMem2, // newMemberAddress
         _enodeid2, // newNodeId
@@ -326,7 +313,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       assert.equal(ballotBasicInfo[2], _end_time);
       assert.equal(ballotBasicInfo[3], _ballotType);
       assert.equal(ballotBasicInfo[4], creator);
-      assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]), _memo);
       ballotBasicInfo[6].should.be.bignumber.equal(0);
       ballotBasicInfo[7].should.be.bignumber.equal(0);
       ballotBasicInfo[8].should.be.bignumber.equal(0);
@@ -405,7 +391,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         _varName,
         _varType,
         _varVal,
@@ -428,7 +413,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         _varName,
         _varType,
         _varVal,
@@ -444,7 +428,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       // assert.equal(ballotBasicInfo[3], _ballotType);
       ballotBasicInfo[3].should.be.bignumber.equal(_ballotType);
       assert.equal(ballotBasicInfo[4], creator);
-      assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]), _memo);
       ballotBasicInfo[6].should.be.bignumber.equal(0);
       ballotBasicInfo[7].should.be.bignumber.equal(0);
       ballotBasicInfo[8].should.be.bignumber.equal(0);
@@ -490,7 +473,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         ZERO_ADDRESS, // oldMemberAddress
         addMem, // newMemberAddress
         _enodeid, // newNodeId

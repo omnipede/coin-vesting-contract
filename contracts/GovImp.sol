@@ -20,8 +20,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         address member,
         bytes enode,
         bytes ip,
-        uint port,
-        bytes memo
+        uint port
     )
         external
         onlyGovMem
@@ -35,23 +34,21 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
         ballotLength = ballotLength.add(1);
-        // BallotStorage(ballotStorage).createBallotForMemeber(
-        //     ballotLength, // ballot id
-        //     uint256(BallotTypes.MemberAdd), // ballot type
-        //     msg.sender, // creator
-        //     memo, // memo
-        //     address(0), // old member address
-        //     member, // new member address
-        //     enode, // new enode
-        //     ip, // new ip
-        //     port // new port
-        // );
+        BallotStorage(ballotStorage).createBallotForMemeber(
+            ballotLength, // ballot id
+            uint256(BallotTypes.MemberAdd), // ballot type
+            msg.sender, // creator
+            address(0), // old member address
+            member, // new member address
+            enode, // new enode
+            ip, // new ip
+            port // new port
+        );
         return ballotLength;
     }
 
     function addProposalToRemoveMember(
-        address member,
-        bytes memo
+        address member
     )
         external
         onlyGovMem
@@ -64,17 +61,16 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
         ballotLength = ballotLength.add(1);
-        // BallotStorage(ballotStorage).createBallotForMemeber(
-        //     ballotLength, // ballot id
-        //     BallotTypes.MemberRemoval, // ballot type
-        //     msg.sender, // creator
-        //     memo, // memo
-        //     member, // old member address
-        //     address(0), // new member address
-        //     0, // new enode
-        //     0, // new ip
-        //     0 // new port
-        // );
+        BallotStorage(ballotStorage).createBallotForMemeber(
+            ballotLength, // ballot id
+            uint256(BallotTypes.MemberRemoval), // ballot type
+            msg.sender, // creator
+            member, // old member address
+            address(0), // new member address
+            new bytes(0), // new enode
+            new bytes(0), // new ip
+            0 // new port
+        );
         return ballotLength;
     }
 
@@ -83,8 +79,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         address nMember,
         bytes nEnode,
         bytes nIp,
-        uint nPort,
-        bytes memo
+        uint nPort
     )
         external
         onlyGovMem
@@ -97,17 +92,16 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
         ballotLength = ballotLength.add(1);
-        // BallotStorage(ballotStorage).createBallotForMemeber(
-        //     ballotLength, // ballot id
-        //     BallotTypes.MemberChange, // ballot type
-        //     msg.sender, // creator
-        //     memo, // memo
-        //     target, // old member address
-        //     nMember, // new member address
-        //     nEnode, // new enode
-        //     nIp, // new ip
-        //     nPort // new port
-        // );
+        BallotStorage(ballotStorage).createBallotForMemeber(
+            ballotLength, // ballot id
+            uint256(BallotTypes.MemberChange), // ballot type
+            msg.sender, // creator
+            target, // old member address
+            nMember, // new member address
+            nEnode, // new enode
+            nIp, // new ip
+            nPort // new port
+        );
         return ballotLength;
     }
 
@@ -124,21 +118,20 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
         ballotLength = ballotLength.add(1);
-        // BallotStorage(ballotStorage).createBallotForAddress(
-        //     ballotLength, // ballot id
-        //     BallotTypes.GovernanceChange, // ballot type
-        //     msg.sender, // creator
-        //     memo, // memo
-        //     newGovAddr // new governance address
-        // );
+        BallotStorage(ballotStorage).createBallotForAddress(
+            ballotLength, // ballot id
+            uint256(BallotTypes.GovernanceChange), // ballot type
+            msg.sender, // creator
+            memo, // memo
+            newGovAddr // new governance address
+        );
         return ballotLength;
     }
 
     function addProposalToChangeEnv(
         bytes32 envName,
         uint256 envType,
-        string envVal,
-        bytes memo
+        string envVal
     )
         external
         onlyGovMem
@@ -149,15 +142,14 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
         ballotLength = ballotLength.add(1);
-        // BallotStorage(ballotStorage).createBallotForVariable(
-        //     ballotLength, // ballot id
-        //     BallotTypes.EnvValChange, // ballot type
-        //     msg.sender, // creator
-        //     memo, // memo
-        //     envName, // env name
-        //     envType, // env type
-        //     envVal // env value
-        // );
+        BallotStorage(ballotStorage).createBallotForVariable(
+            ballotLength, // ballot id
+            uint256(BallotTypes.EnvValChange), // ballot type
+            msg.sender, // creator
+            envName, // env name
+            envType, // env type
+            envVal // env value
+        );
         return ballotLength;
     }
 
