@@ -217,7 +217,7 @@ contract('BallotStorage', accounts => {
             assert.equal(ballotBasicInfo[2], _end_time);
             assert.equal(ballotBasicInfo[3], _ballotType);
             assert.equal(ballotBasicInfo[4], creator);
-            assert.equal(ballotBasicInfo[5], _memo);
+            assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]), _memo);
             ballotBasicInfo[6].should.be.bignumber.equal(0);
             ballotBasicInfo[7].should.be.bignumber.equal(0);
             ballotBasicInfo[8].should.be.bignumber.equal(0);
@@ -230,7 +230,7 @@ contract('BallotStorage', accounts => {
             assert.equal(ballotDetailInfo[1], ZERO_ADDRESS);
             assert.equal(ballotDetailInfo[2], addMem);
             assert.equal(ballotDetailInfo[3], _enodeid);
-            assert.equal(ballotDetailInfo[4], _nodeip);
+            assert.equal(web3Utils.toUtf8(ballotDetailInfo[4]), _nodeip);
             assert.equal(ballotDetailInfo[5], _nodePort);
 
         });
@@ -264,7 +264,7 @@ contract('BallotStorage', accounts => {
             assert.equal(ballotBasicInfo[2], 0);
             assert.equal(ballotBasicInfo[3], _ballotType);
             assert.equal(ballotBasicInfo[4], creator);
-            assert.equal(ballotBasicInfo[5], _memo);
+            assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]), _memo);
             ballotBasicInfo[6].should.be.bignumber.equal(0);
             ballotBasicInfo[7].should.be.bignumber.equal(0);
             ballotBasicInfo[8].should.be.bignumber.equal(0);
@@ -326,7 +326,7 @@ contract('BallotStorage', accounts => {
             assert.equal(ballotBasicInfo[2], _end_time); 
             assert.equal(ballotBasicInfo[3], _ballotType);
             assert.equal(ballotBasicInfo[4], creator);
-            assert.equal(ballotBasicInfo[5], _memo);
+            assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]), _memo);
             ballotBasicInfo[6].should.be.bignumber.equal(0);
             ballotBasicInfo[7].should.be.bignumber.equal(0);
             ballotBasicInfo[8].should.be.bignumber.equal(0);
@@ -339,7 +339,7 @@ contract('BallotStorage', accounts => {
             // assert.equal(ballotDetailInfo[1], ZERO_ADDRESS);
             assert.equal(ballotDetailInfo[2], addMem);
             assert.equal(ballotDetailInfo[3], _enodeid);
-            assert.equal(ballotDetailInfo[4], _nodeip);
+            assert.equal(web3Utils.toUtf8(ballotDetailInfo[4]), _nodeip);
             assert.equal(ballotDetailInfo[5], _nodePort);
 
         });
@@ -382,7 +382,7 @@ contract('BallotStorage', accounts => {
             //assert.equal(ballotBasicInfo[3], _ballotType);
             ballotBasicInfo[3].should.be.bignumber.equal(_ballotType);
             assert.equal(ballotBasicInfo[4], creator);
-            assert.equal(ballotBasicInfo[5], _memo);
+            assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]),_memo);
             ballotBasicInfo[6].should.be.bignumber.equal(0);
             ballotBasicInfo[7].should.be.bignumber.equal(0);
             ballotBasicInfo[8].should.be.bignumber.equal(0);
@@ -443,7 +443,7 @@ contract('BallotStorage', accounts => {
             //assert.equal(ballotBasicInfo[3], _ballotType);
             ballotBasicInfo[3].should.be.bignumber.equal(_ballotType);
             assert.equal(ballotBasicInfo[4], creator);
-            assert.equal(ballotBasicInfo[5], _memo);
+            assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]), _memo);
             ballotBasicInfo[6].should.be.bignumber.equal(0);
             ballotBasicInfo[7].should.be.bignumber.equal(0);
             ballotBasicInfo[8].should.be.bignumber.equal(0);

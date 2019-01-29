@@ -21,7 +21,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         // 제안자
         address creator;
         // 투표 내용
-        string memo;
+        bytes memo;
         //총 투표자수  
         uint256 totalVoters;
         // 진행상태
@@ -41,7 +41,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         address oldMemeberAddress;
         address newMemeberAddress;
         bytes newNodeId; // admin.nodeInfo.id is 512 bit public key
-        string newNodeIp;
+        bytes newNodeIp;
         uint newNodePort;
     }
 
@@ -126,7 +126,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 endTime,
         uint256 ballotType,
         address creator,
-        string memo,
+        bytes memo,
         uint256 totalVoters,
         uint256 powerOfAccepts,
         uint256 powerOfRejects,
@@ -154,7 +154,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         address oldMemeberAddress,
         address newMemeberAddress,
         bytes newNodeId, // admin.nodeInfo.id is 512 bit public key
-        string newNodeIp,
+        bytes newNodeIp,
         uint newNodePort
     )
     {
@@ -197,7 +197,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         // uint256 _endTime,
         uint256 _ballotType,
         address _creator,
-        string _memo
+        bytes _memo
         
     )
         internal
@@ -214,7 +214,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         address _oldMemeberAddress,
         address _newMemeberAddress,
         bytes _newNodeId, // admin.nodeInfo.id is 512 bit public key
-        string _newNodeIp,
+        bytes _newNodeIp,
         uint _newNodePort
     )
         internal
@@ -227,11 +227,11 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
             require(_oldMemeberAddress != address(0),"Invalid old member address");
             require(_newMemeberAddress == address(0),"Invalid new member address");
             require(_newNodeId.length == 0, "Invalid new node id");
-            require(bytes(_newNodeIp).length == 0, "Invalid new node IP");
+            require(_newNodeIp.length == 0, "Invalid new node IP");
             require(_newNodePort == 0, "Invalid new node Port");
         }else {
             require(_newNodeId.length == 64, "Invalid new node id");
-            require(bytes(_newNodeIp).length > 0, "Invalid new node IP");
+            require(_newNodeIp.length > 0, "Invalid new node IP");
             require(_newNodePort > 0, "Invalid new node Port");
             if (_ballotType == uint256(BallotTypes.MemberAdd)) {
                 require(_oldMemeberAddress == address(0),"Invalid old member address");
@@ -250,11 +250,11 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 _id,
         uint256 _ballotType,
         address _creator,
-        string _memo,
+        bytes _memo,
         address _oldMemeberAddress,
         address _newMemeberAddress,
         bytes _newNodeId, // admin.nodeInfo.id is 512 bit public key
-        string _newNodeIp,
+        bytes _newNodeIp,
         uint _newNodePort
     )
         public
@@ -282,7 +282,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 _id,
         uint256 _ballotType,
         address _creator,
-        string _memo,
+        bytes _memo,
         address _newGovernanceAddress
     )
         public
@@ -323,7 +323,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 _id,
         uint256 _ballotType,
         address _creator,
-        string _memo,
+        bytes _memo,
         bytes32 _envVariableName,
         uint256 _envVariableType,
         string _envVariableValue 
