@@ -281,7 +281,6 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 _id,
         uint256 _ballotType,
         address _creator,
-        bytes _memo,
         address _newGovernanceAddress
     )
         public
@@ -291,7 +290,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         require(_ballotType == uint256(BallotTypes.GovernanceChange), "Invalid Ballot Type");
         require(_newGovernanceAddress != address(0), "Invalid Parameter");
         
-        uint256 ballotId = _createBallot(_id, _ballotType, _creator, _memo);
+        uint256 ballotId = _createBallot(_id, _ballotType, _creator, "");
         BallotAddress memory newBallot;
         newBallot.id = ballotId;
         newBallot.newGovernanceAddress = _newGovernanceAddress;
@@ -461,5 +460,49 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         _ballot.endTime = _endTime;
         _ballot.state = uint256(BallotStates.InProgress);
         emit BallotStarted(_ballotId, _startTime, _endTime);
+    }
+    function updateBallotMemo(
+        uint256 _ballotId,
+        bytes _memo
+    ) public onlyGov
+    {
+        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
+        require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
+        BallotBasic storage _ballot = ballotBasicMap[_ballotId];
+        _ballot.memo = _memo;
+    }
+
+
+    function getBallotPeriod (uint256 _id) public view returns (
+        uint256 startTime,
+        uint256 endTime
+    )
+    {
+        BallotBasic memory tBallot = ballotBasicMap[_id];
+        startTime = tBallot.startTime;
+        endTime = tBallot.endTime; 
+    }
+    function getBallotVotingInfo(uint256 _id) public view returns (
+        uint256 totalVoters,
+        uint256 powerOfAccepts,
+        uint256 powerOfRejects
+
+    )
+    {
+        BallotBasic memory tBallot = ballotBasicMap[_id];
+        totalVoters = tBallot.totalVoters;
+        powerOfAccepts = tBallot.powerOfAccepts;
+        powerOfRejects = tBallot.powerOfRejects;        
+    }
+    function getBallotState(uint256 _id) public view returns (
+        uint256 ballotType,
+        uint256 state,
+        bool isFinalized
+    )
+    {
+        BallotBasic memory tBallot = ballotBasicMap[_id];
+        ballotType = tBallot.ballotType;
+        state = tBallot.state;
+        isFinalized = tBallot.isFinalized;
     }
 }

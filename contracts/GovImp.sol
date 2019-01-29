@@ -122,7 +122,6 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             ballotLength.add(1), // ballot id
             uint256(BallotTypes.GovernanceChange), // ballot type
             msg.sender, // creator
-            memo, // memo
             newGovAddr // new governance address
         );
         ballotLength = ballotLength.add(1);
