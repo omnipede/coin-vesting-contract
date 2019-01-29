@@ -100,19 +100,27 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
 
     it('can vote approval', async () => {
       await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
-      // await govDelegator.vote(1, true, { from: deployer });
+      await govDelegator.vote(1, true, { from: deployer });
+      const len = await gov.voteLength();
+      len.should.be.bignumber.equal(1);
     });
 
     it('can vote disapproval', async () => {
       await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
-      // await govDelegator.vote(1, false, { from: deployer });
+      await govDelegator.vote(1, false, { from: deployer });
+    });
+
+    it('cannot vote twice', async () => {
+      await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
+      await govDelegator.vote(1, true, { from: deployer });
+      await reverting(govDelegator.vote(1, true, { from: deployer }));
     });
   });
 
-  describe('One Member ', function () {
+  describe('Two Member ', function () {
     beforeEach(async () => {
-      // await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
-      // await govDelegator.vote(1, true, { from: deployer });
+      await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
+      await govDelegator.vote(1, true, { from: deployer });
     });
 
     it('cannot addProposal to add member self', async () => {
@@ -121,6 +129,14 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
 
     it('can vote', async () => {
       // const ret = await govDelegator.vote(0, false, { from: govMem1 });
+    });
+
+    it('cannot vote simultaneously', async () => {
+      await govDelegator.addProposalToAddMember(govMem2, enode, ip, port, { from: deployer });
+      await govDelegator.addProposalToAddMember(govMem3, enode, ip, port, { from: deployer });
+      const len = await gov.ballotLength();
+      await govDelegator.vote(len-1, true, { from: deployer });
+      // await reverting(govDelegator.vote(len, true, { from: deployer }));
     });
   });
 
@@ -133,7 +149,7 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       await reverting(govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: user1 }));
       await reverting(govDelegator.addProposalToRemoveMember(govMem1, { from: user1 }));
       await reverting(govDelegator.addProposalToChangeMember(govMem1, govMem2, enode, ip, port, { from: user1 }));
-      await reverting(govDelegator.addProposalToChangeGov(govMem1, memo, { from: user1 }));
+      await reverting(govDelegator.addProposalToChangeGov(govMem1, { from: user1 }));
       await reverting(govDelegator.addProposalToChangeEnv(envName, 0, envVal, { from: user1 }));
     });
   });

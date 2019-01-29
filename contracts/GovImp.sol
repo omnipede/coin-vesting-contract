@@ -17,6 +17,10 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         return REG.getContractAddress("BallotStorage");
     }
 
+    function getMaxVotingDuration() public pure returns (uint256) {
+        return 7 days;
+    }
+
     function addProposalToAddMember(
         address member,
         bytes enode,
@@ -107,8 +111,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
     }
 
     function addProposalToChangeGov(
-        address newGovAddr,
-        bytes memo
+        address newGovAddr
     )
         external
         onlyGovMem
@@ -157,11 +160,34 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
-        BallotStorage(ballotStorage).getBallotBasic(ballotIdx);
+        // Check if some ballot is in progress
+        if (ballotInVoting != 0) {
+            (, uint256 state, ) = BallotStorage(ballotStorage).getBallotState(ballotIdx);
+            (, uint256 endTime, ) = BallotStorage(ballotStorage).getBallotPeriod(ballotIdx);
+            if (state == uint256(BallotStates.InProgress)) {
+                if (endTime < block.timestamp) {
+                    revert("Now in voting with different ballot");
+                } else {
+                    BallotStorage(ballotStorage).finalizeBallot(ballotIdx, uint256(DecisionTypes.Reject));
+                    ballotInVoting = 0;
+                }
+            }
+        }
+
+        // Check if the ballot can be voted
+        (, state, ) = BallotStorage(ballotStorage).getBallotState(ballotIdx);
+        if (state == uint256(BallotStates.Ready)) {
+            BallotStorage(ballotStorage).startBallot(ballotIdx, block.timestamp, block.timestamp + getMaxVotingDuration());
+        } else if (state == uint256(BallotStates.InProgress)) {
+            // Nothing to do
+        } else {
+            revert("Expired");
+        }
 
         address staking = REG.getContractAddress("Staking");
         require(staking != address(0), "Staking NOT FOUND");
 
+        // Vote
         if (approval) {
             BallotStorage(ballotStorage).createVote(
                 voteLength.add(1),
@@ -180,6 +206,8 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             );
         }
         voteLength = voteLength.add(1);
+
+        // Finalize
     }
 
     // function addMember(address addr, bytes enode, bytes ip, uint port) private {}

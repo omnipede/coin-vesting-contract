@@ -72,3 +72,6 @@ config
 
 # old file 
 *.old
+
+#testCode 
+testcon/

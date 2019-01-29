@@ -28,6 +28,7 @@ contract Gov is UpgradeabilityProxy, GovChecker {
     // For ballot
     uint256 public ballotLength;
     uint256 public voteLength;
+    uint256 internal ballotInVoting;
 
     constructor() public {
         initialized = false;
@@ -35,6 +36,7 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         nodeLength = 0;
         ballotLength = 0;
         voteLength = 0;
+        ballotInVoting = 0;
     }
 
     function isMember(address addr) public view returns (bool) { return (memberIdx[addr] != 0); }
@@ -46,6 +48,7 @@ contract Gov is UpgradeabilityProxy, GovChecker {
     function getNode(uint256 idx) public view returns (bytes enode, bytes ip, uint port) {
         return (nodes[idx].enode, nodes[idx].ip, nodes[idx].port);
     }
+    function getBallotInVoting() public view returns (uint256) { return ballotInVoting; }
 
     function init(
         address registry,

@@ -23,6 +23,7 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
   let registry, staking, ballotStorage;
 
   describe('Ballot', function () {
+    let _duration  = time.duration.weeks(1);
     beforeEach(async () => {
       registry = await Registry.new();
       staking = await Staking.new(registry.address);
@@ -46,6 +47,7 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       const _enodeid = web3Utils.hexToBytes('0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0');
       const _nodeip = '123.11.111.111';
       const _nodePort = 9545;
+
       await reverting(ballotStorage.createBallotForMemeber(
         _id, // ballot id
         _ballotType, // ballot type
@@ -247,7 +249,32 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
         assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]), _memo);
 
-      });
+    });
+    it('update Ballot duration for MemberAdd', async () => {
+        const _id = 1;
+
+        const _ballotType = 1; // new web3.BigNumber(1);
+        const _enodeid = '0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0';
+        const _nodeip = '123.11.111.111';
+        const _nodePort = 9545;
+        await ballotStorage.createBallotForMemeber(
+            _id, // ballot id
+            _ballotType, // ballot type
+            creator, // creator
+            ZERO_ADDRESS, // oldMemberAddress
+            addMem, // newMemberAddress
+            _enodeid, // newNodeId
+            _nodeip, // newNodeIp
+            _nodePort, // newNodePort
+            { value: 0, from: govAddr }
+        ); // .should.be.rejectedWith(ERROR_MSG);
+        await ballotStorage.updateBallotDuration(_id,_duration,{ value: 0, from: govAddr });
+        const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
+        assert.equal(ballotBasicInfo[11], _duration);
+        const ballotPeriodInfo = await ballotStorage.getBallotPeriod(_id);
+        assert.equal(ballotPeriodInfo[2], _duration);
+
+    });
     it('Start Ballot for MemberAdd', async () => {
       const _id = 1;
       const _start_time = moment.utc().add(20, 'seconds').unix();
