@@ -7,14 +7,40 @@ const GovImp = artifacts.require('GovImp.sol')
 const Gov = artifacts.require('Gov.sol')
 
 const fs = require('fs')
+const Web3 = require('web3')
+
+// config file
+const config = require('config')
+//const ropstenConfig = config.get('ropsten')
+const metaTestnetConfig = config.get('metadiumTestnet')
+
+// eslint-disable-next-line max-len
+const enode = '0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0';
+const ip = '127.0.0.1';
+const port = 8542;
+const memo = 'memo';
+
+const web3 = new Web3(new Web3.providers.HttpProvider(metaTestnetConfig.provider));
+const amount = web3.utils.toWei('1', 'ether')
 
 //TODO deploy script clean up
 async function deploy(deployer, network, accounts) {
+
     let registry, govImp, gov, staking, ballotStorage, govDelegator
     deployer.then(async () => {
         [registry, staking, ballotStorage, govImp, gov] = await deployContracts(deployer, network, accounts)
         await basicRegistrySetup(deployer, network, accounts, registry, staking, ballotStorage, govImp, gov)
-        await writeToContractsJson(registry, staking, ballotStorage, govImp, gov)
+
+        // Initialize staking
+        console.log('Initialize staking')
+        await staking.deposit({ value: amount, from: accounts.toString() })
+
+        // Initialize governance
+        console.log('Initialize governance')
+        await gov.init(registry.address, govImp.address, amount, enode, ip, port)
+        govDelegator = await GovImp.at(gov.address)
+
+        await writeToContractsJson(registry, staking, ballotStorage, govImp, gov, govDelegator)
     })
 }
 
@@ -37,7 +63,7 @@ async function basicRegistrySetup(deployer, network, accounts, registry, staking
     await registry.setContractDomain("GovernanceContract", gov.address)
 }
 
-async function writeToContractsJson(registry, staking, ballotStorage, govImp, gov) {
+async function writeToContractsJson(registry, staking, ballotStorage, govImp, gov, govDelegator) {
     console.log(`Writing Contract Address To contracts.json`)
 
     let contractData = {}
@@ -46,6 +72,7 @@ async function writeToContractsJson(registry, staking, ballotStorage, govImp, go
     contractData["BALLOT_STORAGE_ADDRESS"] = ballotStorage.address
     contractData["GOV_IMP_ADDRESS"] = govImp.address
     contractData["GOV_ADDRESS"] = gov.address
+    contractData["GOV_DELEGATOR"] = govDelegator.address
 
     fs.writeFile('contracts.json', JSON.stringify(contractData), 'utf-8', function (e) {
         if (e) {
