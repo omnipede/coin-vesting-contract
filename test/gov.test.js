@@ -66,6 +66,10 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
       const len = await gov.ballotLength();
       len.should.be.bignumber.equal(1);
+      const ballot = await ballotStorage.getBallotBasic(len);
+      const ballotDetail = await ballotStorage.getBallotMember(len);
+      assert.equal(ballot[4], deployer);
+      assert.equal(ballotDetail[2], govMem1);
 
       await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
       const len2 = await gov.ballotLength();
@@ -94,13 +98,21 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       await reverting(govDelegator.addProposalToChangeMember(govMem1, govMem2, enode, ip, port, { from: deployer }));
     });
 
-    it('can vote', async () => {
-      await govDelegator.vote(0, false, { from: deployer });
+    it('can vote approval', async () => {
+      await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
+      // await govDelegator.vote(1, true, { from: deployer });
+    });
+
+    it('can vote disapproval', async () => {
+      await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
+      // await govDelegator.vote(1, false, { from: deployer });
     });
   });
 
   describe('One Member ', function () {
     beforeEach(async () => {
+      // await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
+      // await govDelegator.vote(1, true, { from: deployer });
     });
 
     it('cannot addProposal to add member self', async () => {

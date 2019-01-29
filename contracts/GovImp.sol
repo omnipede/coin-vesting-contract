@@ -1,9 +1,10 @@
 pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol";
-import "./Gov.sol";
 import "./abstract/BallotEnums.sol";
 import "./storage/BallotStorage.sol";
+import "./Gov.sol";
+import "./Staking.sol";
 
 
 contract GovImp is Gov, ReentrancyGuard, BallotEnums {
@@ -154,10 +155,36 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
     }
 
     function vote(uint256 ballotIdx, bool approval) external onlyGovMem nonReentrant {
+        address ballotStorage = getBallotStorageAddress();
+        require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
+        BallotStorage(ballotStorage).getBallotBasic(ballotIdx);
+
+        address staking = REG.getContractAddress("Staking");
+        require(staking != address(0), "Staking NOT FOUND");
+
+        if (approval) {
+            BallotStorage(ballotStorage).createVote(
+                voteLength.add(1),
+                ballotIdx,
+                msg.sender,
+                uint256(DecisionTypes.Accept),
+                Staking(staking).calcVotingWeight(msg.sender)
+            );
+        } else {
+            BallotStorage(ballotStorage).createVote(
+                voteLength.add(1),
+                ballotIdx,
+                msg.sender,
+                uint256(DecisionTypes.Reject),
+                Staking(staking).calcVotingWeight(msg.sender)
+            );
+        }
+        voteLength = voteLength.add(1);
     }
 
     // function addMember(address addr, bytes enode, bytes ip, uint port) private {}
     // function removeMember(address addr) private {}
     // function changeMember(address target, address nAddr, bytes nEnode, bytes nIp, uint nPort) private {}
+    // function applyEnv(bytes32 envName, uint256 envType, string envVal) private {}
 }

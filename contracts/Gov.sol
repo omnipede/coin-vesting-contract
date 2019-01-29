@@ -27,12 +27,14 @@ contract Gov is UpgradeabilityProxy, GovChecker {
 
     // For ballot
     uint256 public ballotLength;
+    uint256 public voteLength;
 
     constructor() public {
         initialized = false;
         memberLength = 0;
         nodeLength = 0;
         ballotLength = 0;
+        voteLength = 0;
     }
 
     function isMember(address addr) public view returns (bool) { return (memberIdx[addr] != 0); }

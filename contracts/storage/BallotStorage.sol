@@ -60,9 +60,9 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         string envVariableValue;
     }
 
-    struct Vote{
-        uint256  voteId;
-        uint256  ballotId;
+    struct Vote {
+        uint256 voteId;
+        uint256 ballotId;
         address voter;
         uint256 decision;
         uint256 power;
