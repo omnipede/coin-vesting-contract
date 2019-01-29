@@ -33,6 +33,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
 
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
+
         ballotLength = ballotLength.add(1);
         // BallotStorage(ballotStorage).createBallotForMemeber(
         //     ballotLength, // ballot id
@@ -57,6 +58,8 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         nonReentrant
         returns (uint256 ballotIdx)
     {
+        require(memberIdx[member] != 0, "Non-member");
+
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
@@ -88,6 +91,8 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         nonReentrant
         returns (uint256 ballotIdx)
     {
+        require(memberIdx[target] != 0, "Non-member");
+
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
