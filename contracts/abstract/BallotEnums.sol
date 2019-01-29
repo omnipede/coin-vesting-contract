@@ -3,6 +3,7 @@ pragma solidity ^0.4.24;
 contract BallotEnums {
     enum BallotStates {
         Invalid,
+        Ready,
         InProgress,
         Accepted,
         Rejected
