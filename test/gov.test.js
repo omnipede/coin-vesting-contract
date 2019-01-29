@@ -46,9 +46,9 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
     it('has enode and locked staking', async () => {
       const locked = await staking.lockedBalanceOf(deployer);
       locked.should.be.bignumber.equal(amount);
-      const idx = await gov.nodeIdxFromMember(deployer);
+      const idx = await gov.getNodeIdxFromMember(deployer);
       assert.notEqual(idx, 0);
-      const [ nEnode, nIp, nPort ] = await gov.nodes(idx);
+      const [ nEnode, nIp, nPort ] = await gov.getNode(idx);
       nEnode.should.equal(enode);
       web3.toUtf8(nIp).should.equal(ip);
       nPort.should.be.bignumber.equal(port);

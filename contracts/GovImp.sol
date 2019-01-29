@@ -28,14 +28,13 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         returns (uint256 ballotIdx)
     {
         require(msg.sender != member, "Cannot add self");
-        require(memberIdx[member] == 0, "Already member");
+        require(!isMember(member), "Already member");
 
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
-        ballotLength = ballotLength.add(1);
         BallotStorage(ballotStorage).createBallotForMemeber(
-            ballotLength, // ballot id
+            ballotLength.add(1), // ballot id
             uint256(BallotTypes.MemberAdd), // ballot type
             msg.sender, // creator
             address(0), // old member address
@@ -44,6 +43,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             ip, // new ip
             port // new port
         );
+        ballotLength = ballotLength.add(1);
         return ballotLength;
     }
 
@@ -55,14 +55,13 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         nonReentrant
         returns (uint256 ballotIdx)
     {
-        require(memberIdx[member] != 0, "Non-member");
+        require(isMember(member), "Non-member");
 
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
-        ballotLength = ballotLength.add(1);
         BallotStorage(ballotStorage).createBallotForMemeber(
-            ballotLength, // ballot id
+            ballotLength.add(1), // ballot id
             uint256(BallotTypes.MemberRemoval), // ballot type
             msg.sender, // creator
             member, // old member address
@@ -71,6 +70,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             new bytes(0), // new ip
             0 // new port
         );
+        ballotLength = ballotLength.add(1);
         return ballotLength;
     }
 
@@ -86,14 +86,13 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         nonReentrant
         returns (uint256 ballotIdx)
     {
-        require(memberIdx[target] != 0, "Non-member");
+        require(isMember(target), "Non-member");
 
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
-        ballotLength = ballotLength.add(1);
         BallotStorage(ballotStorage).createBallotForMemeber(
-            ballotLength, // ballot id
+            ballotLength.add(1), // ballot id
             uint256(BallotTypes.MemberChange), // ballot type
             msg.sender, // creator
             target, // old member address
@@ -102,6 +101,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             nIp, // new ip
             nPort // new port
         );
+        ballotLength = ballotLength.add(1);
         return ballotLength;
     }
 
@@ -117,14 +117,14 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
-        ballotLength = ballotLength.add(1);
         BallotStorage(ballotStorage).createBallotForAddress(
-            ballotLength, // ballot id
+            ballotLength.add(1), // ballot id
             uint256(BallotTypes.GovernanceChange), // ballot type
             msg.sender, // creator
             memo, // memo
             newGovAddr // new governance address
         );
+        ballotLength = ballotLength.add(1);
         return ballotLength;
     }
 
@@ -141,15 +141,15 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
-        ballotLength = ballotLength.add(1);
         BallotStorage(ballotStorage).createBallotForVariable(
-            ballotLength, // ballot id
+            ballotLength.add(1), // ballot id
             uint256(BallotTypes.EnvValChange), // ballot type
             msg.sender, // creator
             envName, // env name
             envType, // env type
             envVal // env value
         );
+        ballotLength = ballotLength.add(1);
         return ballotLength;
     }
 
