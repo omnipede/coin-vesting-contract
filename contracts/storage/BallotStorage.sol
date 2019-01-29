@@ -105,7 +105,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
 
     modifier onlyValidTime(uint256 _startTime, uint256 _endTime) {
         require(_startTime > 0 && _endTime > 0);
-        require(_endTime > _startTime && _startTime > getTime());
+        require(_endTime > _startTime);
         //uint256 diffTime = _endTime.sub(_startTime);
         // require(diffTime > minBallotDuration());
         // require(diffTime <= maxBallotDuration());
@@ -461,6 +461,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         _ballot.state = uint256(BallotStates.InProgress);
         emit BallotStarted(_ballotId, _startTime, _endTime);
     }
+
     function updateBallotMemo(
         uint256 _ballotId,
         bytes _memo
@@ -473,7 +474,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
     }
 
 
-    function getBallotPeriod (uint256 _id) public view returns (
+    function getBallotPeriod(uint256 _id) public view returns (
         uint256 startTime,
         uint256 endTime
     )
@@ -482,6 +483,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         startTime = tBallot.startTime;
         endTime = tBallot.endTime; 
     }
+
     function getBallotVotingInfo(uint256 _id) public view returns (
         uint256 totalVoters,
         uint256 powerOfAccepts,
@@ -494,6 +496,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         powerOfAccepts = tBallot.powerOfAccepts;
         powerOfRejects = tBallot.powerOfRejects;        
     }
+
     function getBallotState(uint256 _id) public view returns (
         uint256 ballotType,
         uint256 state,
