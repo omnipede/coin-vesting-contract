@@ -568,6 +568,8 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         uint256 state;
         // 완료유무
         bool isFinalized;
+        // 투표 기간
+        uint256 duration;
         
     }
 
@@ -640,8 +642,8 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     address prevImp;
 
     modifier onlyValidTime(uint256 _startTime, uint256 _endTime) {
-        require(_startTime > 0 && _endTime > 0);
-        require(_endTime > _startTime && _startTime > getTime());
+        require(_startTime > 0 && _endTime > 0, "start or end is 0");
+        require(_endTime > _startTime, "start >= end"); // && _startTime > getTime()
         //uint256 diffTime = _endTime.sub(_startTime);
         // require(diffTime > minBallotDuration());
         // require(diffTime <= maxBallotDuration());
@@ -667,7 +669,8 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         uint256 powerOfAccepts,
         uint256 powerOfRejects,
         uint256 state,
-        bool isFinalized
+        bool isFinalized,
+        uint256 duration
     )
     {
         BallotBasic memory tBallot = ballotBasicMap[_id];
@@ -682,7 +685,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         powerOfRejects = tBallot.powerOfRejects;
         state = tBallot.state;
         isFinalized = tBallot.isFinalized;
-        
+        duration = tBallot.duration;
     }
 
     function getBallotMember(uint256 _id) public view returns (
@@ -695,7 +698,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     )
     {
         BallotMember storage tBallot = ballotMemberMap[_id];
-        id=tBallot.id;
+        id = tBallot.id;
         oldMemeberAddress = tBallot.oldMemeberAddress;
         newMemeberAddress = tBallot.newMemeberAddress;
         newNodeId = tBallot.newNodeId;
@@ -729,20 +732,25 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
 
     function _createBallot(
         uint256 _id,
-        // uint256 _startTime,
-        // uint256 _endTime,
         uint256 _ballotType,
-        address _creator,
-        bytes _memo
-        
+        address _creator
     )
         internal
-        returns(uint256)
     {
-        require(ballotBasicMap[_id].id != _id , "already existed ballot");
-        ballotBasicMap[_id] = BallotBasic( _id, 0, 0, _ballotType, _creator, _memo, 0, 0, 0, uint256(BallotStates.Ready), false);
+        require(ballotBasicMap[_id].id != _id, "Already existed ballot");
+        
+        //ballotBasicMap[_id] = BallotBasic(_id, 0, 0, _ballotType, _creator, _memo, 0, 0, 0, uint256(BallotStates.Ready), false, _duration);
+
+        BallotBasic memory newBallot;
+        newBallot.id = _id;
+        newBallot.ballotType = _ballotType;
+        newBallot.creator = _creator;
+//        newBallot.memo = _memo;
+        newBallot.state = uint256(BallotStates.Ready);
+        newBallot.isFinalized = false;
+//        newBallot.duration = _duration;
+        ballotBasicMap[_id] = newBallot;
         emit BallotCreated(_id, _ballotType, _creator);
-        return _id;
     }
 
     function _areMemberBallotParamValid(
@@ -794,22 +802,21 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     )
         public
         onlyGov
-        returns (uint256)
     {
         require(
             _areMemberBallotParamValid(_ballotType,_oldMemeberAddress,_newMemeberAddress,_newNodeId,_newNodeIp,_newNodePort),
             "Invalid Parameter"
         );
-        uint256 ballotId = _createBallot(_id, _ballotType, _creator, '');
+        _createBallot(_id, _ballotType, _creator);
         BallotMember memory newBallot;
-        newBallot.id = ballotId;
+        newBallot.id = _id;
         newBallot.oldMemeberAddress = _oldMemeberAddress;
         newBallot.newMemeberAddress = _newMemeberAddress;
         newBallot.newNodeId = _newNodeId;
         newBallot.newNodeIp = _newNodeIp;
         newBallot.newNodePort = _newNodePort;
-        ballotMemberMap[ballotId] = newBallot;
-        return ballotId;
+        ballotMemberMap[_id] = newBallot;
+
     }
 
     
@@ -826,12 +833,12 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         require(_ballotType == uint256(BallotTypes.GovernanceChange), "Invalid Ballot Type");
         require(_newGovernanceAddress != address(0), "Invalid Parameter");
         
-        uint256 ballotId = _createBallot(_id, _ballotType, _creator, "");
+        _createBallot(_id, _ballotType, _creator);
         BallotAddress memory newBallot;
-        newBallot.id = ballotId;
+        newBallot.id = _id;
         newBallot.newGovernanceAddress = _newGovernanceAddress;
-        ballotAddressMap[ballotId] = newBallot;
-        return ballotId;
+        ballotAddressMap[_id] = newBallot;
+        return _id;
     }
 
     function _areVariableBallotParamValid(
@@ -869,14 +876,14 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
             _areVariableBallotParamValid(_ballotType, _envVariableName, _envVariableType, _envVariableValue),
             "Invalid Parameter"
         );
-        uint256 ballotId = _createBallot(_id, _ballotType, _creator, '');
+        _createBallot(_id, _ballotType, _creator);
         BallotVariable memory newBallot;
-        newBallot.id = ballotId;
+        newBallot.id = _id;
         newBallot.envVariableName = _envVariableName;
         newBallot.envVariableType = _envVariableType;
         newBallot.envVariableValue = _envVariableValue;
-        ballotVariableMap[ballotId] = newBallot;
-        return ballotId;
+        ballotVariableMap[_id] = newBallot;
+        return _id;
     }
 
     function createVote(
@@ -1007,16 +1014,28 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         BallotBasic storage _ballot = ballotBasicMap[_ballotId];
         _ballot.memo = _memo;
     }
-
+    function updateBallotDuration(
+        uint256 _ballotId,
+        uint256 _duration
+    ) public onlyGov
+    {
+        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
+        require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
+        require(ballotBasicMap[_ballotId].state == uint256(BallotStates.Ready), "Not Ready State");
+        BallotBasic storage _ballot = ballotBasicMap[_ballotId];
+        _ballot.duration = _duration;
+    }
 
     function getBallotPeriod (uint256 _id) public view returns (
         uint256 startTime,
-        uint256 endTime
+        uint256 endTime,
+        uint256 duration
     )
     {
         BallotBasic memory tBallot = ballotBasicMap[_id];
         startTime = tBallot.startTime;
         endTime = tBallot.endTime; 
+        duration = tBallot.duration;
     }
     function getBallotVotingInfo(uint256 _id) public view returns (
         uint256 totalVoters,
