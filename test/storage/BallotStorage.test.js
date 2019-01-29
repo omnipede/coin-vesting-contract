@@ -401,7 +401,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         govAddr2, // new governance contract address
         { value: 0, from: creator }
       ));
@@ -417,7 +416,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _id, // ballot id
         _ballotType, // ballot type
         creator, // creator
-        _memo, // memo
         govAddr2, // new governance contract address
         { value: 0, from: govAddr }
       ); // .should.be.rejectedWith(ERROR_MSG);
@@ -430,7 +428,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       // assert.equal(ballotBasicInfo[3], _ballotType);
       ballotBasicInfo[3].should.be.bignumber.equal(_ballotType);
       assert.equal(ballotBasicInfo[4], creator);
-      assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]), _memo);
       ballotBasicInfo[6].should.be.bignumber.equal(0);
       ballotBasicInfo[7].should.be.bignumber.equal(0);
       ballotBasicInfo[8].should.be.bignumber.equal(0);
@@ -527,7 +524,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       _start_time = moment.utc().add(1, 'seconds').unix();
       _end_time = moment.utc().add(10, 'days').unix();
       const _ballotType = 1; // new web3.BigNumber(1);
-      const _memo = 'test message for ballot';
       const _enodeid = '0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0';
       // let _enodeid = web3Utils.hexToBytes(_enodidHexString);
       const _nodeip = '123.11.111.111';

@@ -656,7 +656,6 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             ballotLength, // ballot id
             uint256(BallotTypes.GovernanceChange), // ballot type
             msg.sender, // creator
-            memo, // memo
             newGovAddr // new governance address
         );
         return ballotLength;
@@ -971,7 +970,6 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 _id,
         uint256 _ballotType,
         address _creator,
-        bytes _memo,
         address _newGovernanceAddress
     )
         public
@@ -981,7 +979,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         require(_ballotType == uint256(BallotTypes.GovernanceChange), "Invalid Ballot Type");
         require(_newGovernanceAddress != address(0), "Invalid Parameter");
         
-        uint256 ballotId = _createBallot(_id, _ballotType, _creator, _memo);
+        uint256 ballotId = _createBallot(_id, _ballotType, _creator, "");
         BallotAddress memory newBallot;
         newBallot.id = ballotId;
         newBallot.newGovernanceAddress = _newGovernanceAddress;

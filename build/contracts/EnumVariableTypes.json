@@ -11,14 +11,14 @@
     "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/abstract/EnumVariableTypes.sol",
     "exportedSymbols": {
       "EnumVariableTypes": [
-        1244
+        1243
       ]
     },
-    "id": 1245,
+    "id": 1244,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1235,
+        "id": 1234,
         "literals": [
           "solidity",
           "^",
@@ -34,55 +34,55 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 1244,
+        "id": 1243,
         "linearizedBaseContracts": [
-          1244
+          1243
         ],
         "name": "EnumVariableTypes",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "EnumVariableTypes.VariableTypes",
-            "id": 1243,
+            "id": 1242,
             "members": [
               {
-                "id": 1236,
+                "id": 1235,
                 "name": "Invalid",
                 "nodeType": "EnumValue",
                 "src": "88:7:7"
               },
               {
-                "id": 1237,
+                "id": 1236,
                 "name": "Int",
                 "nodeType": "EnumValue",
                 "src": "105:3:7"
               },
               {
-                "id": 1238,
+                "id": 1237,
                 "name": "Uint",
                 "nodeType": "EnumValue",
                 "src": "118:4:7"
               },
               {
-                "id": 1239,
+                "id": 1238,
                 "name": "Address",
                 "nodeType": "EnumValue",
                 "src": "132:7:7"
               },
               {
-                "id": 1240,
+                "id": 1239,
                 "name": "Bytes32",
                 "nodeType": "EnumValue",
                 "src": "149:7:7"
               },
               {
-                "id": 1241,
+                "id": 1240,
                 "name": "Bytes",
                 "nodeType": "EnumValue",
                 "src": "166:5:7"
               },
               {
-                "id": 1242,
+                "id": 1241,
                 "name": "String",
                 "nodeType": "EnumValue",
                 "src": "181:6:7"
@@ -93,7 +93,7 @@
             "src": "59:134:7"
           }
         ],
-        "scope": 1245,
+        "scope": 1244,
         "src": "26:169:7"
       }
     ],
@@ -103,14 +103,14 @@
     "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/abstract/EnumVariableTypes.sol",
     "exportedSymbols": {
       "EnumVariableTypes": [
-        1244
+        1243
       ]
     },
-    "id": 1245,
+    "id": 1244,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1235,
+        "id": 1234,
         "literals": [
           "solidity",
           "^",
@@ -126,55 +126,55 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 1244,
+        "id": 1243,
         "linearizedBaseContracts": [
-          1244
+          1243
         ],
         "name": "EnumVariableTypes",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "EnumVariableTypes.VariableTypes",
-            "id": 1243,
+            "id": 1242,
             "members": [
               {
-                "id": 1236,
+                "id": 1235,
                 "name": "Invalid",
                 "nodeType": "EnumValue",
                 "src": "88:7:7"
               },
               {
-                "id": 1237,
+                "id": 1236,
                 "name": "Int",
                 "nodeType": "EnumValue",
                 "src": "105:3:7"
               },
               {
-                "id": 1238,
+                "id": 1237,
                 "name": "Uint",
                 "nodeType": "EnumValue",
                 "src": "118:4:7"
               },
               {
-                "id": 1239,
+                "id": 1238,
                 "name": "Address",
                 "nodeType": "EnumValue",
                 "src": "132:7:7"
               },
               {
-                "id": 1240,
+                "id": 1239,
                 "name": "Bytes32",
                 "nodeType": "EnumValue",
                 "src": "149:7:7"
               },
               {
-                "id": 1241,
+                "id": 1240,
                 "name": "Bytes",
                 "nodeType": "EnumValue",
                 "src": "166:5:7"
               },
               {
-                "id": 1242,
+                "id": 1241,
                 "name": "String",
                 "nodeType": "EnumValue",
                 "src": "181:6:7"
@@ -185,7 +185,7 @@
             "src": "59:134:7"
           }
         ],
-        "scope": 1245,
+        "scope": 1244,
         "src": "26:169:7"
       }
     ],
@@ -197,5 +197,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-29T05:35:19.848Z"
+  "updatedAt": "2019-01-29T05:50:26.593Z"
 }
