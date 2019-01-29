@@ -221,6 +221,7 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       assert.equal(ballotDetailInfo[3], _enodeid);
       assert.equal(web3Utils.toUtf8(ballotDetailInfo[4]), _nodeip);
       assert.equal(ballotDetailInfo[5], _nodePort);
+
     });
     it('update Ballot memo for MemberAdd', async () => {
         const _id = 1;
@@ -245,6 +246,7 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         await ballotStorage.updateBallotMemo(_id,_memo,{ value: 0, from: govAddr });
         const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
         assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]), _memo);
+
       });
     it('Start Ballot for MemberAdd', async () => {
       const _id = 1;
@@ -285,6 +287,18 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       assert.equal(ballotBasicInfo[1], _start_time);
       assert.equal(ballotBasicInfo[2], _end_time);
       ballotBasicInfo[9].should.be.bignumber.equal(2); // InProgress
+
+      const ballotBasicTime = await ballotStorage.getBallotPeriod(_id);
+      assert.equal(ballotBasicTime[0], _start_time);
+      assert.equal(ballotBasicTime[1], _end_time);
+      const ballotBasicState = await ballotStorage.getBallotState(_id);
+      ballotBasicState[0].should.be.bignumber.equal(_ballotType);
+      ballotBasicState[1].should.be.bignumber.equal(2);
+      assert.equal(ballotBasicState[2], false);
+      const ballotBasicVotingInfo = await ballotStorage.getBallotVotingInfo(_id);
+      ballotBasicVotingInfo[0].should.be.bignumber.equal(0);
+      ballotBasicVotingInfo[1].should.be.bignumber.equal(0);
+      ballotBasicVotingInfo[2].should.be.bignumber.equal(0);
     });
     it('finalize Ballot for MemberAdd', async () => {
         const _id = 1;
@@ -330,7 +344,12 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
         ballotBasicInfo[9].should.be.bignumber.equal(_state);
         assert.equal(ballotBasicInfo[10], true);
+        const ballotBasicState = await ballotStorage.getBallotState(_id);
+        ballotBasicState[0].should.be.bignumber.equal(_ballotType);
+        ballotBasicState[1].should.be.bignumber.equal(_state); 
+        assert.equal(ballotBasicState[2], true);
       });
+
     it('cannot create Ballot by duplicated id ', async () => {
       const _id = 1;
       const _start_time = 0;
@@ -580,6 +599,12 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       ballotBasicInfo[6].should.be.bignumber.equal(1); // totalVoters
       ballotBasicInfo[7].should.be.bignumber.equal(_power); // powerOfAccepts
       ballotBasicInfo[8].should.be.bignumber.equal(0); // powerOfRejects
+      let ballotBasicVotingInfo = await ballotStorage.getBallotVotingInfo(_id);
+      ballotBasicVotingInfo[0].should.be.bignumber.equal(1);
+      ballotBasicVotingInfo[1].should.be.bignumber.equal(_power);
+      ballotBasicVotingInfo[2].should.be.bignumber.equal(0);
+
+
 
       let _hasVoted = await ballotStorage.hasAlreadyVoted(_id, member1);
       assert.equal(_hasVoted, true);
@@ -601,6 +626,11 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       ballotBasicInfo[7].should.be.bignumber.equal(_power + _power2); // powerOfAccepts
       ballotBasicInfo[8].should.be.bignumber.equal(0); // powerOfRejects
 
+      ballotBasicVotingInfo = await ballotStorage.getBallotVotingInfo(_id);
+      ballotBasicVotingInfo[0].should.be.bignumber.equal(2);
+      ballotBasicVotingInfo[1].should.be.bignumber.equal(_power + _power2);
+      ballotBasicVotingInfo[2].should.be.bignumber.equal(0);
+
       _hasVoted = await ballotStorage.hasAlreadyVoted(_id, member2);
       assert.equal(_hasVoted, true);
 
@@ -621,6 +651,10 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       ballotBasicInfo[7].should.be.bignumber.equal(_power + _power2); // powerOfAccepts
       ballotBasicInfo[8].should.be.bignumber.equal(_power3); // powerOfRejects
 
+      ballotBasicVotingInfo = await ballotStorage.getBallotVotingInfo(_id);
+      ballotBasicVotingInfo[0].should.be.bignumber.equal(3);
+      ballotBasicVotingInfo[1].should.be.bignumber.equal(_power + _power2);
+      ballotBasicVotingInfo[2].should.be.bignumber.equal(_power3);
       _hasVoted = await ballotStorage.hasAlreadyVoted(_id, member3);
       assert.equal(_hasVoted, true);
     });

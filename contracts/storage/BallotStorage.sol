@@ -471,4 +471,38 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         BallotBasic storage _ballot = ballotBasicMap[_ballotId];
         _ballot.memo = _memo;
     }
+
+
+    function getBallotPeriod (uint256 _id) public view returns (
+        uint256 startTime,
+        uint256 endTime
+    )
+    {
+        BallotBasic memory tBallot = ballotBasicMap[_id];
+        startTime = tBallot.startTime;
+        endTime = tBallot.endTime; 
+    }
+    function getBallotVotingInfo(uint256 _id) public view returns (
+        uint256 totalVoters,
+        uint256 powerOfAccepts,
+        uint256 powerOfRejects
+
+    )
+    {
+        BallotBasic memory tBallot = ballotBasicMap[_id];
+        totalVoters = tBallot.totalVoters;
+        powerOfAccepts = tBallot.powerOfAccepts;
+        powerOfRejects = tBallot.powerOfRejects;        
+    }
+    function getBallotState(uint256 _id) public view returns (
+        uint256 ballotType,
+        uint256 state,
+        bool isFinalized
+    )
+    {
+        BallotBasic memory tBallot = ballotBasicMap[_id];
+        ballotType = tBallot.ballotType;
+        state = tBallot.state;
+        isFinalized = tBallot.isFinalized;
+    }
 }

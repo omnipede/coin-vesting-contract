@@ -145,7 +145,7 @@
         "id": 193,
         "nodeType": "ImportDirective",
         "scope": 266,
-        "sourceUnit": 3449,
+        "sourceUnit": 3541,
         "src": "26:63:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -181,10 +181,10 @@
               "id": 196,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3448,
+              "referencedDeclaration": 3540,
               "src": "245:7:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$3448",
+                "typeIdentifier": "t_contract$_Ownable_$3540",
                 "typeString": "contract Ownable"
               }
             },
@@ -194,7 +194,7 @@
           }
         ],
         "contractDependencies": [
-          3448
+          3540
         ],
         "contractKind": "contract",
         "documentation": "@title GovChecker\n@dev GovChecker Contract that uses Registry contract",
@@ -202,7 +202,7 @@
         "id": 265,
         "linearizedBaseContracts": [
           265,
-          3448
+          3540
         ],
         "name": "GovChecker",
         "nodeType": "ContractDefinition",
@@ -383,7 +383,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 3382,
+                  "referencedDeclaration": 3474,
                   "src": "617:9:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -538,7 +538,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 3494,
+                            "referencedDeclaration": 3586,
                             "src": "748:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -599,10 +599,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3497,
-                        3498
+                        3589,
+                        3590
                       ],
-                      "referencedDeclaration": 3498,
+                      "referencedDeclaration": 3590,
                       "src": "704:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -880,10 +880,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3497,
-                        3498
+                        3589,
+                        3590
                       ],
-                      "referencedDeclaration": 3498,
+                      "referencedDeclaration": 3590,
                       "src": "889:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -934,7 +934,7 @@
                                 "name": "msg",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 3494,
+                                "referencedDeclaration": 3586,
                                 "src": "971:3:1",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_magic_message",
@@ -1100,10 +1100,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3497,
-                        3498
+                        3589,
+                        3590
                       ],
-                      "referencedDeclaration": 3498,
+                      "referencedDeclaration": 3590,
                       "src": "943:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1182,7 +1182,7 @@
         "id": 193,
         "nodeType": "ImportDirective",
         "scope": 266,
-        "sourceUnit": 3449,
+        "sourceUnit": 3541,
         "src": "26:63:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -1218,10 +1218,10 @@
               "id": 196,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3448,
+              "referencedDeclaration": 3540,
               "src": "245:7:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$3448",
+                "typeIdentifier": "t_contract$_Ownable_$3540",
                 "typeString": "contract Ownable"
               }
             },
@@ -1231,7 +1231,7 @@
           }
         ],
         "contractDependencies": [
-          3448
+          3540
         ],
         "contractKind": "contract",
         "documentation": "@title GovChecker\n@dev GovChecker Contract that uses Registry contract",
@@ -1239,7 +1239,7 @@
         "id": 265,
         "linearizedBaseContracts": [
           265,
-          3448
+          3540
         ],
         "name": "GovChecker",
         "nodeType": "ContractDefinition",
@@ -1420,7 +1420,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 3382,
+                  "referencedDeclaration": 3474,
                   "src": "617:9:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1575,7 +1575,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 3494,
+                            "referencedDeclaration": 3586,
                             "src": "748:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1636,10 +1636,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3497,
-                        3498
+                        3589,
+                        3590
                       ],
-                      "referencedDeclaration": 3498,
+                      "referencedDeclaration": 3590,
                       "src": "704:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1917,10 +1917,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3497,
-                        3498
+                        3589,
+                        3590
                       ],
-                      "referencedDeclaration": 3498,
+                      "referencedDeclaration": 3590,
                       "src": "889:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1971,7 +1971,7 @@
                                 "name": "msg",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 3494,
+                                "referencedDeclaration": 3586,
                                 "src": "971:3:1",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_magic_message",
@@ -2137,10 +2137,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3497,
-                        3498
+                        3589,
+                        3590
                       ],
-                      "referencedDeclaration": 3498,
+                      "referencedDeclaration": 3590,
                       "src": "943:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2198,5 +2198,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-29T05:50:26.589Z"
+  "updatedAt": "2019-01-29T06:15:10.034Z"
 }

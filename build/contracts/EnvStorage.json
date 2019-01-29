@@ -273,14 +273,14 @@
     "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/storage/EnvStorage.sol",
     "exportedSymbols": {
       "EnvStorage": [
-        3078
+        3170
       ]
     },
-    "id": 3079,
+    "id": 3171,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3055,
+        "id": 3147,
         "literals": [
           "solidity",
           "^",
@@ -293,9 +293,9 @@
       {
         "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/storage/AEnvStorage.sol",
         "file": "./AEnvStorage.sol",
-        "id": 3056,
+        "id": 3148,
         "nodeType": "ImportDirective",
-        "scope": 3079,
+        "scope": 3171,
         "sourceUnit": 1656,
         "src": "26:27:13",
         "symbolAliases": [],
@@ -304,9 +304,9 @@
       {
         "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/proxy/UpgradeabilityProxy.sol",
         "file": "../proxy/UpgradeabilityProxy.sol",
-        "id": 3057,
+        "id": 3149,
         "nodeType": "ImportDirective",
-        "scope": 3079,
+        "scope": 3171,
         "sourceUnit": 1461,
         "src": "54:42:13",
         "symbolAliases": [],
@@ -318,7 +318,7 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 3058,
+              "id": 3150,
               "name": "UpgradeabilityProxy",
               "nodeType": "UserDefinedTypeName",
               "referencedDeclaration": 1460,
@@ -328,7 +328,7 @@
                 "typeString": "contract UpgradeabilityProxy"
               }
             },
-            "id": 3059,
+            "id": 3151,
             "nodeType": "InheritanceSpecifier",
             "src": "122:19:13"
           },
@@ -336,7 +336,7 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 3060,
+              "id": 3152,
               "name": "AEnvStorage",
               "nodeType": "UserDefinedTypeName",
               "referencedDeclaration": 1655,
@@ -346,7 +346,7 @@
                 "typeString": "contract AEnvStorage"
               }
             },
-            "id": 3061,
+            "id": 3153,
             "nodeType": "InheritanceSpecifier",
             "src": "143:11:13"
           }
@@ -356,17 +356,17 @@
           1394,
           1460,
           1655,
-          3448
+          3540
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 3078,
+        "id": 3170,
         "linearizedBaseContracts": [
-          3078,
+          3170,
           1655,
           265,
-          3448,
+          3540,
           1460,
           1394
         ],
@@ -375,7 +375,7 @@
         "nodes": [
           {
             "body": {
-              "id": 3076,
+              "id": 3168,
               "nodeType": "Block",
               "src": "225:83:13",
               "statements": [
@@ -385,11 +385,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 3069,
+                        "id": 3161,
                         "name": "_registry",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3063,
+                        "referencedDeclaration": 3155,
                         "src": "247:9:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -404,7 +404,7 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 3068,
+                      "id": 3160,
                       "name": "setRegistry",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -415,7 +415,7 @@
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 3070,
+                    "id": 3162,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -429,7 +429,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3071,
+                  "id": 3163,
                   "nodeType": "ExpressionStatement",
                   "src": "235:22:13"
                 },
@@ -439,11 +439,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 3073,
+                        "id": 3165,
                         "name": "_implementation",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3065,
+                        "referencedDeclaration": 3157,
                         "src": "285:15:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -458,7 +458,7 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 3072,
+                      "id": 3164,
                       "name": "setImplementation",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -469,7 +469,7 @@
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 3074,
+                    "id": 3166,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -483,14 +483,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3075,
+                  "id": 3167,
                   "nodeType": "ExpressionStatement",
                   "src": "267:34:13"
                 }
               ]
             },
             "documentation": null,
-            "id": 3077,
+            "id": 3169,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
@@ -498,15 +498,15 @@
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3066,
+              "id": 3158,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3063,
+                  "id": 3155,
                   "name": "_registry",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3077,
+                  "scope": 3169,
                   "src": "174:17:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -515,7 +515,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3062,
+                    "id": 3154,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "174:7:13",
@@ -529,10 +529,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3065,
+                  "id": 3157,
                   "name": "_implementation",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3077,
+                  "scope": 3169,
                   "src": "193:23:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -541,7 +541,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3064,
+                    "id": 3156,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "193:7:13",
@@ -558,19 +558,19 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 3067,
+              "id": 3159,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "225:0:13"
             },
-            "scope": 3078,
+            "scope": 3170,
             "src": "162:146:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 3079,
+        "scope": 3171,
         "src": "99:211:13"
       }
     ],
@@ -580,14 +580,14 @@
     "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/storage/EnvStorage.sol",
     "exportedSymbols": {
       "EnvStorage": [
-        3078
+        3170
       ]
     },
-    "id": 3079,
+    "id": 3171,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3055,
+        "id": 3147,
         "literals": [
           "solidity",
           "^",
@@ -600,9 +600,9 @@
       {
         "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/storage/AEnvStorage.sol",
         "file": "./AEnvStorage.sol",
-        "id": 3056,
+        "id": 3148,
         "nodeType": "ImportDirective",
-        "scope": 3079,
+        "scope": 3171,
         "sourceUnit": 1656,
         "src": "26:27:13",
         "symbolAliases": [],
@@ -611,9 +611,9 @@
       {
         "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/proxy/UpgradeabilityProxy.sol",
         "file": "../proxy/UpgradeabilityProxy.sol",
-        "id": 3057,
+        "id": 3149,
         "nodeType": "ImportDirective",
-        "scope": 3079,
+        "scope": 3171,
         "sourceUnit": 1461,
         "src": "54:42:13",
         "symbolAliases": [],
@@ -625,7 +625,7 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 3058,
+              "id": 3150,
               "name": "UpgradeabilityProxy",
               "nodeType": "UserDefinedTypeName",
               "referencedDeclaration": 1460,
@@ -635,7 +635,7 @@
                 "typeString": "contract UpgradeabilityProxy"
               }
             },
-            "id": 3059,
+            "id": 3151,
             "nodeType": "InheritanceSpecifier",
             "src": "122:19:13"
           },
@@ -643,7 +643,7 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 3060,
+              "id": 3152,
               "name": "AEnvStorage",
               "nodeType": "UserDefinedTypeName",
               "referencedDeclaration": 1655,
@@ -653,7 +653,7 @@
                 "typeString": "contract AEnvStorage"
               }
             },
-            "id": 3061,
+            "id": 3153,
             "nodeType": "InheritanceSpecifier",
             "src": "143:11:13"
           }
@@ -663,17 +663,17 @@
           1394,
           1460,
           1655,
-          3448
+          3540
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 3078,
+        "id": 3170,
         "linearizedBaseContracts": [
-          3078,
+          3170,
           1655,
           265,
-          3448,
+          3540,
           1460,
           1394
         ],
@@ -682,7 +682,7 @@
         "nodes": [
           {
             "body": {
-              "id": 3076,
+              "id": 3168,
               "nodeType": "Block",
               "src": "225:83:13",
               "statements": [
@@ -692,11 +692,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 3069,
+                        "id": 3161,
                         "name": "_registry",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3063,
+                        "referencedDeclaration": 3155,
                         "src": "247:9:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -711,7 +711,7 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 3068,
+                      "id": 3160,
                       "name": "setRegistry",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -722,7 +722,7 @@
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 3070,
+                    "id": 3162,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -736,7 +736,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3071,
+                  "id": 3163,
                   "nodeType": "ExpressionStatement",
                   "src": "235:22:13"
                 },
@@ -746,11 +746,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 3073,
+                        "id": 3165,
                         "name": "_implementation",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3065,
+                        "referencedDeclaration": 3157,
                         "src": "285:15:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -765,7 +765,7 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 3072,
+                      "id": 3164,
                       "name": "setImplementation",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -776,7 +776,7 @@
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 3074,
+                    "id": 3166,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -790,14 +790,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3075,
+                  "id": 3167,
                   "nodeType": "ExpressionStatement",
                   "src": "267:34:13"
                 }
               ]
             },
             "documentation": null,
-            "id": 3077,
+            "id": 3169,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
@@ -805,15 +805,15 @@
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3066,
+              "id": 3158,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3063,
+                  "id": 3155,
                   "name": "_registry",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3077,
+                  "scope": 3169,
                   "src": "174:17:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -822,7 +822,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3062,
+                    "id": 3154,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "174:7:13",
@@ -836,10 +836,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3065,
+                  "id": 3157,
                   "name": "_implementation",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3077,
+                  "scope": 3169,
                   "src": "193:23:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -848,7 +848,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3064,
+                    "id": 3156,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "193:7:13",
@@ -865,19 +865,19 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 3067,
+              "id": 3159,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "225:0:13"
             },
-            "scope": 3078,
+            "scope": 3170,
             "src": "162:146:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 3079,
+        "scope": 3171,
         "src": "99:211:13"
       }
     ],
@@ -889,5 +889,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-29T05:50:26.602Z"
+  "updatedAt": "2019-01-29T06:15:10.048Z"
 }
