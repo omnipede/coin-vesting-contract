@@ -21,7 +21,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         // 제안자
         address creator;
         // 투표 내용
-        string memo;
+        bytes memo;
         //총 투표자수  
         uint256 totalVoters;
         // 진행상태
@@ -41,7 +41,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         address oldMemeberAddress;
         address newMemeberAddress;
         bytes newNodeId; // admin.nodeInfo.id is 512 bit public key
-        string newNodeIp;
+        bytes newNodeIp;
         uint newNodePort;
     }
 
@@ -60,9 +60,9 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         string envVariableValue;
     }
 
-    struct Vote{
-        uint256  voteId;
-        uint256  ballotId;
+    struct Vote {
+        uint256 voteId;
+        uint256 ballotId;
         address voter;
         uint256 decision;
         uint256 power;
@@ -126,7 +126,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 endTime,
         uint256 ballotType,
         address creator,
-        string memo,
+        bytes memo,
         uint256 totalVoters,
         uint256 powerOfAccepts,
         uint256 powerOfRejects,
@@ -154,7 +154,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         address oldMemeberAddress,
         address newMemeberAddress,
         bytes newNodeId, // admin.nodeInfo.id is 512 bit public key
-        string newNodeIp,
+        bytes newNodeIp,
         uint newNodePort
     )
     {
@@ -197,7 +197,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         // uint256 _endTime,
         uint256 _ballotType,
         address _creator,
-        string _memo
+        bytes _memo
         
     )
         internal
@@ -214,7 +214,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         address _oldMemeberAddress,
         address _newMemeberAddress,
         bytes _newNodeId, // admin.nodeInfo.id is 512 bit public key
-        string _newNodeIp,
+        bytes _newNodeIp,
         uint _newNodePort
     )
         internal
@@ -227,11 +227,11 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
             require(_oldMemeberAddress != address(0),"Invalid old member address");
             require(_newMemeberAddress == address(0),"Invalid new member address");
             require(_newNodeId.length == 0, "Invalid new node id");
-            require(bytes(_newNodeIp).length == 0, "Invalid new node IP");
+            require(_newNodeIp.length == 0, "Invalid new node IP");
             require(_newNodePort == 0, "Invalid new node Port");
         }else {
             require(_newNodeId.length == 64, "Invalid new node id");
-            require(bytes(_newNodeIp).length > 0, "Invalid new node IP");
+            require(_newNodeIp.length > 0, "Invalid new node IP");
             require(_newNodePort > 0, "Invalid new node Port");
             if (_ballotType == uint256(BallotTypes.MemberAdd)) {
                 require(_oldMemeberAddress == address(0),"Invalid old member address");
@@ -250,11 +250,10 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 _id,
         uint256 _ballotType,
         address _creator,
-        string _memo,
         address _oldMemeberAddress,
         address _newMemeberAddress,
         bytes _newNodeId, // admin.nodeInfo.id is 512 bit public key
-        string _newNodeIp,
+        bytes _newNodeIp,
         uint _newNodePort
     )
         public
@@ -265,7 +264,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
             _areMemberBallotParamValid(_ballotType,_oldMemeberAddress,_newMemeberAddress,_newNodeId,_newNodeIp,_newNodePort),
             "Invalid Parameter"
         );
-        uint256 ballotId = _createBallot(_id, _ballotType, _creator, _memo);
+        uint256 ballotId = _createBallot(_id, _ballotType, _creator, '');
         BallotMember memory newBallot;
         newBallot.id = ballotId;
         newBallot.oldMemeberAddress = _oldMemeberAddress;
@@ -282,7 +281,6 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 _id,
         uint256 _ballotType,
         address _creator,
-        string _memo,
         address _newGovernanceAddress
     )
         public
@@ -292,7 +290,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         require(_ballotType == uint256(BallotTypes.GovernanceChange), "Invalid Ballot Type");
         require(_newGovernanceAddress != address(0), "Invalid Parameter");
         
-        uint256 ballotId = _createBallot(_id, _ballotType, _creator, _memo);
+        uint256 ballotId = _createBallot(_id, _ballotType, _creator, "");
         BallotAddress memory newBallot;
         newBallot.id = ballotId;
         newBallot.newGovernanceAddress = _newGovernanceAddress;
@@ -323,7 +321,6 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 _id,
         uint256 _ballotType,
         address _creator,
-        string _memo,
         bytes32 _envVariableName,
         uint256 _envVariableType,
         string _envVariableValue 
@@ -336,7 +333,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
             _areVariableBallotParamValid(_ballotType, _envVariableName, _envVariableType, _envVariableValue),
             "Invalid Parameter"
         );
-        uint256 ballotId = _createBallot(_id, _ballotType, _creator, _memo);
+        uint256 ballotId = _createBallot(_id, _ballotType, _creator, '');
         BallotVariable memory newBallot;
         newBallot.id = ballotId;
         newBallot.envVariableName = _envVariableName;
@@ -463,5 +460,49 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         _ballot.endTime = _endTime;
         _ballot.state = uint256(BallotStates.InProgress);
         emit BallotStarted(_ballotId, _startTime, _endTime);
+    }
+    function updateBallotMemo(
+        uint256 _ballotId,
+        bytes _memo
+    ) public onlyGov
+    {
+        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
+        require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
+        BallotBasic storage _ballot = ballotBasicMap[_ballotId];
+        _ballot.memo = _memo;
+    }
+
+
+    function getBallotPeriod (uint256 _id) public view returns (
+        uint256 startTime,
+        uint256 endTime
+    )
+    {
+        BallotBasic memory tBallot = ballotBasicMap[_id];
+        startTime = tBallot.startTime;
+        endTime = tBallot.endTime; 
+    }
+    function getBallotVotingInfo(uint256 _id) public view returns (
+        uint256 totalVoters,
+        uint256 powerOfAccepts,
+        uint256 powerOfRejects
+
+    )
+    {
+        BallotBasic memory tBallot = ballotBasicMap[_id];
+        totalVoters = tBallot.totalVoters;
+        powerOfAccepts = tBallot.powerOfAccepts;
+        powerOfRejects = tBallot.powerOfRejects;        
+    }
+    function getBallotState(uint256 _id) public view returns (
+        uint256 ballotType,
+        uint256 state,
+        bool isFinalized
+    )
+    {
+        BallotBasic memory tBallot = ballotBasicMap[_id];
+        ballotType = tBallot.ballotType;
+        state = tBallot.state;
+        isFinalized = tBallot.isFinalized;
     }
 }
