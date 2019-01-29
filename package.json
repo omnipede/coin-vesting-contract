@@ -22,6 +22,7 @@
   "author": "Metadium",
   "license": "MIT",
   "dependencies": {
+    "config": "^3.0.1",
     "openzeppelin-solidity": "^2.0.0"
   },
   "devDependencies": {
