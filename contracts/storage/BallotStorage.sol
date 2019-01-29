@@ -1,12 +1,12 @@
 pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
-import "../abstract/EnumVariableTypes.sol";
+import "../abstract/EnvConstants.sol";
 import "../abstract/BallotEnums.sol";
 import "../GovChecker.sol";
 
 
-contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
+contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     using SafeMath for uint256;
     
     struct BallotBasic {

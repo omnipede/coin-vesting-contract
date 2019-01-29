@@ -358,7 +358,9 @@ contract Staking is GovChecker, ReentrancyGuard {
 
 }
 
-contract EnumVariableTypes {
+contract EnvConstants {
+    bytes32 internal constant BLOCK_PER_NAME = keccak256("blockPer"); 
+    uint256 internal constant BLOCK_PER_TYPE = uint256(VariableTypes.Uint);
     enum VariableTypes {
         Invalid,
         Int,
@@ -587,9 +589,8 @@ contract AEnvStorage is GovChecker {
     }
 }
 
-contract EnvStorageImp is AEnvStorage, EnumVariableTypes {
-    bytes32 internal constant BLOCK_PER_NAME = keccak256("blockPer"); 
-    uint256 internal constant BLOCK_PER_TYPE = uint256(VariableTypes.Uint);
+contract EnvStorageImp is AEnvStorage, EnvConstants {
+    
 
     function getBlockPer() public view returns (uint256 varType, string varVal) {
         varType = getBlockPerType();
