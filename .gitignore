@@ -69,3 +69,6 @@ package-lock.json
 
 # old file 
 *.old
+
+#testCode 
+testcon/

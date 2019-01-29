@@ -1,0 +1,543 @@
+{
+  "contractName": "EnvConstants",
+  "abi": [],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a723058202e55fca7538ba849c44c459eb96013173e99efd48545ddf9c5413ed6ba7a006c0029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a723058202e55fca7538ba849c44c459eb96013173e99efd48545ddf9c5413ed6ba7a006c0029",
+  "sourceMap": "26:311:7:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:311:7;;;;;;;",
+  "deployedSourceMap": "26:311:7:-;;;;;",
+  "source": "pragma solidity ^0.4.24;\n\ncontract EnvConstants {\n    bytes32 internal constant BLOCK_PER_NAME = keccak256(\"blockPer\"); \n    uint256 internal constant BLOCK_PER_TYPE = uint256(VariableTypes.Uint);\n    enum VariableTypes {\n        Invalid,\n        Int,\n        Uint,\n        Address,\n        Bytes32,\n        Bytes,\n        String\n    }\n}",
+  "sourcePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/abstract/EnvConstants.sol",
+  "ast": {
+    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/abstract/EnvConstants.sol",
+    "exportedSymbols": {
+      "EnvConstants": [
+        1573
+      ]
+    },
+    "id": 1574,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1553,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:7"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1573,
+        "linearizedBaseContracts": [
+          1573
+        ],
+        "name": "EnvConstants",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 1558,
+            "name": "BLOCK_PER_NAME",
+            "nodeType": "VariableDeclaration",
+            "scope": 1573,
+            "src": "54:64:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 1554,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "54:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "hexValue": "626c6f636b506572",
+                  "id": 1556,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "107:10:7",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_008d80f2622b27327ee2b0fbf15ede84d294a69a121677366aa7c4b5b611f96d",
+                    "typeString": "literal_string \"blockPer\""
+                  },
+                  "value": "blockPer"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_008d80f2622b27327ee2b0fbf15ede84d294a69a121677366aa7c4b5b611f96d",
+                    "typeString": "literal_string \"blockPer\""
+                  }
+                ],
+                "id": 1555,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 3969,
+                "src": "97:9:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
+                  "typeString": "function () pure returns (bytes32)"
+                }
+              },
+              "id": 1557,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "97:21:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1564,
+            "name": "BLOCK_PER_TYPE",
+            "nodeType": "VariableDeclaration",
+            "scope": 1573,
+            "src": "125:70:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 1559,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "125:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1561,
+                    "name": "VariableTypes",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 1572,
+                    "src": "176:13:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1572_$",
+                      "typeString": "type(enum EnvConstants.VariableTypes)"
+                    }
+                  },
+                  "id": 1562,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "memberName": "Uint",
+                  "nodeType": "MemberAccess",
+                  "referencedDeclaration": null,
+                  "src": "176:18:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1572",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1572",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                ],
+                "id": 1560,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "ElementaryTypeNameExpression",
+                "src": "168:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_type$_t_uint256_$",
+                  "typeString": "type(uint256)"
+                },
+                "typeName": "uint256"
+              },
+              "id": 1563,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "typeConversion",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "168:27:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "canonicalName": "EnvConstants.VariableTypes",
+            "id": 1572,
+            "members": [
+              {
+                "id": 1565,
+                "name": "Invalid",
+                "nodeType": "EnumValue",
+                "src": "230:7:7"
+              },
+              {
+                "id": 1566,
+                "name": "Int",
+                "nodeType": "EnumValue",
+                "src": "247:3:7"
+              },
+              {
+                "id": 1567,
+                "name": "Uint",
+                "nodeType": "EnumValue",
+                "src": "260:4:7"
+              },
+              {
+                "id": 1568,
+                "name": "Address",
+                "nodeType": "EnumValue",
+                "src": "274:7:7"
+              },
+              {
+                "id": 1569,
+                "name": "Bytes32",
+                "nodeType": "EnumValue",
+                "src": "291:7:7"
+              },
+              {
+                "id": 1570,
+                "name": "Bytes",
+                "nodeType": "EnumValue",
+                "src": "308:5:7"
+              },
+              {
+                "id": 1571,
+                "name": "String",
+                "nodeType": "EnumValue",
+                "src": "323:6:7"
+              }
+            ],
+            "name": "VariableTypes",
+            "nodeType": "EnumDefinition",
+            "src": "201:134:7"
+          }
+        ],
+        "scope": 1574,
+        "src": "26:311:7"
+      }
+    ],
+    "src": "0:337:7"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/abstract/EnvConstants.sol",
+    "exportedSymbols": {
+      "EnvConstants": [
+        1573
+      ]
+    },
+    "id": 1574,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1553,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:7"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1573,
+        "linearizedBaseContracts": [
+          1573
+        ],
+        "name": "EnvConstants",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 1558,
+            "name": "BLOCK_PER_NAME",
+            "nodeType": "VariableDeclaration",
+            "scope": 1573,
+            "src": "54:64:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 1554,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "54:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "hexValue": "626c6f636b506572",
+                  "id": 1556,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "107:10:7",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_008d80f2622b27327ee2b0fbf15ede84d294a69a121677366aa7c4b5b611f96d",
+                    "typeString": "literal_string \"blockPer\""
+                  },
+                  "value": "blockPer"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_008d80f2622b27327ee2b0fbf15ede84d294a69a121677366aa7c4b5b611f96d",
+                    "typeString": "literal_string \"blockPer\""
+                  }
+                ],
+                "id": 1555,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 3969,
+                "src": "97:9:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
+                  "typeString": "function () pure returns (bytes32)"
+                }
+              },
+              "id": 1557,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "97:21:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1564,
+            "name": "BLOCK_PER_TYPE",
+            "nodeType": "VariableDeclaration",
+            "scope": 1573,
+            "src": "125:70:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 1559,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "125:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1561,
+                    "name": "VariableTypes",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 1572,
+                    "src": "176:13:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1572_$",
+                      "typeString": "type(enum EnvConstants.VariableTypes)"
+                    }
+                  },
+                  "id": 1562,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "memberName": "Uint",
+                  "nodeType": "MemberAccess",
+                  "referencedDeclaration": null,
+                  "src": "176:18:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1572",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1572",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                ],
+                "id": 1560,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "ElementaryTypeNameExpression",
+                "src": "168:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_type$_t_uint256_$",
+                  "typeString": "type(uint256)"
+                },
+                "typeName": "uint256"
+              },
+              "id": 1563,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "typeConversion",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "168:27:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "canonicalName": "EnvConstants.VariableTypes",
+            "id": 1572,
+            "members": [
+              {
+                "id": 1565,
+                "name": "Invalid",
+                "nodeType": "EnumValue",
+                "src": "230:7:7"
+              },
+              {
+                "id": 1566,
+                "name": "Int",
+                "nodeType": "EnumValue",
+                "src": "247:3:7"
+              },
+              {
+                "id": 1567,
+                "name": "Uint",
+                "nodeType": "EnumValue",
+                "src": "260:4:7"
+              },
+              {
+                "id": 1568,
+                "name": "Address",
+                "nodeType": "EnumValue",
+                "src": "274:7:7"
+              },
+              {
+                "id": 1569,
+                "name": "Bytes32",
+                "nodeType": "EnumValue",
+                "src": "291:7:7"
+              },
+              {
+                "id": 1570,
+                "name": "Bytes",
+                "nodeType": "EnumValue",
+                "src": "308:5:7"
+              },
+              {
+                "id": 1571,
+                "name": "String",
+                "nodeType": "EnumValue",
+                "src": "323:6:7"
+              }
+            ],
+            "name": "VariableTypes",
+            "nodeType": "EnumDefinition",
+            "src": "201:134:7"
+          }
+        ],
+        "scope": 1574,
+        "src": "26:311:7"
+      }
+    ],
+    "src": "0:337:7"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2019-01-29T09:04:52.110Z"
+}

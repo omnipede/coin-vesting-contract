@@ -163,7 +163,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         // Check if some ballot is in progress
         if (ballotInVoting != 0) {
             (, uint256 state, ) = BallotStorage(ballotStorage).getBallotState(ballotIdx);
-            (, uint256 endTime) = BallotStorage(ballotStorage).getBallotPeriod(ballotIdx);
+            (, uint256 endTime, ) = BallotStorage(ballotStorage).getBallotPeriod(ballotIdx);
             if (state == uint256(BallotStates.InProgress)) {
                 if (endTime < block.timestamp) {
                     revert("Now in voting with different ballot");
@@ -206,6 +206,8 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             );
         }
         voteLength = voteLength.add(1);
+
+        // Finalize
     }
 
     // function addMember(address addr, bytes enode, bytes ip, uint port) private {}
