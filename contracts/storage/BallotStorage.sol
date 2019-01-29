@@ -62,9 +62,9 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         string envVariableValue;
     }
 
-    struct Vote{
-        uint256  voteId;
-        uint256  ballotId;
+    struct Vote {
+        uint256 voteId;
+        uint256 ballotId;
         address voter;
         uint256 decision;
         uint256 power;
@@ -468,6 +468,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         _ballot.state = uint256(BallotStates.InProgress);
         emit BallotStarted(_ballotId, _startTime, _endTime);
     }
+
     function updateBallotMemo(
         uint256 _ballotId,
         bytes _memo
@@ -490,7 +491,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         _ballot.duration = _duration;
     }
 
-    function getBallotPeriod (uint256 _id) public view returns (
+    function getBallotPeriod(uint256 _id) public view returns (
         uint256 startTime,
         uint256 endTime,
         uint256 duration
@@ -501,6 +502,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         endTime = tBallot.endTime; 
         duration = tBallot.duration;
     }
+
     function getBallotVotingInfo(uint256 _id) public view returns (
         uint256 totalVoters,
         uint256 powerOfAccepts,
@@ -513,6 +515,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         powerOfAccepts = tBallot.powerOfAccepts;
         powerOfRejects = tBallot.powerOfRejects;        
     }
+
     function getBallotState(uint256 _id) public view returns (
         uint256 ballotType,
         uint256 state,
