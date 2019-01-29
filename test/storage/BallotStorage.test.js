@@ -186,7 +186,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       const _ballotType = 1; // new web3.BigNumber(1);
       const _memo = 'test message for ballot';
       const _enodeid = '0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0';
-      // let _enodeid = web3Utils.hexToBytes(_enodidHexString);
       const _nodeip = '123.11.111.111';
       const _nodePort = 9545;
       await ballotStorage.createBallotForMemeber(
@@ -223,7 +222,30 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       assert.equal(web3Utils.toUtf8(ballotDetailInfo[4]), _nodeip);
       assert.equal(ballotDetailInfo[5], _nodePort);
     });
-
+    it('update Ballot memo for MemberAdd', async () => {
+        const _id = 1;
+        const _start_time = 0;
+        const _end_time = 0;
+        const _ballotType = 1; // new web3.BigNumber(1);
+        const _memo = 'test message for ballot';
+        const _enodeid = '0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0';
+        const _nodeip = '123.11.111.111';
+        const _nodePort = 9545;
+        await ballotStorage.createBallotForMemeber(
+          _id, // ballot id
+          _ballotType, // ballot type
+          creator, // creator
+          ZERO_ADDRESS, // oldMemberAddress
+          addMem, // newMemberAddress
+          _enodeid, // newNodeId
+          _nodeip, // newNodeIp
+          _nodePort, // newNodePort
+          { value: 0, from: govAddr }
+        ); // .should.be.rejectedWith(ERROR_MSG);
+        await ballotStorage.updateBallotMemo(_id,_memo,{ value: 0, from: govAddr });
+        const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
+        assert.equal(web3Utils.toUtf8(ballotBasicInfo[5]), _memo);
+      });
     it('Start Ballot for MemberAdd', async () => {
       const _id = 1;
       const _start_time = moment.utc().add(20, 'seconds').unix();
@@ -231,7 +253,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       const _ballotType = 1; // new web3.BigNumber(1);
       const _memo = 'test message for ballot';
       const _enodeid = '0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0';
-      // let _enodeid = web3Utils.hexToBytes(_enodidHexString);
       const _nodeip = '123.11.111.111';
       const _nodePort = 9545;
       await ballotStorage.createBallotForMemeber(
@@ -265,7 +286,51 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       assert.equal(ballotBasicInfo[2], _end_time);
       ballotBasicInfo[9].should.be.bignumber.equal(2); // InProgress
     });
-
+    it('finalize Ballot for MemberAdd', async () => {
+        const _id = 1;
+        const _start_time = moment.utc().add(20, 'seconds').unix();
+        const _end_time = moment.utc().add(10, 'days').unix();
+        const _ballotType = 1; // new web3.BigNumber(1);
+        const _memo = 'test message for ballot';
+        const _enodeid = '0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0';
+        const _nodeip = '123.11.111.111';
+        const _nodePort = 9545;
+        await ballotStorage.createBallotForMemeber(
+          _id, // ballot id
+          _ballotType, // ballot type
+          creator, // creator
+          ZERO_ADDRESS, // oldMemberAddress
+          addMem, // newMemberAddress
+          _enodeid, // newNodeId
+          _nodeip, // newNodeIp
+          _nodePort, // newNodePort
+          { value: 0, from: govAddr }
+        ); // .should.be.rejectedWith(ERROR_MSG);
+  
+        let ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
+        // console.log(`MemberBallotBasic : ${ballotBasicInfo}`);
+        assert.equal(ballotBasicInfo[0], _id);
+        assert.equal(ballotBasicInfo[1], 0);
+        assert.equal(ballotBasicInfo[2], 0);
+        assert.equal(ballotBasicInfo[3], _ballotType);
+        assert.equal(ballotBasicInfo[4], creator);
+        ballotBasicInfo[6].should.be.bignumber.equal(0);
+        ballotBasicInfo[7].should.be.bignumber.equal(0);
+        ballotBasicInfo[8].should.be.bignumber.equal(0);
+        ballotBasicInfo[9].should.be.bignumber.equal(1); // Ready
+        assert.equal(ballotBasicInfo[10], false);
+  
+        await ballotStorage.startBallot(_id, _start_time, _end_time, { value: 0, from: govAddr });
+        ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
+        assert.equal(ballotBasicInfo[1], _start_time);
+        assert.equal(ballotBasicInfo[2], _end_time);
+        ballotBasicInfo[9].should.be.bignumber.equal(2); // InProgress
+        let _state = 3;//accepted
+        await ballotStorage.finalizeBallot(_id,_state, { value: 0, from: govAddr });
+        ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
+        ballotBasicInfo[9].should.be.bignumber.equal(_state);
+        assert.equal(ballotBasicInfo[10], true);
+      });
     it('cannot create Ballot by duplicated id ', async () => {
       const _id = 1;
       const _start_time = 0;
@@ -273,7 +338,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       const _ballotType = 1; // new web3.BigNumber(1);
       const _memo = 'test message for ballot';
       const _enodeid = '0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0';
-      // let _enodeid = web3Utils.hexToBytes(_enodidHexString);
       const _nodeip = '123.11.111.111';
       const _nodePort = 9545;
       await ballotStorage.createBallotForMemeber(
@@ -291,7 +355,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       const _ballotType2 = 1; // new web3.BigNumber(1);
       const _memo2 = 'test message for ballot2';
       const _enodeid2 = '0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92bb';
-      // let _enodeid = web3Utils.hexToBytes(_enodidHexString);
       const _nodeip2 = '123.11.111.112';
       const _nodePort2 = 9541;
       await reverting(ballotStorage.createBallotForMemeber(

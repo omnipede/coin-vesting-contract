@@ -462,4 +462,14 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         _ballot.state = uint256(BallotStates.InProgress);
         emit BallotStarted(_ballotId, _startTime, _endTime);
     }
+    function updateBallotMemo(
+        uint256 _ballotId,
+        bytes _memo
+    ) public onlyGov
+    {
+        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
+        require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
+        BallotBasic storage _ballot = ballotBasicMap[_ballotId];
+        _ballot.memo = _memo;
+    }
 }
