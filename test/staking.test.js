@@ -12,13 +12,13 @@ const Staking = artifacts.require('Staking.sol');
 contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
   let registry, staking;
   const amount = ether(1e7);
-  
+
   beforeEach(async () => {
     registry = await Registry.new();
     staking = await Staking.new(registry.address);
 
-    await registry.setContractDomain("Staking", staking.address);
-    await registry.setContractDomain("GovernanceContract", fakeGov);
+    await registry.setContractDomain('Staking', staking.address);
+    await registry.setContractDomain('GovernanceContract', fakeGov);
   });
 
   describe('Staker ', function () {
@@ -44,7 +44,7 @@ contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
       await reverting(staking.withdraw(amount, { from: user }));
       await staking.deposit({ value: amount, from: user });
       const bal = await staking.balanceOf(user);
-      await reverting(staking.withdraw(bal*2, { from: user }));
+      await reverting(staking.withdraw(bal * 2, { from: user }));
     });
 
     it('can withdraw partial', async () => {
@@ -81,7 +81,6 @@ contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
       await staking.lock(user, amount, { from: fakeGov });
       await reverting(staking.unlock(user, amount, { from: user2 }));
     });
-
   });
 
   describe('Governance ', function () {
@@ -102,7 +101,7 @@ contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
     });
 
     it('cannot unlock over balance locked', async () => {
-      await reverting(staking.unlock(user, amount*2, { from: fakeGov }));
+      await reverting(staking.unlock(user, amount * 2, { from: fakeGov }));
     });
 
     it('can unlock', async () => {
@@ -110,14 +109,13 @@ contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
       const availBal = await staking.availableBalance(user);
       availBal.should.be.bignumber.equal(amount);
     });
-
   });
 
   describe('Voting weight ', function () {
     beforeEach(async () => {
       await staking.deposit({ value: amount, from: user });
-      await staking.deposit({ value: amount*2, from: user2 });
-      await staking.deposit({ value: amount*3, from: user3 });
+      await staking.deposit({ value: amount * 2, from: user2 });
+      await staking.deposit({ value: amount * 3, from: user3 });
       await staking.lock(user, amount, { from: fakeGov });
       await staking.lock(user2, amount, { from: fakeGov });
       await staking.lock(user3, amount, { from: fakeGov });
@@ -146,7 +144,7 @@ contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
     it('can be calculated when distributed differently', async () => {
       // user : user2 : user3 = 1 : 2 : 3
       await staking.lock(user2, amount, { from: fakeGov });
-      await staking.lock(user3, amount*2, { from: fakeGov });
+      await staking.lock(user3, amount * 2, { from: fakeGov });
 
       const weight1 = await staking.calcVotingWeight(user);
       weight1.should.be.bignumber.equal(16);
@@ -208,13 +206,13 @@ contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
       const start = 55;
       const end = 400;
       const rand = Math.floor(Math.random() * (end - start) + start);
-      const sum = 1000 + rand + (2*rand);
+      const sum = 1000 + rand + (2 * rand);
 
-      await staking.unlock(user2, (amount*(1000-rand)) / 1000, { from: fakeGov });
-      await staking.unlock(user3, (amount*(1000-(2*rand))) / 1000, { from: fakeGov });
+      await staking.unlock(user2, (amount * (1000 - rand)) / 1000, { from: fakeGov });
+      await staking.unlock(user3, (amount * (1000 - (2 * rand))) / 1000, { from: fakeGov });
 
-      const expect1 = Math.floor((1000 * 1000 ) / sum);
-      const expect2 = Math.floor((rand * 1000 ) / sum);
+      const expect1 = Math.floor((1000 * 1000) / sum);
+      const expect2 = Math.floor((rand * 1000) / sum);
       const expect3 = Math.floor((rand * 2 * 1000) / sum);
 
       const weight1 = await staking.calcVotingWeightWithScaleFactor(user, 1e3);
@@ -229,7 +227,7 @@ contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
 
     it('can be calculated with users locked randomly', async () => {
       // Make all users lock zero
-      await staking.deposit({ value: amount*2, from: user });
+      await staking.deposit({ value: amount * 2, from: user });
       await staking.deposit({ value: amount, from: user2 });
       await staking.unlock(user, amount, { from: fakeGov });
       await staking.unlock(user2, amount, { from: fakeGov });
@@ -237,7 +235,7 @@ contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
 
       // Rand
       const start = 1;
-      const end = amount*3;
+      const end = amount * 3;
       [user, user2, user3].forEach(async (u) => {
         const rand = Math.floor(Math.random() * (end - start) + start);
         await staking.lock(u, rand, { from: fakeGov });
@@ -248,7 +246,5 @@ contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
       const weight3 = await staking.calcVotingWeight(user3);
       weight1.plus(weight2).plus(weight3).should.be.bignumber.gt(97);
     });
-
   });
-
 });

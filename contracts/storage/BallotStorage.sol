@@ -250,7 +250,6 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 _id,
         uint256 _ballotType,
         address _creator,
-        bytes _memo,
         address _oldMemeberAddress,
         address _newMemeberAddress,
         bytes _newNodeId, // admin.nodeInfo.id is 512 bit public key
@@ -265,7 +264,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
             _areMemberBallotParamValid(_ballotType,_oldMemeberAddress,_newMemeberAddress,_newNodeId,_newNodeIp,_newNodePort),
             "Invalid Parameter"
         );
-        uint256 ballotId = _createBallot(_id, _ballotType, _creator, _memo);
+        uint256 ballotId = _createBallot(_id, _ballotType, _creator, '');
         BallotMember memory newBallot;
         newBallot.id = ballotId;
         newBallot.oldMemeberAddress = _oldMemeberAddress;
@@ -323,7 +322,6 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 _id,
         uint256 _ballotType,
         address _creator,
-        bytes _memo,
         bytes32 _envVariableName,
         uint256 _envVariableType,
         string _envVariableValue 
@@ -336,7 +334,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
             _areVariableBallotParamValid(_ballotType, _envVariableName, _envVariableType, _envVariableValue),
             "Invalid Parameter"
         );
-        uint256 ballotId = _createBallot(_id, _ballotType, _creator, _memo);
+        uint256 ballotId = _createBallot(_id, _ballotType, _creator, '');
         BallotVariable memory newBallot;
         newBallot.id = ballotId;
         newBallot.envVariableName = _envVariableName;
