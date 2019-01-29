@@ -73,6 +73,12 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         uint256 indexed ballotType,
         address indexed creator
     );
+    
+    event BallotStarted(
+        uint256 indexed ballotId,
+        uint256 indexed startTime,
+        uint256 indexed endTime
+    );
     event Voted(
         uint256 indexed voteid,
         uint256 indexed ballotId,
@@ -174,15 +180,15 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
     }
     function _createBallot(
         uint256 _id,
-        uint256 _startTime,
-        uint256 _endTime,
+        // uint256 _startTime,
+        // uint256 _endTime,
         uint256 _ballotType,
         address _creator,
         string _memo
         
     ) internal returns(uint256){
         require(ballotBasicMap[_id].id != _id , "already existed ballot");
-        ballotBasicMap[_id] = BallotBasic( _id, _startTime, _endTime, _ballotType, _creator, _memo, 0, 0, 0, uint256(BallotStates.InProgress), false);
+        ballotBasicMap[_id] = BallotBasic( _id, 0, 0, _ballotType, _creator, _memo, 0, 0, 0, uint256(BallotStates.Ready), false);
         emit BallotCreated(_id, _ballotType, _creator);
         return _id;
     }
@@ -220,8 +226,6 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
     //For MemberAdding/MemberRemoval/MemberSwap
     function createBallotForMemeber(
         uint256 _id,
-        uint256 _startTime,
-        uint256 _endTime,
         uint256 _ballotType,
         address _creator,
         string _memo,
@@ -235,7 +239,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
             _areMemberBallotParamValid(_ballotType,_oldMemeberAddress,_newMemeberAddress,_newNodeId,_newNodeIp,_newNodePort),
             "Invalid Parameter"
         );
-        uint256 ballotId = _createBallot(_id, _startTime, _endTime, _ballotType, _creator, _memo);
+        uint256 ballotId = _createBallot(_id, _ballotType, _creator, _memo);
         BallotMember memory newBallot;
         newBallot.id = ballotId;
         newBallot.oldMemeberAddress = _oldMemeberAddress;
@@ -250,8 +254,6 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
     
     function createBallotForAddress(
         uint256 _id,
-        uint256 _startTime,
-        uint256 _endTime,
         uint256 _ballotType,
         address _creator,
         string _memo,
@@ -260,7 +262,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         require(_ballotType == uint256(BallotTypes.GovernanceChange), "Invalid Ballot Type");
         require(_newGovernanceAddress != address(0), "Invalid Parameter");
         
-        uint256 ballotId = _createBallot(_id, _startTime, _endTime, _ballotType, _creator, _memo);
+        uint256 ballotId = _createBallot(_id, _ballotType, _creator, _memo);
         BallotAddress memory newBallot;
         newBallot.id = ballotId;
         newBallot.newGovernanceAddress = _newGovernanceAddress;
@@ -285,8 +287,6 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
 
     function createBallotForVariable(
         uint256 _id,
-        uint256 _startTime,
-        uint256 _endTime,
         uint256 _ballotType,
         address _creator,
         string _memo,
@@ -298,7 +298,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
             _areVariableBallotParamValid(_ballotType, _envVariableName, _envVariableType, _envVariableValue),
             "Invalid Parameter"
         );
-        uint256 ballotId = _createBallot(_id, _startTime, _endTime, _ballotType, _creator, _memo);
+        uint256 ballotId = _createBallot(_id, _ballotType, _creator, _memo);
         BallotVariable memory newBallot;
         newBallot.id = ballotId;
         newBallot.envVariableName = _envVariableName;
@@ -324,6 +324,8 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
         require(voteMap[_voteId].voteId != _voteId, "already existed voteId");
         //5. 이미 vote 했는지 확인 
         require(!hasVotedMap[_ballotId][_voter], "already voted");
+        require(ballotBasicMap[_ballotId].state == uint256(BallotStates.InProgress), "Not InProgress State");
+       //require((ballotBasicMap[_ballotId].startTime <= getTime()) && (getTime() <= ballotBasicMap[_ballotId].startTime), "not voting time");
 
         //1. 생성
         voteMap[_voteId] = Vote(_voteId, _ballotId, _voter, _decision, _power, getTime());
@@ -382,7 +384,7 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
     function finalizeBallot(uint256 _ballotId,uint256 _ballotState) public onlyGov{
         require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
         require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
-        require((_ballotState == uint256(BallotStates.Accepted)) || (_ballotState == uint256(BallotStates.Rejected)), "Invalid Ballot Type");
+        require((_ballotState == uint256(BallotStates.Accepted)) || (_ballotState == uint256(BallotStates.Rejected)), "Invalid Ballot State");
 
         BallotBasic storage _ballot = ballotBasicMap[_ballotId];
         _ballot.state = _ballotState;
@@ -391,5 +393,21 @@ contract BallotStorage is  GovChecker, EnumVariableTypes, BallotEnums {
     }
     function hasAlreadyVoted(uint56 _ballotId,address _voter) public view returns(bool){
         return hasVotedMap[_ballotId][_voter];
+    }
+//start/end /state 
+    function startBallot(
+        uint256 _ballotId,
+        uint256 _startTime,
+        uint256 _endTime
+    ) public onlyGov onlyValidTime(_startTime,_endTime) {
+
+        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
+        require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
+        require(ballotBasicMap[_ballotId].state == uint256(BallotStates.Ready), "Not Ready State");
+        BallotBasic storage _ballot = ballotBasicMap[_ballotId];
+        _ballot.startTime = _startTime;
+        _ballot.endTime = _endTime;
+        _ballot.state = uint256(BallotStates.InProgress);
+        emit BallotStarted(_ballotId, _startTime, _endTime);
     }
 }
