@@ -2,12 +2,11 @@ pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol";
 import "./Gov.sol";
-import "./abstract/VotingTypes.sol";
 import "./abstract/BallotEnums.sol";
 import "./storage/BallotStorage.sol";
 
 
-contract GovImp is Gov, ReentrancyGuard, EnumVotingTypes, BallotEnums {
+contract GovImp is Gov, ReentrancyGuard, BallotEnums {
     using SafeMath for uint256;
 
     bytes32 internal constant BLOCK_PER = keccak256("blockPer");
@@ -37,7 +36,7 @@ contract GovImp is Gov, ReentrancyGuard, EnumVotingTypes, BallotEnums {
         ballotLength = ballotLength.add(1);
         // BallotStorage(ballotStorage).createBallotForMemeber(
         //     ballotLength, // ballot id
-        //     VotingTypes.AddMember, // ballot type
+        //     uint256(BallotTypes.MemberAdd), // ballot type
         //     msg.sender, // creator
         //     memo, // memo
         //     address(0), // old member address
@@ -64,7 +63,7 @@ contract GovImp is Gov, ReentrancyGuard, EnumVotingTypes, BallotEnums {
         ballotLength = ballotLength.add(1);
         // BallotStorage(ballotStorage).createBallotForMemeber(
         //     ballotLength, // ballot id
-        //     VotingTypes.RemoveMember, // ballot type
+        //     BallotTypes.MemberRemoval, // ballot type
         //     msg.sender, // creator
         //     memo, // memo
         //     member, // old member address
@@ -95,7 +94,7 @@ contract GovImp is Gov, ReentrancyGuard, EnumVotingTypes, BallotEnums {
         ballotLength = ballotLength.add(1);
         // BallotStorage(ballotStorage).createBallotForMemeber(
         //     ballotLength, // ballot id
-        //     VotingTypes.ChangeMember, // ballot type
+        //     BallotTypes.MemberChange, // ballot type
         //     msg.sender, // creator
         //     memo, // memo
         //     target, // old member address
@@ -122,7 +121,7 @@ contract GovImp is Gov, ReentrancyGuard, EnumVotingTypes, BallotEnums {
         ballotLength = ballotLength.add(1);
         // BallotStorage(ballotStorage).createBallotForAddress(
         //     ballotLength, // ballot id
-        //     VotingTypes.ChangeGovernance, // ballot type
+        //     BallotTypes.GovernanceChange, // ballot type
         //     msg.sender, // creator
         //     memo, // memo
         //     newGovAddr // new governance address
@@ -147,7 +146,7 @@ contract GovImp is Gov, ReentrancyGuard, EnumVotingTypes, BallotEnums {
         ballotLength = ballotLength.add(1);
         // BallotStorage(ballotStorage).createBallotForVariable(
         //     ballotLength, // ballot id
-        //     VotingTypes.ChangeEnvironment, // ballot type
+        //     BallotTypes.EnvValChange, // ballot type
         //     msg.sender, // creator
         //     memo, // memo
         //     envName, // env name
