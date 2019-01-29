@@ -1,33 +1,8 @@
-/* jslint node: true */
-const ERROR_MSG = 'VM Exception while processing transaction: revert';
 const { reverting } = require('openzeppelin-solidity/test/helpers/shouldFail');
-const { ether } = require('openzeppelin-solidity/test/helpers/ether');
-// const { time } = require('openzeppelin-solidity/test/helpers/time');
 const Registry = artifacts.require('Registry.sol');
-
 const EnvStorage = artifacts.require('EnvStorage.sol');
 const EnvStorageImp = artifacts.require('EnvStorageImp.sol');
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
-
-const moment = require('moment');
-const web3Utils = require('web3-utils');
-const web3EthAbi = require('web3-eth-abi');
 const truffleAssert = require('truffle-assertions');
-
-// For each byte in our array, retrieve the char code value of the binary value
-const binArrayToString = array => array.map(byte => String.fromCharCode(parseInt(byte, 2))).join('');
-
-// Basic left pad implementation to ensure string is on 8 bits
-const leftPad = str => str.length < 8 ? (Array(8).join('0') + str).slice(-8) : str;
-
-// For each char of the string, get the int code and convert it to binary. Ensure 8 bits.
-const stringToBinArray = str => str.split('').map(c => leftPad(c.charCodeAt().toString(2)));
-function hex2a (hexx) {
-  const hex = hexx.toString();// force conversion
-  let str = '';
-  for (let i = 0; (i < hex.length && hex.substr(i, 2) !== '00'); i += 2) { str += String.fromCharCode(parseInt(hex.substr(i, 2), 16)); }
-  return str;
-}
 
 require('chai')
   .use(require('chai-as-promised'))
@@ -53,6 +28,7 @@ contract('EnvStorage', accounts => {
   describe('EnvStorage', function () {
     const BLOCK_PER_VALUE = '1000';
     const UPDATE_BLOCK_PER_VALUE = '100';
+
     it('Check Owner', async () => {
       const _owner = await envStorage.owner();
       assert.equal(_owner, deployer);
@@ -75,7 +51,6 @@ contract('EnvStorage', accounts => {
       });
       const [_type, _value] = await testEnvStorage.getBlockPer();
 
-      console.log(`BlockPer : ${_type}, ${_value}`);
       _type.should.be.bignumber.equal(2);
       assert.equal(_value, BLOCK_PER_VALUE);
       const _ttype = await testEnvStorage.getBlockPerType();
@@ -109,7 +84,5 @@ contract('EnvStorage', accounts => {
       _ttype.should.be.bignumber.equal(2);
       assert.equal(_tvalue, UPDATE_BLOCK_PER_VALUE);
     });
-
   });
-  
 });

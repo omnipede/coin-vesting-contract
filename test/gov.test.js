@@ -88,6 +88,7 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
     });
 
     it('cannot addProposal to change non-member', async () => {
+      // eslint-disable-next-line max-len
       await reverting(govDelegator.addProposalToChangeMember(govMem1, govMem2, enode, ip, port, memo, { from: deployer }));
     });
 
