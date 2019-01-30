@@ -27,60 +27,67 @@ const amount = web3.utils.toWei('1', 'ether')
 
 //TODO deploy script clean up
 async function deploy(deployer, network, accounts) {
+    let contracts = {}
 
-    
-    let registry, govImp, gov, staking, ballotStorage, envStorageImp, envStorage
     deployer.then(async () => {
         // Deploy contracts
-        [registry, staking, ballotStorage, govImp, gov, envStorageImp, envStorage] = await deployContracts(deployer, network, accounts)
+        contracts = await deployContracts(deployer, network, accounts)
 
         // Setup contracts
-        await basicRegistrySetup(registry, staking, ballotStorage, envStorage, gov)
+        await basicRegistrySetup(contracts)
 
         // Initialize staking contract
         console.log('Initialize staking')
-        await staking.deposit({ value: amount, from: accounts[0].toString() })
+        await contracts.staking.deposit({ value: amount, from: accounts[0].toString() })
 
         // Initialize gov contract
         console.log('Initialize governance')
-        await gov.init(registry.address, govImp.address, amount, enode, ip, port)
+        await contracts.gov.init(contracts.registry.address, contracts.govImp.address, amount, enode, ip, port)
 
         // Write contract address to contract.json
-        await writeToContractsJson(registry, staking, ballotStorage, envStorage, gov)
+        await writeToContractsJson(contracts)
     })
 }
 
 async function deployContracts(deployer, network, accounts) {
     //proxy create metaID instead user for now. Because users do not have enough fee.
-    let registry, staking, ballotStorage, govImp, gov, envStorageImp, envStorage
+    var contracts = {
+        'registry': Object,
+        'govImp': Object,
+        'gov': Object,
+        'staking': Object,
+        'ballotStorage': Object,
+        'envStorageImp': Object,
+        'envStorage': Object 
+    }
+    
+    contracts.registry = await deployer.deploy(Registry)
+    contracts.staking = await deployer.deploy(Staking, contracts.registry.address)
+    contracts.ballotStorage = await deployer.deploy(BallotStorage, contracts.registry.address)
+    contracts.envStorageImp = await deployer.deploy(EnvStorageImp)
+    contracts.envStorage = await deployer.deploy(EnvStorage, contracts.registry.address, contracts.envStorageImp.address)
+    contracts.govImp = await deployer.deploy(GovImp)
+    contracts.gov = await deployer.deploy(Gov)
 
-    registry = await deployer.deploy(Registry)
-    staking = await deployer.deploy(Staking, registry.address)
-    ballotStorage = await deployer.deploy(BallotStorage, registry.address)
-    envStorageImp = await deployer.deploy(EnvStorageImp)
-    envStorage = await deployer.deploy(EnvStorage, registry.address, envStorageImp.address)
-    govImp = await deployer.deploy(GovImp)
-    gov = await deployer.deploy(Gov)
-
-    return [registry, staking, ballotStorage, govImp, gov, envStorageImp, envStorage]
+    return contracts
 }
 
-async function basicRegistrySetup(registry, staking, ballotStorage, envStorage, gov) {
-    await registry.setContractDomain("Staking", staking.address)
-    await registry.setContractDomain("BallotStorage", ballotStorage.address)
-    await registry.setContractDomain("EnvStorage", envStorage.address)
-    await registry.setContractDomain("GovernanceContract", gov.address)
+async function basicRegistrySetup(contracts) {
+    await contracts.registry.setContractDomain("Staking", contracts.staking.address)
+    await contracts.registry.setContractDomain("BallotStorage", contracts.ballotStorage.address)
+    await contracts.registry.setContractDomain("EnvStorage", contracts.envStorage.address)
+    await contracts.registry.setContractDomain("GovernanceContract", contracts.gov.address)
 }
 
-async function writeToContractsJson(registry, staking, ballotStorage, envStorage, gov) {
+async function writeToContractsJson(contracts) {
     console.log(`Writing Contract Address To contracts.json`)
 
     let contractData = {}
-    contractData["REGISTRY_ADDRESS"] = registry.address
-    contractData["STAKING_ADDRESS"] = staking.address
-    contractData["ENV_STORAGE_ADDRESS"] = envStorage.address
-    contractData["BALLOT_STORAGE_ADDRESS"] = ballotStorage.address
-    contractData["GOV_ADDRESS"] = gov.address
+    contractData["REGISTRY_ADDRESS"] = contracts.registry.address
+    contractData["STAKING_ADDRESS"] = contracts.staking.address
+    contractData["ENV_STORAGE_ADDRESS"] = contracts.envStorage.address
+    contractData["BALLOT_STORAGE_ADDRESS"] = contracts.ballotStorage.address
+    contractData["GOV_ADDRESS"] = contracts.gov.address
 
     fs.writeFile('contracts.json', JSON.stringify(contractData), 'utf-8', function (e) {
         if (e) {
