@@ -54,7 +54,7 @@ contract AEnvStorage is GovChecker {
     * @param _h The keccak256 hash of the variable name
     */
     function get(bytes32 _h) public view returns (uint256 varType, string varVal){
-        require(s[_h]._name == _h,"not found");
+        //require(s[_h]._name == _h,"not found");
         return (s[_h]._type, s[_h]._value);
     }
     /**
@@ -62,7 +62,7 @@ contract AEnvStorage is GovChecker {
     * @param _h The keccak256 hash of the variable name
     */
     function getType(bytes32 _h) public view returns (uint256){
-        require(s[_h]._name == _h,"not found");
+        //require(s[_h]._name == _h,"not found");
         return s[_h]._type;
     }
     /**
@@ -70,7 +70,7 @@ contract AEnvStorage is GovChecker {
     * @param _h The keccak256 hash of the variable name
     */
     function getValue(bytes32 _h) public view returns (string){
-        require(s[_h]._name == _h,"not found");
+        //require(s[_h]._name == _h,"not found");
         return s[_h]._value;
     }
 }

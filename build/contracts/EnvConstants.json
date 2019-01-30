@@ -1,20 +1,20 @@
 {
   "contractName": "EnvConstants",
   "abi": [],
-  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a723058202e55fca7538ba849c44c459eb96013173e99efd48545ddf9c5413ed6ba7a006c0029",
-  "deployedBytecode": "0x6080604052600080fd00a165627a7a723058202e55fca7538ba849c44c459eb96013173e99efd48545ddf9c5413ed6ba7a006c0029",
-  "sourceMap": "26:311:7:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:311:7;;;;;;;",
-  "deployedSourceMap": "26:311:7:-;;;;;",
-  "source": "pragma solidity ^0.4.24;\n\ncontract EnvConstants {\n    bytes32 internal constant BLOCK_PER_NAME = keccak256(\"blockPer\"); \n    uint256 internal constant BLOCK_PER_TYPE = uint256(VariableTypes.Uint);\n    enum VariableTypes {\n        Invalid,\n        Int,\n        Uint,\n        Address,\n        Bytes32,\n        Bytes,\n        String\n    }\n}",
-  "sourcePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/abstract/EnvConstants.sol",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a723058200039752c3a42ab7ce813f828d2b78e9299cfc20a1647b8012f888a666d16e1890029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a723058200039752c3a42ab7ce813f828d2b78e9299cfc20a1647b8012f888a666d16e1890029",
+  "sourceMap": "26:974:7:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:974:7;;;;;;;",
+  "deployedSourceMap": "26:974:7:-;;;;;",
+  "source": "pragma solidity ^0.4.24;\n\ncontract EnvConstants {\n    bytes32 internal constant BLOCK_PER_NAME = keccak256(\"blockPer\"); \n    uint256 internal constant BLOCK_PER_TYPE = uint256(VariableTypes.Uint);\n\n    bytes32 internal constant BALLOT_DURATION_MIN_NAME = keccak256(\"ballotDurationMin\"); \n    uint256 internal constant BALLOT_DURATION_MIN_TYPE = uint256(VariableTypes.Uint);\n\n    bytes32 internal constant BALLOT_DURATION_MAX_NAME = keccak256(\"ballotDurationMax\"); \n    uint256 internal constant BALLOT_DURATION_MAX_TYPE = uint256(VariableTypes.Uint);\n\n    bytes32 internal constant STAKING_MIN_NAME = keccak256(\"stakingMin\"); \n    uint256 internal constant STAKING_MIN_TYPE = uint256(VariableTypes.Uint);\n\n    bytes32 internal constant STAKING_MAX_NAME = keccak256(\"stakingMax\"); \n    uint256 internal constant STAKING_MAX_TYPE = uint256(VariableTypes.Uint);\n\n    enum VariableTypes {\n        Invalid,\n        Int,\n        Uint,\n        Address,\n        Bytes32,\n        Bytes,\n        String\n    }\n}",
+  "sourcePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/abstract/EnvConstants.sol",
   "ast": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/abstract/EnvConstants.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/abstract/EnvConstants.sol",
     "exportedSymbols": {
       "EnvConstants": [
-        1573
+        1617
       ]
     },
-    "id": 1574,
+    "id": 1618,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -34,9 +34,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 1573,
+        "id": 1617,
         "linearizedBaseContracts": [
-          1573
+          1617
         ],
         "name": "EnvConstants",
         "nodeType": "ContractDefinition",
@@ -46,7 +46,7 @@
             "id": 1558,
             "name": "BLOCK_PER_NAME",
             "nodeType": "VariableDeclaration",
-            "scope": 1573,
+            "scope": 1617,
             "src": "54:64:7",
             "stateVariable": true,
             "storageLocation": "default",
@@ -97,7 +97,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 3969,
+                "referencedDeclaration": 4338,
                 "src": "97:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -125,7 +125,7 @@
             "id": 1564,
             "name": "BLOCK_PER_TYPE",
             "nodeType": "VariableDeclaration",
-            "scope": 1573,
+            "scope": 1617,
             "src": "125:70:7",
             "stateVariable": true,
             "storageLocation": "default",
@@ -154,10 +154,10 @@
                     "name": "VariableTypes",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 1572,
+                    "referencedDeclaration": 1616,
                     "src": "176:13:7",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1572_$",
+                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1616_$",
                       "typeString": "type(enum EnvConstants.VariableTypes)"
                     }
                   },
@@ -171,7 +171,7 @@
                   "referencedDeclaration": null,
                   "src": "176:18:7",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_VariableTypes_$1572",
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
                     "typeString": "enum EnvConstants.VariableTypes"
                   }
                 }
@@ -179,7 +179,7 @@
               "expression": {
                 "argumentTypes": [
                   {
-                    "typeIdentifier": "t_enum$_VariableTypes_$1572",
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
                     "typeString": "enum EnvConstants.VariableTypes"
                   }
                 ],
@@ -213,71 +213,755 @@
             "visibility": "internal"
           },
           {
+            "constant": true,
+            "id": 1569,
+            "name": "BALLOT_DURATION_MIN_NAME",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "202:83:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 1565,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "202:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "hexValue": "62616c6c6f744475726174696f6e4d696e",
+                  "id": 1567,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "265:19:7",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_c69fc6b7d0efc934fd5a3581c7253a7107a952526bb6dbcd814ef8d8dae1f44a",
+                    "typeString": "literal_string \"ballotDurationMin\""
+                  },
+                  "value": "ballotDurationMin"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_c69fc6b7d0efc934fd5a3581c7253a7107a952526bb6dbcd814ef8d8dae1f44a",
+                    "typeString": "literal_string \"ballotDurationMin\""
+                  }
+                ],
+                "id": 1566,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 4338,
+                "src": "255:9:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
+                  "typeString": "function () pure returns (bytes32)"
+                }
+              },
+              "id": 1568,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "255:30:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1575,
+            "name": "BALLOT_DURATION_MIN_TYPE",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "292:80:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 1570,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "292:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1572,
+                    "name": "VariableTypes",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 1616,
+                    "src": "353:13:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1616_$",
+                      "typeString": "type(enum EnvConstants.VariableTypes)"
+                    }
+                  },
+                  "id": 1573,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "memberName": "Uint",
+                  "nodeType": "MemberAccess",
+                  "referencedDeclaration": null,
+                  "src": "353:18:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                ],
+                "id": 1571,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "ElementaryTypeNameExpression",
+                "src": "345:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_type$_t_uint256_$",
+                  "typeString": "type(uint256)"
+                },
+                "typeName": "uint256"
+              },
+              "id": 1574,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "typeConversion",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "345:27:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1580,
+            "name": "BALLOT_DURATION_MAX_NAME",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "379:83:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 1576,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "379:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "hexValue": "62616c6c6f744475726174696f6e4d6178",
+                  "id": 1578,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "442:19:7",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_0c4fbe9dc9de15dd7c0d064975ee1a2f2f9b954fa0e65d4f6cddba94884bdc3e",
+                    "typeString": "literal_string \"ballotDurationMax\""
+                  },
+                  "value": "ballotDurationMax"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_0c4fbe9dc9de15dd7c0d064975ee1a2f2f9b954fa0e65d4f6cddba94884bdc3e",
+                    "typeString": "literal_string \"ballotDurationMax\""
+                  }
+                ],
+                "id": 1577,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 4338,
+                "src": "432:9:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
+                  "typeString": "function () pure returns (bytes32)"
+                }
+              },
+              "id": 1579,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "432:30:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1586,
+            "name": "BALLOT_DURATION_MAX_TYPE",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "469:80:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 1581,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "469:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1583,
+                    "name": "VariableTypes",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 1616,
+                    "src": "530:13:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1616_$",
+                      "typeString": "type(enum EnvConstants.VariableTypes)"
+                    }
+                  },
+                  "id": 1584,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "memberName": "Uint",
+                  "nodeType": "MemberAccess",
+                  "referencedDeclaration": null,
+                  "src": "530:18:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                ],
+                "id": 1582,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "ElementaryTypeNameExpression",
+                "src": "522:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_type$_t_uint256_$",
+                  "typeString": "type(uint256)"
+                },
+                "typeName": "uint256"
+              },
+              "id": 1585,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "typeConversion",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "522:27:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1591,
+            "name": "STAKING_MIN_NAME",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "556:68:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 1587,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "556:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "hexValue": "7374616b696e674d696e",
+                  "id": 1589,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "611:12:7",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_0b09c9badbbeb6c813a598ee910770a39ccda797a1940439bb6e47fc6c87548b",
+                    "typeString": "literal_string \"stakingMin\""
+                  },
+                  "value": "stakingMin"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_0b09c9badbbeb6c813a598ee910770a39ccda797a1940439bb6e47fc6c87548b",
+                    "typeString": "literal_string \"stakingMin\""
+                  }
+                ],
+                "id": 1588,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 4338,
+                "src": "601:9:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
+                  "typeString": "function () pure returns (bytes32)"
+                }
+              },
+              "id": 1590,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "601:23:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1597,
+            "name": "STAKING_MIN_TYPE",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "631:72:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 1592,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "631:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1594,
+                    "name": "VariableTypes",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 1616,
+                    "src": "684:13:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1616_$",
+                      "typeString": "type(enum EnvConstants.VariableTypes)"
+                    }
+                  },
+                  "id": 1595,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "memberName": "Uint",
+                  "nodeType": "MemberAccess",
+                  "referencedDeclaration": null,
+                  "src": "684:18:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                ],
+                "id": 1593,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "ElementaryTypeNameExpression",
+                "src": "676:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_type$_t_uint256_$",
+                  "typeString": "type(uint256)"
+                },
+                "typeName": "uint256"
+              },
+              "id": 1596,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "typeConversion",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "676:27:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1602,
+            "name": "STAKING_MAX_NAME",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "710:68:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 1598,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "710:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "hexValue": "7374616b696e674d6178",
+                  "id": 1600,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "765:12:7",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_18ad4415ef4a621ce1a136395c51ab6c3712bb2e24b79d526059925cea58dcb8",
+                    "typeString": "literal_string \"stakingMax\""
+                  },
+                  "value": "stakingMax"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_18ad4415ef4a621ce1a136395c51ab6c3712bb2e24b79d526059925cea58dcb8",
+                    "typeString": "literal_string \"stakingMax\""
+                  }
+                ],
+                "id": 1599,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 4338,
+                "src": "755:9:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
+                  "typeString": "function () pure returns (bytes32)"
+                }
+              },
+              "id": 1601,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "755:23:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1608,
+            "name": "STAKING_MAX_TYPE",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "785:72:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 1603,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "785:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1605,
+                    "name": "VariableTypes",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 1616,
+                    "src": "838:13:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1616_$",
+                      "typeString": "type(enum EnvConstants.VariableTypes)"
+                    }
+                  },
+                  "id": 1606,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "memberName": "Uint",
+                  "nodeType": "MemberAccess",
+                  "referencedDeclaration": null,
+                  "src": "838:18:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                ],
+                "id": 1604,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "ElementaryTypeNameExpression",
+                "src": "830:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_type$_t_uint256_$",
+                  "typeString": "type(uint256)"
+                },
+                "typeName": "uint256"
+              },
+              "id": 1607,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "typeConversion",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "830:27:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
             "canonicalName": "EnvConstants.VariableTypes",
-            "id": 1572,
+            "id": 1616,
             "members": [
               {
-                "id": 1565,
+                "id": 1609,
                 "name": "Invalid",
                 "nodeType": "EnumValue",
-                "src": "230:7:7"
+                "src": "893:7:7"
               },
               {
-                "id": 1566,
+                "id": 1610,
                 "name": "Int",
                 "nodeType": "EnumValue",
-                "src": "247:3:7"
+                "src": "910:3:7"
               },
               {
-                "id": 1567,
+                "id": 1611,
                 "name": "Uint",
                 "nodeType": "EnumValue",
-                "src": "260:4:7"
+                "src": "923:4:7"
               },
               {
-                "id": 1568,
+                "id": 1612,
                 "name": "Address",
                 "nodeType": "EnumValue",
-                "src": "274:7:7"
+                "src": "937:7:7"
               },
               {
-                "id": 1569,
+                "id": 1613,
                 "name": "Bytes32",
                 "nodeType": "EnumValue",
-                "src": "291:7:7"
+                "src": "954:7:7"
               },
               {
-                "id": 1570,
+                "id": 1614,
                 "name": "Bytes",
                 "nodeType": "EnumValue",
-                "src": "308:5:7"
+                "src": "971:5:7"
               },
               {
-                "id": 1571,
+                "id": 1615,
                 "name": "String",
                 "nodeType": "EnumValue",
-                "src": "323:6:7"
+                "src": "986:6:7"
               }
             ],
             "name": "VariableTypes",
             "nodeType": "EnumDefinition",
-            "src": "201:134:7"
+            "src": "864:134:7"
           }
         ],
-        "scope": 1574,
-        "src": "26:311:7"
+        "scope": 1618,
+        "src": "26:974:7"
       }
     ],
-    "src": "0:337:7"
+    "src": "0:1000:7"
   },
   "legacyAST": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/abstract/EnvConstants.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/abstract/EnvConstants.sol",
     "exportedSymbols": {
       "EnvConstants": [
-        1573
+        1617
       ]
     },
-    "id": 1574,
+    "id": 1618,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -297,9 +981,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 1573,
+        "id": 1617,
         "linearizedBaseContracts": [
-          1573
+          1617
         ],
         "name": "EnvConstants",
         "nodeType": "ContractDefinition",
@@ -309,7 +993,7 @@
             "id": 1558,
             "name": "BLOCK_PER_NAME",
             "nodeType": "VariableDeclaration",
-            "scope": 1573,
+            "scope": 1617,
             "src": "54:64:7",
             "stateVariable": true,
             "storageLocation": "default",
@@ -360,7 +1044,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 3969,
+                "referencedDeclaration": 4338,
                 "src": "97:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -388,7 +1072,7 @@
             "id": 1564,
             "name": "BLOCK_PER_TYPE",
             "nodeType": "VariableDeclaration",
-            "scope": 1573,
+            "scope": 1617,
             "src": "125:70:7",
             "stateVariable": true,
             "storageLocation": "default",
@@ -417,10 +1101,10 @@
                     "name": "VariableTypes",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 1572,
+                    "referencedDeclaration": 1616,
                     "src": "176:13:7",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1572_$",
+                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1616_$",
                       "typeString": "type(enum EnvConstants.VariableTypes)"
                     }
                   },
@@ -434,7 +1118,7 @@
                   "referencedDeclaration": null,
                   "src": "176:18:7",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_VariableTypes_$1572",
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
                     "typeString": "enum EnvConstants.VariableTypes"
                   }
                 }
@@ -442,7 +1126,7 @@
               "expression": {
                 "argumentTypes": [
                   {
-                    "typeIdentifier": "t_enum$_VariableTypes_$1572",
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
                     "typeString": "enum EnvConstants.VariableTypes"
                   }
                 ],
@@ -476,62 +1160,746 @@
             "visibility": "internal"
           },
           {
+            "constant": true,
+            "id": 1569,
+            "name": "BALLOT_DURATION_MIN_NAME",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "202:83:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 1565,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "202:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "hexValue": "62616c6c6f744475726174696f6e4d696e",
+                  "id": 1567,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "265:19:7",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_c69fc6b7d0efc934fd5a3581c7253a7107a952526bb6dbcd814ef8d8dae1f44a",
+                    "typeString": "literal_string \"ballotDurationMin\""
+                  },
+                  "value": "ballotDurationMin"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_c69fc6b7d0efc934fd5a3581c7253a7107a952526bb6dbcd814ef8d8dae1f44a",
+                    "typeString": "literal_string \"ballotDurationMin\""
+                  }
+                ],
+                "id": 1566,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 4338,
+                "src": "255:9:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
+                  "typeString": "function () pure returns (bytes32)"
+                }
+              },
+              "id": 1568,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "255:30:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1575,
+            "name": "BALLOT_DURATION_MIN_TYPE",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "292:80:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 1570,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "292:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1572,
+                    "name": "VariableTypes",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 1616,
+                    "src": "353:13:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1616_$",
+                      "typeString": "type(enum EnvConstants.VariableTypes)"
+                    }
+                  },
+                  "id": 1573,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "memberName": "Uint",
+                  "nodeType": "MemberAccess",
+                  "referencedDeclaration": null,
+                  "src": "353:18:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                ],
+                "id": 1571,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "ElementaryTypeNameExpression",
+                "src": "345:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_type$_t_uint256_$",
+                  "typeString": "type(uint256)"
+                },
+                "typeName": "uint256"
+              },
+              "id": 1574,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "typeConversion",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "345:27:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1580,
+            "name": "BALLOT_DURATION_MAX_NAME",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "379:83:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 1576,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "379:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "hexValue": "62616c6c6f744475726174696f6e4d6178",
+                  "id": 1578,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "442:19:7",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_0c4fbe9dc9de15dd7c0d064975ee1a2f2f9b954fa0e65d4f6cddba94884bdc3e",
+                    "typeString": "literal_string \"ballotDurationMax\""
+                  },
+                  "value": "ballotDurationMax"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_0c4fbe9dc9de15dd7c0d064975ee1a2f2f9b954fa0e65d4f6cddba94884bdc3e",
+                    "typeString": "literal_string \"ballotDurationMax\""
+                  }
+                ],
+                "id": 1577,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 4338,
+                "src": "432:9:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
+                  "typeString": "function () pure returns (bytes32)"
+                }
+              },
+              "id": 1579,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "432:30:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1586,
+            "name": "BALLOT_DURATION_MAX_TYPE",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "469:80:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 1581,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "469:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1583,
+                    "name": "VariableTypes",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 1616,
+                    "src": "530:13:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1616_$",
+                      "typeString": "type(enum EnvConstants.VariableTypes)"
+                    }
+                  },
+                  "id": 1584,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "memberName": "Uint",
+                  "nodeType": "MemberAccess",
+                  "referencedDeclaration": null,
+                  "src": "530:18:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                ],
+                "id": 1582,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "ElementaryTypeNameExpression",
+                "src": "522:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_type$_t_uint256_$",
+                  "typeString": "type(uint256)"
+                },
+                "typeName": "uint256"
+              },
+              "id": 1585,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "typeConversion",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "522:27:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1591,
+            "name": "STAKING_MIN_NAME",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "556:68:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 1587,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "556:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "hexValue": "7374616b696e674d696e",
+                  "id": 1589,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "611:12:7",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_0b09c9badbbeb6c813a598ee910770a39ccda797a1940439bb6e47fc6c87548b",
+                    "typeString": "literal_string \"stakingMin\""
+                  },
+                  "value": "stakingMin"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_0b09c9badbbeb6c813a598ee910770a39ccda797a1940439bb6e47fc6c87548b",
+                    "typeString": "literal_string \"stakingMin\""
+                  }
+                ],
+                "id": 1588,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 4338,
+                "src": "601:9:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
+                  "typeString": "function () pure returns (bytes32)"
+                }
+              },
+              "id": 1590,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "601:23:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1597,
+            "name": "STAKING_MIN_TYPE",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "631:72:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 1592,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "631:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1594,
+                    "name": "VariableTypes",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 1616,
+                    "src": "684:13:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1616_$",
+                      "typeString": "type(enum EnvConstants.VariableTypes)"
+                    }
+                  },
+                  "id": 1595,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "memberName": "Uint",
+                  "nodeType": "MemberAccess",
+                  "referencedDeclaration": null,
+                  "src": "684:18:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                ],
+                "id": 1593,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "ElementaryTypeNameExpression",
+                "src": "676:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_type$_t_uint256_$",
+                  "typeString": "type(uint256)"
+                },
+                "typeName": "uint256"
+              },
+              "id": 1596,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "typeConversion",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "676:27:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1602,
+            "name": "STAKING_MAX_NAME",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "710:68:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 1598,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "710:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "hexValue": "7374616b696e674d6178",
+                  "id": 1600,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "765:12:7",
+                  "subdenomination": null,
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_18ad4415ef4a621ce1a136395c51ab6c3712bb2e24b79d526059925cea58dcb8",
+                    "typeString": "literal_string \"stakingMax\""
+                  },
+                  "value": "stakingMax"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_18ad4415ef4a621ce1a136395c51ab6c3712bb2e24b79d526059925cea58dcb8",
+                    "typeString": "literal_string \"stakingMax\""
+                  }
+                ],
+                "id": 1599,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 4338,
+                "src": "755:9:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
+                  "typeString": "function () pure returns (bytes32)"
+                }
+              },
+              "id": 1601,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "755:23:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": true,
+            "id": 1608,
+            "name": "STAKING_MAX_TYPE",
+            "nodeType": "VariableDeclaration",
+            "scope": 1617,
+            "src": "785:72:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 1603,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "785:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "arguments": [
+                {
+                  "argumentTypes": null,
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1605,
+                    "name": "VariableTypes",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 1616,
+                    "src": "838:13:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_type$_t_enum$_VariableTypes_$1616_$",
+                      "typeString": "type(enum EnvConstants.VariableTypes)"
+                    }
+                  },
+                  "id": 1606,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "lValueRequested": false,
+                  "memberName": "Uint",
+                  "nodeType": "MemberAccess",
+                  "referencedDeclaration": null,
+                  "src": "838:18:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_enum$_VariableTypes_$1616",
+                    "typeString": "enum EnvConstants.VariableTypes"
+                  }
+                ],
+                "id": 1604,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "lValueRequested": false,
+                "nodeType": "ElementaryTypeNameExpression",
+                "src": "830:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_type$_t_uint256_$",
+                  "typeString": "type(uint256)"
+                },
+                "typeName": "uint256"
+              },
+              "id": 1607,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "typeConversion",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "830:27:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
             "canonicalName": "EnvConstants.VariableTypes",
-            "id": 1572,
+            "id": 1616,
             "members": [
               {
-                "id": 1565,
+                "id": 1609,
                 "name": "Invalid",
                 "nodeType": "EnumValue",
-                "src": "230:7:7"
+                "src": "893:7:7"
               },
               {
-                "id": 1566,
+                "id": 1610,
                 "name": "Int",
                 "nodeType": "EnumValue",
-                "src": "247:3:7"
+                "src": "910:3:7"
               },
               {
-                "id": 1567,
+                "id": 1611,
                 "name": "Uint",
                 "nodeType": "EnumValue",
-                "src": "260:4:7"
+                "src": "923:4:7"
               },
               {
-                "id": 1568,
+                "id": 1612,
                 "name": "Address",
                 "nodeType": "EnumValue",
-                "src": "274:7:7"
+                "src": "937:7:7"
               },
               {
-                "id": 1569,
+                "id": 1613,
                 "name": "Bytes32",
                 "nodeType": "EnumValue",
-                "src": "291:7:7"
+                "src": "954:7:7"
               },
               {
-                "id": 1570,
+                "id": 1614,
                 "name": "Bytes",
                 "nodeType": "EnumValue",
-                "src": "308:5:7"
+                "src": "971:5:7"
               },
               {
-                "id": 1571,
+                "id": 1615,
                 "name": "String",
                 "nodeType": "EnumValue",
-                "src": "323:6:7"
+                "src": "986:6:7"
               }
             ],
             "name": "VariableTypes",
             "nodeType": "EnumDefinition",
-            "src": "201:134:7"
+            "src": "864:134:7"
           }
         ],
-        "scope": 1574,
-        "src": "26:311:7"
+        "scope": 1618,
+        "src": "26:974:7"
       }
     ],
-    "src": "0:337:7"
+    "src": "0:1000:7"
   },
   "compiler": {
     "name": "solc",
@@ -539,5 +1907,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-29T09:04:52.110Z"
+  "updatedAt": "2019-01-30T06:47:20.769Z"
 }
