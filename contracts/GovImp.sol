@@ -170,10 +170,13 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             (, uint256 endTime, ) = BallotStorage(ballotStorage).getBallotPeriod(ballotInVoting);
             if (state == uint256(BallotStates.InProgress)) {
                 if (endTime < block.timestamp) {
-                    revert("Now in voting with different ballot");
-                } else {
                     BallotStorage(ballotStorage).finalizeBallot(ballotIdx, uint256(BallotStates.Rejected));
                     ballotInVoting = 0;
+                    if (ballotIdx == ballotInVoting) {
+                        return;
+                    }
+                } else if (ballotIdx != ballotInVoting) {
+                    revert("Now in voting with different ballot");
                 }
             }
         }
