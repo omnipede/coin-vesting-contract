@@ -21,8 +21,8 @@ require('babel-register')({
   ignore: /node_modules\/(?!zeppelin-solidity)/,
 });
 require('babel-polyfill');
-var HDWalletProvider = require("truffle-hdwallet-provider")
 
+const HDWalletProvider = require('truffle-hdwallet-provider')
 const config = require('config')
 const ropstenConfig = config.get('ropsten')
 const metaTestnetConfig = config.get('metadiumTestnet')
@@ -46,25 +46,33 @@ module.exports = {
     // options below to some value.
     //
     development: {
-      host: "localhost",
+      host: 'localhost',
       port: 8545,
-      network_id: "*", // Match any network id
-      //gas: 20000000000
+      network_id: '*', // Match any network id
+      gas: 7984452,
+      gasPrice: 2000000000
+    },
+    coverage: {
+      host: 'localhost',
+      network_id: '*',
+      port: 8555, // <-- If you change this, also set the port option in .solcover.js.
+      gas: 0xfffffffffff, // <-- Use this high gas value
+      gasPrice: 0x01, // <-- Use this low gas price
     },
     metadiumTestnet: {
-        provider: () => {
-          return new HDWalletProvider(metaTestnetConfig.mnemonic, metaTestnetConfig.provider);
-        },
-        network_id: metaTestnetConfig.network_id,
-        gasPrice: metaTestnetConfig.gasPrice
+      provider: () => {
+        return new HDWalletProvider(metaTestnetConfig.mnemonic, metaTestnetConfig.provider);
+      },
+      network_id: metaTestnetConfig.network_id,
+      gasPrice: metaTestnetConfig.gasPrice
     },
     ropsten: {
-        provider: function() {
-          return new HDWalletProvider(ropstenConfig.mnemonic, ropstenConfig.provider)
-        },
-        network_id: ropstenConfig.network_id,
-        gas: ropstenConfig.gas,
-        gasPrice: ropstenConfig.gasPrice
+      provider: function() {
+        return new HDWalletProvider(ropstenConfig.mnemonic, ropstenConfig.provider)
+      },
+      network_id: ropstenConfig.network_id,
+      gas: ropstenConfig.gas,
+      gasPrice: ropstenConfig.gasPrice
     }
   },
 
@@ -76,10 +84,12 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
+      // version: '0.5.1',    // Fetch exact version from solc-bin (default: truffle's version)
+      // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       optimizer: {
         enabled: true,
         runs: 200
-      },
+      }
     },
   },
 };

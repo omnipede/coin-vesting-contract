@@ -24,9 +24,8 @@ ganache_running() {
 }
 
 start_ganache() {
-  # We define 10 accounts with balance 1000M ether, needed for high-value tests.
+  # We define 10 accounts with balance 1000M ether.
   local accounts=(
-                 
     --account="0x4d6574616469756d476f7665726e616e6365536d617274436f6e747261637400,1000000000000000000000000000"
     --account="0x4d6574616469756d476f7665726e616e6365536d617274436f6e747261637401,1000000000000000000000000000"
     --account="0x4D6574616469756D476F7665726E616E6365536D617274436F6E747261637402,1000000000000000000000000000"
@@ -40,9 +39,10 @@ start_ganache() {
   )
 
   if [ "$SOLIDITY_COVERAGE" = true ]; then
-    node_modules/.bin/testrpc-sc --gasLimit 0xfffffffffff --port "$ganache_port" "${accounts[@]}" > /dev/null &
+    node_modules/.bin/testrpc-sc --gasLimit 0xffffffffffff --port "$ganache_port" "${accounts[@]}" > /dev/null &
   else
-    node_modules/.bin/ganache-cli --gasLimit 0xfffffffffff "${accounts[@]}" > /dev/null &
+    # node_modules/.bin/testrpc-sc --gasLimit 0xffffffffffff --port "$ganache_port" "${accounts[@]}" > /dev/null &
+    node_modules/.bin/ganache-cli --gasLimit=7984452 --gasPrice=2000000000 "${accounts[@]}" > /dev/null &
   fi
 
   ganache_pid=$!
