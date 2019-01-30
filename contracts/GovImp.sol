@@ -256,7 +256,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         (, uint256 accept, uint256 reject) = BallotStorage(ballotStorage).getBallotVotingInfo(ballotIdx);
         require(accept.add(reject) >= getThreshould(), "Not yet finalized");
 
-        (,, address addr, bytes memory enode, bytes memory ip, uint port) = BallotStorage(ballotStorage).getBallotMember(ballotIdx);
+        (,address addr, bytes memory enode, bytes memory ip, uint port,) = BallotStorage(ballotStorage).getBallotMember(ballotIdx);
         if (isMember(addr)) {
             return; // Already member. it is abnormal case
         }

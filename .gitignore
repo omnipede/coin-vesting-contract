@@ -68,7 +68,7 @@ reports/
 package-lock.json
 
 # config file
-config
+# config
 
 # old file 
 *.old
