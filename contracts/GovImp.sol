@@ -295,12 +295,12 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         (, uint256 accept, uint256 reject) = BallotStorage(ballotStorage).getBallotVotingInfo(ballotIdx);
         require(accept.add(reject) >= getThreshould(), "Not yet finalized");
 
-        // (, address addr, , , , ) = BallotStorage(ballotStorage).getBallotMember(ballotIdx);
-        // if (!isMember(addr)) {
-        //     return; // Non-member. it is abnormal case
-        // }
+        (address addr, , , , ,) = BallotStorage(ballotStorage).getBallotMember(ballotIdx);
+        if (!isMember(addr)) {
+            return; // Non-member. it is abnormal case
+        }
 
-        // emit MemberRemoved(addr);
+        emit MemberRemoved(addr);
     }
 
     function changeMember(uint256 ballotIdx) private {
@@ -310,20 +310,30 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         require(state == uint(BallotStates.InProgress), "Invalid voting state");
         (, uint256 accept, uint256 reject) = BallotStorage(ballotStorage).getBallotVotingInfo(ballotIdx);
         require(accept.add(reject) >= getThreshould(), "Not yet finalized");
+        
+        (
+            address addr,
+            address nAddr,
+            bytes memory enode,
+            bytes memory ip,
+            uint port,
+        ) = BallotStorage(ballotStorage).getBallotMember(ballotIdx);
+        if (!isMember(addr)) {
+            return; // Non-member. it is abnormal case
+        }
 
-        // (
-        //     ,address addr,
-        //     address nAddr,
-        //     bytes memory enode,
-        //     bytes memory ip,
-        //     uint port
-        // ) = BallotStorage(ballotStorage).getBallotMember(ballotIdx);
-        // if (!isMember(addr)) {
-        //     return; // Non-member. it is abnormal case
-        // }
+        members[memberIdx[addr]] = nAddr;
 
-        // address target, address nAddr, bytes nEnode, bytes nIp, uint nPort
-        // emit MemberChanged(addr);
+        uint256 nodeIdx = nodeIdxFromMember[addr];
+        Node storage node = nodes[nodeIdx];
+        node.enode = enode;
+        node.ip = ip;
+        node.port = port;
+        nodeToMember[nodeIdx] = nAddr;
+        nodeIdxFromMember[nAddr] = nodeIdx;
+        nodeIdxFromMember[addr] = 0;
+
+        emit MemberChanged(addr, nAddr);
     }
 
     function applyEnv(uint256 ballotIdx) private {
