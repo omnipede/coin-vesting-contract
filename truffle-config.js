@@ -82,7 +82,6 @@ module.exports = {
       reporterOptions: {
         currency: 'USD',
         gasPrice: 18
-      }
     },
   },
 
