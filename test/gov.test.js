@@ -208,8 +208,10 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       await govDelegator.addProposalToAddMember(govMem2, enode, ip, port, { from: deployer });
       await govDelegator.addProposalToAddMember(govMem3, enode, ip, port, { from: deployer });
       const len = await gov.ballotLength();
-      // await govDelegator.vote(len-1, true, { from: deployer });
-      // await reverting(govDelegator.vote(len, true, { from: deployer }));
+      await govDelegator.vote(len-1, true, { from: deployer });
+      const voting = await gov.getBallotInVoting();
+      voting.should.be.bignumber.equal(len-1);
+      await reverting(govDelegator.vote(len, true, { from: deployer }));
     });
   });
 
