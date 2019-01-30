@@ -253,9 +253,13 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         (uint256 ballotType, uint256 state, ) = BallotStorage(ballotStorage).getBallotState(ballotIdx);
         require(ballotType == uint256(BallotTypes.MemberAdd), "Not voting for addMember");
         require(state == uint(BallotStates.InProgress), "Invalid voting state");
+        (, uint256 accept, uint256 reject) = BallotStorage(ballotStorage).getBallotVotingInfo(ballotIdx);
+        require(accept.add(reject) >= getThreshould(), "Not yet finalized");
 
-        (,, address addr, bytes memory enode, bytes memory ip, uint port) = BallotStorage(ballotStorage).getBallotMember(ballotIdx);
-        require(!isMember(addr), "Already member");
+        (,address addr, bytes memory enode, bytes memory ip, uint port,) = BallotStorage(ballotStorage).getBallotMember(ballotIdx);
+        if (isMember(addr)) {
+            return; // Already member. it is abnormal case
+        }
 
         // Lock
         Staking staking = Staking(REG.getContractAddress("Staking"));
@@ -288,6 +292,13 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         (uint256 ballotType, uint256 state, ) = BallotStorage(ballotStorage).getBallotState(ballotIdx);
         require(ballotType == uint256(BallotTypes.MemberRemoval), "Not voting for removeMember");
         require(state == uint(BallotStates.InProgress), "Invalid voting state");
+        (, uint256 accept, uint256 reject) = BallotStorage(ballotStorage).getBallotVotingInfo(ballotIdx);
+        require(accept.add(reject) >= getThreshould(), "Not yet finalized");
+
+        // (, address addr, , , , ) = BallotStorage(ballotStorage).getBallotMember(ballotIdx);
+        // if (!isMember(addr)) {
+        //     return; // Non-member. it is abnormal case
+        // }
 
         // emit MemberRemoved(addr);
     }
@@ -297,6 +308,19 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         (uint256 ballotType, uint256 state, ) = BallotStorage(ballotStorage).getBallotState(ballotIdx);
         require(ballotType == uint256(BallotTypes.MemberChange), "Not voting for changeMember");
         require(state == uint(BallotStates.InProgress), "Invalid voting state");
+        (, uint256 accept, uint256 reject) = BallotStorage(ballotStorage).getBallotVotingInfo(ballotIdx);
+        require(accept.add(reject) >= getThreshould(), "Not yet finalized");
+
+        // (
+        //     ,address addr,
+        //     address nAddr,
+        //     bytes memory enode,
+        //     bytes memory ip,
+        //     uint port
+        // ) = BallotStorage(ballotStorage).getBallotMember(ballotIdx);
+        // if (!isMember(addr)) {
+        //     return; // Non-member. it is abnormal case
+        // }
 
         // address target, address nAddr, bytes nEnode, bytes nIp, uint nPort
         // emit MemberChanged(addr);
