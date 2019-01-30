@@ -10,17 +10,14 @@ import "./Staking.sol";
 contract GovImp is Gov, ReentrancyGuard, BallotEnums {
     using SafeMath for uint256;
 
-    bytes32 internal constant BLOCK_PER = keccak256("blockPer");
-    bytes32 internal constant THRESHOLD = keccak256("threshold");
-
+    function getMinVotingDuration() public pure returns (uint256) { return 1 days; }
+    function getMaxVotingDuration() public pure returns (uint256) { return 7 days; }
+    function getThreshould() public pure returns (uint256) { return 50; } // 50% from 50 of 100
+    
     function getBallotStorageAddress() private view returns (address) {
         return REG.getContractAddress("BallotStorage");
     }
-
-    function getMaxVotingDuration() public pure returns (uint256) {
-        return 7 days;
-    }
-
+    
     function addProposalToAddMember(
         address member,
         bytes enode,
@@ -61,6 +58,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         returns (uint256 ballotIdx)
     {
         require(isMember(member), "Non-member");
+        require(getMemberLength() > 1, "Cannot remove a sole member");
 
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
@@ -118,6 +116,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         nonReentrant
         returns (uint256 ballotIdx)
     {
+        require(newGovAddr != implementation(), "Same contract address");
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
@@ -162,22 +161,23 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
 
         // Check if some ballot is in progress
         if (ballotInVoting != 0) {
-            (, uint256 state, ) = BallotStorage(ballotStorage).getBallotState(ballotIdx);
+            (uint256 ballotType, uint256 state, ) = BallotStorage(ballotStorage).getBallotState(ballotIdx);
             (, uint256 endTime, ) = BallotStorage(ballotStorage).getBallotPeriod(ballotIdx);
             if (state == uint256(BallotStates.InProgress)) {
                 if (endTime < block.timestamp) {
                     revert("Now in voting with different ballot");
                 } else {
-                    BallotStorage(ballotStorage).finalizeBallot(ballotIdx, uint256(DecisionTypes.Reject));
+                    BallotStorage(ballotStorage).finalizeBallot(ballotIdx, uint256(BallotStates.Rejected));
                     ballotInVoting = 0;
                 }
             }
         }
 
         // Check if the ballot can be voted
-        (, state, ) = BallotStorage(ballotStorage).getBallotState(ballotIdx);
+        (ballotType, state, ) = BallotStorage(ballotStorage).getBallotState(ballotIdx);
         if (state == uint256(BallotStates.Ready)) {
             BallotStorage(ballotStorage).startBallot(ballotIdx, block.timestamp, block.timestamp + getMaxVotingDuration());
+            ballotInVoting = ballotIdx;
         } else if (state == uint256(BallotStates.InProgress)) {
             // Nothing to do
         } else {
@@ -208,6 +208,23 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         voteLength = voteLength.add(1);
 
         // Finalize
+        (, uint256 accept, uint256 reject) = BallotStorage(ballotStorage).getBallotVotingInfo(ballotIdx);
+        if (accept.add(reject) >= getThreshould()) {
+            if (accept > reject) {
+                BallotStorage(ballotStorage).finalizeBallot(ballotIdx, uint256(BallotStates.Accepted));
+                if (ballotType == uint256(BallotTypes.MemberAdd)) {
+                    // FIX
+                    memberLength = memberLength.add(1);
+                } else if (ballotType == uint256(BallotTypes.MemberRemoval)) {
+                } else if (ballotType == uint256(BallotTypes.MemberChange)) {
+                } else if (ballotType == uint256(BallotTypes.GovernanceChange)) {
+                } else if (ballotType == uint256(BallotTypes.EnvValChange)) {
+                }
+            } else {
+                BallotStorage(ballotStorage).finalizeBallot(ballotIdx, uint256(BallotStates.Rejected));
+            }
+            ballotInVoting = 0;
+        }
     }
 
     // function addMember(address addr, bytes enode, bytes ip, uint port) private {}
