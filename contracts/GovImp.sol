@@ -12,7 +12,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
 
     function getMinVotingDuration() public pure returns (uint256) { return 1 days; }
     function getMaxVotingDuration() public pure returns (uint256) { return 7 days; }
-    function getThreshould() public pure returns (uint256) { return 50; } // 50% from 50 of 100
+    function getThreshould() public pure returns (uint256) { return 51; } // 51% from 50 of 100
     
     function getBallotStorageAddress() private view returns (address) {
         return REG.getContractAddress("BallotStorage");
@@ -35,8 +35,9 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
+        ballotIdx = ballotLength.add(1);
         BallotStorage(ballotStorage).createBallotForMemeber(
-            ballotLength.add(1), // ballot id
+            ballotIdx, // ballot id
             uint256(BallotTypes.MemberAdd), // ballot type
             msg.sender, // creator
             address(0), // old member address
@@ -45,8 +46,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             ip, // new ip
             port // new port
         );
-        ballotLength = ballotLength.add(1);
-        return ballotLength;
+        ballotLength = ballotIdx;
     }
 
     function addProposalToRemoveMember(
@@ -63,8 +63,9 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
+        ballotIdx = ballotLength.add(1);
         BallotStorage(ballotStorage).createBallotForMemeber(
-            ballotLength.add(1), // ballot id
+            ballotIdx, // ballot id
             uint256(BallotTypes.MemberRemoval), // ballot type
             msg.sender, // creator
             member, // old member address
@@ -73,8 +74,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             new bytes(0), // new ip
             0 // new port
         );
-        ballotLength = ballotLength.add(1);
-        return ballotLength;
+        ballotLength = ballotIdx;
     }
 
     function addProposalToChangeMember(
@@ -94,8 +94,9 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
+        ballotIdx = ballotLength.add(1);
         BallotStorage(ballotStorage).createBallotForMemeber(
-            ballotLength.add(1), // ballot id
+            ballotIdx, // ballot id
             uint256(BallotTypes.MemberChange), // ballot type
             msg.sender, // creator
             target, // old member address
@@ -104,8 +105,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             nIp, // new ip
             nPort // new port
         );
-        ballotLength = ballotLength.add(1);
-        return ballotLength;
+        ballotLength = ballotIdx;
     }
 
     function addProposalToChangeGov(
@@ -120,14 +120,14 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
+        ballotIdx = ballotLength.add(1);
         BallotStorage(ballotStorage).createBallotForAddress(
             ballotLength.add(1), // ballot id
             uint256(BallotTypes.GovernanceChange), // ballot type
             msg.sender, // creator
             newGovAddr // new governance address
         );
-        ballotLength = ballotLength.add(1);
-        return ballotLength;
+        ballotLength = ballotIdx;
     }
 
     function addProposalToChangeEnv(
@@ -143,16 +143,16 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
 
+        ballotIdx = ballotLength.add(1);
         BallotStorage(ballotStorage).createBallotForVariable(
-            ballotLength.add(1), // ballot id
+            ballotIdx, // ballot id
             uint256(BallotTypes.EnvValChange), // ballot type
             msg.sender, // creator
             envName, // env name
             envType, // env type
             envVal // env value
         );
-        ballotLength = ballotLength.add(1);
-        return ballotLength;
+        ballotLength = ballotIdx;
     }
 
     function vote(uint256 ballotIdx, bool approval) external onlyGovMem nonReentrant {
@@ -213,8 +213,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             if (accept > reject) {
                 BallotStorage(ballotStorage).finalizeBallot(ballotIdx, uint256(BallotStates.Accepted));
                 if (ballotType == uint256(BallotTypes.MemberAdd)) {
-                    // FIX
-                    memberLength = memberLength.add(1);
+                    addMember(ballotIdx);
                 } else if (ballotType == uint256(BallotTypes.MemberRemoval)) {
                 } else if (ballotType == uint256(BallotTypes.MemberChange)) {
                 } else if (ballotType == uint256(BallotTypes.GovernanceChange)) {
@@ -225,6 +224,33 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             }
             ballotInVoting = 0;
         }
+    }
+
+    function addMember(uint256 ballotIdx) private {
+        (,, address addr, bytes memory enode, bytes memory ip, uint port) = BallotStorage(getBallotStorageAddress()).getBallotMember(ballotIdx);
+
+        // Lock
+        Staking staking = Staking(REG.getContractAddress("Staking"));
+        // FIXME: should lock with given amount
+        require(staking.availableBalance(addr) >= 1 ether, "Insufficient staking");
+        staking.lock(addr, 1 ether);
+
+        // Add member
+        uint256 nMemIdx = memberLength.add(1);
+        members[nMemIdx] = addr;
+        memberIdx[addr] = nMemIdx;
+
+        // Add node
+        uint256 nNodeIdx = nodeLength.add(1);
+        Node storage node = nodes[nNodeIdx];
+        node.enode = enode;
+        node.ip = ip;
+        node.port = port;
+        nodeIdxFromMember[addr] = nNodeIdx;
+        nodeToMember[nNodeIdx] = addr;
+
+        memberLength = nMemIdx;
+        nodeLength = nNodeIdx;
     }
 
     // function addMember(address addr, bytes enode, bytes ip, uint port) private {}

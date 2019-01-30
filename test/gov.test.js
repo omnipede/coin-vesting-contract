@@ -133,19 +133,34 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
     it('cannot addProposal to change environment with wrong type', async () => {
       await reverting(govDelegator.addProposalToChangeEnv(envName, envTypes.Invalid, envVal, { from: deployer }));
     });
-
+    
     it('can vote approval to add member', async () => {
+      await staking.deposit({ value: amount, from: govMem1 });
       await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
       await govDelegator.vote(1, true, { from: deployer });
       const len = await gov.voteLength();
       len.should.be.bignumber.equal(1);
       const inVoting = await gov.getBallotInVoting();
       inVoting.should.be.bignumber.equal(0);
-      const state = await ballotStorage.getBallotState(len);
+      const state = await ballotStorage.getBallotState(1);
       state[1].should.be.bignumber.equal(ballotStates.Accepted);
       state[2].should.equal(true);
       const memberLen = await gov.getMemberLength();
       memberLen.should.be.bignumber.equal(2);
+    });
+
+    it('cannot vote approval to add member with insufficient staking', async () => {
+      await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
+      await reverting(govDelegator.vote(1, true, { from: deployer }));
+      const len = await gov.voteLength();
+      len.should.be.bignumber.equal(0);
+      const inVoting = await gov.getBallotInVoting();
+      inVoting.should.be.bignumber.equal(0);
+      const state = await ballotStorage.getBallotState(1);
+      state[1].should.be.bignumber.equal(ballotStates.Ready);
+      state[2].should.equal(false);
+      const memberLen = await gov.getMemberLength();
+      memberLen.should.be.bignumber.equal(1);
     });
 
     it('can vote disapproval to deny adding member', async () => {
@@ -160,7 +175,8 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       state[2].should.equal(true);
     });
 
-    it('cannot vote twice', async () => {
+    it('cannot vote for a ballot already done', async () => {
+      await staking.deposit({ value: amount, from: govMem1 });
       await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
       await govDelegator.vote(1, true, { from: deployer });
       await reverting(govDelegator.vote(1, true, { from: deployer }));
@@ -169,6 +185,7 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
 
   describe('Two Member ', function () {
     beforeEach(async () => {
+      await staking.deposit({ value: amount, from: govMem1 });
       await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
       await govDelegator.vote(1, true, { from: deployer });
     });
@@ -178,9 +195,9 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
     });
 
     it('can addProposal to remove member', async () => {
-      // await govDelegator.addProposalToRemoveMember(govMem1, { from: deployer });
-      // const len = await gov.ballotLength();
-      // len.should.be.bignumber.equal(2);
+      await govDelegator.addProposalToRemoveMember(govMem1, { from: deployer });
+      const len = await gov.ballotLength();
+      len.should.be.bignumber.equal(2);
     });
 
     it('can vote', async () => {
@@ -191,7 +208,7 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       await govDelegator.addProposalToAddMember(govMem2, enode, ip, port, { from: deployer });
       await govDelegator.addProposalToAddMember(govMem3, enode, ip, port, { from: deployer });
       const len = await gov.ballotLength();
-      await govDelegator.vote(len-1, true, { from: deployer });
+      // await govDelegator.vote(len-1, true, { from: deployer });
       // await reverting(govDelegator.vote(len, true, { from: deployer }));
     });
   });
