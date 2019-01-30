@@ -178,7 +178,7 @@ contract GovChecker is Ownable {
     modifier onlyGovMem() {
         address addr = REG.getContractAddress(GOV_NAME);
         require(addr != address(0), "No Governance");
-        require(Gov(addr).memberIdx(msg.sender) != 0, "No Permission");
+        require(Gov(addr).isMember(msg.sender), "No Permission");
         _;
     }
 
@@ -361,6 +361,19 @@ contract Staking is GovChecker, ReentrancyGuard {
 contract EnvConstants {
     bytes32 internal constant BLOCK_PER_NAME = keccak256("blockPer"); 
     uint256 internal constant BLOCK_PER_TYPE = uint256(VariableTypes.Uint);
+
+    bytes32 internal constant BALLOT_DURATION_MIN_NAME = keccak256("ballotDurationMin"); 
+    uint256 internal constant BALLOT_DURATION_MIN_TYPE = uint256(VariableTypes.Uint);
+
+    bytes32 internal constant BALLOT_DURATION_MAX_NAME = keccak256("ballotDurationMax"); 
+    uint256 internal constant BALLOT_DURATION_MAX_TYPE = uint256(VariableTypes.Uint);
+
+    bytes32 internal constant STAKING_MIN_NAME = keccak256("stakingMin"); 
+    uint256 internal constant STAKING_MIN_TYPE = uint256(VariableTypes.Uint);
+
+    bytes32 internal constant STAKING_MAX_NAME = keccak256("stakingMax"); 
+    uint256 internal constant STAKING_MAX_TYPE = uint256(VariableTypes.Uint);
+
     enum VariableTypes {
         Invalid,
         Int,
@@ -454,9 +467,9 @@ contract Gov is UpgradeabilityProxy, GovChecker {
     bool private initialized;
 
     // For member
-    mapping(uint256 => address) public members;
-    mapping(address => uint256) public memberIdx;
-    uint256 public memberLength;
+    mapping(uint256 => address) internal members;
+    mapping(address => uint256) internal memberIdx;
+    uint256 internal memberLength;
 
     // For enode
     struct Node {
@@ -464,20 +477,35 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         bytes ip;
         uint port;
     }
-    mapping(uint256 => Node) public nodes;
-    mapping(address => uint256) public nodeIdxFromMember;
-    mapping(uint256 => address) public nodeToMember;
-    uint256 public nodeLength;
+    mapping(uint256 => Node) internal nodes;
+    mapping(address => uint256) internal nodeIdxFromMember;
+    mapping(uint256 => address) internal nodeToMember;
+    uint256 internal nodeLength;
 
     // For ballot
     uint256 public ballotLength;
+    uint256 public voteLength;
+    uint256 internal ballotInVoting;
 
     constructor() public {
         initialized = false;
         memberLength = 0;
         nodeLength = 0;
         ballotLength = 0;
+        voteLength = 0;
+        ballotInVoting = 0;
     }
+
+    function isMember(address addr) public view returns (bool) { return (memberIdx[addr] != 0); }
+    function getMember(uint256 idx) public view returns (address) { return members[idx]; }
+    function getMemberLength() public view returns (uint256) { return memberLength; }
+    function getNodeIdxFromMember(address addr) public view returns (uint256) { return nodeIdxFromMember[addr]; }
+    function getMemberFromNodeIdx(uint256 idx) public view returns (address) { return nodeToMember[idx]; }
+    function getNodeLength() public view returns (uint256) { return nodeLength; }
+    function getNode(uint256 idx) public view returns (bytes enode, bytes ip, uint port) {
+        return (nodes[idx].enode, nodes[idx].ip, nodes[idx].port);
+    }
+    function getBallotInVoting() public view returns (uint256) { return ballotInVoting; }
 
     function init(
         address registry,
@@ -568,7 +596,7 @@ contract AEnvStorage is GovChecker {
     * @param _h The keccak256 hash of the variable name
     */
     function get(bytes32 _h) public view returns (uint256 varType, string varVal){
-        require(s[_h]._name == _h,"not found");
+        //require(s[_h]._name == _h,"not found");
         return (s[_h]._type, s[_h]._value);
     }
     /**
@@ -576,7 +604,7 @@ contract AEnvStorage is GovChecker {
     * @param _h The keccak256 hash of the variable name
     */
     function getType(bytes32 _h) public view returns (uint256){
-        require(s[_h]._name == _h,"not found");
+        //require(s[_h]._name == _h,"not found");
         return s[_h]._type;
     }
     /**
@@ -584,14 +612,36 @@ contract AEnvStorage is GovChecker {
     * @param _h The keccak256 hash of the variable name
     */
     function getValue(bytes32 _h) public view returns (string){
-        require(s[_h]._name == _h,"not found");
+        //require(s[_h]._name == _h,"not found");
         return s[_h]._value;
     }
 }
 
 contract EnvStorageImp is AEnvStorage, EnvConstants {
-    
-
+    function initialize() public onlyOwner{
+        string memory blockPerVal = getBlockPerValue();
+        string memory BallotDurationMin = getBallotDurationMinValue();
+        string memory BallotDurationMax = getBallotDurationMaxValue();
+        string memory StakingMin = getStakingMinValue();
+        string memory StakingMax = getStakingMaxValue();
+        if( bytes(blockPerVal).length == 0){
+            _set(BLOCK_PER_NAME, BLOCK_PER_TYPE, "1000");
+        }
+        if( bytes(BallotDurationMin).length == 0){
+            _set(BALLOT_DURATION_MIN_NAME, BALLOT_DURATION_MIN_TYPE, "10000");
+        }
+        if( bytes(BallotDurationMax).length == 0 ){
+            _set(BALLOT_DURATION_MAX_NAME, BALLOT_DURATION_MAX_TYPE, "20000");
+        }
+        if( bytes(StakingMin).length == 0 ){
+            _set(STAKING_MIN_NAME, STAKING_MIN_TYPE, "10000000000");
+        }
+        if( bytes(StakingMax).length == 0 ){
+           
+            _set(STAKING_MAX_NAME, STAKING_MAX_TYPE, "20000000000");
+        }
+        
+    }
     function getBlockPer() public view returns (uint256 varType, string varVal) {
         varType = getBlockPerType();
         varVal = getBlockPerValue();
@@ -605,6 +655,64 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
     function setBlockPer(string _value) public onlyGov { 
         _set(BLOCK_PER_NAME, BLOCK_PER_TYPE, _value);
     }
+    
+    function getBallotDurationMin() public view returns (uint256 varType, string varVal) {
+        varType = getBallotDurationMinType();
+        varVal = getBallotDurationMinValue();
+    }
+    function getBallotDurationMinType() public view returns (uint256) {
+        return getType(BALLOT_DURATION_MIN_NAME);
+    }
+    function getBallotDurationMinValue() public view returns (string) {
+        return getValue(BALLOT_DURATION_MIN_NAME);
+    }
+    function setBallotDurationMin(string _value) public onlyGov { 
+        _set(BALLOT_DURATION_MIN_NAME, BALLOT_DURATION_MIN_TYPE, _value);
+    }
+
+    function getBallotDurationMax() public view returns (uint256 varType, string varVal) {
+        varType = getBallotDurationMaxType();
+        varVal = getBallotDurationMaxValue();
+    }
+    function getBallotDurationMaxType() public view returns (uint256) {
+        return getType(BALLOT_DURATION_MAX_NAME);
+    }
+    function getBallotDurationMaxValue() public view returns (string) {
+        return getValue(BALLOT_DURATION_MAX_NAME);
+    }
+    function setBallotDurationMax(string _value) public onlyGov { 
+        _set(BALLOT_DURATION_MAX_NAME, BALLOT_DURATION_MAX_TYPE, _value);
+    }
+
+    function getStakingMin() public view returns (uint256 varType, string varVal) {
+        varType = getStakingMinType();
+        varVal = getStakingMinValue();
+    }
+    function getStakingMinType() public view returns (uint256) {
+        return getType(STAKING_MIN_NAME);
+    }
+    function getStakingMinValue() public view returns (string) {
+        return getValue(STAKING_MIN_NAME);
+    }
+    function setStakingMin(string _value) public onlyGov { 
+        _set(STAKING_MIN_NAME, STAKING_MIN_TYPE, _value);
+    }
+
+    function getStakingMax() public view returns (uint256 varType, string varVal) {
+        varType = getStakingMaxType();
+        varVal = getStakingMaxValue();
+    }
+    function getStakingMaxType() public view returns (uint256) {
+        return getType(STAKING_MAX_NAME);
+    }
+    function getStakingMaxValue() public view returns (string) {
+        return getValue(STAKING_MAX_NAME);
+    }
+    function setStakingMax(string _value) public onlyGov { 
+        _set(STAKING_MAX_NAME, STAKING_MAX_TYPE, _value);
+    }
+
+
     /**
     * @dev set a value for a string variable.
     * @param _h The keccak256 hash of the variable name

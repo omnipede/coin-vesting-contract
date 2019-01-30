@@ -1,3 +1,4 @@
+"use strict";
 const { reverting } = require('openzeppelin-solidity/test/helpers/shouldFail');
 const Registry = artifacts.require('Registry.sol');
 const EnvStorage = artifacts.require('EnvStorage.sol');
@@ -22,7 +23,9 @@ contract('EnvStorage', accounts => {
     // console.log(`envStorage : ${envStorage.address}`);
     await registry.setContractDomain('EnvStorage', envStorage.address);
     await registry.setContractDomain('GovernanceContract', govAddr);
+
     testEnvStorage = EnvStorageImp.at(envStorage.address);
+    await testEnvStorage.initialize({from:deployer});
   });
 
   describe('EnvStorage', function () {
@@ -38,44 +41,56 @@ contract('EnvStorage', accounts => {
       const _govAddr = await testEnvStorage.REG.call();
       assert.equal(_govAddr, registry.address);
     });
+    it('Check Variable Default Value', async () => {
+      const blockPer = await testEnvStorage.getBlockPerValue();
+      const durationMin = await testEnvStorage.getBallotDurationMinValue();
+      const durationMax = await testEnvStorage.getBallotDurationMaxValue();
+      const stakingMin = await testEnvStorage.getStakingMinValue();
+      const stakingMax = await testEnvStorage.getStakingMaxValue();
+      assert.equal(blockPer, "1000","is not Default of BlockPer ");
+      assert.equal(durationMin, "10000","is not Default of BallotDurationMin ");
+      assert.equal(durationMax, "20000","is not Default of BallotDurationMax ");
+      assert.equal(stakingMin, "10000000000","is not Default of StakingMin ");
+      assert.equal(stakingMax, "20000000000","is not Default of StakingMax ");
+    });
 
     it('Canot Set block per variable(not govAddr)', async () => {
       await reverting(testEnvStorage.setBlockPer(BLOCK_PER_VALUE), { value: 0, from: creator });
     });
 
-    it('Add block per variable with VariableAdded Event', async () => {
-      // let _testUIntBytes = web3EthAbi.encodeParameter('uint256',1000000);
-      const _result = await testEnvStorage.setBlockPer(BLOCK_PER_VALUE, { value: 0, from: govAddr });
-      truffleAssert.eventEmitted(_result, 'VarableAdded', (ev) => {
-        return ev._name === web3.sha3('blockPer') && ev._value === BLOCK_PER_VALUE;
-      });
-      const [_type, _value] = await testEnvStorage.getBlockPer();
+    // it('Add block per variable with VariableAdded Event', async () => {
+    //   // let _testUIntBytes = web3EthAbi.encodeParameter('uint256',1000000);
+    //   const _result = await testEnvStorage.setBlockPer(BLOCK_PER_VALUE, { value: 0, from: govAddr });
+    //   truffleAssert.eventEmitted(_result, 'VarableChanged', (ev) => {
+    //     return ev._name === web3.sha3('blockPer') && ev._value === BLOCK_PER_VALUE;
+    //   });
+    //   const [_type, _value] = await testEnvStorage.getBlockPer();
 
-      _type.should.be.bignumber.equal(2);
-      assert.equal(_value, BLOCK_PER_VALUE);
-      const _ttype = await testEnvStorage.getBlockPerType();
-      const _tvalue = await testEnvStorage.getBlockPerValue();
-      _ttype.should.be.bignumber.equal(2);
-      assert.equal(_tvalue, BLOCK_PER_VALUE);
-    });
+    //   _type.should.be.bignumber.equal(2);
+    //   assert.equal(_value, BLOCK_PER_VALUE);
+    //   const _ttype = await testEnvStorage.getBlockPerType();
+    //   const _tvalue = await testEnvStorage.getBlockPerValue();
+    //   _ttype.should.be.bignumber.equal(2);
+    //   assert.equal(_tvalue, BLOCK_PER_VALUE);
+    // });
 
     it('Update block per variable  with VariableChange Event', async () => {
-      // Add BlockPer variable
-      let _result = await testEnvStorage.setBlockPer(BLOCK_PER_VALUE, { value: 0, from: govAddr });
-      truffleAssert.eventEmitted(_result, 'VarableAdded', (ev) => {
-        return ev._name === web3.sha3('blockPer') && ev._value === BLOCK_PER_VALUE;
-      });
-      let [_type, _value] = await testEnvStorage.getBlockPer();
-      // console.log(`BlockPer : ${_type}, ${_value}`);
-      _type.should.be.bignumber.equal(2);
-      assert.equal(_value, BLOCK_PER_VALUE);
+      // // Add BlockPer variable
+      // let _result = await testEnvStorage.setBlockPer(BLOCK_PER_VALUE, { value: 0, from: govAddr });
+      // truffleAssert.eventEmitted(_result, 'VarableAdded', (ev) => {
+      //   return ev._name === web3.sha3('blockPer') && ev._value === BLOCK_PER_VALUE;
+      // });
+      // let [_type, _value] = await testEnvStorage.getBlockPer();
+      // // console.log(`BlockPer : ${_type}, ${_value}`);
+      // _type.should.be.bignumber.equal(2);
+      // assert.equal(_value, BLOCK_PER_VALUE);
 
       // Update BlockPer variable
-      _result = await testEnvStorage.setBlockPer(UPDATE_BLOCK_PER_VALUE, { value: 0, from: govAddr });
+      let _result = await testEnvStorage.setBlockPer(UPDATE_BLOCK_PER_VALUE, { value: 0, from: govAddr });
       truffleAssert.eventEmitted(_result, 'VarableChanged', (ev) => {
         return ev._name === web3.sha3('blockPer') && ev._value === UPDATE_BLOCK_PER_VALUE;
       });
-      [_type, _value] = await testEnvStorage.getBlockPer();
+      let [_type, _value] = await testEnvStorage.getBlockPer();
       // console.log(`BlockPer : ${_type}, ${_value}`);
       _type.should.be.bignumber.equal(2);
       assert.equal(_value, UPDATE_BLOCK_PER_VALUE);

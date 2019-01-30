@@ -44,7 +44,8 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         address newMemeberAddress;
         bytes newNodeId; // admin.nodeInfo.id is 512 bit public key
         bytes newNodeIp;
-        uint newNodePort;
+        uint256 newNodePort;
+        uint256 lockAmount;
     }
 
     //For GovernanceChange 
@@ -123,7 +124,6 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     }
 
     function getBallotBasic(uint256 _id) public view returns (
-        uint256 id,
         uint256 startTime,
         uint256 endTime,
         uint256 ballotType,
@@ -138,7 +138,6 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     )
     {
         BallotBasic memory tBallot = ballotBasicMap[_id];
-        id = tBallot.id;
         startTime = tBallot.startTime;
         endTime = tBallot.endTime;
         ballotType = tBallot.ballotType;
@@ -153,42 +152,38 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     }
 
     function getBallotMember(uint256 _id) public view returns (
-        uint256 id,
         address oldMemeberAddress,
         address newMemeberAddress,
         bytes newNodeId, // admin.nodeInfo.id is 512 bit public key
         bytes newNodeIp,
-        uint newNodePort
+        uint256 newNodePort,
+        uint256 lockAmount
     )
     {
         BallotMember storage tBallot = ballotMemberMap[_id];
-        id = tBallot.id;
         oldMemeberAddress = tBallot.oldMemeberAddress;
         newMemeberAddress = tBallot.newMemeberAddress;
         newNodeId = tBallot.newNodeId;
         newNodeIp = tBallot.newNodeIp;
         newNodePort = tBallot.newNodePort;
+        lockAmount = tBallot.lockAmount;
     }
 
     function getBallotAddress(uint256 _id) public view returns (
-        uint256 id,
         address newGovernanceAddress
     )
     {
         BallotAddress storage tBallot = ballotAddressMap[_id];
-        id = tBallot.id;
         newGovernanceAddress = tBallot.newGovernanceAddress;
     }
 
     function getBallotVariable(uint256 _id) public view returns (
-        uint256 id,
         bytes32 envVariableName,
         uint256 envVariableType,
         string envVariableValue 
     )
     {
         BallotVariable storage tBallot = ballotVariableMap[_id];
-        id = tBallot.id;
         envVariableName = tBallot.envVariableName;
         envVariableType = tBallot.envVariableType;
         envVariableValue = tBallot.envVariableValue;
@@ -490,7 +485,18 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         BallotBasic storage _ballot = ballotBasicMap[_ballotId];
         _ballot.duration = _duration;
     }
-
+    function updateBallotMemberLockAmount(
+        uint256 _ballotId,
+        uint256 _lockAmount
+    ) public onlyGov
+    {
+        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
+        require(ballotMemberMap[_ballotId].id == _ballotId, "not existed BallotMember");
+        require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
+        require(ballotBasicMap[_ballotId].state == uint256(BallotStates.Ready), "Not Ready State");
+        BallotMember storage _ballot = ballotMemberMap[_ballotId];
+        _ballot.lockAmount = _lockAmount;
+    }
     function getBallotPeriod(uint256 _id) public view returns (
         uint256 startTime,
         uint256 endTime,

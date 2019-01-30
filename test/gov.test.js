@@ -87,8 +87,8 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       len.should.be.bignumber.equal(1);
       const ballot = await ballotStorage.getBallotBasic(len);
       const ballotDetail = await ballotStorage.getBallotMember(len);
-      assert.equal(ballot[4], deployer);
-      assert.equal(ballotDetail[2], govMem1);
+      assert.equal(ballot[3], deployer);
+      assert.equal(ballotDetail[1], govMem1);
 
       await govDelegator.addProposalToAddMember(govMem1, enode, ip, port, { from: deployer });
       const len2 = await gov.ballotLength();
