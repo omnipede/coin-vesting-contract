@@ -130,6 +130,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         nonReentrant
         returns (uint256 ballotIdx)
     {
+        require(newGovAddr != address(0), "Implementation cannot be zero");
         require(newGovAddr != implementation(), "Same contract address");
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
@@ -245,8 +246,9 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             } else if (ballotType == uint256(BallotTypes.MemberChange)) {
                 changeMember(ballotIdx);
             } else if (ballotType == uint256(BallotTypes.GovernanceChange)) {
-                // FIXME
-                setImplementation(address(0));
+                if (BallotStorage(ballotStorage).getBallotAddress(ballotIdx) != address(0)) {
+                    setImplementation(BallotStorage(ballotStorage).getBallotAddress(ballotIdx));
+                }
             } else if (ballotType == uint256(BallotTypes.EnvValChange)) {
                 applyEnv(ballotIdx);
             }
