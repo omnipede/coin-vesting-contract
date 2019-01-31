@@ -252,30 +252,30 @@ contract Registry is Ownable {
 contract Staking is GovChecker, ReentrancyGuard {
     using SafeMath for uint256;
 
-    mapping(address => uint256) private _balance;
-    mapping(address => uint256) private _lockedBalance;
-    uint256 private _totalLockedBalance;
+    mapping(address => uint256) private balance;
+    mapping(address => uint256) private lockedBalance;
+    uint256 private totalLockedBalance;
     
     event Staked(address indexed payee, uint256 amount, uint256 total, uint256 available);
     event Unstaked(address indexed payee, uint256 amount, uint256 total, uint256 available);
     event Locked(address indexed payee, uint256 amount, uint256 total, uint256 available);
     event Unlocked(address indexed payee, uint256 amount, uint256 total, uint256 available);
 
-    constructor(address _registry) public {
-        _totalLockedBalance = 0;
-        setRegistry(_registry);
+    constructor(address registry) public {
+        totalLockedBalance = 0;
+        setRegistry(registry);
     }
 
     function balanceOf(address payee) public view returns (uint256) {
-        return _balance[payee];
+        return balance[payee];
     }
 
     function lockedBalanceOf(address payee) public view returns (uint256) {
-        return _lockedBalance[payee];
+        return lockedBalance[payee];
     }
 
     function availableBalance(address payee) public view returns (uint256) {
-        return _balance[payee].sub(_lockedBalance[payee]);
+        return balance[payee].sub(lockedBalance[payee]);
     }
 
     /**
@@ -295,8 +295,8 @@ contract Staking is GovChecker, ReentrancyGuard {
     *               if 1e3, result range is between 0 ~ 1000
     */
     function calcVotingWeightWithScaleFactor(address payee, uint32 factor) public view returns (uint256) {
-        if (_lockedBalance[payee] == 0 || factor == 0) return 0;
-        return _lockedBalance[payee].mul(factor).div(_totalLockedBalance);
+        if (lockedBalance[payee] == 0 || factor == 0) return 0;
+        return lockedBalance[payee].mul(factor).div(totalLockedBalance);
     }
 
     function () external payable {
@@ -309,9 +309,9 @@ contract Staking is GovChecker, ReentrancyGuard {
     function deposit() external nonReentrant payable {
         require(msg.value > 0, "Deposit amount should be greater than zero");
 
-        _balance[msg.sender] = _balance[msg.sender].add(msg.value);
+        balance[msg.sender] = balance[msg.sender].add(msg.value);
 
-        emit Staked(msg.sender, msg.value, _balance[msg.sender], availableBalance(msg.sender));
+        emit Staked(msg.sender, msg.value, balance[msg.sender], availableBalance(msg.sender));
     }
 
     /**
@@ -321,10 +321,10 @@ contract Staking is GovChecker, ReentrancyGuard {
     function withdraw(uint256 amount) external nonReentrant {
         require(amount <= availableBalance(msg.sender), "Withdraw amount should be equal or less than balance");
 
-        _balance[msg.sender] = _balance[msg.sender].sub(amount);
+        balance[msg.sender] = balance[msg.sender].sub(amount);
         msg.sender.transfer(amount);
 
-        emit Unstaked(msg.sender, amount, _balance[msg.sender], availableBalance(msg.sender));
+        emit Unstaked(msg.sender, amount, balance[msg.sender], availableBalance(msg.sender));
     }
 
     /**
@@ -333,13 +333,13 @@ contract Staking is GovChecker, ReentrancyGuard {
     * @param lockAmount The amount of funds will be locked.
     */
     function lock(address payee, uint256 lockAmount) external onlyGov {
-        require(_balance[payee] >= lockAmount, "Lock amount should be equal or less than balance");
+        require(balance[payee] >= lockAmount, "Lock amount should be equal or less than balance");
         require(availableBalance(payee) >= lockAmount, "Insufficient balance that can be locked");
 
-        _lockedBalance[payee] = _lockedBalance[payee].add(lockAmount);
-        _totalLockedBalance = _totalLockedBalance.add(lockAmount);
+        lockedBalance[payee] = lockedBalance[payee].add(lockAmount);
+        totalLockedBalance = totalLockedBalance.add(lockAmount);
 
-        emit Locked(payee, lockAmount, _balance[payee], availableBalance(payee));
+        emit Locked(payee, lockAmount, balance[payee], availableBalance(payee));
     }
 
     /**
@@ -348,14 +348,13 @@ contract Staking is GovChecker, ReentrancyGuard {
     * @param unlockAmount The amount of funds will be unlocked.
     */
     function unlock(address payee, uint256 unlockAmount) external onlyGov {
-        require(_lockedBalance[payee] >= unlockAmount, "Unlock amount should be equal or less than balance locked");
+        require(lockedBalance[payee] >= unlockAmount, "Unlock amount should be equal or less than balance locked");
 
-        _lockedBalance[payee] = _lockedBalance[payee].sub(unlockAmount);
-        _totalLockedBalance = _totalLockedBalance.sub(unlockAmount);
+        lockedBalance[payee] = lockedBalance[payee].sub(unlockAmount);
+        totalLockedBalance = totalLockedBalance.sub(unlockAmount);
 
-        emit Unlocked(payee, unlockAmount, _balance[payee], availableBalance(payee));
+        emit Unlocked(payee, unlockAmount, balance[payee], availableBalance(payee));
     }
-
 }
 
 contract BallotEnums {
@@ -408,6 +407,33 @@ contract EnvConstants {
         Bytes,
         String
     }
+    bytes32 internal constant TEST_INT = keccak256("TEST_INT"); 
+    bytes32 internal constant TEST_ADDRESS = keccak256("TEST_ADDRESS"); 
+    bytes32 internal constant TEST_BYTES32 = keccak256("TEST_BYTES32"); 
+    bytes32 internal constant TEST_BYTES = keccak256("TEST_BYTES"); 
+    bytes32 internal constant TEST_STRING = keccak256("TEST_STRING"); 
+}
+
+contract IBallotStorage {
+    function getBallotBasic(uint256) public view returns (
+        uint256,uint256,uint256,address,bytes,uint256,
+        uint256,uint256,uint256,bool,uint256);
+    function getBallotMember(uint256) public view returns (address,address,bytes,bytes,uint256,uint256);
+    function getBallotAddress(uint256) public view returns (address);
+    function getBallotVariable(uint256) public view returns (bytes32,uint256,bytes);
+    function createBallotForMemeber(
+        uint256,uint256,address,address,
+        address,bytes,bytes,uint) public;
+    function createBallotForAddress(uint256,uint256,address,address) public returns (uint256);
+    function createBallotForVariable(uint256,uint256,address,bytes32,uint256,bytes) public returns (uint256);
+    function createVote(uint256,uint256,address,uint256,uint256) public returns (uint256);
+    function finalizeBallot(uint256, uint256) public;
+    function startBallot(uint256,uint256,uint256) public;
+    function updateBallotDuration(uint256,uint256) public;
+    function updateBallotMemberLockAmount(uint256,uint256) public;
+    function getBallotPeriod(uint256) public view returns (uint256,uint256,uint256);
+    function getBallotVotingInfo(uint256) public view returns (uint256,uint256,uint256);
+    function getBallotState(uint256) public view returns (uint256,uint256,bool);
 }
 
 contract Proxy {
@@ -570,25 +596,28 @@ contract Gov is UpgradeabilityProxy, GovChecker {
     }
 }
 
-contract GovImp is Gov, ReentrancyGuard, BallotEnums {
+contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
     using SafeMath for uint256;
 
-    bytes32 internal constant BLOCK_PER = keccak256("blockPer");
-    bytes32 internal constant THRESHOLD = keccak256("threshold");
+    event MemberAdded(address indexed addr);
+    event MemberRemoved(address indexed addr);
+    event MemberChanged(address indexed oldAddr, address indexed newAddr);
+    event EnvChanged(bytes32 envName, uint256 envType, bytes envVal);
 
-    function getBallotStorageAddress() private view returns (address) {
-        return REG.getContractAddress("BallotStorage");
-    }
+    // FIXME: get from EnvStorage
+    function getMinStaking() public pure returns (uint256) { return 10 ether; }
+    function getMaxStaking() public pure returns (uint256) { return 100 ether; }
+    function getMinVotingDuration() public pure returns (uint256) { return 1 days; }
+    function getMaxVotingDuration() public pure returns (uint256) { return 7 days; }
 
-    function getMaxVotingDuration() public pure returns (uint256) {
-        return 7 days;
-    }
-
+    function getThreshould() public pure returns (uint256) { return 51; } // 51% from 51 of 100
+            
     function addProposalToAddMember(
         address member,
         bytes enode,
         bytes ip,
-        uint port
+        uint port,
+        uint256 lockAmount
     )
         external
         onlyGovMem
@@ -598,11 +627,9 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         require(msg.sender != member, "Cannot add self");
         require(!isMember(member), "Already member");
 
-        address ballotStorage = getBallotStorageAddress();
-        require(ballotStorage != address(0), "BallotStorage NOT FOUND");
-
-        BallotStorage(ballotStorage).createBallotForMemeber(
-            ballotLength.add(1), // ballot id
+        ballotIdx = ballotLength.add(1);
+        createBallotForMemeber(
+            ballotIdx, // ballot id
             uint256(BallotTypes.MemberAdd), // ballot type
             msg.sender, // creator
             address(0), // old member address
@@ -611,12 +638,13 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             ip, // new ip
             port // new port
         );
-        ballotLength = ballotLength.add(1);
-        return ballotLength;
+        updateBallotLock(ballotIdx, lockAmount);
+        ballotLength = ballotIdx;
     }
 
     function addProposalToRemoveMember(
-        address member
+        address member,
+        uint256 lockAmount
     )
         external
         onlyGovMem
@@ -624,12 +652,11 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         returns (uint256 ballotIdx)
     {
         require(isMember(member), "Non-member");
+        require(getMemberLength() > 1, "Cannot remove a sole member");
 
-        address ballotStorage = getBallotStorageAddress();
-        require(ballotStorage != address(0), "BallotStorage NOT FOUND");
-
-        BallotStorage(ballotStorage).createBallotForMemeber(
-            ballotLength.add(1), // ballot id
+        ballotIdx = ballotLength.add(1);
+        createBallotForMemeber(
+            ballotIdx, // ballot id
             uint256(BallotTypes.MemberRemoval), // ballot type
             msg.sender, // creator
             member, // old member address
@@ -638,8 +665,8 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             new bytes(0), // new ip
             0 // new port
         );
-        ballotLength = ballotLength.add(1);
-        return ballotLength;
+        updateBallotLock(ballotIdx, lockAmount);
+        ballotLength = ballotIdx;
     }
 
     function addProposalToChangeMember(
@@ -647,7 +674,8 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         address nMember,
         bytes nEnode,
         bytes nIp,
-        uint nPort
+        uint nPort,
+        uint256 lockAmount
     )
         external
         onlyGovMem
@@ -656,11 +684,9 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
     {
         require(isMember(target), "Non-member");
 
-        address ballotStorage = getBallotStorageAddress();
-        require(ballotStorage != address(0), "BallotStorage NOT FOUND");
-
-        BallotStorage(ballotStorage).createBallotForMemeber(
-            ballotLength.add(1), // ballot id
+        ballotIdx = ballotLength.add(1);
+        createBallotForMemeber(
+            ballotIdx, // ballot id
             uint256(BallotTypes.MemberChange), // ballot type
             msg.sender, // creator
             target, // old member address
@@ -669,8 +695,8 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             nIp, // new ip
             nPort // new port
         );
-        ballotLength = ballotLength.add(1);
-        return ballotLength;
+        updateBallotLock(ballotIdx, lockAmount);
+        ballotLength = ballotIdx;
     }
 
     function addProposalToChangeGov(
@@ -681,66 +707,74 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         nonReentrant
         returns (uint256 ballotIdx)
     {
-        address ballotStorage = getBallotStorageAddress();
-        require(ballotStorage != address(0), "BallotStorage NOT FOUND");
+        require(newGovAddr != address(0), "Implementation cannot be zero");
+        require(newGovAddr != implementation(), "Same contract address");
 
-        BallotStorage(ballotStorage).createBallotForAddress(
+        ballotIdx = ballotLength.add(1);
+        IBallotStorage(getBallotStorageAddress()).createBallotForAddress(
             ballotLength.add(1), // ballot id
             uint256(BallotTypes.GovernanceChange), // ballot type
             msg.sender, // creator
             newGovAddr // new governance address
         );
-        ballotLength = ballotLength.add(1);
-        return ballotLength;
+        ballotLength = ballotIdx;
     }
 
     function addProposalToChangeEnv(
         bytes32 envName,
         uint256 envType,
-        string envVal
+        bytes envVal
     )
         external
         onlyGovMem
         nonReentrant
         returns (uint256 ballotIdx)
     {
-        address ballotStorage = getBallotStorageAddress();
-        require(ballotStorage != address(0), "BallotStorage NOT FOUND");
+        require(uint256(VariableTypes.Int) <= envType && envType <= uint256(VariableTypes.String), "Invalid type");
 
-        BallotStorage(ballotStorage).createBallotForVariable(
-            ballotLength.add(1), // ballot id
+        ballotIdx = ballotLength.add(1);
+        IBallotStorage(getBallotStorageAddress()).createBallotForVariable(
+            ballotIdx, // ballot id
             uint256(BallotTypes.EnvValChange), // ballot type
             msg.sender, // creator
             envName, // env name
             envType, // env type
             envVal // env value
         );
-        ballotLength = ballotLength.add(1);
-        return ballotLength;
+        ballotLength = ballotIdx;
     }
 
     function vote(uint256 ballotIdx, bool approval) external onlyGovMem nonReentrant {
         address ballotStorage = getBallotStorageAddress();
-        require(ballotStorage != address(0), "BallotStorage NOT FOUND");
-
         // Check if some ballot is in progress
         if (ballotInVoting != 0) {
-            (, uint256 state, ) = BallotStorage(ballotStorage).getBallotState(ballotIdx);
-            (, uint256 endTime, ) = BallotStorage(ballotStorage).getBallotPeriod(ballotIdx);
+            (uint256 ballotType, uint256 state, ) = getBallotState(ballotInVoting);
+            (, uint256 endTime, ) = getBallotPeriod(ballotInVoting);
             if (state == uint256(BallotStates.InProgress)) {
                 if (endTime < block.timestamp) {
-                    revert("Now in voting with different ballot");
-                } else {
-                    BallotStorage(ballotStorage).finalizeBallot(ballotIdx, uint256(DecisionTypes.Reject));
+                    finalizeBallot(ballotIdx, uint256(BallotStates.Rejected));
                     ballotInVoting = 0;
+                    if (ballotIdx == ballotInVoting) {
+                        return;
+                    }
+                } else if (ballotIdx != ballotInVoting) {
+                    revert("Now in voting with different ballot");
                 }
             }
         }
 
         // Check if the ballot can be voted
-        (, state, ) = BallotStorage(ballotStorage).getBallotState(ballotIdx);
+        (ballotType, state, ) = getBallotState(ballotIdx);
         if (state == uint256(BallotStates.Ready)) {
-            BallotStorage(ballotStorage).startBallot(ballotIdx, block.timestamp, block.timestamp + getMaxVotingDuration());
+            (,, uint256 duration) = getBallotPeriod(ballotIdx);
+            if (duration < getMinVotingDuration()) {
+                startBallot(ballotIdx, block.timestamp, block.timestamp + getMinVotingDuration());
+            } else if (getMaxVotingDuration() < duration) {
+                startBallot(ballotIdx, block.timestamp, block.timestamp + getMaxVotingDuration());
+            } else {
+                startBallot(ballotIdx, block.timestamp, block.timestamp + duration);
+            }
+            ballotInVoting = ballotIdx;
         } else if (state == uint256(BallotStates.InProgress)) {
             // Nothing to do
         } else {
@@ -751,560 +785,945 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         require(staking != address(0), "Staking NOT FOUND");
 
         // Vote
+        uint256 voteIdx = voteLength.add(1);
         if (approval) {
-            BallotStorage(ballotStorage).createVote(
-                voteLength.add(1),
+            IBallotStorage(ballotStorage).createVote(
+                voteIdx,
                 ballotIdx,
                 msg.sender,
                 uint256(DecisionTypes.Accept),
                 Staking(staking).calcVotingWeight(msg.sender)
             );
         } else {
-            BallotStorage(ballotStorage).createVote(
-                voteLength.add(1),
+            IBallotStorage(ballotStorage).createVote(
+                voteIdx,
                 ballotIdx,
                 msg.sender,
                 uint256(DecisionTypes.Reject),
                 Staking(staking).calcVotingWeight(msg.sender)
             );
         }
-        voteLength = voteLength.add(1);
+        voteLength = voteIdx;
 
         // Finalize
+        (, uint256 accept, uint256 reject) = getBallotVotingInfo(ballotIdx);
+        if (accept.add(reject) < getThreshould()) {
+            return;
+        }
+        if (accept > reject) {
+            if (ballotType == uint256(BallotTypes.MemberAdd)) {
+                addMember(ballotIdx);
+            } else if (ballotType == uint256(BallotTypes.MemberRemoval)) {
+                removeMember(ballotIdx);
+            } else if (ballotType == uint256(BallotTypes.MemberChange)) {
+                changeMember(ballotIdx);
+            } else if (ballotType == uint256(BallotTypes.GovernanceChange)) {
+                if (IBallotStorage(ballotStorage).getBallotAddress(ballotIdx) != address(0)) {
+                    setImplementation(IBallotStorage(ballotStorage).getBallotAddress(ballotIdx));
+                }
+            } else if (ballotType == uint256(BallotTypes.EnvValChange)) {
+                applyEnv(ballotIdx);
+            }
+            finalizeBallot(ballotIdx, uint256(BallotStates.Accepted));
+        } else {
+            finalizeBallot(ballotIdx, uint256(BallotStates.Rejected));
+        }
+        ballotInVoting = 0;
     }
 
-    // function addMember(address addr, bytes enode, bytes ip, uint port) private {}
-    // function removeMember(address addr) private {}
-    // function changeMember(address target, address nAddr, bytes nEnode, bytes nIp, uint nPort) private {}
-    // function applyEnv(bytes32 envName, uint256 envType, string envVal) private {}
+    function addMember(uint256 ballotIdx) private {
+        (uint256 ballotType, uint256 state, ) = getBallotState(ballotIdx);
+        require(ballotType == uint256(BallotTypes.MemberAdd), "Not voting for addMember");
+        require(state == uint(BallotStates.InProgress), "Invalid voting state");
+        (, uint256 accept, uint256 reject) = getBallotVotingInfo(ballotIdx);
+        require(accept.add(reject) >= getThreshould(), "Not yet finalized");
+
+        (
+            ,address addr,
+            bytes memory enode,
+            bytes memory ip,
+            uint port,
+            uint256 lockAmount
+        ) = getBallotMember(ballotIdx);
+        if (isMember(addr)) {
+            return; // Already member. it is abnormal case
+        }
+
+        // Lock
+        require(getMinStaking() <= lockAmount && lockAmount <= getMaxStaking(), "Invalid lock amount");
+        lock(addr, lockAmount);
+
+        // Add member
+        uint256 nMemIdx = memberLength.add(1);
+        members[nMemIdx] = addr;
+        memberIdx[addr] = nMemIdx;
+
+        // Add node
+        uint256 nNodeIdx = nodeLength.add(1);
+        Node storage node = nodes[nNodeIdx];
+        node.enode = enode;
+        node.ip = ip;
+        node.port = port;
+        nodeIdxFromMember[addr] = nNodeIdx;
+        nodeToMember[nNodeIdx] = addr;
+
+        memberLength = nMemIdx;
+        nodeLength = nNodeIdx;
+
+        emit MemberAdded(addr);
+    }
+
+    function removeMember(uint256 ballotIdx) private {
+        (uint256 ballotType, uint256 state, ) = getBallotState(ballotIdx);
+        require(ballotType == uint256(BallotTypes.MemberRemoval), "Not voting for removeMember");
+        require(state == uint(BallotStates.InProgress), "Invalid voting state");
+        (, uint256 accept, uint256 reject) = getBallotVotingInfo(ballotIdx);
+        require(accept.add(reject) >= getThreshould(), "Not yet finalized");
+
+        (address addr, , , , , uint256 unlockAmount) = getBallotMember(ballotIdx);
+        if (!isMember(addr)) {
+            return; // Non-member. it is abnormal case
+        }
+
+        // Remove member
+        if (memberIdx[addr] != memberLength) {
+            (members[memberIdx[addr]], members[memberLength]) = (members[memberLength], members[memberIdx[addr]]);
+        }
+        memberIdx[addr] = 0;
+        members[memberLength] = address(0);
+        memberLength = memberLength.sub(1);
+
+        // Remove node
+        if (nodeIdxFromMember[addr] != nodeLength) {
+            Node storage node = nodes[nodeIdxFromMember[addr]];
+            node.enode = nodes[nodeLength].enode;
+            node.ip = nodes[nodeLength].ip;
+            node.port = nodes[nodeLength].port;
+        }
+        nodeIdxFromMember[addr] = 0;
+        nodeToMember[nodeLength] = address(0);
+        nodeLength = nodeLength.sub(1);
+
+        // Unlock
+        unlock(addr, unlockAmount);
+
+        emit MemberRemoved(addr);
+    }
+
+    function changeMember(uint256 ballotIdx) private {
+        (uint256 ballotType, uint256 state, ) = getBallotState(ballotIdx);
+        require(ballotType == uint256(BallotTypes.MemberChange), "Not voting for changeMember");
+        require(state == uint(BallotStates.InProgress), "Invalid voting state");
+        (, uint256 accept, uint256 reject) = getBallotVotingInfo(ballotIdx);
+        require(accept.add(reject) >= getThreshould(), "Not yet finalized");
+        
+        (
+            address addr,
+            address nAddr,
+            bytes memory enode,
+            bytes memory ip,
+            uint port,
+            uint256 lockAmount
+        ) = getBallotMember(ballotIdx);
+        if (!isMember(addr)) {
+            return; // Non-member. it is abnormal case
+        }
+
+        if (addr != nAddr) {
+            // Lock
+            require(getMinStaking() <= lockAmount && lockAmount <= getMaxStaking(), "Invalid lock amount");
+            lock(nAddr, lockAmount);
+            // Change member
+            members[memberIdx[addr]] = nAddr;
+        }
+
+        // Change node
+        uint256 nodeIdx = nodeIdxFromMember[addr];
+        Node storage node = nodes[nodeIdx];
+        node.enode = enode;
+        node.ip = ip;
+        node.port = port;
+        if (addr != nAddr) {
+            nodeToMember[nodeIdx] = nAddr;
+            nodeIdxFromMember[nAddr] = nodeIdx;
+            nodeIdxFromMember[addr] = 0;
+            // Unlock
+            unlock(addr, lockAmount);
+
+            emit MemberChanged(addr, nAddr);
+        }
+    }
+
+    function applyEnv(uint256 ballotIdx) private {
+        (uint256 ballotType, uint256 state, ) = getBallotState(ballotIdx);
+        require(ballotType == uint256(BallotTypes.EnvValChange), "Not voting for applyEnv");
+        require(state == uint(BallotStates.InProgress), "Invalid voting state");
+
+        (
+            bytes32 envKey,
+            uint256 envType,
+            bytes memory envVal
+        ) = IBallotStorage(getBallotStorageAddress()).getBallotVariable(ballotIdx);
+
+        address envStorage = REG.getContractAddress("EnvStorage");
+        require(envStorage != address(0), "EnvStorage NOT FOUND");
+        if (envKey == BLOCK_PER_NAME && envType == BLOCK_PER_TYPE) {
+            EnvStorageImp(envStorage).setBlockPerByBytes(envVal);
+        } else if (envKey == BALLOT_DURATION_MIN_NAME && envType == BALLOT_DURATION_MIN_TYPE) {
+            EnvStorageImp(envStorage).setBallotDurationMinByBytes(envVal);
+        } else if (envKey == BALLOT_DURATION_MAX_NAME && envType == BALLOT_DURATION_MAX_TYPE) {
+            EnvStorageImp(envStorage).setBallotDurationMaxByBytes(envVal);
+        } else if (envKey == STAKING_MIN_NAME && envType == STAKING_MIN_TYPE) {
+            EnvStorageImp(envStorage).setStakingMinByBytes(envVal);
+        } else if (envKey == STAKING_MAX_NAME && envType == STAKING_MAX_TYPE) {
+            EnvStorageImp(envStorage).setStakingMaxByBytes(envVal);
+        }
+
+        emit EnvChanged(envKey, envType, envVal);
+    }
+
+    //------------------ Code reduction
+    function getBallotStorageAddress() private view returns (address) {
+        return REG.getContractAddress("BallotStorage");
+    }
+
+    function getStakingAddress() private view returns (address) {
+        return REG.getContractAddress("Staking");
+    }
+
+    function createBallotForMemeber(
+        uint256 id,
+        uint256 bType,
+        address creator,
+        address oAddr,
+        address nAddr,
+        bytes enode,
+        bytes ip,
+        uint port
+    )
+        private
+    {
+        IBallotStorage(getBallotStorageAddress()).createBallotForMemeber(
+            id, // ballot id
+            bType, // ballot type
+            creator, // creator
+            oAddr, // old member address
+            nAddr, // new member address
+            enode, // new enode
+            ip, // new ip
+            port // new port
+        );
+        // getBallotStorageAddress().call(bytes4(keccak256("createBallotForMemeber(uint256,uint256,address,address,address,bytes,bytes,uint)")),
+        //     id, // ballot id
+        //     bType, // ballot type
+        //     creator, // creator
+        //     oAddr, // old member address
+        //     nAddr, // new member address
+        //     enode, // new enode
+        //     ip, // new ip
+        //     port // new port
+        // );
+    }
+
+    function updateBallotLock(uint256 id, uint256 amount) private {
+        IBallotStorage(getBallotStorageAddress()).updateBallotMemberLockAmount(id, amount);
+        // getBallotStorageAddress().call(bytes4(keccak256("updateBallotMemberLockAmount(uint256,uint256)")), id, amount);
+    }
+
+    function startBallot(uint256 id, uint256 s, uint256 e) private {
+        IBallotStorage(getBallotStorageAddress()).startBallot(id, s, e);
+    }
+
+    function finalizeBallot(uint256 id, uint256 state) private {
+        IBallotStorage(getBallotStorageAddress()).finalizeBallot(id, state);
+    }
+
+    function getBallotState(uint256 id) private view returns (uint256, uint256, bool) {
+        return IBallotStorage(getBallotStorageAddress()).getBallotState(id);
+    }
+
+    function getBallotPeriod(uint256 id) private view returns (uint256, uint256, uint256) {
+        return IBallotStorage(getBallotStorageAddress()).getBallotPeriod(id);
+    }
+
+    function getBallotVotingInfo(uint256 id) private view returns (uint256, uint256, uint256) {
+        return IBallotStorage(getBallotStorageAddress()).getBallotVotingInfo(id);
+    }
+
+    function getBallotMember(uint256 id) private view returns (address, address, bytes, bytes, uint256, uint256) {
+        return IBallotStorage(getBallotStorageAddress()).getBallotMember(id);
+    }
+
+    function lock(address addr, uint256 amount) private {
+        Staking(getStakingAddress()).lock(addr, amount);
+    }
+
+    function unlock(address addr, uint256 amount) private {
+        Staking(getStakingAddress()).unlock(addr, amount);
+    }
+    //------------------ Code reduction end
 }
 
-contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
+contract EternalStorage {
+    struct Storage {
+        mapping(bytes32 => bool) _bool;
+        mapping(bytes32 => int256) _int;
+        mapping(bytes32 => uint256) _uint;
+        mapping(bytes32 => string) _string;
+        mapping(bytes32 => address) _address;
+        mapping(bytes32 => bytes) _bytes;
+        mapping(bytes32 => bytes32) _bytes32;
+    }
+
+    Storage internal s;
+
+    /**
+    * @dev Allows the owner to set a value for a boolean variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setBoolean(bytes32 h, bool v) internal {
+        s._bool[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a int variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setInt(bytes32 h, int256 v) internal {
+        s._int[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a boolean variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setUint(bytes32 h, uint256 v) internal {
+        s._uint[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a address variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setAddress(bytes32 h, address v) internal {
+        s._address[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a string variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setString(bytes32 h, string v) internal  {
+        s._string[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a bytes variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setBytes(bytes32 h, bytes v) internal {
+        s._bytes[h] = v;
+    }
+    /**
+    * @dev Allows the owner to set a value for a bytes32 variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setBytes32(bytes32 h, bytes32 v) internal {
+        s._bytes32[h] = v;
+    }
+    /**
+    * @dev Get the value stored of a boolean variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getBoolean(bytes32 h) public view returns (bool){
+        return s._bool[h];
+    }
+
+    /**
+    * @dev Get the value stored of a int variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getInt(bytes32 h) public view returns (int){
+        return s._int[h];
+    }
+
+    /**
+    * @dev Get the value stored of a uint variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getUint(bytes32 h) public view returns (uint256){
+        return s._uint[h];
+    }
+
+    /**
+    * @dev Get the value stored of a address variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getAddress(bytes32 h) public view returns (address){
+        return s._address[h];
+    }
+
+    /**
+    * @dev Get the value stored of a string variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getString(bytes32 h) public view returns (string){
+        return s._string[h];
+    }
+
+    /**
+    * @dev Get the value stored of a bytes variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getBytes(bytes32 h) public view returns (bytes){
+        return s._bytes[h];
+    }
+    /**
+    * @dev Get the value stored of a bytes variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getBytes32(bytes32 h) public view returns (bytes32){
+        return s._bytes32[h];
+    }
+}
+
+contract AEnvStorage is EternalStorage, GovChecker {
+    // struct Variable {
+    //     bytes32 _name;
+    //     uint256 _type;
+    //     string _value;
+    // }
+   
+    event StringVarableChanged ( 
+        bytes32 indexed _name,
+        string _value
+    );
+    event UintVarableChanged ( 
+        bytes32 indexed _name,
+        uint _value
+    );
+    event IntVarableChanged ( 
+        bytes32 indexed _name,
+        int _value
+    );
+    event AddressVarableChanged ( 
+        bytes32 indexed _name,
+        address _value
+    );
+    event Bytes32VarableChanged ( 
+        bytes32 indexed _name,
+        bytes32 _value
+    );
+    event BytesVarableChanged ( 
+        bytes32 indexed _name,
+        bytes _value
+    );
+
+    event VarableChanged ( 
+        bytes32 indexed _name,
+        uint256 indexed _type,
+        string _value
+    );
+   
+    /**
+    * @dev Allows the owner to set a value for a int variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function setInt(bytes32 h, int256 v) internal {
+        _setInt(h, v);
+        emit IntVarableChanged(h,v);
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a boolean variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function setUint(bytes32 h, uint256 v) internal {
+        _setUint(h, v);
+        emit UintVarableChanged(h,v);
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a address variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function setAddress(bytes32 h, address v) internal {
+        _setAddress(h, v);
+        emit AddressVarableChanged(h,v);
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a string variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function setString(bytes32 h, string v) internal  {
+        _setString(h, v);
+        emit StringVarableChanged(h,v);
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a bytes variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function setBytes(bytes32 h, bytes v) internal {
+        _setBytes(h, v);
+        emit BytesVarableChanged(h,v);
+    }
+    /**
+    * @dev Allows the owner to set a value for a bytes32 variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function setBytes32(bytes32 h, bytes32 v) internal {
+        _setBytes32(h, v);
+        emit Bytes32VarableChanged(h,v);
+    }
+
+
+
+    // mapping(bytes32 => Variable) internal s;
+
+    // /**
+    // * @dev Add a new variable .
+    // * @param _h The keccak256 hash of the variable name
+    // * @param _t The type of value
+    // * @param _v The value to be stored
+    // */
+    // function _add(bytes32 _h, uint256 _t, string _v) internal  {
+    //     require(s[_h]._name == "","not found");
+    //     s[_h] = Variable(_h,_t,_v);
+    //     emit VarableAdded(_h,_t,_v);
+    // }
+    // /**
+    // * @dev Update a new variable .
+    // * @param _h The keccak256 hash of the variable name
+    // * @param _t The type of value
+    // * @param _v The value to be stored
+    // */
+    // function _change(bytes32 _h, uint256 _t, string _v) internal {
+    //     require(s[_h]._name == _h,"not found");
+    //     Variable storage v = s[_h];
+    //     v._name = _h;
+    //     v._type = _t;
+    //     v._value = _v;
+    //     emit VarableChanged(_h,_t,_v);
+
+    // }
+    // /**
+    // * @dev Get the type & value stored of a string variable by the hash name
+    // * @param _h The keccak256 hash of the variable name
+    // */
+    // function get(bytes32 _h) public view returns (uint256 varType, string varVal){
+    //     //require(s[_h]._name == _h,"not found");
+    //     return (s[_h]._type, s[_h]._value);
+    // }
+    // /**
+    // * @dev Get the type stored of a string variable by the hash name
+    // * @param _h The keccak256 hash of the variable name
+    // */
+    // function getType(bytes32 _h) public view returns (uint256){
+    //     require(s[_h]._name == _h,"not found");
+    //     return s[_h]._type;
+    // }
+    // /**
+    // * @dev Get the value stored of a string variable by the hash name
+    // * @param _h The keccak256 hash of the variable name
+    // */
+    // function getValue(bytes32 _h) public view returns (string){
+    //     require(s[_h]._name == _h,"not found");
+    //     return s[_h]._value;
+    // }
+    
+}
+
+contract EnvStorageImp is AEnvStorage, EnvConstants {
     using SafeMath for uint256;
+    //using Conversion for string;
     
-    struct BallotBasic {
-        //Ballot ID
-        uint256 id;
-        //시작 시간
-        uint256 startTime;
-        //종료 시간 
-        uint256 endTime;
-        // 투표 종류
-        uint256 ballotType;
-        // 제안자
-        address creator;
-        // 투표 내용
-        bytes memo;
-        //총 투표자수  
-        uint256 totalVoters;
-        // 진행상태
-        uint256 powerOfAccepts;
-        // 진행상태
-        uint256 powerOfRejects;
-        // 상태 
-        uint256 state;
-        // 완료유무
-        bool isFinalized;
-        // 투표 기간
-        uint256 duration;
+    function initialize() public onlyOwner{
+        uint256 blockPerVal = getBlockPerValue();
+        uint256 ballotDurationMin = getBallotDurationMinValue();
+        uint256 ballotDurationMax = getBallotDurationMaxValue();
+        uint256 stakingMin = getStakingMinValue();
+        uint256 stakingMax = getStakingMaxValue();
+        if( blockPerVal == 0){
+            setUint(BLOCK_PER_NAME, 1000);
+        }
+        if( ballotDurationMin == 0){
+            setUint(BALLOT_DURATION_MIN_NAME, 604800);
+        }
+        if( ballotDurationMax == 0 ){
+            setUint(BALLOT_DURATION_MAX_NAME, 604800);
+        }
+        if( stakingMin == 0 ){
+            setUint(STAKING_MIN_NAME, 10000000000);
+        }
+        if( stakingMax == 0 ){
+            setUint(STAKING_MAX_NAME, 20000000000);
+        }
         
     }
 
-    //For MemberAdding/MemberRemoval/MemberSwap
-    struct BallotMember {
-        uint256 id;    
-        address oldMemeberAddress;
-        address newMemeberAddress;
-        bytes newNodeId; // admin.nodeInfo.id is 512 bit public key
-        bytes newNodeIp;
-        uint256 newNodePort;
-        uint256 lockAmount;
+    function getBlockPerValue() public view returns (uint256) {
+        return getUint(BLOCK_PER_NAME);
+    }
+    function getBallotDurationMinValue() public view returns (uint256) {
+        return getUint(BALLOT_DURATION_MIN_NAME);
+    }
+    function getBallotDurationMaxValue() public view returns (uint256) {
+        return getUint(BALLOT_DURATION_MAX_NAME);
+    }
+    function getStakingMinValue() public view returns (uint256) {
+        return getUint(STAKING_MIN_NAME);
+    }
+    function getStakingMaxValue() public view returns (uint256) {
+        return getUint(STAKING_MAX_NAME);
     }
 
-    //For GovernanceChange 
-    struct BallotAddress {
-        uint256 id;
-        address newGovernanceAddress;
+    function getBlockPer() public view returns (uint256) {
+        return getUint(BLOCK_PER_NAME);
     }
-
-    //For EnvValChange
-    struct BallotVariable {
-    //Ballot ID
-        uint256 id; 
-        bytes32 envVariableName;
-        uint256 envVariableType;
-        string envVariableValue;
+    function getBallotDurationMin() public view returns (uint256) {
+        return getUint(BALLOT_DURATION_MIN_NAME);
     }
-
-    struct Vote {
-        uint256 voteId;
-        uint256 ballotId;
-        address voter;
-        uint256 decision;
-        uint256 power;
-        uint256 time;
+    function getBallotDurationMax() public view returns (uint256) {
+        return getUint(BALLOT_DURATION_MAX_NAME);
     }
-
-    event BallotCreated(
-        uint256 indexed ballotId,
-        uint256 indexed ballotType,
-        address indexed creator
-    );
+    function getStakingMin() public view returns (uint256) {
+        return getUint(STAKING_MIN_NAME);
+    }
+    function getStakingMax() public view returns (uint256) {
+        return getUint(STAKING_MAX_NAME);
+    }
     
-    event BallotStarted(
-        uint256 indexed ballotId,
-        uint256 indexed startTime,
-        uint256 indexed endTime
-    );
+    function setBlockPer(uint256 _value) public onlyGov { 
+        setUint(BLOCK_PER_NAME, _value);
+    }
+    function setBallotDurationMin(uint256 _value) public onlyGov { 
+        setUint(BALLOT_DURATION_MIN_NAME, _value);
+    }
+    function setBallotDurationMax(uint256 _value) public onlyGov { 
+        setUint(BALLOT_DURATION_MAX_NAME, _value);
+    }
+    function setStakingMin(uint256 _value) public onlyGov { 
+        setUint(STAKING_MIN_NAME, _value);
+    }
+    function setStakingMax(uint256 _value) public onlyGov { 
+        setUint(STAKING_MAX_NAME, _value);
+    }
 
-    event Voted(
-        uint256 indexed voteid,
-        uint256 indexed ballotId,
-        address indexed voter,
-        uint256 decision       
-    );
+    function setBlockPerByBytes(bytes _value) public onlyGov { 
+        setBlockPer(toUint(_value));
+    }
+    function setBallotDurationMinByBytes(bytes _value) public onlyGov { 
+        setBallotDurationMin(toUint(_value));
+    }
+    function setBallotDurationMaxByBytes(bytes _value) public onlyGov { 
+        setBallotDurationMax(toUint(_value));
+    }
+    function setStakingMinByBytes(bytes _value) public onlyGov { 
+        setStakingMin(toUint(_value));
+    }
+    function setStakingMaxByBytes(bytes _value) public onlyGov { 
+        setStakingMax(toUint(_value));
+    }
 
-    event BallotFinalized(
-        uint256 indexed ballotId,
-        uint256 state
-    );
+    function getTestInt() public view returns (int256) {
+        return getInt(TEST_INT);
+    }
+    function getTestAddress() public view returns (address) {
+        return getAddress(TEST_ADDRESS);
+    }
+    function getTestBytes32() public view returns (bytes32) {
+        return getBytes32(TEST_BYTES32);
+    }
+    function getTestBytes() public view returns (bytes) {
+        return getBytes(TEST_BYTES);
+    }
+    function getTestString() public view returns (string) {
+        return getString(TEST_STRING);
+    }
+    function setTestIntByBytes(bytes _value) public onlyGov { 
+        setInt(TEST_INT, toInt(_value));
+    }
+    function setTestAddressByBytes(bytes _value) public onlyGov { 
+        setAddress(TEST_ADDRESS, toAddress(_value));
+    }
+    function setTestBytes32ByBytes(bytes _value) public onlyGov { 
+        setBytes32(TEST_BYTES32, toBytes32(_value));
+    }
+    function setTestBytesByBytes(bytes _value) public onlyGov { 
+        setBytes(TEST_BYTES, _value);
+    }
+    event testCodeValue(bytes _bytes,string _string);
+    function setTestStringByBytes(bytes _value) public onlyGov { 
+        emit testCodeValue(_value,string(_value));
+        setString(TEST_STRING, string(_value));
+    }
+    // function getBlockPer() public view returns (uint256 varType, string varVal) {
+    //     (varType,varVal) = get(BLOCK_PER_NAME);
+    //     // varType = getBlockPerType();
+    //     // varVal = getBlockPerValue();
+    // }
+    // function getBlockPerType() public view returns (uint256) {
+    //     return getType(BLOCK_PER_NAME);
+    // }
+    // function getBlockPerValue() public view returns (string) {
+    //     return getValue(BLOCK_PER_NAME);
+    // }
+    // function setBlockPer(string _value) public onlyGov { 
+    //     _set(BLOCK_PER_NAME, BLOCK_PER_TYPE, _value);
+    // }
     
-    mapping(uint=>BallotBasic) internal ballotBasicMap;
-    mapping(uint=>BallotMember) internal ballotMemberMap;
-    mapping(uint=>BallotAddress) internal ballotAddressMap;
-    mapping(uint=>BallotVariable) internal ballotVariableMap;
+    // function getBallotDurationMin() public view returns (uint256 varType, string varVal) {
+    //     varType = getBallotDurationMinType();
+    //     varVal = getBallotDurationMinValue();
+    // }
+    // function getBallotDurationMinType() public view returns (uint256) {
+    //     return getType(BALLOT_DURATION_MIN_NAME);
+    // }
+    // function getBallotDurationMinValue() public view returns (string) {
+    //     return getValue(BALLOT_DURATION_MIN_NAME);
+    // }
+    // function setBallotDurationMin(string _value) public onlyGov { 
+    //     _set(BALLOT_DURATION_MIN_NAME, BALLOT_DURATION_MIN_TYPE, _value);
+    // }
+
+    // function getBallotDurationMax() public view returns (uint256 varType, string varVal) {
+    //     varType = getBallotDurationMaxType();
+    //     varVal = getBallotDurationMaxValue();
+    // }
+    // function getBallotDurationMaxType() public view returns (uint256) {
+    //     return getType(BALLOT_DURATION_MAX_NAME);
+    // }
+    // function getBallotDurationMaxValue() public view returns (string) {
+    //     return getValue(BALLOT_DURATION_MAX_NAME);
+    // }
+    // function setBallotDurationMax(string _value) public onlyGov { 
+    //     _set(BALLOT_DURATION_MAX_NAME, BALLOT_DURATION_MAX_TYPE, _value);
+    // }
+
+    // function getStakingMin() public view returns (uint256 varType, string varVal) {
+    //     varType = getStakingMinType();
+    //     varVal = getStakingMinValue();
+    // }
+    // function getStakingMinType() public view returns (uint256) {
+    //     return getType(STAKING_MIN_NAME);
+    // }
+    // function getStakingMinValue() public view returns (string) {
+    //     return getValue(STAKING_MIN_NAME);
+    // }
+    // function setStakingMin(string _value) public onlyGov { 
+    //     _set(STAKING_MIN_NAME, STAKING_MIN_TYPE, _value);
+    // }
+
+    // function getStakingMax() public view returns (uint256 varType, string varVal) {
+    //     varType = getStakingMaxType();
+    //     varVal = getStakingMaxValue();
+    // }
+    // function getStakingMaxType() public view returns (uint256) {
+    //     return getType(STAKING_MAX_NAME);
+    // }
+    // function getStakingMaxValue() public view returns (string) {
+    //     return getValue(STAKING_MAX_NAME);
+    // }
+    // function setStakingMax(string _value) public onlyGov { 
+    //     _set(STAKING_MAX_NAME, STAKING_MAX_TYPE, _value);
+    // }
+
+
     
-    mapping(uint=>Vote) internal voteMap;
-    mapping(uint=>mapping(address=>bool)) internal hasVotedMap;
+    // * @dev set a value for a string variable.
+    // * @param _h The keccak256 hash of the variable name
+    // * @param _t The type of value
+    // * @param _v The value to be stored
+    
+    // function _set(bytes32 _h, uint256 _t,string _v) internal {
+    //     require(_t >= uint256(VariableTypes.Int), "Invalid Variable Type");
+    //     require(_t <= uint256(VariableTypes.String), "Invalid Variable Type");
+    //     require(bytes(_v).length > 0, "empty value");
+    //     if(s[_h]._name == "") {
+    //         _add(_h, _t, _v);
+    //     }else{
+    //         _change(_h, _t, _v);
+    //     }
+    // }
 
-    address prevImp;
-
-    modifier onlyValidTime(uint256 _startTime, uint256 _endTime) {
-        require(_startTime > 0 && _endTime > 0, "start or end is 0");
-        require(_endTime > _startTime, "start >= end"); // && _startTime > getTime()
-        //uint256 diffTime = _endTime.sub(_startTime);
-        // require(diffTime > minBallotDuration());
-        // require(diffTime <= maxBallotDuration());
-        _;
+/*
+    function parseAddr(string memory _a) internal pure returns (address _parsedAddress) {
+        bytes memory tmp = bytes(_a);
+        uint160 iaddr = 0;
+        uint160 b1;
+        uint160 b2;
+        for (uint i = 2; i < 2 + 2 * 20; i += 2) {
+            iaddr *= 256;
+            b1 = uint160(uint8(tmp[i]));
+            b2 = uint160(uint8(tmp[i + 1]));
+            if ((b1 >= 97) && (b1 <= 102)) {
+                b1 -= 87;
+            } else if ((b1 >= 65) && (b1 <= 70)) {
+                b1 -= 55;
+            } else if ((b1 >= 48) && (b1 <= 57)) {
+                b1 -= 48;
+            }
+            if ((b2 >= 97) && (b2 <= 102)) {
+                b2 -= 87;
+            } else if ((b2 >= 65) && (b2 <= 70)) {
+                b2 -= 55;
+            } else if ((b2 >= 48) && (b2 <= 57)) {
+                b2 -= 48;
+            }
+            iaddr += (b1 * 16 + b2);
+        }
+        return address(iaddr);
     }
+    
+    function safeParseUInt2(string memory _a) public pure returns (uint _parsedInt) {
+        bytes memory bresult = bytes(_a);
+        uint256 mint = 0;
 
-    function getTime() public view returns(uint256) {
-        return now;
-    }
-
-    constructor(address _registry) public {
-        setRegistry(_registry);
-    }
-
-    function getBallotBasic(uint256 _id) public view returns (
-        uint256 startTime,
-        uint256 endTime,
-        uint256 ballotType,
-        address creator,
-        bytes memo,
-        uint256 totalVoters,
-        uint256 powerOfAccepts,
-        uint256 powerOfRejects,
-        uint256 state,
-        bool isFinalized,
-        uint256 duration
-    )
-    {
-        BallotBasic memory tBallot = ballotBasicMap[_id];
-        startTime = tBallot.startTime;
-        endTime = tBallot.endTime;
-        ballotType = tBallot.ballotType;
-        creator = tBallot.creator;
-        memo = tBallot.memo;
-        totalVoters = tBallot.totalVoters;
-        powerOfAccepts = tBallot.powerOfAccepts;
-        powerOfRejects = tBallot.powerOfRejects;
-        state = tBallot.state;
-        isFinalized = tBallot.isFinalized;
-        duration = tBallot.duration;
-    }
-
-    function getBallotMember(uint256 _id) public view returns (
-        address oldMemeberAddress,
-        address newMemeberAddress,
-        bytes newNodeId, // admin.nodeInfo.id is 512 bit public key
-        bytes newNodeIp,
-        uint256 newNodePort,
-        uint256 lockAmount
-    )
-    {
-        BallotMember storage tBallot = ballotMemberMap[_id];
-        oldMemeberAddress = tBallot.oldMemeberAddress;
-        newMemeberAddress = tBallot.newMemeberAddress;
-        newNodeId = tBallot.newNodeId;
-        newNodeIp = tBallot.newNodeIp;
-        newNodePort = tBallot.newNodePort;
-        lockAmount = tBallot.lockAmount;
-    }
-
-    function getBallotAddress(uint256 _id) public view returns (
-        address newGovernanceAddress
-    )
-    {
-        BallotAddress storage tBallot = ballotAddressMap[_id];
-        newGovernanceAddress = tBallot.newGovernanceAddress;
-    }
-
-    function getBallotVariable(uint256 _id) public view returns (
-        bytes32 envVariableName,
-        uint256 envVariableType,
-        string envVariableValue 
-    )
-    {
-        BallotVariable storage tBallot = ballotVariableMap[_id];
-        envVariableName = tBallot.envVariableName;
-        envVariableType = tBallot.envVariableType;
-        envVariableValue = tBallot.envVariableValue;
-    }
-
-    function _createBallot(
-        uint256 _id,
-        uint256 _ballotType,
-        address _creator
-    )
-        internal
-    {
-        require(ballotBasicMap[_id].id != _id, "Already existed ballot");
-        
-        //ballotBasicMap[_id] = BallotBasic(_id, 0, 0, _ballotType, _creator, _memo, 0, 0, 0, uint256(BallotStates.Ready), false, _duration);
-
-        BallotBasic memory newBallot;
-        newBallot.id = _id;
-        newBallot.ballotType = _ballotType;
-        newBallot.creator = _creator;
-//        newBallot.memo = _memo;
-        newBallot.state = uint256(BallotStates.Ready);
-        newBallot.isFinalized = false;
-//        newBallot.duration = _duration;
-        ballotBasicMap[_id] = newBallot;
-        emit BallotCreated(_id, _ballotType, _creator);
-    }
-
-    function _areMemberBallotParamValid(
-        uint256 _ballotType,
-        address _oldMemeberAddress,
-        address _newMemeberAddress,
-        bytes _newNodeId, // admin.nodeInfo.id is 512 bit public key
-        bytes _newNodeIp,
-        uint _newNodePort
-    )
-        internal
-        pure
-        returns(bool)
-    {
-        require((_ballotType >= uint256(BallotTypes.MemberAdd)) && (_ballotType <= uint256(BallotTypes.MemberChange)), "Invalid Ballot Type");
-
-        if (_ballotType == uint256(BallotTypes.MemberRemoval)){
-            require(_oldMemeberAddress != address(0),"Invalid old member address");
-            require(_newMemeberAddress == address(0),"Invalid new member address");
-            require(_newNodeId.length == 0, "Invalid new node id");
-            require(_newNodeIp.length == 0, "Invalid new node IP");
-            require(_newNodePort == 0, "Invalid new node Port");
-        }else {
-            require(_newNodeId.length == 64, "Invalid new node id");
-            require(_newNodeIp.length > 0, "Invalid new node IP");
-            require(_newNodePort > 0, "Invalid new node Port");
-            if (_ballotType == uint256(BallotTypes.MemberAdd)) {
-                require(_oldMemeberAddress == address(0),"Invalid old member address");
-                require(_newMemeberAddress != address(0),"Invalid new member address");
-            }else if (_ballotType == uint256(BallotTypes.MemberChange)){
-                require(_oldMemeberAddress != address(0),"Invalid old member address");
-                require(_newMemeberAddress != address(0),"Invalid new member address");
+        for (uint i = 0; i < bresult.length; i++) {
+            if ((uint(uint8(bresult[i])) >= 48) && (uint(uint8(bresult[i])) <= 57)) {
+                 
+                mint = mint.mul(10);
+                mint = mint.add(uint(uint8(bresult[i])) - 48);
+            } else {
+                revert("Non-numeral character encountered in string!");
             }
         }
-
-        return true;
+        return mint;
     }
 
-    //For MemberAdding/MemberRemoval/MemberSwap
-    function createBallotForMemeber(
-        uint256 _id,
-        uint256 _ballotType,
-        address _creator,
-        address _oldMemeberAddress,
-        address _newMemeberAddress,
-        bytes _newNodeId, // admin.nodeInfo.id is 512 bit public key
-        bytes _newNodeIp,
-        uint _newNodePort
-    )
-        public
-        onlyGov
-    {
-        require(
-            _areMemberBallotParamValid(_ballotType,_oldMemeberAddress,_newMemeberAddress,_newNodeId,_newNodeIp,_newNodePort),
-            "Invalid Parameter"
-        );
-        _createBallot(_id, _ballotType, _creator);
-        BallotMember memory newBallot;
-        newBallot.id = _id;
-        newBallot.oldMemeberAddress = _oldMemeberAddress;
-        newBallot.newMemeberAddress = _newMemeberAddress;
-        newBallot.newNodeId = _newNodeId;
-        newBallot.newNodeIp = _newNodeIp;
-        newBallot.newNodePort = _newNodePort;
-        ballotMemberMap[_id] = newBallot;
-
+    function safeParseInt(string memory _a) public pure returns (int _parsedInt) {
+        bytes memory bresult = bytes(_a);
+        uint mint = 0;
+        int pint = 0;
+        bool minus = false;
+        for (uint i = 0; i < bresult.length; i++) {
+            if ((uint(uint8(bresult[i])) >= 48) && (uint(uint8(bresult[i])) <= 57)) {
+                mint = mint.mul(10);
+                mint = mint.add(uint(uint8(bresult[i])) - 48);
+            } else if (uint(uint8(bresult[i])) == 45) {
+                require(i == 0 , 'not start with Minus symbol in string!');
+                minus = true;
+            } else {
+                revert("Non-numeral character encountered in string!");
+            }
+        }
+        if(minus){
+            uint _max = uint(INT256_MAX).add(1);
+            require(mint <= _max, "out of range of int min!");
+            if(mint == _max ){
+                pint =INT256_MIN;
+            }else{
+                pint = int(mint) * -1;
+            }
+        }else{
+            require(mint < uint(INT256_MAX), "out of range of int max!");
+            pint =int(mint);
+        }
+        return pint;
     }
-
+*/
+// }
     
-    function createBallotForAddress(
-        uint256 _id,
-        uint256 _ballotType,
-        address _creator,
-        address _newGovernanceAddress
-    )
-        public
-        onlyGov
-        returns (uint256)
-    {
-        require(_ballotType == uint256(BallotTypes.GovernanceChange), "Invalid Ballot Type");
-        require(_newGovernanceAddress != address(0), "Invalid Parameter");
-        
-        _createBallot(_id, _ballotType, _creator);
-        BallotAddress memory newBallot;
-        newBallot.id = _id;
-        newBallot.newGovernanceAddress = _newGovernanceAddress;
-        ballotAddressMap[_id] = newBallot;
-        return _id;
-    }
-
-    function _areVariableBallotParamValid(
-        uint256 _ballotType,
-        bytes32 _envVariableName,
-        uint256 _envVariableType,
-        string _envVariableValue 
-    )
-        internal
-        pure
-        returns(bool)
-    {
-        require(_ballotType == uint256(BallotTypes.EnvValChange), "Invalid Ballot Type");
-        require(_envVariableName.length > 0, "Invalid environment variable name");
-        require(_envVariableType >= uint256(VariableTypes.Int), "Invalid environment variable Type");
-        require(_envVariableType <= uint256(VariableTypes.String), "Invalid environment variable Type");
-        require(bytes(_envVariableValue).length > 0, "Invalid environment variable value");
-
-        return true;
-    }
-
-    function createBallotForVariable(
-        uint256 _id,
-        uint256 _ballotType,
-        address _creator,
-        bytes32 _envVariableName,
-        uint256 _envVariableType,
-        string _envVariableValue 
-    )
-        public
-        onlyGov
-        returns (uint256)
-    {
-        require(
-            _areVariableBallotParamValid(_ballotType, _envVariableName, _envVariableType, _envVariableValue),
-            "Invalid Parameter"
-        );
-        _createBallot(_id, _ballotType, _creator);
-        BallotVariable memory newBallot;
-        newBallot.id = _id;
-        newBallot.envVariableName = _envVariableName;
-        newBallot.envVariableType = _envVariableType;
-        newBallot.envVariableValue = _envVariableValue;
-        ballotVariableMap[_id] = newBallot;
-        return _id;
-    }
-
-    function createVote(
-        uint256 _voteId,
-        uint256 _ballotId,
-        address _voter,
-        uint256 _decision,
-        uint256 _power
-    )
-        public
-        onlyGov
-        returns (uint256)
-    {
-        //1. msg.sender가 member
-        //2. actionType 범위 
-        require((_decision == uint256(DecisionTypes.Accept)) || (_decision <= uint256(DecisionTypes.Reject)), "Invalid decision");
-        
-        //3. ballotId 존재 하는지 확인 
-        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
-        //4. voteId 존재 확인
-        require(voteMap[_voteId].voteId != _voteId, "already existed voteId");
-        //5. 이미 vote 했는지 확인 
-        require(!hasVotedMap[_ballotId][_voter], "already voted");
-        require(ballotBasicMap[_ballotId].state == uint256(BallotStates.InProgress), "Not InProgress State");
-       //require((ballotBasicMap[_ballotId].startTime <= getTime()) && (getTime() <= ballotBasicMap[_ballotId].startTime), "not voting time");
-
-        //1. 생성
-        voteMap[_voteId] = Vote(_voteId, _ballotId, _voter, _decision, _power, getTime());
-        
-        //2. 투표 업데이트 
-        _updateBallotForVote(_ballotId, _voter, _decision, _power);
-
-        //3. event 처리 
-        emit Voted(_voteId,_ballotId,_voter,_decision);
-    }
-
-    function getVote(uint256 _voteId) public view returns (
-        uint256 voteId,
-        uint256 ballotId,
-        address voter,
-        uint256 decision,
-        uint256 power,
-        uint256 time
-    )
-    {
-        require(voteMap[_voteId].voteId == _voteId, "not existed voteId");
-        Vote memory _vote = voteMap[_voteId];
-        voteId = _vote.voteId;
-        ballotId = _vote.ballotId;
-        voter = _vote.voter;
-        decision = _vote.decision;
-        power = _vote.power;
-        time = _vote.time;
-    }
-
-    // update ballot 
-    function _updateBallotForVote(
-        uint256 _ballotId,
-        address _voter,
-        uint256 _decision,
-        uint256 _power
-    )
-        internal
-    {
-        // c1. actionType 범위 
-        require((_decision == uint256(DecisionTypes.Accept)) || (_decision == uint256(DecisionTypes.Reject)), "Invalid decision");
-        // c2. ballotId 존재 하는지 확인 
-        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
-        // c3. 이미 vote 했는지 확인 
-        require(hasVotedMap[_ballotId][_voter] == false, "already voted");
-
-        //1.get ballotBasic
-        BallotBasic storage _ballot = ballotBasicMap[_ballotId];
-        //2. 투표 여부 등록
-        hasVotedMap[_ballotId][_voter] = true;
-        //3. update totalVoters
-        _ballot.totalVoters = _ballot.totalVoters.add(1);
-        //4. Update power of accept/reject
-        if (_decision == uint256(DecisionTypes.Accept)){
-            _ballot.powerOfAccepts = _ballot.powerOfAccepts.add(_power);
-        } else {
-            _ballot.powerOfRejects = _ballot.powerOfRejects.add(_power);
+    function toBytes32( bytes memory  _input) internal pure  returns (bytes32 _output){
+        assembly {
+          _output := mload(add(_input, 32))
         }
     }
-
-    // finalize ballot info.
-    function finalizeBallot(uint256 _ballotId, uint256 _ballotState) public onlyGov {
-        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
-        require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
-        require((_ballotState == uint256(BallotStates.Accepted)) || (_ballotState == uint256(BallotStates.Rejected)), "Invalid Ballot State");
-
-        BallotBasic storage _ballot = ballotBasicMap[_ballotId];
-        _ballot.state = _ballotState;
-        _ballot.isFinalized = true;
-        emit BallotFinalized (_ballotId,_ballotState);
+    function toInt(bytes memory _input) internal pure returns (int256 _output) {
+        assembly {
+            _output := mload(add(_input, 32))
+        }
+    }
+    function toUint(bytes memory _input) internal pure returns (uint256 _output) {
+        
+        assembly {
+            _output := mload(add(_input, 32))
+        }
+    }
+    function toAddress(bytes memory _input) internal pure returns (address _output) {
+        assembly {
+            _output := mload(add(_input, 20))
+        }
+    } 
+    // function toString(bytes memory _input) internal pure returns(string _output){
+    //     _output = string(_input);
+    // }
+    function toString( bytes memory _input ) public pure returns(string memory _output) {
+        return string(_input);
+        // uint _offst = _input.length;
+        // uint size = 32;
+        // assembly {
+            
+        //     let chunk_count
+        //     size := mload(add(_input,_offst))
+        //     chunk_count := add(div(size,32),1) // chunk_count = size/32 + 1
+            
+        //     if gt(mod(size,32),0) {
+        //         chunk_count := add(chunk_count,1)  // chunk_count++
+        //     }
+               
+        //     for { let index:= 0 }  lt(index , chunk_count){ index := add(index,1) } {
+        //         mstore(add(_output,mul(index,32)),mload(add(_input,_offst)))
+        //         _offst := sub(_offst,32)           // _offst -= 32
+        //     }
+        // }
     }
 
-    function hasAlreadyVoted(uint56 _ballotId, address _voter) public view returns (bool) {
-        return hasVotedMap[_ballotId][_voter];
+    function bytes32ToBytes( bytes32 _input) internal pure returns(bytes) {
+        bytes memory _output = new bytes(32);
+        assembly {
+            mstore(add(_output, 32), _input)
+            mstore(add(add(_output,32),32), add(_input,32))
+        }
+        return _output;
     }
+    function intToBytes(int _input) public pure returns(bytes memory _output) {
+        _output = new bytes(32);
+        assembly {
+            mstore(add(_output, 32), _input)
+        }
+    } 
+    
+    function uintToBytes(uint _input) public pure returns(bytes memory _output) {
+        _output = new bytes(32);
+        assembly {
+            mstore(add(_output, 32), _input)
+        }
+    }
+    
+    function addressToBytes(address _input) public pure returns (bytes _output){
+        assembly {
+            let m := mload(0x40)
+            mstore(add(m, 20), xor(0x140000000000000000000000000000000000000000, _input))
+            mstore(0x40, add(m, 52))
+            _output := m
+        }
+    }
+    
+    function stringToBytes(string memory _input) public pure returns(bytes _output){
+        //_output = bytes(_input);
+        _output =  abi.encode(_input);
+    }
+    
 
-    //start/end /state 
-    function startBallot(
-        uint256 _ballotId,
-        uint256 _startTime,
-        uint256 _endTime
-    )
-        public
-        onlyGov
-        onlyValidTime(_startTime,_endTime)
-    {
-        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
-        require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
-        require(ballotBasicMap[_ballotId].state == uint256(BallotStates.Ready), "Not Ready State");
-        BallotBasic storage _ballot = ballotBasicMap[_ballotId];
-        _ballot.startTime = _startTime;
-        _ballot.endTime = _endTime;
-        _ballot.state = uint256(BallotStates.InProgress);
-        emit BallotStarted(_ballotId, _startTime, _endTime);
-    }
 
-    function updateBallotMemo(
-        uint256 _ballotId,
-        bytes _memo
-    ) public onlyGov
-    {
-        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
-        require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
-        BallotBasic storage _ballot = ballotBasicMap[_ballotId];
-        _ballot.memo = _memo;
-    }
-    function updateBallotDuration(
-        uint256 _ballotId,
-        uint256 _duration
-    ) public onlyGov
-    {
-        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
-        require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
-        require(ballotBasicMap[_ballotId].state == uint256(BallotStates.Ready), "Not Ready State");
-        BallotBasic storage _ballot = ballotBasicMap[_ballotId];
-        _ballot.duration = _duration;
-    }
-    function updateBallotMemberLockAmount(
-        uint256 _ballotId,
-        uint256 _lockAmount
-    ) public onlyGov
-    {
-        require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
-        require(ballotMemberMap[_ballotId].id == _ballotId, "not existed BallotMember");
-        require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
-        require(ballotBasicMap[_ballotId].state == uint256(BallotStates.Ready), "Not Ready State");
-        BallotMember storage _ballot = ballotMemberMap[_ballotId];
-        _ballot.lockAmount = _lockAmount;
-    }
-    function getBallotPeriod(uint256 _id) public view returns (
-        uint256 startTime,
-        uint256 endTime,
-        uint256 duration
-    )
-    {
-        BallotBasic memory tBallot = ballotBasicMap[_id];
-        startTime = tBallot.startTime;
-        endTime = tBallot.endTime; 
-        duration = tBallot.duration;
-    }
 
-    function getBallotVotingInfo(uint256 _id) public view returns (
-        uint256 totalVoters,
-        uint256 powerOfAccepts,
-        uint256 powerOfRejects
 
-    )
-    {
-        BallotBasic memory tBallot = ballotBasicMap[_id];
-        totalVoters = tBallot.totalVoters;
-        powerOfAccepts = tBallot.powerOfAccepts;
-        powerOfRejects = tBallot.powerOfRejects;        
-    }
 
-    function getBallotState(uint256 _id) public view returns (
-        uint256 ballotType,
-        uint256 state,
-        bool isFinalized
-    )
-    {
-        BallotBasic memory tBallot = ballotBasicMap[_id];
-        ballotType = tBallot.ballotType;
-        state = tBallot.state;
-        isFinalized = tBallot.isFinalized;
-    }
 }
 

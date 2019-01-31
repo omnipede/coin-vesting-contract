@@ -60,7 +60,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         uint256 id; 
         bytes32 envVariableName;
         uint256 envVariableType;
-        string envVariableValue;
+        bytes envVariableValue;
     }
 
     struct Vote {
@@ -180,7 +180,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     function getBallotVariable(uint256 _id) public view returns (
         bytes32 envVariableName,
         uint256 envVariableType,
-        string envVariableValue 
+        bytes envVariableValue 
     )
     {
         BallotVariable storage tBallot = ballotVariableMap[_id];
@@ -303,7 +303,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         uint256 _ballotType,
         bytes32 _envVariableName,
         uint256 _envVariableType,
-        string _envVariableValue 
+        bytes _envVariableValue 
     )
         internal
         pure
@@ -313,7 +313,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         require(_envVariableName.length > 0, "Invalid environment variable name");
         require(_envVariableType >= uint256(VariableTypes.Int), "Invalid environment variable Type");
         require(_envVariableType <= uint256(VariableTypes.String), "Invalid environment variable Type");
-        require(bytes(_envVariableValue).length > 0, "Invalid environment variable value");
+        require(_envVariableValue.length > 0, "Invalid environment variable value");
 
         return true;
     }
@@ -324,7 +324,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         address _creator,
         bytes32 _envVariableName,
         uint256 _envVariableType,
-        string _envVariableValue 
+        bytes _envVariableValue 
     )
         public
         onlyGov

@@ -14,7 +14,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
     event MemberAdded(address indexed addr);
     event MemberRemoved(address indexed addr);
     event MemberChanged(address indexed oldAddr, address indexed newAddr);
-    event EnvChanged(bytes32 envName, uint256 envType, string envVal);
+    event EnvChanged(bytes32 envName, uint256 envType, bytes envVal);
 
     // FIXME: get from EnvStorage
     function getMinStaking() public pure returns (uint256) { return 10 ether; }
@@ -135,7 +135,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
     function addProposalToChangeEnv(
         bytes32 envName,
         uint256 envType,
-        string envVal
+        bytes envVal
     )
         external
         onlyGovMem
@@ -374,21 +374,21 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
         (
             bytes32 envKey,
             uint256 envType,
-            string memory envVal
+            bytes memory envVal
         ) = IBallotStorage(getBallotStorageAddress()).getBallotVariable(ballotIdx);
 
         address envStorage = REG.getContractAddress("EnvStorage");
         require(envStorage != address(0), "EnvStorage NOT FOUND");
         if (envKey == BLOCK_PER_NAME && envType == BLOCK_PER_TYPE) {
-            EnvStorageImp(envStorage).setBlockPer(envVal);
+            EnvStorageImp(envStorage).setBlockPerByBytes(envVal);
         } else if (envKey == BALLOT_DURATION_MIN_NAME && envType == BALLOT_DURATION_MIN_TYPE) {
-            EnvStorageImp(envStorage).setBallotDurationMin(envVal);
+            EnvStorageImp(envStorage).setBallotDurationMinByBytes(envVal);
         } else if (envKey == BALLOT_DURATION_MAX_NAME && envType == BALLOT_DURATION_MAX_TYPE) {
-            EnvStorageImp(envStorage).setBallotDurationMax(envVal);
+            EnvStorageImp(envStorage).setBallotDurationMaxByBytes(envVal);
         } else if (envKey == STAKING_MIN_NAME && envType == STAKING_MIN_TYPE) {
-            EnvStorageImp(envStorage).setStakingMin(envVal);
+            EnvStorageImp(envStorage).setStakingMinByBytes(envVal);
         } else if (envKey == STAKING_MAX_NAME && envType == STAKING_MAX_TYPE) {
-            EnvStorageImp(envStorage).setStakingMax(envVal);
+            EnvStorageImp(envStorage).setStakingMaxByBytes(envVal);
         }
 
         emit EnvChanged(envKey, envType, envVal);
