@@ -13,14 +13,15 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
     event MemberAdded(address indexed addr);
     event MemberRemoved(address indexed addr);
     event MemberChanged(address indexed oldAddr, address indexed newAddr);
+    event EnvChanged(bytes32 envName, uint256 envType, string envVal);
 
     // FIXME: get from EnvStorage
     function getMinStaking() public pure returns (uint256) { return 10 ether; }
     function getMaxStaking() public pure returns (uint256) { return 100 ether; }
     function getMinVotingDuration() public pure returns (uint256) { return 1 days; }
     function getMaxVotingDuration() public pure returns (uint256) { return 7 days; }
+
     function getThreshould() public pure returns (uint256) { return 51; } // 51% from 51 of 100
-    
     function getBallotStorageAddress() private view returns (address) {
         return REG.getContractAddress("BallotStorage");
     }
@@ -129,6 +130,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         nonReentrant
         returns (uint256 ballotIdx)
     {
+        require(newGovAddr != address(0), "Implementation cannot be zero");
         require(newGovAddr != implementation(), "Same contract address");
         address ballotStorage = getBallotStorageAddress();
         require(ballotStorage != address(0), "BallotStorage NOT FOUND");
@@ -244,8 +246,9 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             } else if (ballotType == uint256(BallotTypes.MemberChange)) {
                 changeMember(ballotIdx);
             } else if (ballotType == uint256(BallotTypes.GovernanceChange)) {
-                // FIXME
-                setImplementation(address(0));
+                if (BallotStorage(ballotStorage).getBallotAddress(ballotIdx) != address(0)) {
+                    setImplementation(BallotStorage(ballotStorage).getBallotAddress(ballotIdx));
+                }
             } else if (ballotType == uint256(BallotTypes.EnvValChange)) {
                 applyEnv(ballotIdx);
             }
@@ -277,9 +280,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
 
         // Lock
         require(getMinStaking() <= lockAmount && lockAmount <= getMaxStaking(), "Invalid lock amount");
-        Staking staking = Staking(REG.getContractAddress("Staking"));
-        require(staking.availableBalance(addr) >= lockAmount, "Insufficient staking");
-        staking.lock(addr, lockAmount);
+        Staking(REG.getContractAddress("Staking")).lock(addr, lockAmount);
 
         // Add member
         uint256 nMemIdx = memberLength.add(1);
@@ -315,13 +316,26 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         }
 
         // Remove member
+        if (memberIdx[addr] != memberLength) {
+            (members[memberIdx[addr]], members[memberLength]) = (members[memberLength], members[memberIdx[addr]]);
+        }
+        memberIdx[addr] = 0;
+        members[memberLength] = address(0);
         memberLength = memberLength.sub(1);
+
+        // Remove node
+        if (nodeIdxFromMember[addr] != nodeLength) {
+            Node storage node = nodes[nodeIdxFromMember[addr]];
+            node.enode = nodes[nodeLength].enode;
+            node.ip = nodes[nodeLength].ip;
+            node.port = nodes[nodeLength].port;
+        }
+        nodeIdxFromMember[addr] = 0;
+        nodeToMember[nodeLength] = address(0);
         nodeLength = nodeLength.sub(1);
 
         // Unlock
-        Staking staking = Staking(REG.getContractAddress("Staking"));
-        require(staking.lockedBalanceOf(addr) >= unlockAmount, "Invalid unlock amount");
-        staking.unlock(addr, unlockAmount);
+        Staking(REG.getContractAddress("Staking")).unlock(addr, unlockAmount);
 
         emit MemberRemoved(addr);
     }
@@ -350,7 +364,6 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
         if (addr != nAddr) {
             // Lock
             require(getMinStaking() <= lockAmount && lockAmount <= getMaxStaking(), "Invalid lock amount");
-            require(staking.availableBalance(nAddr) >= lockAmount, "Insufficient staking");    
             staking.lock(nAddr, lockAmount);
             // Change member
             members[memberIdx[addr]] = nAddr;
@@ -367,7 +380,6 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums {
             nodeIdxFromMember[nAddr] = nodeIdx;
             nodeIdxFromMember[addr] = 0;
             // Unlock
-            require(staking.lockedBalanceOf(addr) >= lockAmount, "Invalid unlock amount");
             staking.unlock(addr, lockAmount);
 
             emit MemberChanged(addr, nAddr);

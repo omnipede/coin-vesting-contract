@@ -10,6 +10,8 @@ const Staking = artifacts.require('Staking.sol');
 const BallotStorage = artifacts.require('BallotStorage.sol');
 const Gov = artifacts.require('Gov.sol');
 const GovImp = artifacts.require('GovImp.sol');
+const EnvStorage = artifacts.require('EnvStorage.sol');
+const EnvStorageImp = artifacts.require('EnvStorageImp.sol');
 
 const amount = ether(1e2);
 
@@ -51,18 +53,25 @@ const envTypes = {
 };
 
 contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, govMem5, user1]) {
-  let registry, staking, ballotStorage, govImp, gov, govDelegator;
+  let registry, staking, ballotStorage, govImp, gov, govDelegator, envStorage, envStorageImp, envDelegator;
   
   beforeEach(async () => {
     registry = await Registry.new();
-    staking = await Staking.new(registry.address);
+    envStorageImp = await EnvStorageImp.new();
+    envStorage = await EnvStorage.new(registry.address, envStorageImp.address);
     ballotStorage = await BallotStorage.new(registry.address);
+    staking = await Staking.new(registry.address);
     govImp = await GovImp.new();
     gov = await Gov.new();
-
+    
+    await registry.setContractDomain('EnvStorage', envStorage.address);
     await registry.setContractDomain('BallotStorage', ballotStorage.address);
     await registry.setContractDomain('Staking', staking.address);
     await registry.setContractDomain('GovernanceContract', gov.address);
+
+    // Initialize environment storage
+    envDelegator = EnvStorageImp.at(envStorage.address);
+    await envDelegator.initialize({from:deployer});
 
     // Initialize for staking
     await staking.deposit({ value: amount, from: deployer });
@@ -133,6 +142,10 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
 
     it('cannot addProposal to change governance with same address', async () => {
       await reverting(govDelegator.addProposalToChangeGov(govImp.address, { from: deployer }));
+    });
+
+    it('cannot addProposal to change governance with zero address', async () => {
+      await reverting(govDelegator.addProposalToChangeGov('0x0', { from: deployer }));
     });
 
     it('can addProposal to change environment', async () => {
@@ -249,6 +262,34 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       await reverting(govDelegator.vote(1, true, { from: deployer }));
     });
 
+    it('can vote approval to change governance', async () => {
+      const newGovImp = await GovImp.new();
+      await govDelegator.addProposalToChangeGov(newGovImp.address, { from: deployer });
+      await govDelegator.vote(1, true, { from: deployer });
+      const len = await gov.voteLength();
+      len.should.be.bignumber.equal(1);
+      const inVoting = await gov.getBallotInVoting();
+      inVoting.should.be.bignumber.equal(0);
+      const state = await ballotStorage.getBallotState(1);
+      state[1].should.be.bignumber.equal(ballotStates.Accepted);
+      state[2].should.equal(true);
+
+      const imp = await gov.implementation();
+      imp.should.equal(newGovImp.address);
+    });
+
+    it('can vote approval to change environment', async () => {
+      await govDelegator.addProposalToChangeEnv(envName, envTypes.Bytes32, envVal, { from: deployer });
+      await govDelegator.vote(1, true, { from: deployer });
+      const len = await gov.voteLength();
+      len.should.be.bignumber.equal(1);
+      const inVoting = await gov.getBallotInVoting();
+      inVoting.should.be.bignumber.equal(0);
+      const state = await ballotStorage.getBallotState(1);
+      state[1].should.be.bignumber.equal(ballotStates.Accepted);
+      state[2].should.equal(true);
+    });
+
     it('cannot vote for a ballot already done', async () => {
       await staking.deposit({ value: amount, from: govMem1 });
       await govDelegator.addProposalToAddMember(govMem1, enode[0], ip[0], port[0], amount, { from: deployer });
@@ -311,7 +352,39 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       state2[2].should.equal(true);
     });
 
-    it('can vote to remove member', async () => {
+    it('can vote to remove first member', async () => {
+      const preAvail = await staking.availableBalance(deployer);
+      await govDelegator.addProposalToRemoveMember(deployer, amount, { from: deployer });
+      const len = await gov.ballotLength();
+      await govDelegator.vote(len, true, { from: deployer });
+      const inVoting = await gov.getBallotInVoting();
+      inVoting.should.be.bignumber.equal(len);
+      const state = await ballotStorage.getBallotState(len);
+      state[1].should.be.bignumber.equal(ballotStates.InProgress);
+      state[2].should.equal(false);
+
+      await govDelegator.vote(len, true, { from: govMem1 });
+      const inVoting2 = await gov.getBallotInVoting();
+      inVoting2.should.be.bignumber.equal(0);
+      const state2 = await ballotStorage.getBallotState(len);
+      state2[1].should.be.bignumber.equal(ballotStates.Accepted);
+      state2[2].should.equal(true);
+
+      const memberLen = await gov.getMemberLength();
+      memberLen.should.be.bignumber.equal(1);
+      const isMem = await gov.isMember(deployer);
+      isMem.should.equal(false);
+      const nodeLen = await gov.getNodeLength();
+      nodeLen.should.be.bignumber.equal(1);
+      const nodeIdx = await gov.getNodeIdxFromMember(deployer);
+      nodeIdx.should.be.bignumber.equal(0);
+
+      const postAvail = await staking.availableBalance(deployer);
+      postAvail.minus(preAvail).should.be.bignumber.equal(amount);
+    });
+
+    it('can vote to remove last member', async () => {
+      const preAvail = await staking.availableBalance(govMem1);
       await govDelegator.addProposalToRemoveMember(govMem1, amount, { from: deployer });
       const len = await gov.ballotLength();
       await govDelegator.vote(len, true, { from: deployer });
@@ -330,8 +403,15 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
 
       const memberLen = await gov.getMemberLength();
       memberLen.should.be.bignumber.equal(1);
+      const isMem = await gov.isMember(govMem1);
+      isMem.should.equal(false);
       const nodeLen = await gov.getNodeLength();
       nodeLen.should.be.bignumber.equal(1);
+      const nodeIdx = await gov.getNodeIdxFromMember(govMem1);
+      nodeIdx.should.be.bignumber.equal(0);
+
+      const postAvail = await staking.availableBalance(govMem1);
+      postAvail.minus(preAvail).should.be.bignumber.equal(amount);
     });
 
     it('cannot vote simultaneously', async () => {
