@@ -17,6 +17,7 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage/
 coverage.json
+allFiredEvents
 
 # solidity_flattener output directory 
 # flat/
@@ -67,11 +68,8 @@ reports/
 
 package-lock.json
 
-# config file
-# config
-
-# old file 
+# old file
 *.old
 
-#testCode 
+# testCode
 testcon/

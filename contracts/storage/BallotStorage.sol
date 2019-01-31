@@ -278,7 +278,6 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
 
     }
 
-    
     function createBallotForAddress(
         uint256 _id,
         uint256 _ballotType,
@@ -467,17 +466,20 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     function updateBallotMemo(
         uint256 _ballotId,
         bytes _memo
-    ) public onlyGov
+    )
+        public onlyGov
     {
         require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
         require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
         BallotBasic storage _ballot = ballotBasicMap[_ballotId];
         _ballot.memo = _memo;
     }
+
     function updateBallotDuration(
         uint256 _ballotId,
         uint256 _duration
-    ) public onlyGov
+    )
+        public onlyGov
     {
         require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
         require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
@@ -485,10 +487,12 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         BallotBasic storage _ballot = ballotBasicMap[_ballotId];
         _ballot.duration = _duration;
     }
+
     function updateBallotMemberLockAmount(
         uint256 _ballotId,
         uint256 _lockAmount
-    ) public onlyGov
+    )
+        public onlyGov
     {
         require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
         require(ballotMemberMap[_ballotId].id == _ballotId, "not existed BallotMember");
@@ -497,6 +501,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         BallotMember storage _ballot = ballotMemberMap[_ballotId];
         _ballot.lockAmount = _lockAmount;
     }
+
     function getBallotPeriod(uint256 _id) public view returns (
         uint256 startTime,
         uint256 endTime,
