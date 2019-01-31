@@ -81,6 +81,12 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
     govDelegator = await GovImp.at(gov.address);
   });
 
+  describe('Contract creation ', function () {
+    it('consume for govImp', async () => { await GovImp.new(); });
+    it('consume for envStorageImp', async () => { await EnvStorageImp.new(); });
+    it('consume for ballotStorage', async () => { await BallotStorage.new(registry.address); });
+  });
+
   describe('Deployer ', function () {
     it('has enode and locked staking', async () => {
       const locked = await staking.lockedBalanceOf(deployer);
@@ -279,7 +285,7 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
     });
 
     it('can vote approval to change environment', async () => {
-      await govDelegator.addProposalToChangeEnv(envName, envTypes.Bytes32, envVal, { from: deployer });
+      await govDelegator.addProposalToChangeEnv(web3.sha3('blockPer'), envTypes.Uint, '100', { from: deployer });
       await govDelegator.vote(1, true, { from: deployer });
       const len = await gov.voteLength();
       len.should.be.bignumber.equal(1);
@@ -288,6 +294,9 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       const state = await ballotStorage.getBallotState(1);
       state[1].should.be.bignumber.equal(ballotStates.Accepted);
       state[2].should.equal(true);
+
+      const blockPer = await envDelegator.getBlockPerValue();
+      assert.equal(blockPer, '100');
     });
 
     it('cannot vote for a ballot already done', async () => {

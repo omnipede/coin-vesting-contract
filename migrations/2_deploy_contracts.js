@@ -25,7 +25,6 @@ const memo = 'memo';
 const web3 = new Web3(new Web3.providers.HttpProvider(metaTestnetConfig.provider));
 const amount = web3.utils.toWei('1', 'ether')
 
-//TODO deploy script clean up
 async function deploy(deployer, network, accounts) {
     let contracts = {}
 

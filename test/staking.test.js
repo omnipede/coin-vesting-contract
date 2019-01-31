@@ -11,7 +11,7 @@ const Staking = artifacts.require('Staking.sol');
 
 contract('Staking', function ([deployer, fakeGov, user, user2, user3, user4]) {
   let registry, staking;
-  const amount = ether(1e7);
+  const amount = ether(4e7);
 
   beforeEach(async () => {
     registry = await Registry.new();
