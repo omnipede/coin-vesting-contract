@@ -152,9 +152,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.16;\n\n\ninterface IGov {\n    function isMember(address) external view returns (bool);\n    function getMember(uint256) external view returns (address);\n    function getMemberLength() external view returns (uint256);\n    function getNodeIdxFromMember(address) external view returns (uint256);\n    function getMemberFromNodeIdx(uint256) external view returns (address);\n    function getNodeLength() external view returns (uint256);\n    function getNode(uint256) external view returns (bytes, bytes, uint);\n    function getBallotInVoting() external view returns (uint256);\n}",
-  "sourcePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/interface/IGov.sol",
+  "sourcePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/interface/IGov.sol",
   "ast": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/interface/IGov.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/interface/IGov.sol",
     "exportedSymbols": {
       "IGov": [
         3046
@@ -830,7 +830,7 @@
     "src": "0:589:10"
   },
   "legacyAST": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/interface/IGov.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/interface/IGov.sol",
     "exportedSymbols": {
       "IGov": [
         3046
@@ -1511,5 +1511,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-02-01T06:27:34.159Z"
+  "updatedAt": "2019-02-01T07:05:06.164Z"
 }

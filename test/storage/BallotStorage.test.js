@@ -64,6 +64,63 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
     const _nodePort = 9545;
     const _duration = time.duration.weeks(1);
     const _lockAmount = new web3.BigNumber(100000000);
+    describe('UpdateContract', function () {
+      it('change ballotContract Address', async () => {
+        let newBallotStorage = await BallotStorage.new(registry.address);
+        await newBallotStorage.setPreviousBallotStorage(ballotStorage.address);
+        let state1 = await ballotStorage.isDisabled();
+        assert.equal(state1, false);
+        let state2 = await newBallotStorage.isDisabled();
+        assert.equal(state2, true);
+
+        await registry.setContractDomain('BallotStorage', newBallotStorage.address);
+        state1 = await ballotStorage.isDisabled();
+        assert.equal(state1, true);
+        state2 = await newBallotStorage.isDisabled();
+        assert.equal(state2, false);
+      });
+      
+      it('cannot create pchange ballotContract Address', async () => {
+        const _ballotType = new web3.BigNumber(1);
+        let newBallotStorage = await BallotStorage.new(registry.address);
+        await newBallotStorage.setPreviousBallotStorage(ballotStorage.address);
+        await reverting(newBallotStorage.createBallotForMemeber(
+          _id, // ballot id
+          _ballotType, // ballot type
+          creator, // creator
+          ZERO_ADDRESS, // oldMemberAddress
+          addMem, // newMemberAddress
+          _enodeid, // newNodeId
+          _nodeip, // newNodeIp
+          _nodePort, // newNodePort
+          { value: 0, from: creator }
+        ));
+
+        await registry.setContractDomain('BallotStorage', newBallotStorage.address);
+        await reverting(ballotStorage.createBallotForMemeber(
+          _id, // ballot id
+          _ballotType, // ballot type
+          creator, // creator
+          ZERO_ADDRESS, // oldMemberAddress
+          addMem, // newMemberAddress
+          _enodeid, // newNodeId
+          _nodeip, // newNodeIp
+          _nodePort, // newNodePort
+          { value: 0, from: creator }
+        ));
+        await newBallotStorage.createBallotForMemeber(
+          _id, // ballot id
+          _ballotType, // ballot type
+          creator, // creator
+          ZERO_ADDRESS, // oldMemberAddress
+          addMem, // newMemberAddress
+          _enodeid, // newNodeId
+          _nodeip, // newNodeIp
+          _nodePort, // newNodePort
+          { value: 0, from: govAddr }
+        ); // .should.be.rejectedWith(ERROR_MSG);
+      });
+    });
     describe('Member', function () {
       describe('create', function () {
         describe('add', function () {

@@ -39,14 +39,14 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x608060405234801561001057600080fd5b5061019c806100206000396000f300608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635c60da1b146100b0575b600061004b610107565b9050600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561008957600080fd5b60405136600082376000803683855af43d806000843e81600081146100ac578184f35b8184fd5b3480156100bc57600080fd5b506100c5610107565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60008060405180807f6f72672e6d6574616469756d2e70726f78792e696d706c656d656e746174696f81526020017f6e000000000000000000000000000000000000000000000000000000000000008152506021019050604051809103902090508054915050905600a165627a7a72305820b33dc94c93746b200f2808a9b5bf7a8b8b8699ff539e4c51f436a71e3359a1e30029",
-  "deployedBytecode": "0x608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635c60da1b146100b0575b600061004b610107565b9050600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561008957600080fd5b60405136600082376000803683855af43d806000843e81600081146100ac578184f35b8184fd5b3480156100bc57600080fd5b506100c5610107565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60008060405180807f6f72672e6d6574616469756d2e70726f78792e696d706c656d656e746174696f81526020017f6e000000000000000000000000000000000000000000000000000000000000008152506021019050604051809103902090508054915050905600a165627a7a72305820b33dc94c93746b200f2808a9b5bf7a8b8b8699ff539e4c51f436a71e3359a1e30029",
+  "bytecode": "0x608060405234801561001057600080fd5b5061019c806100206000396000f300608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635c60da1b146100b0575b600061004b610107565b9050600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561008957600080fd5b60405136600082376000803683855af43d806000843e81600081146100ac578184f35b8184fd5b3480156100bc57600080fd5b506100c5610107565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60008060405180807f6f72672e6d6574616469756d2e70726f78792e696d706c656d656e746174696f81526020017f6e000000000000000000000000000000000000000000000000000000000000008152506021019050604051809103902090508054915050905600a165627a7a72305820c56b2728c3584dbb9954193d38978ce71283dffa29f9b205e701b7d46789c70c0029",
+  "deployedBytecode": "0x608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635c60da1b146100b0575b600061004b610107565b9050600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561008957600080fd5b60405136600082376000803683855af43d806000843e81600081146100ac578184f35b8184fd5b3480156100bc57600080fd5b506100c5610107565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60008060405180807f6f72672e6d6574616469756d2e70726f78792e696d706c656d656e746174696f81526020017f6e000000000000000000000000000000000000000000000000000000000000008152506021019050604051809103902090508054915050905600a165627a7a72305820c56b2728c3584dbb9954193d38978ce71283dffa29f9b205e701b7d46789c70c0029",
   "sourceMap": "204:1632:15:-;;;702:23;8:9:-1;5:2;;;30:1;27;20:12;5:2;702:23:15;204:1632;;;;;;",
   "deployedSourceMap": "204:1632:15:-;;;;;;;;;;;;;;;;;;;;;370:13:14;386:16;:14;:16::i;:::-;370:32;;437:1;420:19;;:5;:19;;;;412:28;;;;;;;;491:4;485:11;530:12;527:1;522:3;509:34;617:1;614;600:12;595:3;588:5;583:3;570:49;644:14;694:4;691:1;686:3;671:28;720:6;744:1;739:28;;;;802:4;797:3;790:17;739:28;760:4;755:3;748:17;860:180:15;;8:9:-1;5:2;;;30:1;27;20:12;5:2;860:180:15;;;;;;;;;;;;;;;;;;;;;;;;;;;;907:12;931:16;600:46;;;;;;;;;;;;;;;;;;;;;;;;931:37;;1015:8;1009:15;1001:23;;987:47;;:::o",
   "source": "pragma solidity ^0.4.24;\n\nimport \"./Proxy.sol\";\n\n\n/**\n * @title UpgradeabilityProxy\n * @dev This contract represents a proxy where the implementation address to which it will delegate can be upgraded\n */\ncontract UpgradeabilityProxy is Proxy {\n    /**\n     * @dev This event will be emitted every time the implementation gets upgraded\n     * @param implementation representing the address of the upgraded implementation\n     */\n    event Upgraded(address indexed implementation);\n\n    // Storage position of the address of the current implementation\n    bytes32 private constant IMPLEMENT_POSITION = keccak256(\"org.metadium.proxy.implementation\");\n\n    /**\n     * @dev Constructor function\n     */\n    constructor() public {}\n\n    /**\n     * @dev Tells the address of the current implementation\n     * @return address of the current implementation\n     */\n    function implementation() public view returns (address impl) {\n        bytes32 position = IMPLEMENT_POSITION;\n        assembly {\n            impl := sload(position)\n        }\n    }\n\n    /**\n     * @dev Sets the address of the current implementation\n     * @param newImplementation address representing the new implementation to be set\n     */\n    function setImplementation(address newImplementation) internal {\n        bytes32 position = IMPLEMENT_POSITION;\n        assembly {\n            sstore(position, newImplementation)\n        }\n    }\n\n    /**\n     * @dev Upgrades the implementation address\n     * @param newImplementation representing the address of the new implementation to be set\n     */\n    function _upgradeTo(address newImplementation) internal {\n        address currentImplementation = implementation();\n        require(currentImplementation != newImplementation);\n        setImplementation(newImplementation);\n        emit Upgraded(newImplementation);\n    }\n}",
-  "sourcePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/proxy/UpgradeabilityProxy.sol",
+  "sourcePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/proxy/UpgradeabilityProxy.sol",
   "ast": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/proxy/UpgradeabilityProxy.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/proxy/UpgradeabilityProxy.sol",
     "exportedSymbols": {
       "UpgradeabilityProxy": [
         3335
@@ -67,7 +67,7 @@
         "src": "0:24:15"
       },
       {
-        "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/proxy/Proxy.sol",
+        "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/proxy/Proxy.sol",
         "file": "./Proxy.sol",
         "id": 3272,
         "nodeType": "ImportDirective",
@@ -210,7 +210,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "600:9:15",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -676,10 +676,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6147,
-                        6148
+                        6162,
+                        6163
                       ],
-                      "referencedDeclaration": 6147,
+                      "referencedDeclaration": 6162,
                       "src": "1688:7:15",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -876,7 +876,7 @@
     "src": "0:1836:15"
   },
   "legacyAST": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/proxy/UpgradeabilityProxy.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/proxy/UpgradeabilityProxy.sol",
     "exportedSymbols": {
       "UpgradeabilityProxy": [
         3335
@@ -897,7 +897,7 @@
         "src": "0:24:15"
       },
       {
-        "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/proxy/Proxy.sol",
+        "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/proxy/Proxy.sol",
         "file": "./Proxy.sol",
         "id": 3272,
         "nodeType": "ImportDirective",
@@ -1040,7 +1040,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "600:9:15",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -1506,10 +1506,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        6147,
-                        6148
+                        6162,
+                        6163
                       ],
-                      "referencedDeclaration": 6147,
+                      "referencedDeclaration": 6162,
                       "src": "1688:7:15",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1711,5 +1711,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-02-01T06:27:34.160Z"
+  "updatedAt": "2019-02-01T07:05:06.165Z"
 }

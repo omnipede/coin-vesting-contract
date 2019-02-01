@@ -1,14 +1,14 @@
 {
   "contractName": "EnvConstants",
   "abi": [],
-  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a723058208d43ddcc62d4856bd2575c99454f8979851c47830b2b5d65264831e80b669ae90029",
-  "deployedBytecode": "0x6080604052600080fd00a165627a7a723058208d43ddcc62d4856bd2575c99454f8979851c47830b2b5d65264831e80b669ae90029",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a72305820a5e6e7ce41b75f80b18d5728275a15dafb83d7d8c611d963b7d99805301e22020029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a72305820a5e6e7ce41b75f80b18d5728275a15dafb83d7d8c611d963b7d99805301e22020029",
   "sourceMap": "26:1330:7:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:1330:7;;;;;;;",
   "deployedSourceMap": "26:1330:7:-;;;;;",
   "source": "pragma solidity ^0.4.24;\n\ncontract EnvConstants {\n    bytes32 internal constant BLOCK_PER_NAME = keccak256(\"blockPer\"); \n    uint256 internal constant BLOCK_PER_TYPE = uint256(VariableTypes.Uint);\n\n    bytes32 internal constant BALLOT_DURATION_MIN_NAME = keccak256(\"ballotDurationMin\"); \n    uint256 internal constant BALLOT_DURATION_MIN_TYPE = uint256(VariableTypes.Uint);\n\n    bytes32 internal constant BALLOT_DURATION_MAX_NAME = keccak256(\"ballotDurationMax\"); \n    uint256 internal constant BALLOT_DURATION_MAX_TYPE = uint256(VariableTypes.Uint);\n\n    bytes32 internal constant STAKING_MIN_NAME = keccak256(\"stakingMin\"); \n    uint256 internal constant STAKING_MIN_TYPE = uint256(VariableTypes.Uint);\n\n    bytes32 internal constant STAKING_MAX_NAME = keccak256(\"stakingMax\"); \n    uint256 internal constant STAKING_MAX_TYPE = uint256(VariableTypes.Uint);\n\n    enum VariableTypes {\n        Invalid,\n        Int,\n        Uint,\n        Address,\n        Bytes32,\n        Bytes,\n        String\n    }\n    \n    bytes32 internal constant TEST_INT = keccak256(\"TEST_INT\"); \n    bytes32 internal constant TEST_ADDRESS = keccak256(\"TEST_ADDRESS\"); \n    bytes32 internal constant TEST_BYTES32 = keccak256(\"TEST_BYTES32\"); \n    bytes32 internal constant TEST_BYTES = keccak256(\"TEST_BYTES\"); \n    bytes32 internal constant TEST_STRING = keccak256(\"TEST_STRING\"); \n}",
-  "sourcePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/abstract/EnvConstants.sol",
+  "sourcePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/abstract/EnvConstants.sol",
   "ast": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/abstract/EnvConstants.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/abstract/EnvConstants.sol",
     "exportedSymbols": {
       "EnvConstants": [
         2744
@@ -97,7 +97,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "97:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -268,7 +268,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "255:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -439,7 +439,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "432:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -610,7 +610,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "601:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -781,7 +781,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "755:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -1003,7 +1003,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "1045:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -1082,7 +1082,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "1114:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -1161,7 +1161,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "1187:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -1240,7 +1240,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "1258:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -1319,7 +1319,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "1328:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -1350,7 +1350,7 @@
     "src": "0:1356:7"
   },
   "legacyAST": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/abstract/EnvConstants.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/abstract/EnvConstants.sol",
     "exportedSymbols": {
       "EnvConstants": [
         2744
@@ -1439,7 +1439,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "97:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -1610,7 +1610,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "255:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -1781,7 +1781,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "432:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -1952,7 +1952,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "601:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -2123,7 +2123,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "755:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -2345,7 +2345,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "1045:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -2424,7 +2424,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "1114:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -2503,7 +2503,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "1187:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -2582,7 +2582,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "1258:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -2661,7 +2661,7 @@
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 6138,
+                "referencedDeclaration": 6153,
                 "src": "1328:9:7",
                 "typeDescriptions": {
                   "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -2697,5 +2697,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-02-01T06:27:34.158Z"
+  "updatedAt": "2019-02-01T07:05:06.163Z"
 }

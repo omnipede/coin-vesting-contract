@@ -455,9 +455,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.16;\n\n\ninterface IBallotStorage {\n    function createBallotForMemeber(\n        uint256, uint256, address, address,\n        address, bytes, bytes, uint) external;\n\n    function createBallotForAddress(uint256, uint256, address, address)external returns (uint256);\n    function createBallotForVariable(uint256, uint256, address, bytes32, uint256, bytes) external returns (uint256);\n    function createVote(uint256, uint256, address, uint256, uint256) external returns (uint256);\n    function finalizeBallot(uint256, uint256) external;\n    function startBallot(uint256, uint256, uint256) external;\n    function updateBallotDuration(uint256, uint256) external;\n    function updateBallotMemberLockAmount(uint256, uint256) external;\n\n    function getBallotPeriod(uint256) external view returns (uint256, uint256, uint256);\n    function getBallotVotingInfo(uint256) external view returns (uint256, uint256, uint256);\n    function getBallotState(uint256) external view returns (uint256, uint256, bool);\n\n    function getBallotBasic(uint256) external view returns (\n        uint256, uint256, uint256, address, bytes, uint256,\n        uint256, uint256, uint256, bool, uint256);\n\n    function getBallotMember(uint256) external view returns (address, address, bytes, bytes, uint256, uint256);\n    function getBallotAddress(uint256) external view returns (address);\n    function getBallotVariable(uint256) external view returns (bytes32, uint256, bytes);\n}",
-  "sourcePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/interface/IBallotStorage.sol",
+  "sourcePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/interface/IBallotStorage.sol",
   "ast": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/interface/IBallotStorage.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/interface/IBallotStorage.sol",
     "exportedSymbols": {
       "IBallotStorage": [
         2936
@@ -2830,7 +2830,7 @@
     "src": "0:1462:8"
   },
   "legacyAST": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/interface/IBallotStorage.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/interface/IBallotStorage.sol",
     "exportedSymbols": {
       "IBallotStorage": [
         2936
@@ -5208,5 +5208,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-02-01T06:27:34.158Z"
+  "updatedAt": "2019-02-01T07:05:06.164Z"
 }
