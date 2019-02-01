@@ -1,50 +1,55 @@
 pragma solidity ^0.4.24;
 
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "../abstract/EnvConstants.sol";
 import "./AEnvStorage.sol";
 //import "./Conversion.sol";
-import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+
 
 contract EnvStorageImp is AEnvStorage, EnvConstants {
     using SafeMath for uint256;
     //using Conversion for string;
     
-    function initialize() public onlyOwner{
+    function initialize() public onlyOwner {
         uint256 blockPerVal = getBlockPerValue();
         uint256 ballotDurationMin = getBallotDurationMinValue();
         uint256 ballotDurationMax = getBallotDurationMaxValue();
         uint256 stakingMin = getStakingMinValue();
         uint256 stakingMax = getStakingMaxValue();
-        if( blockPerVal == 0){
+
+        if (blockPerVal == 0) {
             setUint(BLOCK_PER_NAME, 1000);
         }
-        if( ballotDurationMin == 0){
+        if (ballotDurationMin == 0) {
             setUint(BALLOT_DURATION_MIN_NAME, 604800);
         }
-        if( ballotDurationMax == 0 ){
+        if (ballotDurationMax == 0) {
             setUint(BALLOT_DURATION_MAX_NAME, 604800);
         }
-        if( stakingMin == 0 ){
+        if (stakingMin == 0) {
             setUint(STAKING_MIN_NAME, 10000000000);
         }
-        if( stakingMax == 0 ){
+        if (stakingMax == 0) {
             setUint(STAKING_MAX_NAME, 20000000000);
         }
-        
     }
 
     function getBlockPerValue() public view returns (uint256) {
         return getUint(BLOCK_PER_NAME);
     }
+
     function getBallotDurationMinValue() public view returns (uint256) {
         return getUint(BALLOT_DURATION_MIN_NAME);
     }
+
     function getBallotDurationMaxValue() public view returns (uint256) {
         return getUint(BALLOT_DURATION_MAX_NAME);
     }
+
     function getStakingMinValue() public view returns (uint256) {
         return getUint(STAKING_MIN_NAME);
     }
+
     function getStakingMaxValue() public view returns (uint256) {
         return getUint(STAKING_MAX_NAME);
     }
@@ -52,15 +57,19 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
     function getBlockPer() public view returns (uint256) {
         return getUint(BLOCK_PER_NAME);
     }
+
     function getBallotDurationMin() public view returns (uint256) {
         return getUint(BALLOT_DURATION_MIN_NAME);
     }
+
     function getBallotDurationMax() public view returns (uint256) {
         return getUint(BALLOT_DURATION_MAX_NAME);
     }
+
     function getStakingMin() public view returns (uint256) {
         return getUint(STAKING_MIN_NAME);
     }
+
     function getStakingMax() public view returns (uint256) {
         return getUint(STAKING_MAX_NAME);
     }
@@ -68,15 +77,19 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
     function setBlockPer(uint256 _value) public onlyGov { 
         setUint(BLOCK_PER_NAME, _value);
     }
+
     function setBallotDurationMin(uint256 _value) public onlyGov { 
         setUint(BALLOT_DURATION_MIN_NAME, _value);
     }
+
     function setBallotDurationMax(uint256 _value) public onlyGov { 
         setUint(BALLOT_DURATION_MAX_NAME, _value);
     }
+
     function setStakingMin(uint256 _value) public onlyGov { 
         setUint(STAKING_MIN_NAME, _value);
     }
+
     function setStakingMax(uint256 _value) public onlyGov { 
         setUint(STAKING_MAX_NAME, _value);
     }
@@ -84,15 +97,19 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
     function setBlockPerByBytes(bytes _value) public onlyGov { 
         setBlockPer(toUint(_value));
     }
+
     function setBallotDurationMinByBytes(bytes _value) public onlyGov { 
         setBallotDurationMin(toUint(_value));
     }
+
     function setBallotDurationMaxByBytes(bytes _value) public onlyGov { 
         setBallotDurationMax(toUint(_value));
     }
+
     function setStakingMinByBytes(bytes _value) public onlyGov { 
         setStakingMin(toUint(_value));
     }
+
     function setStakingMaxByBytes(bytes _value) public onlyGov { 
         setStakingMax(toUint(_value));
     }
@@ -100,31 +117,41 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
     function getTestInt() public view returns (int256) {
         return getInt(TEST_INT);
     }
+
     function getTestAddress() public view returns (address) {
         return getAddress(TEST_ADDRESS);
     }
+
     function getTestBytes32() public view returns (bytes32) {
         return getBytes32(TEST_BYTES32);
     }
+
     function getTestBytes() public view returns (bytes) {
         return getBytes(TEST_BYTES);
     }
+
     function getTestString() public view returns (string) {
         return getString(TEST_STRING);
     }
+
     function setTestIntByBytes(bytes _value) public onlyGov { 
         setInt(TEST_INT, toInt(_value));
     }
+
     function setTestAddressByBytes(bytes _value) public onlyGov { 
         setAddress(TEST_ADDRESS, toAddress(_value));
     }
+
     function setTestBytes32ByBytes(bytes _value) public onlyGov { 
         setBytes32(TEST_BYTES32, toBytes32(_value));
     }
+
     function setTestBytesByBytes(bytes _value) public onlyGov { 
         setBytes(TEST_BYTES, _value);
     }
+
     event testCodeValue(bytes _bytes,string _string);
+
     function setTestStringByBytes(bytes _value) public onlyGov { 
         emit testCodeValue(_value,string(_value));
         setString(TEST_STRING, string(_value));
@@ -296,31 +323,35 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
 */
 // }
     
-    function toBytes32( bytes memory  _input) internal pure  returns (bytes32 _output){
+    function toBytes32( bytes memory  _input) internal pure  returns (bytes32 _output) {
         assembly {
           _output := mload(add(_input, 32))
         }
     }
+
     function toInt(bytes memory _input) internal pure returns (int256 _output) {
         assembly {
             _output := mload(add(_input, 32))
         }
     }
+
     function toUint(bytes memory _input) internal pure returns (uint256 _output) {
         
         assembly {
             _output := mload(add(_input, 32))
         }
     }
+
     function toAddress(bytes memory _input) internal pure returns (address _output) {
         assembly {
             _output := mload(add(_input, 20))
         }
-    } 
+    }
+
     // function toString(bytes memory _input) internal pure returns(string _output){
     //     _output = string(_input);
     // }
-    function toString( bytes memory _input ) public pure returns(string memory _output) {
+    function toString( bytes memory _input ) public pure returns (string memory _output) {
         return string(_input);
         // uint _offst = _input.length;
         // uint size = 32;
@@ -341,7 +372,7 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
         // }
     }
 
-    function bytes32ToBytes( bytes32 _input) internal pure returns(bytes) {
+    function bytes32ToBytes(bytes32 _input) internal pure returns (bytes) {
         bytes memory _output = new bytes(32);
         assembly {
             mstore(add(_output, 32), _input)
@@ -349,21 +380,22 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
         }
         return _output;
     }
-    function intToBytes(int _input) public pure returns(bytes memory _output) {
+
+    function intToBytes(int _input) public pure returns (bytes memory _output) {
         _output = new bytes(32);
         assembly {
             mstore(add(_output, 32), _input)
         }
     } 
-    
-    function uintToBytes(uint _input) public pure returns(bytes memory _output) {
+
+    function uintToBytes(uint _input) public pure returns (bytes memory _output) {
         _output = new bytes(32);
         assembly {
             mstore(add(_output, 32), _input)
         }
     }
-    
-    function addressToBytes(address _input) public pure returns (bytes _output){
+
+    function addressToBytes(address _input) public pure returns (bytes _output) {
         assembly {
             let m := mload(0x40)
             mstore(add(m, 20), xor(0x140000000000000000000000000000000000000000, _input))
@@ -372,14 +404,8 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
         }
     }
     
-    function stringToBytes(string memory _input) public pure returns(bytes _output){
+    function stringToBytes(string memory _input) public pure returns (bytes _output) {
         //_output = bytes(_input);
         _output =  abi.encode(_input);
     }
-    
-
-
-
-
-
 }

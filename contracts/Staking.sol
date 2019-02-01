@@ -22,39 +22,6 @@ contract Staking is GovChecker, ReentrancyGuard {
         setRegistry(registry);
     }
 
-    function balanceOf(address payee) public view returns (uint256) {
-        return balance[payee];
-    }
-
-    function lockedBalanceOf(address payee) public view returns (uint256) {
-        return lockedBalance[payee];
-    }
-
-    function availableBalance(address payee) public view returns (uint256) {
-        return balance[payee].sub(lockedBalance[payee]);
-    }
-
-    /**
-    * @dev Calculate voting weight which range between 0 and 100.
-    * @param payee The address whose funds were locked.
-    */
-    function calcVotingWeight(address payee) public view returns (uint256) {
-        return calcVotingWeightWithScaleFactor(payee, 1e2);
-    }
-
-    /**
-    * @dev Calculate voting weight with a scale factor.
-    * @param payee The address whose funds were locked.
-    * @param factor The scale factor for weight. For instance:
-    *               if 1e1, result range is between 0 ~ 10
-    *               if 1e2, result range is between 0 ~ 100
-    *               if 1e3, result range is between 0 ~ 1000
-    */
-    function calcVotingWeightWithScaleFactor(address payee, uint32 factor) public view returns (uint256) {
-        if (lockedBalance[payee] == 0 || factor == 0) return 0;
-        return lockedBalance[payee].mul(factor).div(totalLockedBalance);
-    }
-
     function () external payable {
         revert();
     }
@@ -110,5 +77,38 @@ contract Staking is GovChecker, ReentrancyGuard {
         totalLockedBalance = totalLockedBalance.sub(unlockAmount);
 
         emit Unlocked(payee, unlockAmount, balance[payee], availableBalance(payee));
+    }
+
+    function balanceOf(address payee) public view returns (uint256) {
+        return balance[payee];
+    }
+
+    function lockedBalanceOf(address payee) public view returns (uint256) {
+        return lockedBalance[payee];
+    }
+
+    function availableBalance(address payee) public view returns (uint256) {
+        return balance[payee].sub(lockedBalance[payee]);
+    }
+
+    /**
+    * @dev Calculate voting weight which range between 0 and 100.
+    * @param payee The address whose funds were locked.
+    */
+    function calcVotingWeight(address payee) public view returns (uint256) {
+        return calcVotingWeightWithScaleFactor(payee, 1e2);
+    }
+
+    /**
+    * @dev Calculate voting weight with a scale factor.
+    * @param payee The address whose funds were locked.
+    * @param factor The scale factor for weight. For instance:
+    *               if 1e1, result range is between 0 ~ 10
+    *               if 1e2, result range is between 0 ~ 100
+    *               if 1e3, result range is between 0 ~ 1000
+    */
+    function calcVotingWeightWithScaleFactor(address payee, uint32 factor) public view returns (uint256) {
+        if (lockedBalance[payee] == 0 || factor == 0) return 0;
+        return lockedBalance[payee].mul(factor).div(totalLockedBalance);
     }
 }

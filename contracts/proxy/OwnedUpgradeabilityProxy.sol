@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
 
-import './UpgradeabilityProxy.sol';
+import "./UpgradeabilityProxy.sol";
 
 
 /**
@@ -16,7 +16,7 @@ contract OwnedUpgradeabilityProxy is UpgradeabilityProxy {
     event ProxyOwnershipTransferred(address previousOwner, address newOwner);
 
     // Storage position of the owner of the contract
-    bytes32 private constant proxyOwnerPosition = keccak256("org.metadium.proxy.owner");
+    bytes32 private constant PROXY_OWNER_POSITION = keccak256("org.metadium.proxy.owner");
 
     /**
     * @dev the constructor sets the original owner of the contract to the sender account.
@@ -38,19 +38,9 @@ contract OwnedUpgradeabilityProxy is UpgradeabilityProxy {
      * @return the address of the owner
      */
     function proxyOwner() public view returns (address owner) {
-        bytes32 position = proxyOwnerPosition;
+        bytes32 position = PROXY_OWNER_POSITION;
         assembly {
             owner := sload(position)
-        }
-    }
-
-    /**
-     * @dev Sets the address of the owner
-     */
-    function setUpgradeabilityOwner(address newProxyOwner) internal {
-        bytes32 position = proxyOwnerPosition;
-        assembly {
-          sstore(position, newProxyOwner)
         }
     }
 
@@ -79,8 +69,18 @@ contract OwnedUpgradeabilityProxy is UpgradeabilityProxy {
      * @param data represents the msg.data to bet sent in the low level call. This parameter may include the function
      * signature of the implementation to be called with the needed payload
      */
-    function upgradeToAndCall(address implementation, bytes data) payable public onlyProxyOwner {
+    function upgradeToAndCall(address implementation, bytes data) public payable onlyProxyOwner {
         upgradeTo(implementation);
         require(address(this).call.value(msg.value)(data));
+    }
+
+    /**
+     * @dev Sets the address of the owner
+     */
+    function setUpgradeabilityOwner(address newProxyOwner) internal {
+        bytes32 position = PROXY_OWNER_POSITION;
+        assembly {
+            sstore(position, newProxyOwner)
+        }
     }
 }

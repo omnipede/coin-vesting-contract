@@ -14,22 +14,27 @@ contract AEnvStorage is EternalStorage, GovChecker {
         bytes32 indexed _name,
         string _value
     );
+
     event UintVarableChanged ( 
         bytes32 indexed _name,
         uint _value
     );
+
     event IntVarableChanged ( 
         bytes32 indexed _name,
         int _value
     );
+
     event AddressVarableChanged ( 
         bytes32 indexed _name,
         address _value
     );
+
     event Bytes32VarableChanged ( 
         bytes32 indexed _name,
         bytes32 _value
     );
+
     event BytesVarableChanged ( 
         bytes32 indexed _name,
         bytes _value
@@ -48,7 +53,7 @@ contract AEnvStorage is EternalStorage, GovChecker {
     */
     function setInt(bytes32 h, int256 v) internal {
         _setInt(h, v);
-        emit IntVarableChanged(h,v);
+        emit IntVarableChanged(h, v);
     }
 
     /**
@@ -58,7 +63,7 @@ contract AEnvStorage is EternalStorage, GovChecker {
     */
     function setUint(bytes32 h, uint256 v) internal {
         _setUint(h, v);
-        emit UintVarableChanged(h,v);
+        emit UintVarableChanged(h, v);
     }
 
     /**
@@ -68,7 +73,7 @@ contract AEnvStorage is EternalStorage, GovChecker {
     */
     function setAddress(bytes32 h, address v) internal {
         _setAddress(h, v);
-        emit AddressVarableChanged(h,v);
+        emit AddressVarableChanged(h, v);
     }
 
     /**
@@ -78,7 +83,7 @@ contract AEnvStorage is EternalStorage, GovChecker {
     */
     function setString(bytes32 h, string v) internal  {
         _setString(h, v);
-        emit StringVarableChanged(h,v);
+        emit StringVarableChanged(h, v);
     }
 
     /**
@@ -88,8 +93,9 @@ contract AEnvStorage is EternalStorage, GovChecker {
     */
     function setBytes(bytes32 h, bytes v) internal {
         _setBytes(h, v);
-        emit BytesVarableChanged(h,v);
+        emit BytesVarableChanged(h, v);
     }
+
     /**
     * @dev Allows the owner to set a value for a bytes32 variable.
     * @param h The keccak256 hash of the variable name
@@ -97,10 +103,8 @@ contract AEnvStorage is EternalStorage, GovChecker {
     */
     function setBytes32(bytes32 h, bytes32 v) internal {
         _setBytes32(h, v);
-        emit Bytes32VarableChanged(h,v);
+        emit Bytes32VarableChanged(h, v);
     }
-
-
 
     // mapping(bytes32 => Variable) internal s;
 
@@ -154,5 +158,4 @@ contract AEnvStorage is EternalStorage, GovChecker {
     //     require(s[_h]._name == _h,"not found");
     //     return s[_h]._value;
     // }
-    
 }
