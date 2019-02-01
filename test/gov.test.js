@@ -286,7 +286,7 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
     });
 
     it('can vote approval to change environment', async () => {
-      await govDelegator.addProposalToChangeEnv(web3.sha3('blockPer'), envTypes.Uint, '100', { from: deployer });
+      await govDelegator.addProposalToChangeEnv(web3.sha3('blockPer'), envTypes.Uint, '0x0000000000000000000000000000000000000000000000000000000000000064', { from: deployer });
       await govDelegator.vote(1, true, { from: deployer });
       const len = await gov.voteLength();
       len.should.be.bignumber.equal(1);
@@ -297,7 +297,7 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       state[2].should.equal(true);
 
       const blockPer = await envDelegator.getBlockPerValue();
-      assert.equal(blockPer, '100');
+      blockPer.should.be.bignumber.equal(100);
     });
 
     it('cannot vote for a ballot already done', async () => {

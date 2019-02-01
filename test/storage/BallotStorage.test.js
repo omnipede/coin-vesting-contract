@@ -69,7 +69,7 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
     const _nodeip = '123.11.111.111';
     const _nodePort = 9545;
     const _duration  = time.duration.weeks(1);
-    
+    const _lockAmount =  new web3.BigNumber(100000000);
     describe('Member', function () {
       describe('create', function () {
         describe('add', function () {
@@ -241,11 +241,190 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
               { value: 0, from: govAddr }
             )); // .should.be.rejectedWith(ERROR_MSG);
         });
-        //TODO: need to Update
-        // describe('remove', function () {
-        // });
-        // describe('swap', function () {
-        // });
+        describe('remove', function () {
+          const _ballotType = new web3.BigNumber(2); 
+          it('Cannot create Ballot for MemberRemoval by invalid param', async () => {
+            const _emptyNodePort = 0;
+
+            // case newMemberAddress is not empty
+            await reverting(ballotStorage.createBallotForMemeber(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              addMem, // oldMemberAddress
+              addMem, // newMemberAddress
+              "", // newNodeId
+              "", // newNodeIp
+              0, // newNodePort
+              { value: 0, from: creator }
+            ));
+            // case newNodeId is not empty
+            await reverting(ballotStorage.createBallotForMemeber(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              addMem, // oldMemberAddress
+              ZERO_ADDRESS, // newMemberAddress
+              _enodeid, // newNodeId
+              "", // newNodeIp
+              0, // newNodePort
+              { value: 0, from: creator }
+            ));
+            // case newNodeIp is not empty
+            await reverting(ballotStorage.createBallotForMemeber(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              addMem, // oldMemberAddress
+              ZERO_ADDRESS, // newMemberAddress
+              "", // newNodeId
+              _nodeip, // newNodeIp
+              0, // newNodePort
+              { value: 0, from: creator }
+            ));
+            // case newNodePort is not empty
+            await reverting(ballotStorage.createBallotForMemeber(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              addMem, // oldMemberAddress
+              ZERO_ADDRESS, // newMemberAddress
+              "", // newNodeId
+              "", // newNodeIp
+              _nodePort, // newNodePort
+              { value: 0, from: creator }
+            ));
+          });
+          it('create Ballot for MemberRemove', async () => {
+            await ballotStorage.createBallotForMemeber(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              addMem, // oldMemberAddress
+              ZERO_ADDRESS, // newMemberAddress
+              "0x", // newNodeId
+              "", // newNodeIp
+              0, // newNodePort
+              { value: 0, from: govAddr }
+            ); // .should.be.rejectedWith(ERROR_MSG);
+
+            const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
+
+            ballotBasicInfo[BallotBasicParams.BallotType].should.be.bignumber.equal(_ballotType);
+            assert.equal(ballotBasicInfo[BallotBasicParams.Creator], creator);
+            ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(0);
+            ballotBasicInfo[BallotBasicParams.PowerOfAccepts].should.be.bignumber.equal(0);
+            ballotBasicInfo[BallotBasicParams.PowerOfRejects].should.be.bignumber.equal(0);
+            ballotBasicInfo[BallotBasicParams.State].should.be.bignumber.equal(1);
+            assert.equal(ballotBasicInfo[BallotBasicParams.IsFinalized], false);
+
+            const ballotDetailInfo = await ballotStorage.getBallotMember(_id);
+
+            assert.equal(ballotDetailInfo[0], addMem);
+            assert.equal(ballotDetailInfo[1], ZERO_ADDRESS);
+            assert.equal(ballotDetailInfo[2], "0x");
+            assert.equal(web3Utils.toUtf8(ballotDetailInfo[3]), "");
+            assert.equal(ballotDetailInfo[4], 0);
+          });
+
+        });
+        describe('swap', function () {
+          const _ballotType = new web3.BigNumber(3); 
+          it('Cannot create Ballot for MemberSwap by invalid param', async () => {
+            
+            // case oldMemberAddress is empty
+            await reverting(ballotStorage.createBallotForMemeber(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              ZERO_ADDRESS, // oldMemberAddress
+              addMem, // newMemberAddress
+              _enodeid, // newNodeId
+              _nodeip, // newNodeIp
+              _nodePort, // newNodePort
+              { value: 0, from: creator }
+            ));
+            // case newMemberAddress is empty
+            await reverting(ballotStorage.createBallotForMemeber(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              addMem, // oldMemberAddress
+              ZERO_ADDRESS, // newMemberAddress
+              _enodeid, // newNodeId
+              _nodeip, // newNodeIp
+              _nodePort, // newNodePort
+              { value: 0, from: creator }
+            ));
+            // case newNodeId is  empty
+            await reverting(ballotStorage.createBallotForMemeber(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              addMem, // oldMemberAddress
+              addMem, // newMemberAddress
+              "0x", // newNodeId
+              _nodeip, // newNodeIp
+              _nodePort, // newNodePort
+              { value: 0, from: creator }
+            ));
+            // case newNodeIp is empty
+            await reverting(ballotStorage.createBallotForMemeber(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              addMem, // oldMemberAddress
+              addMem, // newMemberAddress
+              _enodeid, // newNodeId
+              "0x", // newNodeIp
+              _nodePort, // newNodePort
+              { value: 0, from: creator }
+            ));
+            // case newNodePort is  empty
+            await reverting(ballotStorage.createBallotForMemeber(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              addMem, // oldMemberAddress
+              addMem, // newMemberAddress
+              _enodeid, // newNodeId
+              _nodeip, // newNodeIp
+              0, // newNodePort
+              { value: 0, from: creator }
+            ));
+          });
+          it('create Ballot for MemberSwap', async () => {
+            await ballotStorage.createBallotForMemeber(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              addMem, // oldMemberAddress
+              addMem, // newMemberAddress
+              _enodeid, // newNodeId
+              _nodeip, // newNodeIp
+              _nodePort, // newNodePort
+              { value: 0, from: govAddr }
+            ); // .should.be.rejectedWith(ERROR_MSG);
+
+            const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
+
+            ballotBasicInfo[BallotBasicParams.BallotType].should.be.bignumber.equal(_ballotType);
+            assert.equal(ballotBasicInfo[BallotBasicParams.Creator], creator);
+            ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(0);
+            ballotBasicInfo[BallotBasicParams.PowerOfAccepts].should.be.bignumber.equal(0);
+            ballotBasicInfo[BallotBasicParams.PowerOfRejects].should.be.bignumber.equal(0);
+            ballotBasicInfo[BallotBasicParams.State].should.be.bignumber.equal(1);
+            assert.equal(ballotBasicInfo[BallotBasicParams.IsFinalized], false);
+
+            const ballotDetailInfo = await ballotStorage.getBallotMember(_id);
+
+            assert.equal(ballotDetailInfo[0], addMem);
+            assert.equal(ballotDetailInfo[1], addMem);
+            assert.equal(ballotDetailInfo[2], _enodeid);
+            assert.equal(web3Utils.toUtf8(ballotDetailInfo[3]), _nodeip);
+            assert.equal(ballotDetailInfo[4], _nodePort);
+          });
+        });
       });
       describe('address', function () {
         const _ballotType = new web3.BigNumber(4);
@@ -293,7 +472,7 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         const _varName = web3.sha3('blockPer');
         const _varType = new web3.BigNumber(2);
 
-        const _varVal ="100";
+        const _varVal ="0x0000000000000000000000000000000000000000000000000000000000007530";
 
         it('Canot create Ballot for Enviroment Variable(not govAddr)', async () => {
           // const _id = new web3.BigNumber(4);
@@ -401,6 +580,13 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
           assert.equal(ballotBasicInfo[BallotBasicParams.Duration], _duration);
           const ballotPeriodInfo = await ballotStorage.getBallotPeriod(_id);
           assert.equal(ballotPeriodInfo[2], _duration);
+        });
+      });
+      describe('updateLockAmount', function () {
+        it('update lockAmount for MemberAdd', async () => {
+          await ballotStorage.updateBallotMemberLockAmount(_id,_lockAmount,{ value: 0, from: govAddr });
+          const ballotMemberInfo = await ballotStorage.getBallotMember(_id);
+          ballotMemberInfo[5].should.be.bignumber.equal(_lockAmount);
         });
       });
       describe('finalize', function () {

@@ -252,30 +252,30 @@ contract Registry is Ownable {
 contract Staking is GovChecker, ReentrancyGuard {
     using SafeMath for uint256;
 
-    mapping(address => uint256) private _balance;
-    mapping(address => uint256) private _lockedBalance;
-    uint256 private _totalLockedBalance;
+    mapping(address => uint256) private balance;
+    mapping(address => uint256) private lockedBalance;
+    uint256 private totalLockedBalance;
     
     event Staked(address indexed payee, uint256 amount, uint256 total, uint256 available);
     event Unstaked(address indexed payee, uint256 amount, uint256 total, uint256 available);
     event Locked(address indexed payee, uint256 amount, uint256 total, uint256 available);
     event Unlocked(address indexed payee, uint256 amount, uint256 total, uint256 available);
 
-    constructor(address _registry) public {
-        _totalLockedBalance = 0;
-        setRegistry(_registry);
+    constructor(address registry) public {
+        totalLockedBalance = 0;
+        setRegistry(registry);
     }
 
     function balanceOf(address payee) public view returns (uint256) {
-        return _balance[payee];
+        return balance[payee];
     }
 
     function lockedBalanceOf(address payee) public view returns (uint256) {
-        return _lockedBalance[payee];
+        return lockedBalance[payee];
     }
 
     function availableBalance(address payee) public view returns (uint256) {
-        return _balance[payee].sub(_lockedBalance[payee]);
+        return balance[payee].sub(lockedBalance[payee]);
     }
 
     /**
@@ -295,8 +295,8 @@ contract Staking is GovChecker, ReentrancyGuard {
     *               if 1e3, result range is between 0 ~ 1000
     */
     function calcVotingWeightWithScaleFactor(address payee, uint32 factor) public view returns (uint256) {
-        if (_lockedBalance[payee] == 0 || factor == 0) return 0;
-        return _lockedBalance[payee].mul(factor).div(_totalLockedBalance);
+        if (lockedBalance[payee] == 0 || factor == 0) return 0;
+        return lockedBalance[payee].mul(factor).div(totalLockedBalance);
     }
 
     function () external payable {
@@ -309,9 +309,9 @@ contract Staking is GovChecker, ReentrancyGuard {
     function deposit() external nonReentrant payable {
         require(msg.value > 0, "Deposit amount should be greater than zero");
 
-        _balance[msg.sender] = _balance[msg.sender].add(msg.value);
+        balance[msg.sender] = balance[msg.sender].add(msg.value);
 
-        emit Staked(msg.sender, msg.value, _balance[msg.sender], availableBalance(msg.sender));
+        emit Staked(msg.sender, msg.value, balance[msg.sender], availableBalance(msg.sender));
     }
 
     /**
@@ -321,10 +321,10 @@ contract Staking is GovChecker, ReentrancyGuard {
     function withdraw(uint256 amount) external nonReentrant {
         require(amount <= availableBalance(msg.sender), "Withdraw amount should be equal or less than balance");
 
-        _balance[msg.sender] = _balance[msg.sender].sub(amount);
+        balance[msg.sender] = balance[msg.sender].sub(amount);
         msg.sender.transfer(amount);
 
-        emit Unstaked(msg.sender, amount, _balance[msg.sender], availableBalance(msg.sender));
+        emit Unstaked(msg.sender, amount, balance[msg.sender], availableBalance(msg.sender));
     }
 
     /**
@@ -333,13 +333,13 @@ contract Staking is GovChecker, ReentrancyGuard {
     * @param lockAmount The amount of funds will be locked.
     */
     function lock(address payee, uint256 lockAmount) external onlyGov {
-        require(_balance[payee] >= lockAmount, "Lock amount should be equal or less than balance");
+        require(balance[payee] >= lockAmount, "Lock amount should be equal or less than balance");
         require(availableBalance(payee) >= lockAmount, "Insufficient balance that can be locked");
 
-        _lockedBalance[payee] = _lockedBalance[payee].add(lockAmount);
-        _totalLockedBalance = _totalLockedBalance.add(lockAmount);
+        lockedBalance[payee] = lockedBalance[payee].add(lockAmount);
+        totalLockedBalance = totalLockedBalance.add(lockAmount);
 
-        emit Locked(payee, lockAmount, _balance[payee], availableBalance(payee));
+        emit Locked(payee, lockAmount, balance[payee], availableBalance(payee));
     }
 
     /**
@@ -348,14 +348,13 @@ contract Staking is GovChecker, ReentrancyGuard {
     * @param unlockAmount The amount of funds will be unlocked.
     */
     function unlock(address payee, uint256 unlockAmount) external onlyGov {
-        require(_lockedBalance[payee] >= unlockAmount, "Unlock amount should be equal or less than balance locked");
+        require(lockedBalance[payee] >= unlockAmount, "Unlock amount should be equal or less than balance locked");
 
-        _lockedBalance[payee] = _lockedBalance[payee].sub(unlockAmount);
-        _totalLockedBalance = _totalLockedBalance.sub(unlockAmount);
+        lockedBalance[payee] = lockedBalance[payee].sub(unlockAmount);
+        totalLockedBalance = totalLockedBalance.sub(unlockAmount);
 
-        emit Unlocked(payee, unlockAmount, _balance[payee], availableBalance(payee));
+        emit Unlocked(payee, unlockAmount, balance[payee], availableBalance(payee));
     }
-
 }
 
 contract Proxy {
@@ -518,76 +517,288 @@ contract Gov is UpgradeabilityProxy, GovChecker {
     }
 }
 
-contract AEnvStorage is GovChecker {
-    struct Variable {
-        bytes32 _name;
-        uint256 _type;
-        string _value;
+contract EternalStorage {
+    struct Storage {
+        mapping(bytes32 => bool) _bool;
+        mapping(bytes32 => int256) _int;
+        mapping(bytes32 => uint256) _uint;
+        mapping(bytes32 => string) _string;
+        mapping(bytes32 => address) _address;
+        mapping(bytes32 => bytes) _bytes;
+        mapping(bytes32 => bytes32) _bytes32;
     }
+
+    Storage internal s;
+
+    /**
+    * @dev Allows the owner to set a value for a boolean variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setBoolean(bytes32 h, bool v) internal {
+        s._bool[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a int variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setInt(bytes32 h, int256 v) internal {
+        s._int[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a boolean variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setUint(bytes32 h, uint256 v) internal {
+        s._uint[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a address variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setAddress(bytes32 h, address v) internal {
+        s._address[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a string variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setString(bytes32 h, string v) internal  {
+        s._string[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a bytes variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setBytes(bytes32 h, bytes v) internal {
+        s._bytes[h] = v;
+    }
+    /**
+    * @dev Allows the owner to set a value for a bytes32 variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setBytes32(bytes32 h, bytes32 v) internal {
+        s._bytes32[h] = v;
+    }
+    /**
+    * @dev Get the value stored of a boolean variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getBoolean(bytes32 h) public view returns (bool){
+        return s._bool[h];
+    }
+
+    /**
+    * @dev Get the value stored of a int variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getInt(bytes32 h) public view returns (int){
+        return s._int[h];
+    }
+
+    /**
+    * @dev Get the value stored of a uint variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getUint(bytes32 h) public view returns (uint256){
+        return s._uint[h];
+    }
+
+    /**
+    * @dev Get the value stored of a address variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getAddress(bytes32 h) public view returns (address){
+        return s._address[h];
+    }
+
+    /**
+    * @dev Get the value stored of a string variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getString(bytes32 h) public view returns (string){
+        return s._string[h];
+    }
+
+    /**
+    * @dev Get the value stored of a bytes variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getBytes(bytes32 h) public view returns (bytes){
+        return s._bytes[h];
+    }
+    /**
+    * @dev Get the value stored of a bytes variable by the hash name
+    * @param h The keccak256 hash of the variable name
+    */
+    function getBytes32(bytes32 h) public view returns (bytes32){
+        return s._bytes32[h];
+    }
+}
+
+contract AEnvStorage is EternalStorage, GovChecker {
+    // struct Variable {
+    //     bytes32 _name;
+    //     uint256 _type;
+    //     string _value;
+    // }
    
-    event VarableAdded ( 
+    event StringVarableChanged ( 
         bytes32 indexed _name,
-        uint256 indexed _type,
         string _value
     );
+    event UintVarableChanged ( 
+        bytes32 indexed _name,
+        uint _value
+    );
+    event IntVarableChanged ( 
+        bytes32 indexed _name,
+        int _value
+    );
+    event AddressVarableChanged ( 
+        bytes32 indexed _name,
+        address _value
+    );
+    event Bytes32VarableChanged ( 
+        bytes32 indexed _name,
+        bytes32 _value
+    );
+    event BytesVarableChanged ( 
+        bytes32 indexed _name,
+        bytes _value
+    );
+
     event VarableChanged ( 
         bytes32 indexed _name,
         uint256 indexed _type,
         string _value
     );
    
-    mapping(bytes32 => Variable) internal s;
- 
     /**
-    * @dev Add a new variable .
-    * @param _h The keccak256 hash of the variable name
-    * @param _t The type of value
-    * @param _v The value to be stored
+    * @dev Allows the owner to set a value for a int variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
     */
-    function _add(bytes32 _h, uint256 _t, string _v) internal  {
-        require(s[_h]._name == "","not found");
-        s[_h] = Variable(_h,_t,_v);
-        emit VarableAdded(_h,_t,_v);
+    function setInt(bytes32 h, int256 v) internal {
+        _setInt(h, v);
+        emit IntVarableChanged(h,v);
     }
-    /**
-    * @dev Update a new variable .
-    * @param _h The keccak256 hash of the variable name
-    * @param _t The type of value
-    * @param _v The value to be stored
-    */
-    function _change(bytes32 _h, uint256 _t, string _v) internal {
-        require(s[_h]._name == _h,"not found");
-        Variable storage v = s[_h];
-        v._name = _h;
-        v._type = _t;
-        v._value = _v;
-        emit VarableChanged(_h,_t,_v);
 
+    /**
+    * @dev Allows the owner to set a value for a boolean variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function setUint(bytes32 h, uint256 v) internal {
+        _setUint(h, v);
+        emit UintVarableChanged(h,v);
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a address variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function setAddress(bytes32 h, address v) internal {
+        _setAddress(h, v);
+        emit AddressVarableChanged(h,v);
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a string variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function setString(bytes32 h, string v) internal  {
+        _setString(h, v);
+        emit StringVarableChanged(h,v);
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a bytes variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function setBytes(bytes32 h, bytes v) internal {
+        _setBytes(h, v);
+        emit BytesVarableChanged(h,v);
     }
     /**
-    * @dev Get the type & value stored of a string variable by the hash name
-    * @param _h The keccak256 hash of the variable name
+    * @dev Allows the owner to set a value for a bytes32 variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
     */
-    function get(bytes32 _h) public view returns (uint256 varType, string varVal){
-        //require(s[_h]._name == _h,"not found");
-        return (s[_h]._type, s[_h]._value);
+    function setBytes32(bytes32 h, bytes32 v) internal {
+        _setBytes32(h, v);
+        emit Bytes32VarableChanged(h,v);
     }
-    /**
-    * @dev Get the type stored of a string variable by the hash name
-    * @param _h The keccak256 hash of the variable name
-    */
-    function getType(bytes32 _h) public view returns (uint256){
-        //require(s[_h]._name == _h,"not found");
-        return s[_h]._type;
-    }
-    /**
-    * @dev Get the value stored of a string variable by the hash name
-    * @param _h The keccak256 hash of the variable name
-    */
-    function getValue(bytes32 _h) public view returns (string){
-        //require(s[_h]._name == _h,"not found");
-        return s[_h]._value;
-    }
+
+
+
+    // mapping(bytes32 => Variable) internal s;
+
+    // /**
+    // * @dev Add a new variable .
+    // * @param _h The keccak256 hash of the variable name
+    // * @param _t The type of value
+    // * @param _v The value to be stored
+    // */
+    // function _add(bytes32 _h, uint256 _t, string _v) internal  {
+    //     require(s[_h]._name == "","not found");
+    //     s[_h] = Variable(_h,_t,_v);
+    //     emit VarableAdded(_h,_t,_v);
+    // }
+    // /**
+    // * @dev Update a new variable .
+    // * @param _h The keccak256 hash of the variable name
+    // * @param _t The type of value
+    // * @param _v The value to be stored
+    // */
+    // function _change(bytes32 _h, uint256 _t, string _v) internal {
+    //     require(s[_h]._name == _h,"not found");
+    //     Variable storage v = s[_h];
+    //     v._name = _h;
+    //     v._type = _t;
+    //     v._value = _v;
+    //     emit VarableChanged(_h,_t,_v);
+
+    // }
+    // /**
+    // * @dev Get the type & value stored of a string variable by the hash name
+    // * @param _h The keccak256 hash of the variable name
+    // */
+    // function get(bytes32 _h) public view returns (uint256 varType, string varVal){
+    //     //require(s[_h]._name == _h,"not found");
+    //     return (s[_h]._type, s[_h]._value);
+    // }
+    // /**
+    // * @dev Get the type stored of a string variable by the hash name
+    // * @param _h The keccak256 hash of the variable name
+    // */
+    // function getType(bytes32 _h) public view returns (uint256){
+    //     require(s[_h]._name == _h,"not found");
+    //     return s[_h]._type;
+    // }
+    // /**
+    // * @dev Get the value stored of a string variable by the hash name
+    // * @param _h The keccak256 hash of the variable name
+    // */
+    // function getValue(bytes32 _h) public view returns (string){
+    //     require(s[_h]._name == _h,"not found");
+    //     return s[_h]._value;
+    // }
+    
 }
 
 contract EnvStorage is UpgradeabilityProxy, AEnvStorage {

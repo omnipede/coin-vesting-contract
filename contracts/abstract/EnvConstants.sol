@@ -25,4 +25,9 @@ contract EnvConstants {
         Bytes,
         String
     }
+    bytes32 internal constant TEST_INT = keccak256("TEST_INT"); 
+    bytes32 internal constant TEST_ADDRESS = keccak256("TEST_ADDRESS"); 
+    bytes32 internal constant TEST_BYTES32 = keccak256("TEST_BYTES32"); 
+    bytes32 internal constant TEST_BYTES = keccak256("TEST_BYTES"); 
+    bytes32 internal constant TEST_STRING = keccak256("TEST_STRING"); 
 }

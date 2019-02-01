@@ -252,30 +252,30 @@ contract Registry is Ownable {
 contract Staking is GovChecker, ReentrancyGuard {
     using SafeMath for uint256;
 
-    mapping(address => uint256) private _balance;
-    mapping(address => uint256) private _lockedBalance;
-    uint256 private _totalLockedBalance;
+    mapping(address => uint256) private balance;
+    mapping(address => uint256) private lockedBalance;
+    uint256 private totalLockedBalance;
     
     event Staked(address indexed payee, uint256 amount, uint256 total, uint256 available);
     event Unstaked(address indexed payee, uint256 amount, uint256 total, uint256 available);
     event Locked(address indexed payee, uint256 amount, uint256 total, uint256 available);
     event Unlocked(address indexed payee, uint256 amount, uint256 total, uint256 available);
 
-    constructor(address _registry) public {
-        _totalLockedBalance = 0;
-        setRegistry(_registry);
+    constructor(address registry) public {
+        totalLockedBalance = 0;
+        setRegistry(registry);
     }
 
     function balanceOf(address payee) public view returns (uint256) {
-        return _balance[payee];
+        return balance[payee];
     }
 
     function lockedBalanceOf(address payee) public view returns (uint256) {
-        return _lockedBalance[payee];
+        return lockedBalance[payee];
     }
 
     function availableBalance(address payee) public view returns (uint256) {
-        return _balance[payee].sub(_lockedBalance[payee]);
+        return balance[payee].sub(lockedBalance[payee]);
     }
 
     /**
@@ -295,8 +295,8 @@ contract Staking is GovChecker, ReentrancyGuard {
     *               if 1e3, result range is between 0 ~ 1000
     */
     function calcVotingWeightWithScaleFactor(address payee, uint32 factor) public view returns (uint256) {
-        if (_lockedBalance[payee] == 0 || factor == 0) return 0;
-        return _lockedBalance[payee].mul(factor).div(_totalLockedBalance);
+        if (lockedBalance[payee] == 0 || factor == 0) return 0;
+        return lockedBalance[payee].mul(factor).div(totalLockedBalance);
     }
 
     function () external payable {
@@ -309,9 +309,9 @@ contract Staking is GovChecker, ReentrancyGuard {
     function deposit() external nonReentrant payable {
         require(msg.value > 0, "Deposit amount should be greater than zero");
 
-        _balance[msg.sender] = _balance[msg.sender].add(msg.value);
+        balance[msg.sender] = balance[msg.sender].add(msg.value);
 
-        emit Staked(msg.sender, msg.value, _balance[msg.sender], availableBalance(msg.sender));
+        emit Staked(msg.sender, msg.value, balance[msg.sender], availableBalance(msg.sender));
     }
 
     /**
@@ -321,10 +321,10 @@ contract Staking is GovChecker, ReentrancyGuard {
     function withdraw(uint256 amount) external nonReentrant {
         require(amount <= availableBalance(msg.sender), "Withdraw amount should be equal or less than balance");
 
-        _balance[msg.sender] = _balance[msg.sender].sub(amount);
+        balance[msg.sender] = balance[msg.sender].sub(amount);
         msg.sender.transfer(amount);
 
-        emit Unstaked(msg.sender, amount, _balance[msg.sender], availableBalance(msg.sender));
+        emit Unstaked(msg.sender, amount, balance[msg.sender], availableBalance(msg.sender));
     }
 
     /**
@@ -333,13 +333,13 @@ contract Staking is GovChecker, ReentrancyGuard {
     * @param lockAmount The amount of funds will be locked.
     */
     function lock(address payee, uint256 lockAmount) external onlyGov {
-        require(_balance[payee] >= lockAmount, "Lock amount should be equal or less than balance");
+        require(balance[payee] >= lockAmount, "Lock amount should be equal or less than balance");
         require(availableBalance(payee) >= lockAmount, "Insufficient balance that can be locked");
 
-        _lockedBalance[payee] = _lockedBalance[payee].add(lockAmount);
-        _totalLockedBalance = _totalLockedBalance.add(lockAmount);
+        lockedBalance[payee] = lockedBalance[payee].add(lockAmount);
+        totalLockedBalance = totalLockedBalance.add(lockAmount);
 
-        emit Locked(payee, lockAmount, _balance[payee], availableBalance(payee));
+        emit Locked(payee, lockAmount, balance[payee], availableBalance(payee));
     }
 
     /**
@@ -348,14 +348,13 @@ contract Staking is GovChecker, ReentrancyGuard {
     * @param unlockAmount The amount of funds will be unlocked.
     */
     function unlock(address payee, uint256 unlockAmount) external onlyGov {
-        require(_lockedBalance[payee] >= unlockAmount, "Unlock amount should be equal or less than balance locked");
+        require(lockedBalance[payee] >= unlockAmount, "Unlock amount should be equal or less than balance locked");
 
-        _lockedBalance[payee] = _lockedBalance[payee].sub(unlockAmount);
-        _totalLockedBalance = _totalLockedBalance.sub(unlockAmount);
+        lockedBalance[payee] = lockedBalance[payee].sub(unlockAmount);
+        totalLockedBalance = totalLockedBalance.sub(unlockAmount);
 
-        emit Unlocked(payee, unlockAmount, _balance[payee], availableBalance(payee));
+        emit Unlocked(payee, unlockAmount, balance[payee], availableBalance(payee));
     }
-
 }
 
 contract BallotEnums {
@@ -408,6 +407,11 @@ contract EnvConstants {
         Bytes,
         String
     }
+    bytes32 internal constant TEST_INT = keccak256("TEST_INT"); 
+    bytes32 internal constant TEST_ADDRESS = keccak256("TEST_ADDRESS"); 
+    bytes32 internal constant TEST_BYTES32 = keccak256("TEST_BYTES32"); 
+    bytes32 internal constant TEST_BYTES = keccak256("TEST_BYTES"); 
+    bytes32 internal constant TEST_STRING = keccak256("TEST_STRING"); 
 }
 
 contract Proxy {
@@ -624,7 +628,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         uint256 id; 
         bytes32 envVariableName;
         uint256 envVariableType;
-        string envVariableValue;
+        bytes envVariableValue;
     }
 
     struct Vote {
@@ -744,7 +748,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     function getBallotVariable(uint256 _id) public view returns (
         bytes32 envVariableName,
         uint256 envVariableType,
-        string envVariableValue 
+        bytes envVariableValue 
     )
     {
         BallotVariable storage tBallot = ballotVariableMap[_id];
@@ -842,7 +846,6 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
 
     }
 
-    
     function createBallotForAddress(
         uint256 _id,
         uint256 _ballotType,
@@ -868,7 +871,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         uint256 _ballotType,
         bytes32 _envVariableName,
         uint256 _envVariableType,
-        string _envVariableValue 
+        bytes _envVariableValue 
     )
         internal
         pure
@@ -878,7 +881,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         require(_envVariableName.length > 0, "Invalid environment variable name");
         require(_envVariableType >= uint256(VariableTypes.Int), "Invalid environment variable Type");
         require(_envVariableType <= uint256(VariableTypes.String), "Invalid environment variable Type");
-        require(bytes(_envVariableValue).length > 0, "Invalid environment variable value");
+        require(_envVariableValue.length > 0, "Invalid environment variable value");
 
         return true;
     }
@@ -889,7 +892,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         address _creator,
         bytes32 _envVariableName,
         uint256 _envVariableType,
-        string _envVariableValue 
+        bytes _envVariableValue 
     )
         public
         onlyGov
@@ -1031,17 +1034,20 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     function updateBallotMemo(
         uint256 _ballotId,
         bytes _memo
-    ) public onlyGov
+    )
+        public onlyGov
     {
         require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
         require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
         BallotBasic storage _ballot = ballotBasicMap[_ballotId];
         _ballot.memo = _memo;
     }
+
     function updateBallotDuration(
         uint256 _ballotId,
         uint256 _duration
-    ) public onlyGov
+    )
+        public onlyGov
     {
         require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
         require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
@@ -1049,10 +1055,12 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         BallotBasic storage _ballot = ballotBasicMap[_ballotId];
         _ballot.duration = _duration;
     }
+
     function updateBallotMemberLockAmount(
         uint256 _ballotId,
         uint256 _lockAmount
-    ) public onlyGov
+    )
+        public onlyGov
     {
         require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
         require(ballotMemberMap[_ballotId].id == _ballotId, "not existed BallotMember");
@@ -1061,6 +1069,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         BallotMember storage _ballot = ballotMemberMap[_ballotId];
         _ballot.lockAmount = _lockAmount;
     }
+
     function getBallotPeriod(uint256 _id) public view returns (
         uint256 startTime,
         uint256 endTime,
