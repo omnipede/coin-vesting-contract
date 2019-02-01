@@ -81,6 +81,7 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
     govDelegator = await GovImp.at(gov.address);
   });
 
+  // For short check
   describe('Contract creation ', function () {
     it('consume for govImp', async () => { await GovImp.new(); });
     it('consume for envStorageImp', async () => { await EnvStorageImp.new(); });

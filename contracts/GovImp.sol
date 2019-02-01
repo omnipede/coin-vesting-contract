@@ -2,8 +2,9 @@ pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol";
 import "./abstract/BallotEnums.sol";
+import "./abstract/EnvConstants.sol";
 import "./interface/IBallotStorage.sol";
-import "./storage/EnvStorageImp.sol";
+import "./interface/IEnvStorage.sol";
 import "./Gov.sol";
 import "./Staking.sol";
 
@@ -23,7 +24,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
     function getMaxVotingDuration() public pure returns (uint256) { return 7 days; }
 
     function getThreshould() public pure returns (uint256) { return 51; } // 51% from 51 of 100
-            
+
     function addProposalToAddMember(
         address member,
         bytes enode,
@@ -377,24 +378,27 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
             string memory envVal
         ) = IBallotStorage(getBallotStorageAddress()).getBallotVariable(ballotIdx);
 
-        address envStorage = REG.getContractAddress("EnvStorage");
-        require(envStorage != address(0), "EnvStorage NOT FOUND");
+        IEnvStorage envStorage = IEnvStorage(getEnvStorageAddress());
         if (envKey == BLOCK_PER_NAME && envType == BLOCK_PER_TYPE) {
-            EnvStorageImp(envStorage).setBlockPer(envVal);
+            envStorage.setBlockPer(envVal);
         } else if (envKey == BALLOT_DURATION_MIN_NAME && envType == BALLOT_DURATION_MIN_TYPE) {
-            EnvStorageImp(envStorage).setBallotDurationMin(envVal);
+            envStorage.setBallotDurationMin(envVal);
         } else if (envKey == BALLOT_DURATION_MAX_NAME && envType == BALLOT_DURATION_MAX_TYPE) {
-            EnvStorageImp(envStorage).setBallotDurationMax(envVal);
+            envStorage.setBallotDurationMax(envVal);
         } else if (envKey == STAKING_MIN_NAME && envType == STAKING_MIN_TYPE) {
-            EnvStorageImp(envStorage).setStakingMin(envVal);
+            envStorage.setStakingMin(envVal);
         } else if (envKey == STAKING_MAX_NAME && envType == STAKING_MAX_TYPE) {
-            EnvStorageImp(envStorage).setStakingMax(envVal);
+            envStorage.setStakingMax(envVal);
         }
 
         emit EnvChanged(envKey, envType, envVal);
     }
 
     //------------------ Code reduction
+    function getEnvStorageAddress() private view returns (address) {
+        return REG.getContractAddress("EnvStorage");
+    }
+
     function getBallotStorageAddress() private view returns (address) {
         return REG.getContractAddress("BallotStorage");
     }
