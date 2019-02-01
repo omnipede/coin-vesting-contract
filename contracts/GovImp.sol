@@ -174,13 +174,14 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
 
         // Vote
         uint256 voteIdx = voteLength.add(1);
+        uint256 weight = IStaking(getStakingAddress()).calcVotingWeightWithScaleFactor(msg.sender, 1e4);
         if (approval) {
             IBallotStorage(ballotStorage).createVote(
                 voteIdx,
                 ballotIdx,
                 msg.sender,
                 uint256(DecisionTypes.Accept),
-                IStaking(getStakingAddress()).calcVotingWeight(msg.sender)
+                weight
             );
         } else {
             IBallotStorage(ballotStorage).createVote(
@@ -188,11 +189,11 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
                 ballotIdx,
                 msg.sender,
                 uint256(DecisionTypes.Reject),
-                IStaking(getStakingAddress()).calcVotingWeight(msg.sender)
+                weight
             );
         }
         voteLength = voteIdx;
-
+        
         // Finalize
         (, uint256 accept, uint256 reject) = getBallotVotingInfo(ballotIdx);
         if (accept.add(reject) < getThreshould()) {
@@ -219,16 +220,23 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
         ballotInVoting = 0;
     }
 
-    // FIXME: get from EnvStorage
-    function getMinStaking() public pure returns (uint256) { return 10 ether; }
+    function getMinStaking() public view returns (uint256) {
+        return IEnvStorage(getEnvStorageAddress()).getStakingMin();
+    }
 
-    function getMaxStaking() public pure returns (uint256) { return 100 ether; }
+    function getMaxStaking() public view returns (uint256) {
+        return IEnvStorage(getEnvStorageAddress()).getStakingMax();
+    }
 
-    function getMinVotingDuration() public pure returns (uint256) { return 1 days; }
+    function getMinVotingDuration() public view returns (uint256) {
+        return IEnvStorage(getEnvStorageAddress()).getBallotDurationMin();
+    }
     
-    function getMaxVotingDuration() public pure returns (uint256) { return 7 days; }
+    function getMaxVotingDuration() public view returns (uint256) {
+        return IEnvStorage(getEnvStorageAddress()).getBallotDurationMax();
+    }
 
-    function getThreshould() public pure returns (uint256) { return 51; } // 51% from 51 of 100
+    function getThreshould() public pure returns (uint256) { return 5100; } // 51% from 5100 of 10000
 
     function checkUnfinalized(uint256 ballotIdx) private {
         if (ballotInVoting != 0) {

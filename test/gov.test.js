@@ -13,7 +13,7 @@ const GovImp = artifacts.require('GovImp.sol');
 const EnvStorage = artifacts.require('EnvStorage.sol');
 const EnvStorageImp = artifacts.require('EnvStorageImp.sol');
 
-const amount = ether(1e2);
+const amount = ether(5e6);
 
 const enode = [
   // eslint-disable-next-line max-len
