@@ -158,8 +158,11 @@ contract ReentrancyGuard {
 
 contract GovChecker is Ownable {
 
-    Registry public REG;
-    bytes32 public GOV_NAME ="GovernanceContract";
+    IRegistry public reg;
+    bytes32 public constant GOV_NAME ="GovernanceContract";
+    bytes32 public constant STAKING_NAME ="Staking";
+    bytes32 public constant BALLOT_STORAGE_NAME ="BallotStorage";
+    bytes32 public constant ENV_STORAGE_NAME ="EnvStorage";
 
     /**
      * @dev Function to set registry address. Contract that wants to use registry should setRegistry first.
@@ -167,193 +170,35 @@ contract GovChecker is Ownable {
      * @return A boolean that indicates if the operation was successful.
      */
     function setRegistry(address _addr) public onlyOwner {
-        REG = Registry(_addr);
+        reg = IRegistry(_addr);
     }
     
     modifier onlyGov() {
-        require(REG.getContractAddress(GOV_NAME) == msg.sender, "No Permission");
+        require(getContractAddress(GOV_NAME) == msg.sender, "No Permission");
         _;
     }
 
     modifier onlyGovMem() {
-        address addr = REG.getContractAddress(GOV_NAME);
+        address addr = reg.getContractAddress(GOV_NAME);
         require(addr != address(0), "No Governance");
-        require(Gov(addr).isMember(msg.sender), "No Permission");
+        require(IGov(addr).isMember(msg.sender), "No Permission");
         _;
     }
 
-}
-
-contract Registry is Ownable {
-    mapping(bytes32=>address) public contracts;
-    mapping(bytes32=>mapping(address=>bool)) public permissions;
-
-    event SetContractDomain(address setter, bytes32 indexed name, address indexed addr);
-    event SetPermission(bytes32 indexed _contract, address indexed granted, bool status);
-
-    /**
-    * @dev Function to set contract(can be general address) domain
-    * Only owner can use this function
-    * @param _name name
-    * @param _addr address
-    * @return A boolean that indicates if the operation was successful.
-    */
-    function setContractDomain(bytes32 _name, address _addr) public onlyOwner returns (bool success) {
-        require(_addr != address(0x0), "address should be non-zero");
-        contracts[_name] = _addr;
-
-        emit SetContractDomain(msg.sender, _name, _addr);
-
-        return true;
+    function getContractAddress(bytes32 name) internal view returns (address) {
+        return reg.getContractAddress(name);
     }
 
-    /**
-    * @dev Function to get contract(can be general address) address
-    * Anyone can use this function
-    * @param _name _name
-    * @return An address of the _name
-    */
-    function getContractAddress(bytes32 _name) public view returns (address addr) {
-        require(contracts[_name] != address(0x0), "address should be non-zero");
-        return contracts[_name];
-    }
-    
-    /**
-    * @dev Function to set permission on contract
-    * contract using modifier 'permissioned' references mapping variable 'permissions'
-    * Only owner can use this function
-    * @param _contract contract name
-    * @param _granted granted address
-    * @param _status true = can use, false = cannot use. default is false
-    * @return A boolean that indicates if the operation was successful.
-    */
-    function setPermission(bytes32 _contract, address _granted, bool _status) public onlyOwner returns (bool success) {
-        require(_granted != address(0x0), "address should be non-zero");
-        permissions[_contract][_granted] = _status;
-
-        emit SetPermission(_contract, _granted, _status);
-        
-        return true;
+    function getStakingAddress() internal view returns (address) {
+        return getContractAddress(STAKING_NAME);
     }
 
-    /**
-    * @dev Function to get permission on contract
-    * contract using modifier 'permissioned' references mapping variable 'permissions'
-    * @param _contract contract name
-    * @param _granted granted address
-    * @return permission result
-    */
-    function getPermission(bytes32 _contract, address _granted) public view returns (bool found) {
-        return permissions[_contract][_granted];
-    }
-    
-}
-
-contract Staking is GovChecker, ReentrancyGuard {
-    using SafeMath for uint256;
-
-    mapping(address => uint256) private balance;
-    mapping(address => uint256) private lockedBalance;
-    uint256 private totalLockedBalance;
-    
-    event Staked(address indexed payee, uint256 amount, uint256 total, uint256 available);
-    event Unstaked(address indexed payee, uint256 amount, uint256 total, uint256 available);
-    event Locked(address indexed payee, uint256 amount, uint256 total, uint256 available);
-    event Unlocked(address indexed payee, uint256 amount, uint256 total, uint256 available);
-
-    constructor(address registry) public {
-        totalLockedBalance = 0;
-        setRegistry(registry);
+    function getBallotStorageAddress() internal view returns (address) {
+        return getContractAddress(BALLOT_STORAGE_NAME);
     }
 
-    function balanceOf(address payee) public view returns (uint256) {
-        return balance[payee];
-    }
-
-    function lockedBalanceOf(address payee) public view returns (uint256) {
-        return lockedBalance[payee];
-    }
-
-    function availableBalance(address payee) public view returns (uint256) {
-        return balance[payee].sub(lockedBalance[payee]);
-    }
-
-    /**
-    * @dev Calculate voting weight which range between 0 and 100.
-    * @param payee The address whose funds were locked.
-    */
-    function calcVotingWeight(address payee) public view returns (uint256) {
-        return calcVotingWeightWithScaleFactor(payee, 1e2);
-    }
-
-    /**
-    * @dev Calculate voting weight with a scale factor.
-    * @param payee The address whose funds were locked.
-    * @param factor The scale factor for weight. For instance:
-    *               if 1e1, result range is between 0 ~ 10
-    *               if 1e2, result range is between 0 ~ 100
-    *               if 1e3, result range is between 0 ~ 1000
-    */
-    function calcVotingWeightWithScaleFactor(address payee, uint32 factor) public view returns (uint256) {
-        if (lockedBalance[payee] == 0 || factor == 0) return 0;
-        return lockedBalance[payee].mul(factor).div(totalLockedBalance);
-    }
-
-    function () external payable {
-        revert();
-    }
-
-    /**
-    * @dev Deposit from a sender.
-    */
-    function deposit() external nonReentrant payable {
-        require(msg.value > 0, "Deposit amount should be greater than zero");
-
-        balance[msg.sender] = balance[msg.sender].add(msg.value);
-
-        emit Staked(msg.sender, msg.value, balance[msg.sender], availableBalance(msg.sender));
-    }
-
-    /**
-    * @dev Withdraw for a sender.
-    * @param amount The amount of funds will be withdrawn and transferred to.
-    */
-    function withdraw(uint256 amount) external nonReentrant {
-        require(amount <= availableBalance(msg.sender), "Withdraw amount should be equal or less than balance");
-
-        balance[msg.sender] = balance[msg.sender].sub(amount);
-        msg.sender.transfer(amount);
-
-        emit Unstaked(msg.sender, amount, balance[msg.sender], availableBalance(msg.sender));
-    }
-
-    /**
-    * @dev Lock fund
-    * @param payee The address whose funds will be locked.
-    * @param lockAmount The amount of funds will be locked.
-    */
-    function lock(address payee, uint256 lockAmount) external onlyGov {
-        require(balance[payee] >= lockAmount, "Lock amount should be equal or less than balance");
-        require(availableBalance(payee) >= lockAmount, "Insufficient balance that can be locked");
-
-        lockedBalance[payee] = lockedBalance[payee].add(lockAmount);
-        totalLockedBalance = totalLockedBalance.add(lockAmount);
-
-        emit Locked(payee, lockAmount, balance[payee], availableBalance(payee));
-    }
-
-    /**
-    * @dev Unlock fund
-    * @param payee The address whose funds will be unlocked.
-    * @param unlockAmount The amount of funds will be unlocked.
-    */
-    function unlock(address payee, uint256 unlockAmount) external onlyGov {
-        require(lockedBalance[payee] >= unlockAmount, "Unlock amount should be equal or less than balance locked");
-
-        lockedBalance[payee] = lockedBalance[payee].sub(unlockAmount);
-        totalLockedBalance = totalLockedBalance.sub(unlockAmount);
-
-        emit Unlocked(payee, unlockAmount, balance[payee], availableBalance(payee));
+    function getEnvStorageAddress() internal view returns (address) {
+        return getContractAddress(ENV_STORAGE_NAME);
     }
 }
 
@@ -407,6 +252,7 @@ contract EnvConstants {
         Bytes,
         String
     }
+    
     bytes32 internal constant TEST_INT = keccak256("TEST_INT"); 
     bytes32 internal constant TEST_ADDRESS = keccak256("TEST_ADDRESS"); 
     bytes32 internal constant TEST_BYTES32 = keccak256("TEST_BYTES32"); 
@@ -414,26 +260,65 @@ contract EnvConstants {
     bytes32 internal constant TEST_STRING = keccak256("TEST_STRING"); 
 }
 
-contract IBallotStorage {
-    function getBallotBasic(uint256) public view returns (
-        uint256,uint256,uint256,address,bytes,uint256,
-        uint256,uint256,uint256,bool,uint256);
-    function getBallotMember(uint256) public view returns (address,address,bytes,bytes,uint256,uint256);
-    function getBallotAddress(uint256) public view returns (address);
-    function getBallotVariable(uint256) public view returns (bytes32,uint256,bytes);
+interface IBallotStorage {
     function createBallotForMemeber(
-        uint256,uint256,address,address,
-        address,bytes,bytes,uint) public;
-    function createBallotForAddress(uint256,uint256,address,address) public returns (uint256);
-    function createBallotForVariable(uint256,uint256,address,bytes32,uint256,bytes) public returns (uint256);
-    function createVote(uint256,uint256,address,uint256,uint256) public returns (uint256);
-    function finalizeBallot(uint256, uint256) public;
-    function startBallot(uint256,uint256,uint256) public;
-    function updateBallotDuration(uint256,uint256) public;
-    function updateBallotMemberLockAmount(uint256,uint256) public;
-    function getBallotPeriod(uint256) public view returns (uint256,uint256,uint256);
-    function getBallotVotingInfo(uint256) public view returns (uint256,uint256,uint256);
-    function getBallotState(uint256) public view returns (uint256,uint256,bool);
+        uint256, uint256, address, address,
+        address, bytes, bytes, uint) external;
+
+    function createBallotForAddress(uint256, uint256, address, address)external returns (uint256);
+    function createBallotForVariable(uint256, uint256, address, bytes32, uint256, bytes) external returns (uint256);
+    function createVote(uint256, uint256, address, uint256, uint256) external returns (uint256);
+    function finalizeBallot(uint256, uint256) external;
+    function startBallot(uint256, uint256, uint256) external;
+    function updateBallotDuration(uint256, uint256) external;
+    function updateBallotMemberLockAmount(uint256, uint256) external;
+
+    function getBallotPeriod(uint256) external view returns (uint256, uint256, uint256);
+    function getBallotVotingInfo(uint256) external view returns (uint256, uint256, uint256);
+    function getBallotState(uint256) external view returns (uint256, uint256, bool);
+
+    function getBallotBasic(uint256) external view returns (
+        uint256, uint256, uint256, address, bytes, uint256,
+        uint256, uint256, uint256, bool, uint256);
+
+    function getBallotMember(uint256) external view returns (address, address, bytes, bytes, uint256, uint256);
+    function getBallotAddress(uint256) external view returns (address);
+    function getBallotVariable(uint256) external view returns (bytes32, uint256, bytes);
+}
+
+interface IEnvStorage {
+    function setBlockPerByBytes(bytes) external;
+    function setBallotDurationMinByBytes(bytes) external;
+    function setBallotDurationMaxByBytes(bytes) external;
+    function setStakingMinByBytes(bytes) external;
+    function setStakingMaxByBytes(bytes) external;
+}
+
+interface IGov {
+    function isMember(address) external view returns (bool);
+    function getMember(uint256) external view returns (address);
+    function getMemberLength() external view returns (uint256);
+    function getNodeIdxFromMember(address) external view returns (uint256);
+    function getMemberFromNodeIdx(uint256) external view returns (address);
+    function getNodeLength() external view returns (uint256);
+    function getNode(uint256) external view returns (bytes, bytes, uint);
+    function getBallotInVoting() external view returns (uint256);
+}
+
+interface IRegistry {
+    function getContractAddress(bytes32) external view returns (address);
+}
+
+interface IStaking {
+    function deposit() external payable;
+    function withdraw(uint256) external;
+    function lock(address, uint256) external;
+    function unlock(address, uint256) external;
+    function balanceOf(address) external view returns (uint256);
+    function lockedBalanceOf(address) external view returns (uint256);
+    function availableBalance(address) external view returns (uint256);
+    function calcVotingWeight(address) external view returns (uint256);
+    function calcVotingWeightWithScaleFactor(address, uint32) external view returns (uint256);
 }
 
 contract Proxy {
@@ -441,7 +326,7 @@ contract Proxy {
     * @dev Fallback function allowing to perform a delegatecall to the given implementation.
     * This function will return whatever the implementation call returns
     */
-    function () payable public {
+    function () public payable {
         address _impl = implementation();
         require(_impl != address(0));
 
@@ -528,6 +413,7 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         bytes ip;
         uint port;
     }
+
     mapping(uint256 => Node) internal nodes;
     mapping(address => uint256) internal nodeIdxFromMember;
     mapping(uint256 => address) internal nodeToMember;
@@ -553,9 +439,11 @@ contract Gov is UpgradeabilityProxy, GovChecker {
     function getNodeIdxFromMember(address addr) public view returns (uint256) { return nodeIdxFromMember[addr]; }
     function getMemberFromNodeIdx(uint256 idx) public view returns (address) { return nodeToMember[idx]; }
     function getNodeLength() public view returns (uint256) { return nodeLength; }
+
     function getNode(uint256 idx) public view returns (bytes enode, bytes ip, uint port) {
         return (nodes[idx].enode, nodes[idx].ip, nodes[idx].port);
     }
+    
     function getBallotInVoting() public view returns (uint256) { return ballotInVoting; }
 
     function init(
@@ -574,7 +462,7 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         setImplementation(implementation);
 
         // Lock
-        Staking staking = Staking(REG.getContractAddress("Staking"));
+        IStaking staking = IStaking(getStakingAddress());
         require(staking.availableBalance(msg.sender) >= lockAmount, "Insufficient staking");
         staking.lock(msg.sender, lockAmount);
 
@@ -604,14 +492,6 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
     event MemberChanged(address indexed oldAddr, address indexed newAddr);
     event EnvChanged(bytes32 envName, uint256 envType, bytes envVal);
 
-    // FIXME: get from EnvStorage
-    function getMinStaking() public pure returns (uint256) { return 10 ether; }
-    function getMaxStaking() public pure returns (uint256) { return 100 ether; }
-    function getMinVotingDuration() public pure returns (uint256) { return 1 days; }
-    function getMaxVotingDuration() public pure returns (uint256) { return 7 days; }
-
-    function getThreshould() public pure returns (uint256) { return 51; } // 51% from 51 of 100
-            
     function addProposalToAddMember(
         address member,
         bytes enode,
@@ -747,26 +627,12 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
     function vote(uint256 ballotIdx, bool approval) external onlyGovMem nonReentrant {
         address ballotStorage = getBallotStorageAddress();
         // Check if some ballot is in progress
-        if (ballotInVoting != 0) {
-            (uint256 ballotType, uint256 state, ) = getBallotState(ballotInVoting);
-            (, uint256 endTime, ) = getBallotPeriod(ballotInVoting);
-            if (state == uint256(BallotStates.InProgress)) {
-                if (endTime < block.timestamp) {
-                    finalizeBallot(ballotIdx, uint256(BallotStates.Rejected));
-                    ballotInVoting = 0;
-                    if (ballotIdx == ballotInVoting) {
-                        return;
-                    }
-                } else if (ballotIdx != ballotInVoting) {
-                    revert("Now in voting with different ballot");
-                }
-            }
-        }
+        checkUnfinalized(ballotIdx);
 
         // Check if the ballot can be voted
-        (ballotType, state, ) = getBallotState(ballotIdx);
+        (uint256 ballotType, uint256 state, ) = getBallotState(ballotIdx);
         if (state == uint256(BallotStates.Ready)) {
-            (,, uint256 duration) = getBallotPeriod(ballotIdx);
+            (, , uint256 duration) = getBallotPeriod(ballotIdx);
             if (duration < getMinVotingDuration()) {
                 startBallot(ballotIdx, block.timestamp, block.timestamp + getMinVotingDuration());
             } else if (getMaxVotingDuration() < duration) {
@@ -781,9 +647,6 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
             revert("Expired");
         }
 
-        address staking = REG.getContractAddress("Staking");
-        require(staking != address(0), "Staking NOT FOUND");
-
         // Vote
         uint256 voteIdx = voteLength.add(1);
         if (approval) {
@@ -792,7 +655,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
                 ballotIdx,
                 msg.sender,
                 uint256(DecisionTypes.Accept),
-                Staking(staking).calcVotingWeight(msg.sender)
+                IStaking(getStakingAddress()).calcVotingWeight(msg.sender)
             );
         } else {
             IBallotStorage(ballotStorage).createVote(
@@ -800,7 +663,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
                 ballotIdx,
                 msg.sender,
                 uint256(DecisionTypes.Reject),
-                Staking(staking).calcVotingWeight(msg.sender)
+                IStaking(getStakingAddress()).calcVotingWeight(msg.sender)
             );
         }
         voteLength = voteIdx;
@@ -831,6 +694,35 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
         ballotInVoting = 0;
     }
 
+    // FIXME: get from EnvStorage
+    function getMinStaking() public pure returns (uint256) { return 10 ether; }
+
+    function getMaxStaking() public pure returns (uint256) { return 100 ether; }
+
+    function getMinVotingDuration() public pure returns (uint256) { return 1 days; }
+    
+    function getMaxVotingDuration() public pure returns (uint256) { return 7 days; }
+
+    function getThreshould() public pure returns (uint256) { return 51; } // 51% from 51 of 100
+
+    function checkUnfinalized(uint256 ballotIdx) private {
+        if (ballotInVoting != 0) {
+            (, uint256 state, ) = getBallotState(ballotInVoting);
+            (, uint256 endTime, ) = getBallotPeriod(ballotInVoting);
+            if (state == uint256(BallotStates.InProgress)) {
+                if (endTime < block.timestamp) {
+                    finalizeBallot(ballotIdx, uint256(BallotStates.Rejected));
+                    ballotInVoting = 0;
+                    if (ballotIdx == ballotInVoting) {
+                        return;
+                    }
+                } else if (ballotIdx != ballotInVoting) {
+                    revert("Now in voting with different ballot");
+                }
+            }
+        }
+    }
+
     function addMember(uint256 ballotIdx) private {
         (uint256 ballotType, uint256 state, ) = getBallotState(ballotIdx);
         require(ballotType == uint256(BallotTypes.MemberAdd), "Not voting for addMember");
@@ -839,7 +731,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
         require(accept.add(reject) >= getThreshould(), "Not yet finalized");
 
         (
-            ,address addr,
+            , address addr,
             bytes memory enode,
             bytes memory ip,
             uint port,
@@ -965,32 +857,23 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
             bytes memory envVal
         ) = IBallotStorage(getBallotStorageAddress()).getBallotVariable(ballotIdx);
 
-        address envStorage = REG.getContractAddress("EnvStorage");
-        require(envStorage != address(0), "EnvStorage NOT FOUND");
+        IEnvStorage envStorage = IEnvStorage(getEnvStorageAddress());
         if (envKey == BLOCK_PER_NAME && envType == BLOCK_PER_TYPE) {
-            EnvStorageImp(envStorage).setBlockPerByBytes(envVal);
+            envStorage.setBlockPerByBytes(envVal);
         } else if (envKey == BALLOT_DURATION_MIN_NAME && envType == BALLOT_DURATION_MIN_TYPE) {
-            EnvStorageImp(envStorage).setBallotDurationMinByBytes(envVal);
+            envStorage.setBallotDurationMinByBytes(envVal);
         } else if (envKey == BALLOT_DURATION_MAX_NAME && envType == BALLOT_DURATION_MAX_TYPE) {
-            EnvStorageImp(envStorage).setBallotDurationMaxByBytes(envVal);
+            envStorage.setBallotDurationMaxByBytes(envVal);
         } else if (envKey == STAKING_MIN_NAME && envType == STAKING_MIN_TYPE) {
-            EnvStorageImp(envStorage).setStakingMinByBytes(envVal);
+            envStorage.setStakingMinByBytes(envVal);
         } else if (envKey == STAKING_MAX_NAME && envType == STAKING_MAX_TYPE) {
-            EnvStorageImp(envStorage).setStakingMaxByBytes(envVal);
+            envStorage.setStakingMaxByBytes(envVal);
         }
 
         emit EnvChanged(envKey, envType, envVal);
     }
 
     //------------------ Code reduction
-    function getBallotStorageAddress() private view returns (address) {
-        return REG.getContractAddress("BallotStorage");
-    }
-
-    function getStakingAddress() private view returns (address) {
-        return REG.getContractAddress("Staking");
-    }
-
     function createBallotForMemeber(
         uint256 id,
         uint256 bType,
@@ -1013,21 +896,10 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
             ip, // new ip
             port // new port
         );
-        // getBallotStorageAddress().call(bytes4(keccak256("createBallotForMemeber(uint256,uint256,address,address,address,bytes,bytes,uint)")),
-        //     id, // ballot id
-        //     bType, // ballot type
-        //     creator, // creator
-        //     oAddr, // old member address
-        //     nAddr, // new member address
-        //     enode, // new enode
-        //     ip, // new ip
-        //     port // new port
-        // );
     }
 
     function updateBallotLock(uint256 id, uint256 amount) private {
         IBallotStorage(getBallotStorageAddress()).updateBallotMemberLockAmount(id, amount);
-        // getBallotStorageAddress().call(bytes4(keccak256("updateBallotMemberLockAmount(uint256,uint256)")), id, amount);
     }
 
     function startBallot(uint256 id, uint256 s, uint256 e) private {
@@ -1055,675 +927,12 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
     }
 
     function lock(address addr, uint256 amount) private {
-        Staking(getStakingAddress()).lock(addr, amount);
+        IStaking(getStakingAddress()).lock(addr, amount);
     }
 
     function unlock(address addr, uint256 amount) private {
-        Staking(getStakingAddress()).unlock(addr, amount);
+        IStaking(getStakingAddress()).unlock(addr, amount);
     }
     //------------------ Code reduction end
-}
-
-contract EternalStorage {
-    struct Storage {
-        mapping(bytes32 => bool) _bool;
-        mapping(bytes32 => int256) _int;
-        mapping(bytes32 => uint256) _uint;
-        mapping(bytes32 => string) _string;
-        mapping(bytes32 => address) _address;
-        mapping(bytes32 => bytes) _bytes;
-        mapping(bytes32 => bytes32) _bytes32;
-    }
-
-    Storage internal s;
-
-    /**
-    * @dev Allows the owner to set a value for a boolean variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setBoolean(bytes32 h, bool v) internal {
-        s._bool[h] = v;
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a int variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setInt(bytes32 h, int256 v) internal {
-        s._int[h] = v;
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a boolean variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setUint(bytes32 h, uint256 v) internal {
-        s._uint[h] = v;
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a address variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setAddress(bytes32 h, address v) internal {
-        s._address[h] = v;
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a string variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setString(bytes32 h, string v) internal  {
-        s._string[h] = v;
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a bytes variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setBytes(bytes32 h, bytes v) internal {
-        s._bytes[h] = v;
-    }
-    /**
-    * @dev Allows the owner to set a value for a bytes32 variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setBytes32(bytes32 h, bytes32 v) internal {
-        s._bytes32[h] = v;
-    }
-    /**
-    * @dev Get the value stored of a boolean variable by the hash name
-    * @param h The keccak256 hash of the variable name
-    */
-    function getBoolean(bytes32 h) public view returns (bool){
-        return s._bool[h];
-    }
-
-    /**
-    * @dev Get the value stored of a int variable by the hash name
-    * @param h The keccak256 hash of the variable name
-    */
-    function getInt(bytes32 h) public view returns (int){
-        return s._int[h];
-    }
-
-    /**
-    * @dev Get the value stored of a uint variable by the hash name
-    * @param h The keccak256 hash of the variable name
-    */
-    function getUint(bytes32 h) public view returns (uint256){
-        return s._uint[h];
-    }
-
-    /**
-    * @dev Get the value stored of a address variable by the hash name
-    * @param h The keccak256 hash of the variable name
-    */
-    function getAddress(bytes32 h) public view returns (address){
-        return s._address[h];
-    }
-
-    /**
-    * @dev Get the value stored of a string variable by the hash name
-    * @param h The keccak256 hash of the variable name
-    */
-    function getString(bytes32 h) public view returns (string){
-        return s._string[h];
-    }
-
-    /**
-    * @dev Get the value stored of a bytes variable by the hash name
-    * @param h The keccak256 hash of the variable name
-    */
-    function getBytes(bytes32 h) public view returns (bytes){
-        return s._bytes[h];
-    }
-    /**
-    * @dev Get the value stored of a bytes variable by the hash name
-    * @param h The keccak256 hash of the variable name
-    */
-    function getBytes32(bytes32 h) public view returns (bytes32){
-        return s._bytes32[h];
-    }
-}
-
-contract AEnvStorage is EternalStorage, GovChecker {
-    // struct Variable {
-    //     bytes32 _name;
-    //     uint256 _type;
-    //     string _value;
-    // }
-   
-    event StringVarableChanged ( 
-        bytes32 indexed _name,
-        string _value
-    );
-    event UintVarableChanged ( 
-        bytes32 indexed _name,
-        uint _value
-    );
-    event IntVarableChanged ( 
-        bytes32 indexed _name,
-        int _value
-    );
-    event AddressVarableChanged ( 
-        bytes32 indexed _name,
-        address _value
-    );
-    event Bytes32VarableChanged ( 
-        bytes32 indexed _name,
-        bytes32 _value
-    );
-    event BytesVarableChanged ( 
-        bytes32 indexed _name,
-        bytes _value
-    );
-
-    event VarableChanged ( 
-        bytes32 indexed _name,
-        uint256 indexed _type,
-        string _value
-    );
-   
-    /**
-    * @dev Allows the owner to set a value for a int variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function setInt(bytes32 h, int256 v) internal {
-        _setInt(h, v);
-        emit IntVarableChanged(h,v);
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a boolean variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function setUint(bytes32 h, uint256 v) internal {
-        _setUint(h, v);
-        emit UintVarableChanged(h,v);
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a address variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function setAddress(bytes32 h, address v) internal {
-        _setAddress(h, v);
-        emit AddressVarableChanged(h,v);
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a string variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function setString(bytes32 h, string v) internal  {
-        _setString(h, v);
-        emit StringVarableChanged(h,v);
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a bytes variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function setBytes(bytes32 h, bytes v) internal {
-        _setBytes(h, v);
-        emit BytesVarableChanged(h,v);
-    }
-    /**
-    * @dev Allows the owner to set a value for a bytes32 variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function setBytes32(bytes32 h, bytes32 v) internal {
-        _setBytes32(h, v);
-        emit Bytes32VarableChanged(h,v);
-    }
-
-
-
-    // mapping(bytes32 => Variable) internal s;
-
-    // /**
-    // * @dev Add a new variable .
-    // * @param _h The keccak256 hash of the variable name
-    // * @param _t The type of value
-    // * @param _v The value to be stored
-    // */
-    // function _add(bytes32 _h, uint256 _t, string _v) internal  {
-    //     require(s[_h]._name == "","not found");
-    //     s[_h] = Variable(_h,_t,_v);
-    //     emit VarableAdded(_h,_t,_v);
-    // }
-    // /**
-    // * @dev Update a new variable .
-    // * @param _h The keccak256 hash of the variable name
-    // * @param _t The type of value
-    // * @param _v The value to be stored
-    // */
-    // function _change(bytes32 _h, uint256 _t, string _v) internal {
-    //     require(s[_h]._name == _h,"not found");
-    //     Variable storage v = s[_h];
-    //     v._name = _h;
-    //     v._type = _t;
-    //     v._value = _v;
-    //     emit VarableChanged(_h,_t,_v);
-
-    // }
-    // /**
-    // * @dev Get the type & value stored of a string variable by the hash name
-    // * @param _h The keccak256 hash of the variable name
-    // */
-    // function get(bytes32 _h) public view returns (uint256 varType, string varVal){
-    //     //require(s[_h]._name == _h,"not found");
-    //     return (s[_h]._type, s[_h]._value);
-    // }
-    // /**
-    // * @dev Get the type stored of a string variable by the hash name
-    // * @param _h The keccak256 hash of the variable name
-    // */
-    // function getType(bytes32 _h) public view returns (uint256){
-    //     require(s[_h]._name == _h,"not found");
-    //     return s[_h]._type;
-    // }
-    // /**
-    // * @dev Get the value stored of a string variable by the hash name
-    // * @param _h The keccak256 hash of the variable name
-    // */
-    // function getValue(bytes32 _h) public view returns (string){
-    //     require(s[_h]._name == _h,"not found");
-    //     return s[_h]._value;
-    // }
-    
-}
-
-contract EnvStorageImp is AEnvStorage, EnvConstants {
-    using SafeMath for uint256;
-    //using Conversion for string;
-    
-    function initialize() public onlyOwner{
-        uint256 blockPerVal = getBlockPerValue();
-        uint256 ballotDurationMin = getBallotDurationMinValue();
-        uint256 ballotDurationMax = getBallotDurationMaxValue();
-        uint256 stakingMin = getStakingMinValue();
-        uint256 stakingMax = getStakingMaxValue();
-        if( blockPerVal == 0){
-            setUint(BLOCK_PER_NAME, 1000);
-        }
-        if( ballotDurationMin == 0){
-            setUint(BALLOT_DURATION_MIN_NAME, 604800);
-        }
-        if( ballotDurationMax == 0 ){
-            setUint(BALLOT_DURATION_MAX_NAME, 604800);
-        }
-        if( stakingMin == 0 ){
-            setUint(STAKING_MIN_NAME, 10000000000);
-        }
-        if( stakingMax == 0 ){
-            setUint(STAKING_MAX_NAME, 20000000000);
-        }
-        
-    }
-
-    function getBlockPerValue() public view returns (uint256) {
-        return getUint(BLOCK_PER_NAME);
-    }
-    function getBallotDurationMinValue() public view returns (uint256) {
-        return getUint(BALLOT_DURATION_MIN_NAME);
-    }
-    function getBallotDurationMaxValue() public view returns (uint256) {
-        return getUint(BALLOT_DURATION_MAX_NAME);
-    }
-    function getStakingMinValue() public view returns (uint256) {
-        return getUint(STAKING_MIN_NAME);
-    }
-    function getStakingMaxValue() public view returns (uint256) {
-        return getUint(STAKING_MAX_NAME);
-    }
-
-    function getBlockPer() public view returns (uint256) {
-        return getUint(BLOCK_PER_NAME);
-    }
-    function getBallotDurationMin() public view returns (uint256) {
-        return getUint(BALLOT_DURATION_MIN_NAME);
-    }
-    function getBallotDurationMax() public view returns (uint256) {
-        return getUint(BALLOT_DURATION_MAX_NAME);
-    }
-    function getStakingMin() public view returns (uint256) {
-        return getUint(STAKING_MIN_NAME);
-    }
-    function getStakingMax() public view returns (uint256) {
-        return getUint(STAKING_MAX_NAME);
-    }
-    
-    function setBlockPer(uint256 _value) public onlyGov { 
-        setUint(BLOCK_PER_NAME, _value);
-    }
-    function setBallotDurationMin(uint256 _value) public onlyGov { 
-        setUint(BALLOT_DURATION_MIN_NAME, _value);
-    }
-    function setBallotDurationMax(uint256 _value) public onlyGov { 
-        setUint(BALLOT_DURATION_MAX_NAME, _value);
-    }
-    function setStakingMin(uint256 _value) public onlyGov { 
-        setUint(STAKING_MIN_NAME, _value);
-    }
-    function setStakingMax(uint256 _value) public onlyGov { 
-        setUint(STAKING_MAX_NAME, _value);
-    }
-
-    function setBlockPerByBytes(bytes _value) public onlyGov { 
-        setBlockPer(toUint(_value));
-    }
-    function setBallotDurationMinByBytes(bytes _value) public onlyGov { 
-        setBallotDurationMin(toUint(_value));
-    }
-    function setBallotDurationMaxByBytes(bytes _value) public onlyGov { 
-        setBallotDurationMax(toUint(_value));
-    }
-    function setStakingMinByBytes(bytes _value) public onlyGov { 
-        setStakingMin(toUint(_value));
-    }
-    function setStakingMaxByBytes(bytes _value) public onlyGov { 
-        setStakingMax(toUint(_value));
-    }
-
-    function getTestInt() public view returns (int256) {
-        return getInt(TEST_INT);
-    }
-    function getTestAddress() public view returns (address) {
-        return getAddress(TEST_ADDRESS);
-    }
-    function getTestBytes32() public view returns (bytes32) {
-        return getBytes32(TEST_BYTES32);
-    }
-    function getTestBytes() public view returns (bytes) {
-        return getBytes(TEST_BYTES);
-    }
-    function getTestString() public view returns (string) {
-        return getString(TEST_STRING);
-    }
-    function setTestIntByBytes(bytes _value) public onlyGov { 
-        setInt(TEST_INT, toInt(_value));
-    }
-    function setTestAddressByBytes(bytes _value) public onlyGov { 
-        setAddress(TEST_ADDRESS, toAddress(_value));
-    }
-    function setTestBytes32ByBytes(bytes _value) public onlyGov { 
-        setBytes32(TEST_BYTES32, toBytes32(_value));
-    }
-    function setTestBytesByBytes(bytes _value) public onlyGov { 
-        setBytes(TEST_BYTES, _value);
-    }
-    event testCodeValue(bytes _bytes,string _string);
-    function setTestStringByBytes(bytes _value) public onlyGov { 
-        emit testCodeValue(_value,string(_value));
-        setString(TEST_STRING, string(_value));
-    }
-    // function getBlockPer() public view returns (uint256 varType, string varVal) {
-    //     (varType,varVal) = get(BLOCK_PER_NAME);
-    //     // varType = getBlockPerType();
-    //     // varVal = getBlockPerValue();
-    // }
-    // function getBlockPerType() public view returns (uint256) {
-    //     return getType(BLOCK_PER_NAME);
-    // }
-    // function getBlockPerValue() public view returns (string) {
-    //     return getValue(BLOCK_PER_NAME);
-    // }
-    // function setBlockPer(string _value) public onlyGov { 
-    //     _set(BLOCK_PER_NAME, BLOCK_PER_TYPE, _value);
-    // }
-    
-    // function getBallotDurationMin() public view returns (uint256 varType, string varVal) {
-    //     varType = getBallotDurationMinType();
-    //     varVal = getBallotDurationMinValue();
-    // }
-    // function getBallotDurationMinType() public view returns (uint256) {
-    //     return getType(BALLOT_DURATION_MIN_NAME);
-    // }
-    // function getBallotDurationMinValue() public view returns (string) {
-    //     return getValue(BALLOT_DURATION_MIN_NAME);
-    // }
-    // function setBallotDurationMin(string _value) public onlyGov { 
-    //     _set(BALLOT_DURATION_MIN_NAME, BALLOT_DURATION_MIN_TYPE, _value);
-    // }
-
-    // function getBallotDurationMax() public view returns (uint256 varType, string varVal) {
-    //     varType = getBallotDurationMaxType();
-    //     varVal = getBallotDurationMaxValue();
-    // }
-    // function getBallotDurationMaxType() public view returns (uint256) {
-    //     return getType(BALLOT_DURATION_MAX_NAME);
-    // }
-    // function getBallotDurationMaxValue() public view returns (string) {
-    //     return getValue(BALLOT_DURATION_MAX_NAME);
-    // }
-    // function setBallotDurationMax(string _value) public onlyGov { 
-    //     _set(BALLOT_DURATION_MAX_NAME, BALLOT_DURATION_MAX_TYPE, _value);
-    // }
-
-    // function getStakingMin() public view returns (uint256 varType, string varVal) {
-    //     varType = getStakingMinType();
-    //     varVal = getStakingMinValue();
-    // }
-    // function getStakingMinType() public view returns (uint256) {
-    //     return getType(STAKING_MIN_NAME);
-    // }
-    // function getStakingMinValue() public view returns (string) {
-    //     return getValue(STAKING_MIN_NAME);
-    // }
-    // function setStakingMin(string _value) public onlyGov { 
-    //     _set(STAKING_MIN_NAME, STAKING_MIN_TYPE, _value);
-    // }
-
-    // function getStakingMax() public view returns (uint256 varType, string varVal) {
-    //     varType = getStakingMaxType();
-    //     varVal = getStakingMaxValue();
-    // }
-    // function getStakingMaxType() public view returns (uint256) {
-    //     return getType(STAKING_MAX_NAME);
-    // }
-    // function getStakingMaxValue() public view returns (string) {
-    //     return getValue(STAKING_MAX_NAME);
-    // }
-    // function setStakingMax(string _value) public onlyGov { 
-    //     _set(STAKING_MAX_NAME, STAKING_MAX_TYPE, _value);
-    // }
-
-
-    
-    // * @dev set a value for a string variable.
-    // * @param _h The keccak256 hash of the variable name
-    // * @param _t The type of value
-    // * @param _v The value to be stored
-    
-    // function _set(bytes32 _h, uint256 _t,string _v) internal {
-    //     require(_t >= uint256(VariableTypes.Int), "Invalid Variable Type");
-    //     require(_t <= uint256(VariableTypes.String), "Invalid Variable Type");
-    //     require(bytes(_v).length > 0, "empty value");
-    //     if(s[_h]._name == "") {
-    //         _add(_h, _t, _v);
-    //     }else{
-    //         _change(_h, _t, _v);
-    //     }
-    // }
-
-/*
-    function parseAddr(string memory _a) internal pure returns (address _parsedAddress) {
-        bytes memory tmp = bytes(_a);
-        uint160 iaddr = 0;
-        uint160 b1;
-        uint160 b2;
-        for (uint i = 2; i < 2 + 2 * 20; i += 2) {
-            iaddr *= 256;
-            b1 = uint160(uint8(tmp[i]));
-            b2 = uint160(uint8(tmp[i + 1]));
-            if ((b1 >= 97) && (b1 <= 102)) {
-                b1 -= 87;
-            } else if ((b1 >= 65) && (b1 <= 70)) {
-                b1 -= 55;
-            } else if ((b1 >= 48) && (b1 <= 57)) {
-                b1 -= 48;
-            }
-            if ((b2 >= 97) && (b2 <= 102)) {
-                b2 -= 87;
-            } else if ((b2 >= 65) && (b2 <= 70)) {
-                b2 -= 55;
-            } else if ((b2 >= 48) && (b2 <= 57)) {
-                b2 -= 48;
-            }
-            iaddr += (b1 * 16 + b2);
-        }
-        return address(iaddr);
-    }
-    
-    function safeParseUInt2(string memory _a) public pure returns (uint _parsedInt) {
-        bytes memory bresult = bytes(_a);
-        uint256 mint = 0;
-
-        for (uint i = 0; i < bresult.length; i++) {
-            if ((uint(uint8(bresult[i])) >= 48) && (uint(uint8(bresult[i])) <= 57)) {
-                 
-                mint = mint.mul(10);
-                mint = mint.add(uint(uint8(bresult[i])) - 48);
-            } else {
-                revert("Non-numeral character encountered in string!");
-            }
-        }
-        return mint;
-    }
-
-    function safeParseInt(string memory _a) public pure returns (int _parsedInt) {
-        bytes memory bresult = bytes(_a);
-        uint mint = 0;
-        int pint = 0;
-        bool minus = false;
-        for (uint i = 0; i < bresult.length; i++) {
-            if ((uint(uint8(bresult[i])) >= 48) && (uint(uint8(bresult[i])) <= 57)) {
-                mint = mint.mul(10);
-                mint = mint.add(uint(uint8(bresult[i])) - 48);
-            } else if (uint(uint8(bresult[i])) == 45) {
-                require(i == 0 , 'not start with Minus symbol in string!');
-                minus = true;
-            } else {
-                revert("Non-numeral character encountered in string!");
-            }
-        }
-        if(minus){
-            uint _max = uint(INT256_MAX).add(1);
-            require(mint <= _max, "out of range of int min!");
-            if(mint == _max ){
-                pint =INT256_MIN;
-            }else{
-                pint = int(mint) * -1;
-            }
-        }else{
-            require(mint < uint(INT256_MAX), "out of range of int max!");
-            pint =int(mint);
-        }
-        return pint;
-    }
-*/
-// }
-    
-    function toBytes32( bytes memory  _input) internal pure  returns (bytes32 _output){
-        assembly {
-          _output := mload(add(_input, 32))
-        }
-    }
-    function toInt(bytes memory _input) internal pure returns (int256 _output) {
-        assembly {
-            _output := mload(add(_input, 32))
-        }
-    }
-    function toUint(bytes memory _input) internal pure returns (uint256 _output) {
-        
-        assembly {
-            _output := mload(add(_input, 32))
-        }
-    }
-    function toAddress(bytes memory _input) internal pure returns (address _output) {
-        assembly {
-            _output := mload(add(_input, 20))
-        }
-    } 
-    // function toString(bytes memory _input) internal pure returns(string _output){
-    //     _output = string(_input);
-    // }
-    function toString( bytes memory _input ) public pure returns(string memory _output) {
-        return string(_input);
-        // uint _offst = _input.length;
-        // uint size = 32;
-        // assembly {
-            
-        //     let chunk_count
-        //     size := mload(add(_input,_offst))
-        //     chunk_count := add(div(size,32),1) // chunk_count = size/32 + 1
-            
-        //     if gt(mod(size,32),0) {
-        //         chunk_count := add(chunk_count,1)  // chunk_count++
-        //     }
-               
-        //     for { let index:= 0 }  lt(index , chunk_count){ index := add(index,1) } {
-        //         mstore(add(_output,mul(index,32)),mload(add(_input,_offst)))
-        //         _offst := sub(_offst,32)           // _offst -= 32
-        //     }
-        // }
-    }
-
-    function bytes32ToBytes( bytes32 _input) internal pure returns(bytes) {
-        bytes memory _output = new bytes(32);
-        assembly {
-            mstore(add(_output, 32), _input)
-            mstore(add(add(_output,32),32), add(_input,32))
-        }
-        return _output;
-    }
-    function intToBytes(int _input) public pure returns(bytes memory _output) {
-        _output = new bytes(32);
-        assembly {
-            mstore(add(_output, 32), _input)
-        }
-    } 
-    
-    function uintToBytes(uint _input) public pure returns(bytes memory _output) {
-        _output = new bytes(32);
-        assembly {
-            mstore(add(_output, 32), _input)
-        }
-    }
-    
-    function addressToBytes(address _input) public pure returns (bytes _output){
-        assembly {
-            let m := mload(0x40)
-            mstore(add(m, 20), xor(0x140000000000000000000000000000000000000000, _input))
-            mstore(0x40, add(m, 52))
-            _output := m
-        }
-    }
-    
-    function stringToBytes(string memory _input) public pure returns(bytes _output){
-        //_output = bytes(_input);
-        _output =  abi.encode(_input);
-    }
-    
-
-
-
-
-
 }
 

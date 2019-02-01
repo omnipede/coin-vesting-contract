@@ -296,7 +296,7 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       state[1].should.be.bignumber.equal(ballotStates.Accepted);
       state[2].should.equal(true);
 
-      const blockPer = await envDelegator.getBlockPerValue();
+      const blockPer = await envDelegator.getBlockPer();
       blockPer.should.be.bignumber.equal(100);
     });
 

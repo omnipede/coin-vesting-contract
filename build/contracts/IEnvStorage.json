@@ -77,19 +77,19 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.16;\n\n\ninterface IEnvStorage {\n    function setBlockPerByBytes(bytes) external;\n    function setBallotDurationMinByBytes(bytes) external;\n    function setBallotDurationMaxByBytes(bytes) external;\n    function setStakingMinByBytes(bytes) external;\n    function setStakingMaxByBytes(bytes) external;\n}",
-  "sourcePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/interface/IEnvStorage.sol",
+  "sourcePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/interface/IEnvStorage.sol",
   "ast": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/interface/IEnvStorage.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/interface/IEnvStorage.sol",
     "exportedSymbols": {
       "IEnvStorage": [
-        2936
+        2946
       ]
     },
-    "id": 2937,
+    "id": 2947,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2910,
+        "id": 2920,
         "literals": [
           "solidity",
           "^",
@@ -105,9 +105,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 2936,
+        "id": 2946,
         "linearizedBaseContracts": [
-          2936
+          2946
         ],
         "name": "IEnvStorage",
         "nodeType": "ContractDefinition",
@@ -115,7 +115,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2915,
+            "id": 2925,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -123,15 +123,15 @@
             "name": "setBlockPerByBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2913,
+              "id": 2923,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2912,
+                  "id": 2922,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2915,
+                  "scope": 2925,
                   "src": "83:5:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -140,7 +140,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 2911,
+                    "id": 2921,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "83:5:9",
@@ -157,12 +157,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2914,
+              "id": 2924,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "98:0:9"
             },
-            "scope": 2936,
+            "scope": 2946,
             "src": "55:44:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -171,7 +171,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2920,
+            "id": 2930,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -179,15 +179,15 @@
             "name": "setBallotDurationMinByBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2918,
+              "id": 2928,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2917,
+                  "id": 2927,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2920,
+                  "scope": 2930,
                   "src": "141:5:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -196,7 +196,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 2916,
+                    "id": 2926,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "141:5:9",
@@ -213,12 +213,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2919,
+              "id": 2929,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "156:0:9"
             },
-            "scope": 2936,
+            "scope": 2946,
             "src": "104:53:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -227,7 +227,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2925,
+            "id": 2935,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -235,15 +235,15 @@
             "name": "setBallotDurationMaxByBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2923,
+              "id": 2933,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2922,
+                  "id": 2932,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2925,
+                  "scope": 2935,
                   "src": "199:5:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -252,7 +252,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 2921,
+                    "id": 2931,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "199:5:9",
@@ -269,12 +269,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2924,
+              "id": 2934,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "214:0:9"
             },
-            "scope": 2936,
+            "scope": 2946,
             "src": "162:53:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -283,7 +283,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2930,
+            "id": 2940,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -291,15 +291,15 @@
             "name": "setStakingMinByBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2928,
+              "id": 2938,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2927,
+                  "id": 2937,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2930,
+                  "scope": 2940,
                   "src": "250:5:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -308,7 +308,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 2926,
+                    "id": 2936,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "250:5:9",
@@ -325,12 +325,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2929,
+              "id": 2939,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "265:0:9"
             },
-            "scope": 2936,
+            "scope": 2946,
             "src": "220:46:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -339,7 +339,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2935,
+            "id": 2945,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -347,15 +347,15 @@
             "name": "setStakingMaxByBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2933,
+              "id": 2943,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2932,
+                  "id": 2942,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2935,
+                  "scope": 2945,
                   "src": "301:5:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -364,7 +364,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 2931,
+                    "id": 2941,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "301:5:9",
@@ -381,36 +381,36 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2934,
+              "id": 2944,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "316:0:9"
             },
-            "scope": 2936,
+            "scope": 2946,
             "src": "271:46:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 2937,
+        "scope": 2947,
         "src": "27:292:9"
       }
     ],
     "src": "0:319:9"
   },
   "legacyAST": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/interface/IEnvStorage.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/interface/IEnvStorage.sol",
     "exportedSymbols": {
       "IEnvStorage": [
-        2936
+        2946
       ]
     },
-    "id": 2937,
+    "id": 2947,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2910,
+        "id": 2920,
         "literals": [
           "solidity",
           "^",
@@ -426,9 +426,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 2936,
+        "id": 2946,
         "linearizedBaseContracts": [
-          2936
+          2946
         ],
         "name": "IEnvStorage",
         "nodeType": "ContractDefinition",
@@ -436,7 +436,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2915,
+            "id": 2925,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -444,15 +444,15 @@
             "name": "setBlockPerByBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2913,
+              "id": 2923,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2912,
+                  "id": 2922,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2915,
+                  "scope": 2925,
                   "src": "83:5:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -461,7 +461,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 2911,
+                    "id": 2921,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "83:5:9",
@@ -478,12 +478,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2914,
+              "id": 2924,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "98:0:9"
             },
-            "scope": 2936,
+            "scope": 2946,
             "src": "55:44:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -492,7 +492,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2920,
+            "id": 2930,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -500,15 +500,15 @@
             "name": "setBallotDurationMinByBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2918,
+              "id": 2928,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2917,
+                  "id": 2927,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2920,
+                  "scope": 2930,
                   "src": "141:5:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -517,7 +517,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 2916,
+                    "id": 2926,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "141:5:9",
@@ -534,12 +534,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2919,
+              "id": 2929,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "156:0:9"
             },
-            "scope": 2936,
+            "scope": 2946,
             "src": "104:53:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -548,7 +548,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2925,
+            "id": 2935,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -556,15 +556,15 @@
             "name": "setBallotDurationMaxByBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2923,
+              "id": 2933,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2922,
+                  "id": 2932,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2925,
+                  "scope": 2935,
                   "src": "199:5:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -573,7 +573,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 2921,
+                    "id": 2931,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "199:5:9",
@@ -590,12 +590,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2924,
+              "id": 2934,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "214:0:9"
             },
-            "scope": 2936,
+            "scope": 2946,
             "src": "162:53:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -604,7 +604,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2930,
+            "id": 2940,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -612,15 +612,15 @@
             "name": "setStakingMinByBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2928,
+              "id": 2938,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2927,
+                  "id": 2937,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2930,
+                  "scope": 2940,
                   "src": "250:5:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -629,7 +629,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 2926,
+                    "id": 2936,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "250:5:9",
@@ -646,12 +646,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2929,
+              "id": 2939,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "265:0:9"
             },
-            "scope": 2936,
+            "scope": 2946,
             "src": "220:46:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -660,7 +660,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2935,
+            "id": 2945,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -668,15 +668,15 @@
             "name": "setStakingMaxByBytes",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2933,
+              "id": 2943,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2932,
+                  "id": 2942,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2935,
+                  "scope": 2945,
                   "src": "301:5:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -685,7 +685,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 2931,
+                    "id": 2941,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "301:5:9",
@@ -702,19 +702,19 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2934,
+              "id": 2944,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "316:0:9"
             },
-            "scope": 2936,
+            "scope": 2946,
             "src": "271:46:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 2937,
+        "scope": 2947,
         "src": "27:292:9"
       }
     ],
@@ -726,5 +726,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-02-01T01:24:43.028Z"
+  "updatedAt": "2019-02-01T06:10:20.812Z"
 }
