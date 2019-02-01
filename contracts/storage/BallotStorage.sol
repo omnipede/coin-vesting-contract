@@ -120,7 +120,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     }
 
     modifier notDisabled() {
-        require(previousBallotStorage == address(0), "Is Disabled");
+        require(address(this) == getBallotStorageAddress(), "Is Disabled");
         _;
     }
 
@@ -131,7 +131,9 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     function getPreviousBallotStorage() public view returns(address) {
         return previousBallotStorage;
     }
-
+    function isDisabled() public view returns(bool) {
+        return (address(this) != getBallotStorageAddress());
+    }
     function getBallotBasic(uint256 _id) public view returns (
         uint256 startTime,
         uint256 endTime,

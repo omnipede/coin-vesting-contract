@@ -147,9 +147,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.16;\n\n\ninterface IEnvStorage {\n    function setBlockPerByBytes(bytes) external;\n    function setBallotDurationMinByBytes(bytes) external;\n    function setBallotDurationMaxByBytes(bytes) external;\n    function setStakingMinByBytes(bytes) external;\n    function setStakingMaxByBytes(bytes) external;\n    function getBlockPer() external view returns (uint256);\n    function getStakingMin() external view returns (uint256);\n    function getStakingMax() external view returns (uint256);\n    function getBallotDurationMin() external view returns (uint256);\n    function getBallotDurationMax() external view returns (uint256);\n}",
-  "sourcePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/interface/IEnvStorage.sol",
+  "sourcePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/interface/IEnvStorage.sol",
   "ast": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/interface/IEnvStorage.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/interface/IEnvStorage.sol",
     "exportedSymbols": {
       "IEnvStorage": [
         2989
@@ -750,7 +750,7 @@
     "src": "0:641:9"
   },
   "legacyAST": {
-    "absolutePath": "/Users/hexoul/Documents/Metadium/governance/governance-contract/contracts/interface/IEnvStorage.sol",
+    "absolutePath": "/Users/ywshin/Documents/WS/truffle/governance-contract-blueisle/contracts/interface/IEnvStorage.sol",
     "exportedSymbols": {
       "IEnvStorage": [
         2989
@@ -1356,5 +1356,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-02-01T06:27:34.159Z"
+  "updatedAt": "2019-02-01T07:05:06.164Z"
 }
