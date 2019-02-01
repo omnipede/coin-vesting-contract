@@ -22,10 +22,10 @@ require('babel-register')({
 });
 require('babel-polyfill');
 
-const HDWalletProvider = require('truffle-hdwallet-provider')
-const config = require('config')
-const ropstenConfig = config.get('ropsten')
-const metaTestnetConfig = config.get('metadiumTestnet')
+const HDWalletProvider = require('truffle-hdwallet-provider');
+const config = require('config');
+const ropstenConfig = config.get('ropsten');
+const metaTestnetConfig = config.get('metadiumTestnet');
 
 module.exports = {
   /**
@@ -50,7 +50,7 @@ module.exports = {
       port: 8545,
       network_id: '*', // Match any network id
       gas: 7984452,
-      gasPrice: 2000000000
+      gasPrice: 2000000000,
     },
     coverage: {
       host: 'localhost',
@@ -64,16 +64,16 @@ module.exports = {
         return new HDWalletProvider(metaTestnetConfig.mnemonic, metaTestnetConfig.provider);
       },
       network_id: metaTestnetConfig.network_id,
-      gasPrice: metaTestnetConfig.gasPrice
+      gasPrice: metaTestnetConfig.gasPrice,
     },
     ropsten: {
-      provider: function() {
-        return new HDWalletProvider(ropstenConfig.mnemonic, ropstenConfig.provider)
+      provider: function () {
+        return new HDWalletProvider(ropstenConfig.mnemonic, ropstenConfig.provider);
       },
       network_id: ropstenConfig.network_id,
       gas: ropstenConfig.gas,
-      gasPrice: ropstenConfig.gasPrice
-    }
+      gasPrice: ropstenConfig.gasPrice,
+    },
   },
 
   // Set default mocha options here, use special reporters etc.
@@ -92,8 +92,8 @@ module.exports = {
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       optimizer: {
         enabled: true,
-        runs: 200
-      }
+        runs: 200,
+      },
     },
   },
 };

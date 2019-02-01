@@ -1,15 +1,9 @@
-"use strict";
-
-const ERROR_MSG = 'VM Exception while processing transaction: revert';
 const { reverting } = require('openzeppelin-solidity/test/helpers/shouldFail');
-const { ether } = require('openzeppelin-solidity/test/helpers/ether');
 const time = require('openzeppelin-solidity/test/helpers/time');
 
 const Registry = artifacts.require('Registry.sol');
 const Staking = artifacts.require('Staking.sol');
 const BallotStorage = artifacts.require('BallotStorage.sol');
-const Gov = artifacts.require('Gov.sol');
-const GovImp = artifacts.require('GovImp.sol');
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const util = require('ethereumjs-util');
@@ -20,7 +14,7 @@ const web3Utils = require('web3-utils');
 //   StartTime = 0,
 //   EndTime = 1,
 //   BallotType = 2,
-//   Creator = 3, 
+//   Creator = 3,
 //   Memo = 4,
 //   TotalVoters = 5,
 //   PowerOfAccepts = 6 ,
@@ -30,18 +24,18 @@ const web3Utils = require('web3-utils');
 //   Duration = 10
 // }
 const BallotBasicParams = {
-  StartTime : 0,
-  EndTime : 1,
-  BallotType : 2,
-  Creator : 3, 
-  Memo : 4,
-  TotalVoters : 5,
-  PowerOfAccepts : 6 ,
-  PowerOfRejects : 7,
-  State : 8,
-  IsFinalized : 9,
-  Duration : 10
-}
+  StartTime: 0,
+  EndTime: 1,
+  BallotType: 2,
+  Creator: 3,
+  Memo: 4,
+  TotalVoters: 5,
+  PowerOfAccepts: 6,
+  PowerOfRejects: 7,
+  State: 8,
+  IsFinalized: 9,
+  Duration: 10,
+};
 require('chai')
   .use(require('chai-as-promised'))
   .use(require('chai-bignumber')(web3.BigNumber))
@@ -68,14 +62,13 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
     const _enodeid = '0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0';
     const _nodeip = '123.11.111.111';
     const _nodePort = 9545;
-    const _duration  = time.duration.weeks(1);
-    const _lockAmount =  new web3.BigNumber(100000000);
+    const _duration = time.duration.weeks(1);
+    const _lockAmount = new web3.BigNumber(100000000);
     describe('Member', function () {
       describe('create', function () {
         describe('add', function () {
-          const _ballotType = new web3.BigNumber(1); 
+          const _ballotType = new web3.BigNumber(1);
           it('Cannot create Ballot for MemberAdd.(not govAddr)', async () => {
-           
             await reverting(ballotStorage.createBallotForMemeber(
               _id, // ballot id
               _ballotType, // ballot type
@@ -182,7 +175,6 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
           });
 
           it('create Ballot for MemberAdd', async () => {
-
             await ballotStorage.createBallotForMemeber(
               _id, // ballot id
               _ballotType, // ballot type
@@ -240,295 +232,292 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
               _nodePort2, // newNodePort
               { value: 0, from: govAddr }
             )); // .should.be.rejectedWith(ERROR_MSG);
-        });
-        describe('remove', function () {
-          const _ballotType = new web3.BigNumber(2); 
-          it('Cannot create Ballot for MemberRemoval by invalid param', async () => {
-            const _emptyNodePort = 0;
-
-            // case newMemberAddress is not empty
-            await reverting(ballotStorage.createBallotForMemeber(
-              _id, // ballot id
-              _ballotType, // ballot type
-              creator, // creator
-              addMem, // oldMemberAddress
-              addMem, // newMemberAddress
-              "", // newNodeId
-              "", // newNodeIp
-              0, // newNodePort
-              { value: 0, from: creator }
-            ));
-            // case newNodeId is not empty
-            await reverting(ballotStorage.createBallotForMemeber(
-              _id, // ballot id
-              _ballotType, // ballot type
-              creator, // creator
-              addMem, // oldMemberAddress
-              ZERO_ADDRESS, // newMemberAddress
-              _enodeid, // newNodeId
-              "", // newNodeIp
-              0, // newNodePort
-              { value: 0, from: creator }
-            ));
-            // case newNodeIp is not empty
-            await reverting(ballotStorage.createBallotForMemeber(
-              _id, // ballot id
-              _ballotType, // ballot type
-              creator, // creator
-              addMem, // oldMemberAddress
-              ZERO_ADDRESS, // newMemberAddress
-              "", // newNodeId
-              _nodeip, // newNodeIp
-              0, // newNodePort
-              { value: 0, from: creator }
-            ));
-            // case newNodePort is not empty
-            await reverting(ballotStorage.createBallotForMemeber(
-              _id, // ballot id
-              _ballotType, // ballot type
-              creator, // creator
-              addMem, // oldMemberAddress
-              ZERO_ADDRESS, // newMemberAddress
-              "", // newNodeId
-              "", // newNodeIp
-              _nodePort, // newNodePort
-              { value: 0, from: creator }
-            ));
           });
-          it('create Ballot for MemberRemove', async () => {
-            await ballotStorage.createBallotForMemeber(
-              _id, // ballot id
-              _ballotType, // ballot type
-              creator, // creator
-              addMem, // oldMemberAddress
-              ZERO_ADDRESS, // newMemberAddress
-              "0x", // newNodeId
-              "", // newNodeIp
-              0, // newNodePort
-              { value: 0, from: govAddr }
-            ); // .should.be.rejectedWith(ERROR_MSG);
+          describe('remove', function () {
+            const _ballotType = new web3.BigNumber(2);
+            it('Cannot create Ballot for MemberRemoval by invalid param', async () => {
+              const _emptyNodePort = 0;
 
-            const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
+              // case newMemberAddress is not empty
+              await reverting(ballotStorage.createBallotForMemeber(
+                _id, // ballot id
+                _ballotType, // ballot type
+                creator, // creator
+                addMem, // oldMemberAddress
+                addMem, // newMemberAddress
+                '', // newNodeId
+                '', // newNodeIp
+                0, // newNodePort
+                { value: 0, from: creator }
+              ));
+              // case newNodeId is not empty
+              await reverting(ballotStorage.createBallotForMemeber(
+                _id, // ballot id
+                _ballotType, // ballot type
+                creator, // creator
+                addMem, // oldMemberAddress
+                ZERO_ADDRESS, // newMemberAddress
+                _enodeid, // newNodeId
+                '', // newNodeIp
+                0, // newNodePort
+                { value: 0, from: creator }
+              ));
+              // case newNodeIp is not empty
+              await reverting(ballotStorage.createBallotForMemeber(
+                _id, // ballot id
+                _ballotType, // ballot type
+                creator, // creator
+                addMem, // oldMemberAddress
+                ZERO_ADDRESS, // newMemberAddress
+                '', // newNodeId
+                _nodeip, // newNodeIp
+                0, // newNodePort
+                { value: 0, from: creator }
+              ));
+              // case newNodePort is not empty
+              await reverting(ballotStorage.createBallotForMemeber(
+                _id, // ballot id
+                _ballotType, // ballot type
+                creator, // creator
+                addMem, // oldMemberAddress
+                ZERO_ADDRESS, // newMemberAddress
+                '', // newNodeId
+                '', // newNodeIp
+                _nodePort, // newNodePort
+                { value: 0, from: creator }
+              ));
+            });
+            it('create Ballot for MemberRemove', async () => {
+              await ballotStorage.createBallotForMemeber(
+                _id, // ballot id
+                _ballotType, // ballot type
+                creator, // creator
+                addMem, // oldMemberAddress
+                ZERO_ADDRESS, // newMemberAddress
+                '0x', // newNodeId
+                '', // newNodeIp
+                0, // newNodePort
+                { value: 0, from: govAddr }
+              ); // .should.be.rejectedWith(ERROR_MSG);
 
-            ballotBasicInfo[BallotBasicParams.BallotType].should.be.bignumber.equal(_ballotType);
-            assert.equal(ballotBasicInfo[BallotBasicParams.Creator], creator);
-            ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(0);
-            ballotBasicInfo[BallotBasicParams.PowerOfAccepts].should.be.bignumber.equal(0);
-            ballotBasicInfo[BallotBasicParams.PowerOfRejects].should.be.bignumber.equal(0);
-            ballotBasicInfo[BallotBasicParams.State].should.be.bignumber.equal(1);
-            assert.equal(ballotBasicInfo[BallotBasicParams.IsFinalized], false);
+              const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
 
-            const ballotDetailInfo = await ballotStorage.getBallotMember(_id);
+              ballotBasicInfo[BallotBasicParams.BallotType].should.be.bignumber.equal(_ballotType);
+              assert.equal(ballotBasicInfo[BallotBasicParams.Creator], creator);
+              ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(0);
+              ballotBasicInfo[BallotBasicParams.PowerOfAccepts].should.be.bignumber.equal(0);
+              ballotBasicInfo[BallotBasicParams.PowerOfRejects].should.be.bignumber.equal(0);
+              ballotBasicInfo[BallotBasicParams.State].should.be.bignumber.equal(1);
+              assert.equal(ballotBasicInfo[BallotBasicParams.IsFinalized], false);
 
-            assert.equal(ballotDetailInfo[0], addMem);
-            assert.equal(ballotDetailInfo[1], ZERO_ADDRESS);
-            assert.equal(ballotDetailInfo[2], "0x");
-            assert.equal(web3Utils.toUtf8(ballotDetailInfo[3]), "");
-            assert.equal(ballotDetailInfo[4], 0);
+              const ballotDetailInfo = await ballotStorage.getBallotMember(_id);
+
+              assert.equal(ballotDetailInfo[0], addMem);
+              assert.equal(ballotDetailInfo[1], ZERO_ADDRESS);
+              assert.equal(ballotDetailInfo[2], '0x');
+              assert.equal(web3Utils.toUtf8(ballotDetailInfo[3]), '');
+              assert.equal(ballotDetailInfo[4], 0);
+            });
           });
-
-        });
-        describe('swap', function () {
-          const _ballotType = new web3.BigNumber(3); 
-          it('Cannot create Ballot for MemberSwap by invalid param', async () => {
-            
+          describe('swap', function () {
+            const _ballotType = new web3.BigNumber(3);
+            it('Cannot create Ballot for MemberSwap by invalid param', async () => {
             // case oldMemberAddress is empty
-            await reverting(ballotStorage.createBallotForMemeber(
+              await reverting(ballotStorage.createBallotForMemeber(
+                _id, // ballot id
+                _ballotType, // ballot type
+                creator, // creator
+                ZERO_ADDRESS, // oldMemberAddress
+                addMem, // newMemberAddress
+                _enodeid, // newNodeId
+                _nodeip, // newNodeIp
+                _nodePort, // newNodePort
+                { value: 0, from: creator }
+              ));
+              // case newMemberAddress is empty
+              await reverting(ballotStorage.createBallotForMemeber(
+                _id, // ballot id
+                _ballotType, // ballot type
+                creator, // creator
+                addMem, // oldMemberAddress
+                ZERO_ADDRESS, // newMemberAddress
+                _enodeid, // newNodeId
+                _nodeip, // newNodeIp
+                _nodePort, // newNodePort
+                { value: 0, from: creator }
+              ));
+              // case newNodeId is  empty
+              await reverting(ballotStorage.createBallotForMemeber(
+                _id, // ballot id
+                _ballotType, // ballot type
+                creator, // creator
+                addMem, // oldMemberAddress
+                addMem, // newMemberAddress
+                '0x', // newNodeId
+                _nodeip, // newNodeIp
+                _nodePort, // newNodePort
+                { value: 0, from: creator }
+              ));
+              // case newNodeIp is empty
+              await reverting(ballotStorage.createBallotForMemeber(
+                _id, // ballot id
+                _ballotType, // ballot type
+                creator, // creator
+                addMem, // oldMemberAddress
+                addMem, // newMemberAddress
+                _enodeid, // newNodeId
+                '0x', // newNodeIp
+                _nodePort, // newNodePort
+                { value: 0, from: creator }
+              ));
+              // case newNodePort is  empty
+              await reverting(ballotStorage.createBallotForMemeber(
+                _id, // ballot id
+                _ballotType, // ballot type
+                creator, // creator
+                addMem, // oldMemberAddress
+                addMem, // newMemberAddress
+                _enodeid, // newNodeId
+                _nodeip, // newNodeIp
+                0, // newNodePort
+                { value: 0, from: creator }
+              ));
+            });
+            it('create Ballot for MemberSwap', async () => {
+              await ballotStorage.createBallotForMemeber(
+                _id, // ballot id
+                _ballotType, // ballot type
+                creator, // creator
+                addMem, // oldMemberAddress
+                addMem, // newMemberAddress
+                _enodeid, // newNodeId
+                _nodeip, // newNodeIp
+                _nodePort, // newNodePort
+                { value: 0, from: govAddr }
+              ); // .should.be.rejectedWith(ERROR_MSG);
+
+              const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
+
+              ballotBasicInfo[BallotBasicParams.BallotType].should.be.bignumber.equal(_ballotType);
+              assert.equal(ballotBasicInfo[BallotBasicParams.Creator], creator);
+              ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(0);
+              ballotBasicInfo[BallotBasicParams.PowerOfAccepts].should.be.bignumber.equal(0);
+              ballotBasicInfo[BallotBasicParams.PowerOfRejects].should.be.bignumber.equal(0);
+              ballotBasicInfo[BallotBasicParams.State].should.be.bignumber.equal(1);
+              assert.equal(ballotBasicInfo[BallotBasicParams.IsFinalized], false);
+
+              const ballotDetailInfo = await ballotStorage.getBallotMember(_id);
+
+              assert.equal(ballotDetailInfo[0], addMem);
+              assert.equal(ballotDetailInfo[1], addMem);
+              assert.equal(ballotDetailInfo[2], _enodeid);
+              assert.equal(web3Utils.toUtf8(ballotDetailInfo[3]), _nodeip);
+              assert.equal(ballotDetailInfo[4], _nodePort);
+            });
+          });
+        });
+        describe('address', function () {
+          const _ballotType = new web3.BigNumber(4);
+
+          it('Canot create Ballot for Governance Address(not govAddr)', async () => {
+            await reverting(ballotStorage.createBallotForAddress(
               _id, // ballot id
               _ballotType, // ballot type
               creator, // creator
-              ZERO_ADDRESS, // oldMemberAddress
-              addMem, // newMemberAddress
-              _enodeid, // newNodeId
-              _nodeip, // newNodeIp
-              _nodePort, // newNodePort
-              { value: 0, from: creator }
-            ));
-            // case newMemberAddress is empty
-            await reverting(ballotStorage.createBallotForMemeber(
-              _id, // ballot id
-              _ballotType, // ballot type
-              creator, // creator
-              addMem, // oldMemberAddress
-              ZERO_ADDRESS, // newMemberAddress
-              _enodeid, // newNodeId
-              _nodeip, // newNodeIp
-              _nodePort, // newNodePort
-              { value: 0, from: creator }
-            ));
-            // case newNodeId is  empty
-            await reverting(ballotStorage.createBallotForMemeber(
-              _id, // ballot id
-              _ballotType, // ballot type
-              creator, // creator
-              addMem, // oldMemberAddress
-              addMem, // newMemberAddress
-              "0x", // newNodeId
-              _nodeip, // newNodeIp
-              _nodePort, // newNodePort
-              { value: 0, from: creator }
-            ));
-            // case newNodeIp is empty
-            await reverting(ballotStorage.createBallotForMemeber(
-              _id, // ballot id
-              _ballotType, // ballot type
-              creator, // creator
-              addMem, // oldMemberAddress
-              addMem, // newMemberAddress
-              _enodeid, // newNodeId
-              "0x", // newNodeIp
-              _nodePort, // newNodePort
-              { value: 0, from: creator }
-            ));
-            // case newNodePort is  empty
-            await reverting(ballotStorage.createBallotForMemeber(
-              _id, // ballot id
-              _ballotType, // ballot type
-              creator, // creator
-              addMem, // oldMemberAddress
-              addMem, // newMemberAddress
-              _enodeid, // newNodeId
-              _nodeip, // newNodeIp
-              0, // newNodePort
+              govAddr2, // new governance contract address
               { value: 0, from: creator }
             ));
           });
-          it('create Ballot for MemberSwap', async () => {
-            await ballotStorage.createBallotForMemeber(
+
+          it('create Ballot for Governance Address', async () => {
+            await ballotStorage.createBallotForAddress(
               _id, // ballot id
               _ballotType, // ballot type
               creator, // creator
-              addMem, // oldMemberAddress
-              addMem, // newMemberAddress
-              _enodeid, // newNodeId
-              _nodeip, // newNodeIp
-              _nodePort, // newNodePort
+              govAddr2, // new governance contract address
               { value: 0, from: govAddr }
             ); // .should.be.rejectedWith(ERROR_MSG);
 
             const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
-
             ballotBasicInfo[BallotBasicParams.BallotType].should.be.bignumber.equal(_ballotType);
             assert.equal(ballotBasicInfo[BallotBasicParams.Creator], creator);
+            // memo 4
             ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(0);
             ballotBasicInfo[BallotBasicParams.PowerOfAccepts].should.be.bignumber.equal(0);
             ballotBasicInfo[BallotBasicParams.PowerOfRejects].should.be.bignumber.equal(0);
             ballotBasicInfo[BallotBasicParams.State].should.be.bignumber.equal(1);
             assert.equal(ballotBasicInfo[BallotBasicParams.IsFinalized], false);
 
-            const ballotDetailInfo = await ballotStorage.getBallotMember(_id);
-
-            assert.equal(ballotDetailInfo[0], addMem);
-            assert.equal(ballotDetailInfo[1], addMem);
-            assert.equal(ballotDetailInfo[2], _enodeid);
-            assert.equal(web3Utils.toUtf8(ballotDetailInfo[3]), _nodeip);
-            assert.equal(ballotDetailInfo[4], _nodePort);
+            const ballotDetailInfo = await ballotStorage.getBallotAddress(_id);
+            // console.log(`MemberBallot : ${ballotDetailInfo}`);
+            assert.equal(ballotDetailInfo, govAddr2);
           });
         });
-      });
-      describe('address', function () {
-        const _ballotType = new web3.BigNumber(4);
+        describe('variable', function () {
+          const _id = new web3.BigNumber(4);
+          const _start_time = 0;
+          const _end_time = 0;
+          const _ballotType = new web3.BigNumber(5);
+          const _memo = 'test message for ballot';
+          const _varName = web3.sha3('blockPer');
+          const _varType = new web3.BigNumber(2);
 
-        it('Canot create Ballot for Governance Address(not govAddr)', async () => {
-          await reverting(ballotStorage.createBallotForAddress(
-            _id, // ballot id
-            _ballotType, // ballot type
-            creator, // creator
-            govAddr2, // new governance contract address
-            { value: 0, from: creator }
-          ));
-        });
-    
-        it('create Ballot for Governance Address', async () => {
-          await ballotStorage.createBallotForAddress(
-            _id, // ballot id
-            _ballotType, // ballot type
-            creator, // creator
-            govAddr2, // new governance contract address
-            { value: 0, from: govAddr }
-          ); // .should.be.rejectedWith(ERROR_MSG);
-    
-          const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
-          ballotBasicInfo[BallotBasicParams.BallotType].should.be.bignumber.equal(_ballotType);
-          assert.equal(ballotBasicInfo[BallotBasicParams.Creator], creator);
-          //memo 4
-          ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(0);
-          ballotBasicInfo[BallotBasicParams.PowerOfAccepts].should.be.bignumber.equal(0);
-          ballotBasicInfo[BallotBasicParams.PowerOfRejects].should.be.bignumber.equal(0);
-          ballotBasicInfo[BallotBasicParams.State].should.be.bignumber.equal(1);
-          assert.equal(ballotBasicInfo[BallotBasicParams.IsFinalized], false);
+          const _varVal = '0x0000000000000000000000000000000000000000000000000000000000007530';
 
-          const ballotDetailInfo = await ballotStorage.getBallotAddress(_id);
-          // console.log(`MemberBallot : ${ballotDetailInfo}`);
-          assert.equal(ballotDetailInfo, govAddr2);
-        });
-      });
-      describe('variable', function () {
-        const _id = new web3.BigNumber(4);
-        const _start_time = 0;
-        const _end_time = 0;
-        const _ballotType = new web3.BigNumber(5);
-        const _memo = 'test message for ballot';
-        const _varName = web3.sha3('blockPer');
-        const _varType = new web3.BigNumber(2);
-
-        const _varVal ="0x0000000000000000000000000000000000000000000000000000000000007530";
-
-        it('Canot create Ballot for Enviroment Variable(not govAddr)', async () => {
+          it('Canot create Ballot for Enviroment Variable(not govAddr)', async () => {
           // const _id = new web3.BigNumber(4);
           // const _ballotType = new web3.BigNumber(4);
           // const _memo = 'test message for ballot';
           // const _varName = web3.sha3('blockPer');
           // const _varType = new web3.BigNumber(2);
           // const _varVal = new web3.BigNumber(1000);
-          await reverting(ballotStorage.createBallotForVariable(
-            _id, // ballot id
-            _ballotType, // ballot type
-            creator, // creator
-            _varName,
-            _varType,
-            _varVal,
-            { value: 0, from: creator }
-          ));
-        });
-    
-        it('create Ballot for Enviroment Variable', async () => {
+            await reverting(ballotStorage.createBallotForVariable(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              _varName,
+              _varType,
+              _varVal,
+              { value: 0, from: creator }
+            ));
+          });
 
-          await ballotStorage.createBallotForVariable(
-            _id, // ballot id
-            _ballotType, // ballot type
-            creator, // creator
-            _varName,
-            _varType,
-            _varVal,
-            { value: 0, from: govAddr }
-          ); // .should.be.rejectedWith(ERROR_MSG);
-    
-          const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
-          ballotBasicInfo[BallotBasicParams.BallotType].should.be.bignumber.equal(_ballotType);
-          assert.equal(ballotBasicInfo[BallotBasicParams.Creator], creator);
-          //memo 4
-          ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(0);
-          ballotBasicInfo[6].should.be.bignumber.equal(0);
-          ballotBasicInfo[BallotBasicParams.PowerOfRejects].should.be.bignumber.equal(0);
-          ballotBasicInfo[BallotBasicParams.State].should.be.bignumber.equal(1);
-          assert.equal(ballotBasicInfo[BallotBasicParams.IsFinalized], false);
-         
-          const ballotDetailInfo = await ballotStorage.getBallotVariable(_id);
-          // console.log(`VariableBallot : ${ballotDetailInfo}`);
-        
-          assert.equal(ballotDetailInfo[0], _varName);
-          ballotDetailInfo[1].should.be.bignumber.equal(_varType);
+          it('create Ballot for Enviroment Variable', async () => {
+            await ballotStorage.createBallotForVariable(
+              _id, // ballot id
+              _ballotType, // ballot type
+              creator, // creator
+              _varName,
+              _varType,
+              _varVal,
+              { value: 0, from: govAddr }
+            ); // .should.be.rejectedWith(ERROR_MSG);
 
-          //const _val = web3Utils.hexToNumber(ballotDetailInfo[3]);
-          // console.log(`Variable Value : ${_val}`);
-          assert.equal(ballotDetailInfo[2], _varVal);
+            const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
+            ballotBasicInfo[BallotBasicParams.BallotType].should.be.bignumber.equal(_ballotType);
+            assert.equal(ballotBasicInfo[BallotBasicParams.Creator], creator);
+            // memo 4
+            ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(0);
+            ballotBasicInfo[6].should.be.bignumber.equal(0);
+            ballotBasicInfo[BallotBasicParams.PowerOfRejects].should.be.bignumber.equal(0);
+            ballotBasicInfo[BallotBasicParams.State].should.be.bignumber.equal(1);
+            assert.equal(ballotBasicInfo[BallotBasicParams.IsFinalized], false);
+
+            const ballotDetailInfo = await ballotStorage.getBallotVariable(_id);
+            // console.log(`VariableBallot : ${ballotDetailInfo}`);
+
+            assert.equal(ballotDetailInfo[0], _varName);
+            ballotDetailInfo[1].should.be.bignumber.equal(_varType);
+
+            // const _val = web3Utils.hexToNumber(ballotDetailInfo[3]);
+            // console.log(`Variable Value : ${_val}`);
+            assert.equal(ballotDetailInfo[2], _varVal);
+          });
         });
-      });
       });
     });
     describe('update', function () {
-      const _ballotType = new web3.BigNumber(1); 
+      const _ballotType = new web3.BigNumber(1);
       beforeEach(async () => {
         await ballotStorage.createBallotForMemeber(
           _id, // ballot id
@@ -568,14 +557,14 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       });
       describe('setMemo', function () {
         it('update Ballot memo for MemberAdd', async () => {
-          await ballotStorage.updateBallotMemo(_id,_memo,{ value: 0, from: govAddr });
+          await ballotStorage.updateBallotMemo(_id, _memo, { value: 0, from: govAddr });
           const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
           assert.equal(web3Utils.toUtf8(ballotBasicInfo[BallotBasicParams.Memo]), _memo);
         });
       });
       describe('setDuration', function () {
         it('update Ballot duration for MemberAdd', async () => {
-          await ballotStorage.updateBallotDuration(_id,_duration,{ value: 0, from: govAddr });
+          await ballotStorage.updateBallotDuration(_id, _duration, { value: 0, from: govAddr });
           const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
           assert.equal(ballotBasicInfo[BallotBasicParams.Duration], _duration);
           const ballotPeriodInfo = await ballotStorage.getBallotPeriod(_id);
@@ -584,27 +573,26 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
       });
       describe('updateLockAmount', function () {
         it('update lockAmount for MemberAdd', async () => {
-          await ballotStorage.updateBallotMemberLockAmount(_id,_lockAmount,{ value: 0, from: govAddr });
+          await ballotStorage.updateBallotMemberLockAmount(_id, _lockAmount, { value: 0, from: govAddr });
           const ballotMemberInfo = await ballotStorage.getBallotMember(_id);
           ballotMemberInfo[5].should.be.bignumber.equal(_lockAmount);
         });
       });
       describe('finalize', function () {
         it('finalize Ballot for MemberAdd', async () => {
-
           await ballotStorage.startBallot(_id, _start_time, _end_time, { value: 0, from: govAddr });
           let ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
           assert.equal(ballotBasicInfo[BallotBasicParams.StartTime], _start_time);
           assert.equal(ballotBasicInfo[BallotBasicParams.EndTime], _end_time);
           ballotBasicInfo[BallotBasicParams.State].should.be.bignumber.equal(2); // InProgress
-          let _state = 3;//accepted
-          await ballotStorage.finalizeBallot(_id,_state, { value: 0, from: govAddr });
+          const _state = 3;// accepted
+          await ballotStorage.finalizeBallot(_id, _state, { value: 0, from: govAddr });
           ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
           ballotBasicInfo[BallotBasicParams.State].should.be.bignumber.equal(_state);
           assert.equal(ballotBasicInfo[BallotBasicParams.IsFinalized], true);
           const ballotBasicState = await ballotStorage.getBallotState(_id);
           ballotBasicState[0].should.be.bignumber.equal(_ballotType);
-          ballotBasicState[1].should.be.bignumber.equal(_state); 
+          ballotBasicState[1].should.be.bignumber.equal(_state);
           assert.equal(ballotBasicState[2], true);
         });
       });
@@ -651,7 +639,7 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         const _voteId = 1;
         const _decision = 1; // accept
         const _power = 10000;
-  
+
         await ballotStorage.createVote(
           _voteId, // _voteId,
           _id, // _ballotId,
@@ -660,10 +648,10 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
           _power, // _power,
           { value: 0, from: govAddr }
         ); // .should.be.rejectedWith(ERROR_MSG);
-  
+
         const voteInfo = await ballotStorage.getVote(_voteId);
         // console.log(`MemberBallotBasic : ${ballotBasicInfo}`);
-  
+
         // assert.equal(voteInfo[0], _voteId);
         voteInfo[0].should.be.bignumber.equal(_voteId);
         // assert.equal(voteInfo[1], _Id);
@@ -672,7 +660,7 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         assert.equal(voteInfo[3], _decision);
         // assert.equal(voteInfo[4], _power);
         voteInfo[4].should.be.bignumber.equal(_power);
-  
+
         let ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
         ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(1); // totalVoters
         ballotBasicInfo[6].should.be.bignumber.equal(_power); // powerOfAccepts
@@ -681,12 +669,10 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         ballotBasicVotingInfo[0].should.be.bignumber.equal(1);
         ballotBasicVotingInfo[1].should.be.bignumber.equal(_power);
         ballotBasicVotingInfo[2].should.be.bignumber.equal(0);
-  
-  
-  
+
         let _hasVoted = await ballotStorage.hasAlreadyVoted(_id, member1);
         assert.equal(_hasVoted, true);
-  
+
         // 2nd Vote
         const _voteId2 = 2;
         const _decision2 = 1; // reject
@@ -703,15 +689,15 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(2); // totalVoters
         ballotBasicInfo[6].should.be.bignumber.equal(_power + _power2); // powerOfAccepts
         ballotBasicInfo[BallotBasicParams.PowerOfRejects].should.be.bignumber.equal(0); // powerOfRejects
-  
+
         ballotBasicVotingInfo = await ballotStorage.getBallotVotingInfo(_id);
         ballotBasicVotingInfo[0].should.be.bignumber.equal(2);
         ballotBasicVotingInfo[1].should.be.bignumber.equal(_power + _power2);
         ballotBasicVotingInfo[2].should.be.bignumber.equal(0);
-  
+
         _hasVoted = await ballotStorage.hasAlreadyVoted(_id, member2);
         assert.equal(_hasVoted, true);
-  
+
         // 3rd Vote
         const _voteId3 = 3;
         const _decision3 = 2; // reject
@@ -728,7 +714,7 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(3); // totalVoters
         ballotBasicInfo[6].should.be.bignumber.equal(_power + _power2); // powerOfAccepts
         ballotBasicInfo[BallotBasicParams.PowerOfRejects].should.be.bignumber.equal(_power3); // powerOfRejects
-  
+
         ballotBasicVotingInfo = await ballotStorage.getBallotVotingInfo(_id);
         ballotBasicVotingInfo[0].should.be.bignumber.equal(3);
         ballotBasicVotingInfo[1].should.be.bignumber.equal(_power + _power2);
@@ -736,15 +722,15 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         _hasVoted = await ballotStorage.hasAlreadyVoted(_id, member3);
         assert.equal(_hasVoted, true);
       });
-  
+
       it('cannot create vote - same voteId', async () => {
         const _voteId = 1;
         const _decision = 1; // accept
         const _power = 10000;
-  
+
         const _decision2 = 2; // Reject
         const _power2 = 20000;
-  
+
         await ballotStorage.createVote(
           _voteId, // _voteId,
           _id, // _ballotId,
@@ -753,7 +739,7 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
           _power, // _power,
           { value: 0, from: govAddr }
         ); // .should.be.rejectedWith(ERROR_MSG);
-  
+
         await reverting(ballotStorage.createVote(
           _voteId, // _voteId,
           _id, // _ballotId,
@@ -762,10 +748,10 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
           _power2, // _power,
           { value: 0, from: govAddr }
         ));
-  
+
         const voteInfo = await ballotStorage.getVote(_voteId);
         // console.log(`MemberBallotBasic : ${ballotBasicInfo}`);
-  
+
         // assert.equal(voteInfo[0], _voteId);
         voteInfo[0].should.be.bignumber.equal(_voteId);
         // assert.equal(voteInfo[1], _Id);
@@ -774,25 +760,25 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
         assert.equal(voteInfo[3], _decision);
         // assert.equal(voteInfo[4], _power);
         voteInfo[4].should.be.bignumber.equal(_power);
-  
+
         const ballotBasicInfo = await ballotStorage.getBallotBasic(_id);
         ballotBasicInfo[BallotBasicParams.TotalVoters].should.be.bignumber.equal(1); // totalVoters
         ballotBasicInfo[6].should.be.bignumber.equal(_power); // powerOfAccepts
         ballotBasicInfo[BallotBasicParams.PowerOfRejects].should.be.bignumber.equal(0); // powerOfRejects
-  
+
         const _hasVoted = await ballotStorage.hasAlreadyVoted(_id, member1);
         assert.equal(_hasVoted, true);
       });
-  
+
       it('cannot create vote - multiple vote', async () => {
         const _voteId = 1;
         const _decision = 1; // accept
         const _power = 10000;
-  
+
         const _voteId2 = 2;
         const _decision2 = 2; // Reject
         const _power2 = 20000;
-  
+
         await ballotStorage.createVote(
           _voteId, // _voteId,
           _id, // _ballotId,
@@ -810,7 +796,7 @@ contract('BallotStorage', function ([deployer, creator, addMem, addMem2, govAddr
           _power2, // _power,
           { value: 0, from: govAddr }
         ));
-  
+
         const voteInfo = await ballotStorage.getVote(_voteId);
         // console.log(`MemberBallotBasic : ${ballotBasicInfo}`);
 

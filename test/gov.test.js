@@ -19,15 +19,15 @@ const enode = [
   // eslint-disable-next-line max-len
   '0x6f8a80d14311c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0',
   // eslint-disable-next-line max-len
-  '0x777777777711c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0'
+  '0x777777777711c39f35f516fa664deaaaa13e85b2f7493f37f6144d86991ec012937307647bd3b9a82abe2974e1407241d54947bbb39763a4cac9f77166ad92a0',
 ];
 const ip = [
   '127.0.0.1',
-  '127.0.0.2'
+  '127.0.0.2',
 ];
 const port = [
   8542,
-  8542
+  8542,
 ];
 const memo = 'memo';
 const envName = 'key';
@@ -39,7 +39,7 @@ const ballotStates = {
   Ready: 1,
   InProgress: 2,
   Accepted: 3,
-  Rejected: 4
+  Rejected: 4,
 };
 
 const envTypes = {
@@ -49,12 +49,12 @@ const envTypes = {
   Address: 3,
   Bytes32: 4,
   Bytes: 5,
-  String: 6
+  String: 6,
 };
 
 contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, govMem5, user1]) {
   let registry, staking, ballotStorage, govImp, gov, govDelegator, envStorage, envStorageImp, envDelegator;
-  
+
   beforeEach(async () => {
     registry = await Registry.new();
     envStorageImp = await EnvStorageImp.new();
@@ -63,7 +63,7 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
     staking = await Staking.new(registry.address);
     govImp = await GovImp.new();
     gov = await Gov.new();
-    
+
     await registry.setContractDomain('EnvStorage', envStorage.address);
     await registry.setContractDomain('BallotStorage', ballotStorage.address);
     await registry.setContractDomain('Staking', staking.address);
@@ -71,7 +71,7 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
 
     // Initialize environment storage
     envDelegator = EnvStorageImp.at(envStorage.address);
-    await envDelegator.initialize({from:deployer});
+    await envDelegator.initialize({ from: deployer });
 
     // Initialize for staking
     await staking.deposit({ value: amount, from: deployer });
@@ -164,7 +164,7 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
     it('cannot addProposal to change environment with wrong type', async () => {
       await reverting(govDelegator.addProposalToChangeEnv(envName, envTypes.Invalid, envVal, { from: deployer }));
     });
-    
+
     it('can vote approval to add member', async () => {
       await staking.deposit({ value: amount, from: govMem1 });
       await govDelegator.addProposalToAddMember(govMem1, enode[0], ip[0], port[0], amount, { from: deployer });
@@ -428,9 +428,9 @@ contract('Governance', function ([deployer, govMem1, govMem2, govMem3, govMem4, 
       await govDelegator.addProposalToAddMember(govMem2, enode[0], ip[0], port[0], amount, { from: deployer });
       await govDelegator.addProposalToAddMember(govMem3, enode[0], ip[0], port[0], amount, { from: deployer });
       const len = await gov.ballotLength();
-      await govDelegator.vote(len-1, true, { from: deployer });
+      await govDelegator.vote(len - 1, true, { from: deployer });
       const voting = await gov.getBallotInVoting();
-      voting.should.be.bignumber.equal(len-1);
+      voting.should.be.bignumber.equal(len - 1);
       await reverting(govDelegator.vote(len, true, { from: deployer }));
     });
   });
