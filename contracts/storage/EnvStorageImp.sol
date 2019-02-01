@@ -27,10 +27,10 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
             setUint(BALLOT_DURATION_MAX_NAME, 604800);
         }
         if (stakingMin == 0) {
-            setUint(STAKING_MIN_NAME, 10000000000);
+            setUint(STAKING_MIN_NAME, 5e24);
         }
         if (stakingMax == 0) {
-            setUint(STAKING_MAX_NAME, 20000000000);
+            setUint(STAKING_MAX_NAME, 5e26);
         }
     }
 
