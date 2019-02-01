@@ -15,7 +15,12 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
-coverage
+coverage/
+coverage.json
+allFiredEvents
+
+# solidity_flattener output directory 
+# flat/
 
 # nyc test coverage
 .nyc_output
@@ -29,12 +34,10 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
-
 # Dependency directories
 node_modules/
 jspm_packages/
+installed_contracts/
 
 # TypeScript v1 declaration files
 typings/
@@ -59,3 +62,14 @@ typings/
 
 # next.js build output
 .next
+
+# report output for mythrill & Oyente
+reports/
+
+package-lock.json
+
+# old file
+*.old
+
+# testCode
+testcon/

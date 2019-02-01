@@ -1,0 +1,22 @@
+ARG ETHEREUM_VERSION=alltools-v1.8.2
+ARG SOLC_VERSION=0.4.24
+
+FROM ethereum/client-go:${ETHEREUM_VERSION} as geth
+FROM ethereum/solc:${SOLC_VERSION} as solc
+FROM luongnguyen/oyente as oyente
+
+#SHELL ["/bin/bash", "-c", "-l"]
+#RUN apt-get install -y wget
+# Instsall geth from official geth image
+COPY --from=geth /usr/local/bin/evm /usr/local/bin/evm
+
+# Install solc from official solc image
+COPY --from=solc /usr/bin/solc /usr/bin/solc
+
+# Install mythril from official mythril image
+#COPY --from=myth /usr/local/bin/python /usr/local/bin/python
+#COPY --from=myth /usr/local/bin/myth /usr/local/bin/myth
+WORKDIR /oyente/oyente
+CMD ["python","oyente.py","--help"]
+
+#build image
