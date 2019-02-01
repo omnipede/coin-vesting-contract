@@ -25,7 +25,7 @@ contract EternalStorage {
     * @dev Get the value stored of a boolean variable by the hash name
     * @param h The keccak256 hash of the variable name
     */
-    function getBoolean(bytes32 h) public view returns (bool){
+    function getBoolean(bytes32 h) public view returns (bool) {
         return s._bool[h];
     }
 
@@ -33,7 +33,7 @@ contract EternalStorage {
     * @dev Get the value stored of a int variable by the hash name
     * @param h The keccak256 hash of the variable name
     */
-    function getInt(bytes32 h) public view returns (int){
+    function getInt(bytes32 h) public view returns (int) {
         return s._int[h];
     }
 
@@ -41,7 +41,7 @@ contract EternalStorage {
     * @dev Get the value stored of a uint variable by the hash name
     * @param h The keccak256 hash of the variable name
     */
-    function getUint(bytes32 h) public view returns (uint256){
+    function getUint(bytes32 h) public view returns (uint256) {
         return s._uint[h];
     }
 
@@ -49,7 +49,7 @@ contract EternalStorage {
     * @dev Get the value stored of a address variable by the hash name
     * @param h The keccak256 hash of the variable name
     */
-    function getAddress(bytes32 h) public view returns (address){
+    function getAddress(bytes32 h) public view returns (address) {
         return s._address[h];
     }
 
@@ -57,7 +57,7 @@ contract EternalStorage {
     * @dev Get the value stored of a string variable by the hash name
     * @param h The keccak256 hash of the variable name
     */
-    function getString(bytes32 h) public view returns (string){
+    function getString(bytes32 h) public view returns (string) {
         return s._string[h];
     }
 
@@ -65,14 +65,15 @@ contract EternalStorage {
     * @dev Get the value stored of a bytes variable by the hash name
     * @param h The keccak256 hash of the variable name
     */
-    function getBytes(bytes32 h) public view returns (bytes){
+    function getBytes(bytes32 h) public view returns (bytes) {
         return s._bytes[h];
     }
+
     /**
     * @dev Get the value stored of a bytes variable by the hash name
     * @param h The keccak256 hash of the variable name
     */
-    function getBytes32(bytes32 h) public view returns (bytes32){
+    function getBytes32(bytes32 h) public view returns (bytes32) {
         return s._bytes32[h];
     }
 
@@ -117,7 +118,7 @@ contract EternalStorage {
     * @param h The keccak256 hash of the variable name
     * @param v The value to be stored
     */
-    function _setString(bytes32 h, string v) internal  {
+    function _setString(bytes32 h, string v) internal {
         s._string[h] = v;
     }
 

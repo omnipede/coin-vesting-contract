@@ -150,74 +150,21 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
     }
 
     function vote(uint256 ballotIdx, bool approval) external onlyGovMem nonReentrant {
-        address ballotStorage = getBallotStorageAddress();
         // Check if some ballot is in progress
         checkUnfinalized(ballotIdx);
 
         // Check if the ballot can be voted
-        (uint256 ballotType, uint256 state, ) = getBallotState(ballotIdx);
-        if (state == uint256(BallotStates.Ready)) {
-            (, , uint256 duration) = getBallotPeriod(ballotIdx);
-            if (duration < getMinVotingDuration()) {
-                startBallot(ballotIdx, block.timestamp, block.timestamp + getMinVotingDuration());
-            } else if (getMaxVotingDuration() < duration) {
-                startBallot(ballotIdx, block.timestamp, block.timestamp + getMaxVotingDuration());
-            } else {
-                startBallot(ballotIdx, block.timestamp, block.timestamp + duration);
-            }
-            ballotInVoting = ballotIdx;
-        } else if (state == uint256(BallotStates.InProgress)) {
-            // Nothing to do
-        } else {
-            revert("Expired");
-        }
+        uint256 ballotType = checkVotable(ballotIdx);
 
         // Vote
-        uint256 voteIdx = voteLength.add(1);
-        uint256 weight = IStaking(getStakingAddress()).calcVotingWeightWithScaleFactor(msg.sender, 1e4);
-        if (approval) {
-            IBallotStorage(ballotStorage).createVote(
-                voteIdx,
-                ballotIdx,
-                msg.sender,
-                uint256(DecisionTypes.Accept),
-                weight
-            );
-        } else {
-            IBallotStorage(ballotStorage).createVote(
-                voteIdx,
-                ballotIdx,
-                msg.sender,
-                uint256(DecisionTypes.Reject),
-                weight
-            );
-        }
-        voteLength = voteIdx;
-        
+        createVote(ballotIdx, approval);
+
         // Finalize
         (, uint256 accept, uint256 reject) = getBallotVotingInfo(ballotIdx);
         if (accept.add(reject) < getThreshould()) {
             return;
         }
-        if (accept > reject) {
-            if (ballotType == uint256(BallotTypes.MemberAdd)) {
-                addMember(ballotIdx);
-            } else if (ballotType == uint256(BallotTypes.MemberRemoval)) {
-                removeMember(ballotIdx);
-            } else if (ballotType == uint256(BallotTypes.MemberChange)) {
-                changeMember(ballotIdx);
-            } else if (ballotType == uint256(BallotTypes.GovernanceChange)) {
-                if (IBallotStorage(ballotStorage).getBallotAddress(ballotIdx) != address(0)) {
-                    setImplementation(IBallotStorage(ballotStorage).getBallotAddress(ballotIdx));
-                }
-            } else if (ballotType == uint256(BallotTypes.EnvValChange)) {
-                applyEnv(ballotIdx);
-            }
-            finalizeBallot(ballotIdx, uint256(BallotStates.Accepted));
-        } else {
-            finalizeBallot(ballotIdx, uint256(BallotStates.Rejected));
-        }
-        ballotInVoting = 0;
+        finalizeVote(ballotIdx, ballotType, accept > reject);
     }
 
     function getMinStaking() public view returns (uint256) {
@@ -254,6 +201,69 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
                 }
             }
         }
+    }
+
+    function checkVotable(uint256 ballotIdx) private returns (uint256) {
+        (uint256 ballotType, uint256 state, ) = getBallotState(ballotIdx);
+        if (state == uint256(BallotStates.Ready)) {
+            (, , uint256 duration) = getBallotPeriod(ballotIdx);
+            if (duration < getMinVotingDuration()) {
+                startBallot(ballotIdx, block.timestamp, block.timestamp + getMinVotingDuration());
+            } else if (getMaxVotingDuration() < duration) {
+                startBallot(ballotIdx, block.timestamp, block.timestamp + getMaxVotingDuration());
+            } else {
+                startBallot(ballotIdx, block.timestamp, block.timestamp + duration);
+            }
+            ballotInVoting = ballotIdx;
+        } else if (state == uint256(BallotStates.InProgress)) {
+            // Nothing to do
+        } else {
+            revert("Expired");
+        }
+        return ballotType;
+    }
+
+    function createVote(uint256 ballotIdx, bool approval) private {
+        uint256 voteIdx = voteLength.add(1);
+        uint256 weight = IStaking(getStakingAddress()).calcVotingWeightWithScaleFactor(msg.sender, 1e4);
+        if (approval) {
+            IBallotStorage(getBallotStorageAddress()).createVote(
+                voteIdx,
+                ballotIdx,
+                msg.sender,
+                uint256(DecisionTypes.Accept),
+                weight
+            );
+        } else {
+            IBallotStorage(getBallotStorageAddress()).createVote(
+                voteIdx,
+                ballotIdx,
+                msg.sender,
+                uint256(DecisionTypes.Reject),
+                weight
+            );
+        }
+        voteLength = voteIdx;
+    }
+
+    function finalizeVote(uint256 ballotIdx, uint256 ballotType, bool isAccepted) private {
+        uint256 ballotState = uint256(BallotStates.Rejected);
+        if (isAccepted) {
+            if (ballotType == uint256(BallotTypes.MemberAdd)) {
+                addMember(ballotIdx);
+            } else if (ballotType == uint256(BallotTypes.MemberRemoval)) {
+                removeMember(ballotIdx);
+            } else if (ballotType == uint256(BallotTypes.MemberChange)) {
+                changeMember(ballotIdx);
+            } else if (ballotType == uint256(BallotTypes.GovernanceChange)) {
+                changeGov(ballotIdx);
+            } else if (ballotType == uint256(BallotTypes.EnvValChange)) {
+                applyEnv(ballotIdx);
+            }
+            ballotState = uint256(BallotStates.Accepted);
+        }
+        finalizeBallot(ballotIdx, ballotState);
+        ballotInVoting = 0;
     }
 
     function addMember(uint256 ballotIdx) private {
@@ -376,6 +386,17 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
             unlock(addr, lockAmount);
 
             emit MemberChanged(addr, nAddr);
+        }
+    }
+
+    function changeGov(uint256 ballotIdx) private {
+        (uint256 ballotType, uint256 state, ) = getBallotState(ballotIdx);
+        require(ballotType == uint256(BallotTypes.GovernanceChange), "Not voting for applyGov");
+        require(state == uint(BallotStates.InProgress), "Invalid voting state");
+
+        address newImp = IBallotStorage(getBallotStorageAddress()).getBallotAddress(ballotIdx);
+        if (newImp != address(0)) {
+            setImplementation(newImp);
         }
     }
 
