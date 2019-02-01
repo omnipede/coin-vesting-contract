@@ -22,67 +22,6 @@ contract EternalStorage {
     Storage internal s;
 
     /**
-    * @dev Allows the owner to set a value for a boolean variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setBoolean(bytes32 h, bool v) internal {
-        s._bool[h] = v;
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a int variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setInt(bytes32 h, int256 v) internal {
-        s._int[h] = v;
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a boolean variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setUint(bytes32 h, uint256 v) internal {
-        s._uint[h] = v;
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a address variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setAddress(bytes32 h, address v) internal {
-        s._address[h] = v;
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a string variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setString(bytes32 h, string v) internal  {
-        s._string[h] = v;
-    }
-
-    /**
-    * @dev Allows the owner to set a value for a bytes variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setBytes(bytes32 h, bytes v) internal {
-        s._bytes[h] = v;
-    }
-    /**
-    * @dev Allows the owner to set a value for a bytes32 variable.
-    * @param h The keccak256 hash of the variable name
-    * @param v The value to be stored
-    */
-    function _setBytes32(bytes32 h, bytes32 v) internal {
-        s._bytes32[h] = v;
-    }
-    /**
     * @dev Get the value stored of a boolean variable by the hash name
     * @param h The keccak256 hash of the variable name
     */
@@ -135,5 +74,68 @@ contract EternalStorage {
     */
     function getBytes32(bytes32 h) public view returns (bytes32){
         return s._bytes32[h];
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a boolean variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setBoolean(bytes32 h, bool v) internal {
+        s._bool[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a int variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setInt(bytes32 h, int256 v) internal {
+        s._int[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a boolean variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setUint(bytes32 h, uint256 v) internal {
+        s._uint[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a address variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setAddress(bytes32 h, address v) internal {
+        s._address[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a string variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setString(bytes32 h, string v) internal  {
+        s._string[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a bytes variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setBytes(bytes32 h, bytes v) internal {
+        s._bytes[h] = v;
+    }
+
+    /**
+    * @dev Allows the owner to set a value for a bytes32 variable.
+    * @param h The keccak256 hash of the variable name
+    * @param v The value to be stored
+    */
+    function _setBytes32(bytes32 h, bytes32 v) internal {
+        s._bytes32[h] = v;
     }
 }

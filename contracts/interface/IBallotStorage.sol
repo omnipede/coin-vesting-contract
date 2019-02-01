@@ -17,9 +17,11 @@ interface IBallotStorage {
     function getBallotPeriod(uint256) external view returns (uint256, uint256, uint256);
     function getBallotVotingInfo(uint256) external view returns (uint256, uint256, uint256);
     function getBallotState(uint256) external view returns (uint256, uint256, bool);
+
     function getBallotBasic(uint256) external view returns (
         uint256, uint256, uint256, address, bytes, uint256,
         uint256, uint256, uint256, bool, uint256);
+
     function getBallotMember(uint256) external view returns (address, address, bytes, bytes, uint256, uint256);
     function getBallotAddress(uint256) external view returns (address);
     function getBallotVariable(uint256) external view returns (bytes32, uint256, bytes);

@@ -20,6 +20,7 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         bytes ip;
         uint port;
     }
+
     mapping(uint256 => Node) internal nodes;
     mapping(address => uint256) internal nodeIdxFromMember;
     mapping(uint256 => address) internal nodeToMember;
@@ -45,9 +46,11 @@ contract Gov is UpgradeabilityProxy, GovChecker {
     function getNodeIdxFromMember(address addr) public view returns (uint256) { return nodeIdxFromMember[addr]; }
     function getMemberFromNodeIdx(uint256 idx) public view returns (address) { return nodeToMember[idx]; }
     function getNodeLength() public view returns (uint256) { return nodeLength; }
+
     function getNode(uint256 idx) public view returns (bytes enode, bytes ip, uint port) {
         return (nodes[idx].enode, nodes[idx].ip, nodes[idx].port);
     }
+    
     function getBallotInVoting() public view returns (uint256) { return ballotInVoting; }
 
     function init(
@@ -66,7 +69,7 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         setImplementation(implementation);
 
         // Lock
-        Staking staking = Staking(REG.getContractAddress("Staking"));
+        Staking staking = Staking(getContractAddress(STAKING_NAME));
         require(staking.availableBalance(msg.sender) >= lockAmount, "Insufficient staking");
         staking.lock(msg.sender, lockAmount);
 
