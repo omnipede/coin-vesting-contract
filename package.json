@@ -23,7 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "config": "^3.0.1",
-    "openzeppelin-solidity": "^2.0.0",
+    "openzeppelin-solidity": "2.0.0",
     "web3": "^1.0.0-beta.41"
   },
   "devDependencies": {
