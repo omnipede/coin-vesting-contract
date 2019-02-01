@@ -128,12 +128,14 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         return now;
     }
 
-    function getPreviousBallotStorage() public view returns(address) {
+    function getPreviousBallotStorage() public view returns (address) {
         return previousBallotStorage;
     }
-    function isDisabled() public view returns(bool) {
+
+    function isDisabled() public view returns (bool) {
         return (address(this) != getBallotStorageAddress());
     }
+
     function getBallotBasic(uint256 _id) public view returns (
         uint256 startTime,
         uint256 endTime,
