@@ -5,8 +5,8 @@ import "./abstract/BallotEnums.sol";
 import "./abstract/EnvConstants.sol";
 import "./interface/IBallotStorage.sol";
 import "./interface/IEnvStorage.sol";
+import "./interface/IStaking.sol";
 import "./Gov.sol";
-import "./Staking.sol";
 
 
 contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
@@ -116,7 +116,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
         require(newGovAddr != implementation(), "Same contract address");
 
         ballotIdx = ballotLength.add(1);
-        IBallotStorage(getContractAddress(BALLOT_STORAGE_NAME)).createBallotForAddress(
+        IBallotStorage(getBallotStorageAddress()).createBallotForAddress(
             ballotLength.add(1), // ballot id
             uint256(BallotTypes.GovernanceChange), // ballot type
             msg.sender, // creator
@@ -138,7 +138,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
         require(uint256(VariableTypes.Int) <= envType && envType <= uint256(VariableTypes.String), "Invalid type");
 
         ballotIdx = ballotLength.add(1);
-        IBallotStorage(getContractAddress(BALLOT_STORAGE_NAME)).createBallotForVariable(
+        IBallotStorage(getBallotStorageAddress()).createBallotForVariable(
             ballotIdx, // ballot id
             uint256(BallotTypes.EnvValChange), // ballot type
             msg.sender, // creator
@@ -150,26 +150,12 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
     }
 
     function vote(uint256 ballotIdx, bool approval) external onlyGovMem nonReentrant {
-        address ballotStorage = getContractAddress(BALLOT_STORAGE_NAME);
+        address ballotStorage = getBallotStorageAddress();
         // Check if some ballot is in progress
-        if (ballotInVoting != 0) {
-            (uint256 ballotType, uint256 state, ) = getBallotState(ballotInVoting);
-            (, uint256 endTime, ) = getBallotPeriod(ballotInVoting);
-            if (state == uint256(BallotStates.InProgress)) {
-                if (endTime < block.timestamp) {
-                    finalizeBallot(ballotIdx, uint256(BallotStates.Rejected));
-                    ballotInVoting = 0;
-                    if (ballotIdx == ballotInVoting) {
-                        return;
-                    }
-                } else if (ballotIdx != ballotInVoting) {
-                    revert("Now in voting with different ballot");
-                }
-            }
-        }
+        checkUnfinalized(ballotIdx);
 
         // Check if the ballot can be voted
-        (ballotType, state, ) = getBallotState(ballotIdx);
+        (uint256 ballotType, uint256 state, ) = getBallotState(ballotIdx);
         if (state == uint256(BallotStates.Ready)) {
             (, , uint256 duration) = getBallotPeriod(ballotIdx);
             if (duration < getMinVotingDuration()) {
@@ -194,7 +180,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
                 ballotIdx,
                 msg.sender,
                 uint256(DecisionTypes.Accept),
-                Staking(getContractAddress(STAKING_NAME)).calcVotingWeight(msg.sender)
+                IStaking(getStakingAddress()).calcVotingWeight(msg.sender)
             );
         } else {
             IBallotStorage(ballotStorage).createVote(
@@ -202,7 +188,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
                 ballotIdx,
                 msg.sender,
                 uint256(DecisionTypes.Reject),
-                Staking(getContractAddress(STAKING_NAME)).calcVotingWeight(msg.sender)
+                IStaking(getStakingAddress()).calcVotingWeight(msg.sender)
             );
         }
         voteLength = voteIdx;
@@ -243,6 +229,24 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
     function getMaxVotingDuration() public pure returns (uint256) { return 7 days; }
 
     function getThreshould() public pure returns (uint256) { return 51; } // 51% from 51 of 100
+
+    function checkUnfinalized(uint256 ballotIdx) private {
+        if (ballotInVoting != 0) {
+            (, uint256 state, ) = getBallotState(ballotInVoting);
+            (, uint256 endTime, ) = getBallotPeriod(ballotInVoting);
+            if (state == uint256(BallotStates.InProgress)) {
+                if (endTime < block.timestamp) {
+                    finalizeBallot(ballotIdx, uint256(BallotStates.Rejected));
+                    ballotInVoting = 0;
+                    if (ballotIdx == ballotInVoting) {
+                        return;
+                    }
+                } else if (ballotIdx != ballotInVoting) {
+                    revert("Now in voting with different ballot");
+                }
+            }
+        }
+    }
 
     function addMember(uint256 ballotIdx) private {
         (uint256 ballotType, uint256 state, ) = getBallotState(ballotIdx);
@@ -376,9 +380,9 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
             bytes32 envKey,
             uint256 envType,
             bytes memory envVal
-        ) = IBallotStorage(getContractAddress(ENV_STORAGE_NAME)).getBallotVariable(ballotIdx);
+        ) = IBallotStorage(getBallotStorageAddress()).getBallotVariable(ballotIdx);
 
-        IEnvStorage envStorage = IEnvStorage(getContractAddress(ENV_STORAGE_NAME));
+        IEnvStorage envStorage = IEnvStorage(getEnvStorageAddress());
         if (envKey == BLOCK_PER_NAME && envType == BLOCK_PER_TYPE) {
             envStorage.setBlockPerByBytes(envVal);
         } else if (envKey == BALLOT_DURATION_MIN_NAME && envType == BALLOT_DURATION_MIN_TYPE) {
@@ -407,7 +411,7 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
     )
         private
     {
-        IBallotStorage(getContractAddress(BALLOT_STORAGE_NAME)).createBallotForMemeber(
+        IBallotStorage(getBallotStorageAddress()).createBallotForMemeber(
             id, // ballot id
             bType, // ballot type
             creator, // creator
@@ -420,39 +424,39 @@ contract GovImp is Gov, ReentrancyGuard, BallotEnums, EnvConstants {
     }
 
     function updateBallotLock(uint256 id, uint256 amount) private {
-        IBallotStorage(getContractAddress(BALLOT_STORAGE_NAME)).updateBallotMemberLockAmount(id, amount);
+        IBallotStorage(getBallotStorageAddress()).updateBallotMemberLockAmount(id, amount);
     }
 
     function startBallot(uint256 id, uint256 s, uint256 e) private {
-        IBallotStorage(getContractAddress(BALLOT_STORAGE_NAME)).startBallot(id, s, e);
+        IBallotStorage(getBallotStorageAddress()).startBallot(id, s, e);
     }
 
     function finalizeBallot(uint256 id, uint256 state) private {
-        IBallotStorage(getContractAddress(BALLOT_STORAGE_NAME)).finalizeBallot(id, state);
+        IBallotStorage(getBallotStorageAddress()).finalizeBallot(id, state);
     }
 
     function getBallotState(uint256 id) private view returns (uint256, uint256, bool) {
-        return IBallotStorage(getContractAddress(BALLOT_STORAGE_NAME)).getBallotState(id);
+        return IBallotStorage(getBallotStorageAddress()).getBallotState(id);
     }
 
     function getBallotPeriod(uint256 id) private view returns (uint256, uint256, uint256) {
-        return IBallotStorage(getContractAddress(BALLOT_STORAGE_NAME)).getBallotPeriod(id);
+        return IBallotStorage(getBallotStorageAddress()).getBallotPeriod(id);
     }
 
     function getBallotVotingInfo(uint256 id) private view returns (uint256, uint256, uint256) {
-        return IBallotStorage(getContractAddress(BALLOT_STORAGE_NAME)).getBallotVotingInfo(id);
+        return IBallotStorage(getBallotStorageAddress()).getBallotVotingInfo(id);
     }
 
     function getBallotMember(uint256 id) private view returns (address, address, bytes, bytes, uint256, uint256) {
-        return IBallotStorage(getContractAddress(BALLOT_STORAGE_NAME)).getBallotMember(id);
+        return IBallotStorage(getBallotStorageAddress()).getBallotMember(id);
     }
 
     function lock(address addr, uint256 amount) private {
-        Staking(getContractAddress(STAKING_NAME)).lock(addr, amount);
+        IStaking(getStakingAddress()).lock(addr, amount);
     }
 
     function unlock(address addr, uint256 amount) private {
-        Staking(getContractAddress(STAKING_NAME)).unlock(addr, amount);
+        IStaking(getStakingAddress()).unlock(addr, amount);
     }
     //------------------ Code reduction end
 }

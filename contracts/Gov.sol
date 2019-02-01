@@ -2,8 +2,8 @@ pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "./proxy/UpgradeabilityProxy.sol";
+import "./interface/IStaking.sol";
 import "./GovChecker.sol";
-import "./Staking.sol";
 
 
 contract Gov is UpgradeabilityProxy, GovChecker {
@@ -69,7 +69,7 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         setImplementation(implementation);
 
         // Lock
-        Staking staking = Staking(getContractAddress(STAKING_NAME));
+        IStaking staking = IStaking(getStakingAddress());
         require(staking.availableBalance(msg.sender) >= lockAmount, "Insufficient staking");
         staking.lock(msg.sender, lockAmount);
 

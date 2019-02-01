@@ -149,13 +149,63 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
     function setTestBytesByBytes(bytes _value) public onlyGov { 
         setBytes(TEST_BYTES, _value);
     }
+    
+    function toString( bytes memory _input ) public pure returns (string memory _output) {
+        return string(_input);
+        // uint _offst = _input.length;
+        // uint size = 32;
+        // assembly {
+            
+        //     let chunk_count
+        //     size := mload(add(_input,_offst))
+        //     chunk_count := add(div(size,32),1) // chunk_count = size/32 + 1
+            
+        //     if gt(mod(size,32),0) {
+        //         chunk_count := add(chunk_count,1)  // chunk_count++
+        //     }
+               
+        //     for { let index:= 0 }  lt(index , chunk_count){ index := add(index,1) } {
+        //         mstore(add(_output,mul(index,32)),mload(add(_input,_offst)))
+        //         _offst := sub(_offst,32)           // _offst -= 32
+        //     }
+        // }
+    }
 
-    event testCodeValue(bytes _bytes,string _string);
+    function intToBytes(int _input) public pure returns (bytes memory _output) {
+        _output = new bytes(32);
+        assembly {
+            mstore(add(_output, 32), _input)
+        }
+    } 
+
+    function uintToBytes(uint _input) public pure returns (bytes memory _output) {
+        _output = new bytes(32);
+        assembly {
+            mstore(add(_output, 32), _input)
+        }
+    }
+
+    function addressToBytes(address _input) public pure returns (bytes _output) {
+        assembly {
+            let m := mload(0x40)
+            mstore(add(m, 20), xor(0x140000000000000000000000000000000000000000, _input))
+            mstore(0x40, add(m, 52))
+            _output := m
+        }
+    }
+    
+    function stringToBytes(string memory _input) public pure returns (bytes _output) {
+        //_output = bytes(_input);
+        _output = abi.encode(_input);
+    }
+
+    event testCodeValue(bytes _bytes, string _string);
 
     function setTestStringByBytes(bytes _value) public onlyGov { 
-        emit testCodeValue(_value,string(_value));
+        emit testCodeValue(_value, string(_value));
         setString(TEST_STRING, string(_value));
     }
+
     // function getBlockPer() public view returns (uint256 varType, string varVal) {
     //     (varType,varVal) = get(BLOCK_PER_NAME);
     //     // varType = getBlockPerType();
@@ -322,10 +372,10 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
     }
 */
 // }
-    
-    function toBytes32( bytes memory  _input) internal pure  returns (bytes32 _output) {
+
+    function toBytes32(bytes memory _input) internal pure returns (bytes32 _output) {
         assembly {
-          _output := mload(add(_input, 32))
+            _output := mload(add(_input, 32))
         }
     }
 
@@ -351,61 +401,13 @@ contract EnvStorageImp is AEnvStorage, EnvConstants {
     // function toString(bytes memory _input) internal pure returns(string _output){
     //     _output = string(_input);
     // }
-    function toString( bytes memory _input ) public pure returns (string memory _output) {
-        return string(_input);
-        // uint _offst = _input.length;
-        // uint size = 32;
-        // assembly {
-            
-        //     let chunk_count
-        //     size := mload(add(_input,_offst))
-        //     chunk_count := add(div(size,32),1) // chunk_count = size/32 + 1
-            
-        //     if gt(mod(size,32),0) {
-        //         chunk_count := add(chunk_count,1)  // chunk_count++
-        //     }
-               
-        //     for { let index:= 0 }  lt(index , chunk_count){ index := add(index,1) } {
-        //         mstore(add(_output,mul(index,32)),mload(add(_input,_offst)))
-        //         _offst := sub(_offst,32)           // _offst -= 32
-        //     }
-        // }
-    }
-
+    
     function bytes32ToBytes(bytes32 _input) internal pure returns (bytes) {
         bytes memory _output = new bytes(32);
         assembly {
             mstore(add(_output, 32), _input)
-            mstore(add(add(_output,32),32), add(_input,32))
+            mstore(add(add(_output, 32), 32), add(_input, 32))
         }
         return _output;
-    }
-
-    function intToBytes(int _input) public pure returns (bytes memory _output) {
-        _output = new bytes(32);
-        assembly {
-            mstore(add(_output, 32), _input)
-        }
-    } 
-
-    function uintToBytes(uint _input) public pure returns (bytes memory _output) {
-        _output = new bytes(32);
-        assembly {
-            mstore(add(_output, 32), _input)
-        }
-    }
-
-    function addressToBytes(address _input) public pure returns (bytes _output) {
-        assembly {
-            let m := mload(0x40)
-            mstore(add(m, 20), xor(0x140000000000000000000000000000000000000000, _input))
-            mstore(0x40, add(m, 52))
-            _output := m
-        }
-    }
-    
-    function stringToBytes(string memory _input) public pure returns (bytes _output) {
-        //_output = bytes(_input);
-        _output =  abi.encode(_input);
     }
 }
