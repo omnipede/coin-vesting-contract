@@ -1,4 +1,6 @@
 const { reverting } = require('openzeppelin-solidity/test/helpers/shouldFail');
+const { ether } = require('openzeppelin-solidity/test/helpers/ether');
+const time = require('openzeppelin-solidity/test/helpers/time');
 
 const web3Utils = require('web3-utils');
 const web3EthAbi = require('web3-eth-abi');
@@ -31,6 +33,31 @@ contract('EnvStorage', accounts => {
   });
 
   describe('EnvStorage', function () {
+    const _defaultBlockPer =  new web3.BigNumber(1000);
+    const _defaultBallotDurationMin = time.duration.days(1);
+    const _defaultBallotDurationMax = time.duration.days(7);
+    const _defaultStakingMin = ether (4980000);
+    const _defaultStakingMax = ether (39840000);
+
+    const _blockPer =  100;
+    const _blockPerBytes = web3EthAbi.encodeParameter('uint', _blockPer);
+    const _ballotDurationMin = time.duration.days(2);
+    const _ballotDurationMinBytes = web3EthAbi.encodeParameter('uint', _ballotDurationMin.toString(10));
+    const _ballotDurationMax = time.duration.weeks(2);
+    const _ballotDurationMaxBytes = web3EthAbi.encodeParameter('uint', _ballotDurationMax.toString(10));
+    const _stakingMin = ether (1000);
+    const _stakingMinBytes = web3EthAbi.encodeParameter('uint', _stakingMin.toString(10));
+    const _stakingMax = ether (1000);
+    const _stakingMaxBytes = web3EthAbi.encodeParameter('uint', _stakingMax.toString(10));
+
+    const _testInt = -100;
+    const _testIntBytes = web3EthAbi.encodeParameter('int', _testInt);
+    const _testaddress = "0x961c20596e7EC441723FBb168461f4B51371D8aA";
+    const _testBytes32 = web3.sha3('stakingMax');
+    const _testBytes = "0x961c20596e7ec441723fbb168461f4b51371d8aa961c20596e7ec441723fbb168461f4b51371d8aa";
+    const _testString = "testtesttest";
+    const _testStringBytes =web3Utils.fromUtf8(_testString);
+
     it('Check Owner', async () => {
       const _owner = await envStorage.owner();
       assert.equal(_owner, deployer);
@@ -49,61 +76,41 @@ contract('EnvStorage', accounts => {
     // });
 
     it('Check Variable Default Value', async () => {
-      const blockPer = await testEnvStorage.getBlockPerValue();
-      const durationMin = await testEnvStorage.getBallotDurationMinValue();
-      const durationMax = await testEnvStorage.getBallotDurationMaxValue();
-      const stakingMin = await testEnvStorage.getStakingMinValue();
-      const stakingMax = await testEnvStorage.getStakingMaxValue();
-      blockPer.should.be.bignumber.equal(1000, 'is not Default of BlockPer');
-      durationMin.should.be.bignumber.equal(604800, 'is not Default of BallotDurationMin');
-      durationMax.should.be.bignumber.equal(604800, 'is not Default of BallotDurationMax');
-      stakingMin.should.be.bignumber.equal(10000000000, 'is not Default of StakingMin');
-      stakingMax.should.be.bignumber.equal(20000000000, 'is not Default of StakingMax');
+      const blockPer = await testEnvStorage.getBlockPer();
+      const durationMin = await testEnvStorage.getBallotDurationMin();
+      const durationMax = await testEnvStorage.getBallotDurationMax();
+      const stakingMin = await testEnvStorage.getStakingMin();
+      const stakingMax = await testEnvStorage.getStakingMax();
 
-      // assert.equal(blockPer, "1000","is not Default of BlockPer ");
-      // assert.equal(durationMin, "604800","is not Default of BallotDurationMin ");
-      // assert.equal(durationMax, "604800","is not Default of BallotDurationMax ");
-      // assert.equal(stakingMin, "10000000000","is not Default of StakingMin ");
-      // assert.equal(stakingMax, "20000000000","is not Default of StakingMax ");
+      blockPer.should.be.bignumber.equal( _defaultBlockPer, "is not Default of BlockPer");
+      durationMin.should.be.bignumber.equal( _defaultBallotDurationMin, "is not Default of BallotDurationMin");
+      durationMax.should.be.bignumber.equal( _defaultBallotDurationMax, "is not Default of BallotDurationMax");
+      stakingMin.should.be.bignumber.equal( _defaultStakingMin, "is not Default of StakingMin");
+      stakingMax.should.be.bignumber.equal( _defaultStakingMax, "is not Default of StakingMax");
     });
-    
+
     it('Type Test', async () => {
-      const _testIntBytes = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff9c';
-      const _testInt = '-100';
-      const _testIntBytes2 = web3EthAbi.encodeParameter('int', _testInt);
       let _result = await testEnvStorage.setTestIntByBytes(_testIntBytes, { value: 0, from: govAddr });
       let _value = await testEnvStorage.getTestInt();
       // console.log(`bytes32 : ${web3.sha3('stakingMax')}`);
-      _value.should.be.bignumber.equal(_testInt, 'not pass test int');
-      // console.log(`getTestInt : ${_value} / ${_testIntBytes2}`);
+      _value.should.be.bignumber.equal(_testInt,"not pass test int");
+      // console.log(`getTestInt : ${_value} / ${_testIntBytes}`);
 
-      const _testaddress = '0x961c20596e7EC441723FBb168461f4B51371D8aA';
-      const _testaddressBytes = web3EthAbi.encodeParameter('address', _testaddress);
       _result = await testEnvStorage.setTestAddressByBytes(_testaddress, { value: 0, from: govAddr });
       _value = await testEnvStorage.getTestAddress();
-      assert.equal(web3Utils.toChecksumAddress(_value), _testaddress, 'not pass test address');
-      // console.log(`getTestAddress : ${_value} / ${_testaddressBytes}`);
-
-      const _testBytes32 = web3.sha3('stakingMax');
-      const _testBytes32Bytes = web3EthAbi.encodeParameter('string', _testBytes32);
+      assert.equal(web3Utils.toChecksumAddress(_value), _testaddress,"not pass test address");
+      // console.log(`getTestAddress : ${_value} `);
 
       _result = await testEnvStorage.setTestBytes32ByBytes(_testBytes32, { value: 0, from: govAddr });
       _value = await testEnvStorage.getTestBytes32();
       assert.equal(_value, _testBytes32);
-      // console.log(`getTestBytes32 :  ${_testBytes32} / ${_testBytes32Bytes} / ${_value}`);
+      // console.log(`getTestBytes32 :  ${_value} / ${_testBytes32}`);
 
-      // const _testBytes32Bytes = web3EthAbi.encodeParameter('bytes32',_testBytes32);
-      const _testBytes = '0x961c20596e7ec441723fbb168461f4b51371d8aa961c20596e7ec441723fbb168461f4b51371d8aa'; // ;
       _result = await testEnvStorage.setTestBytesByBytes(_testBytes, { value: 0, from: govAddr });
       _value = await testEnvStorage.getTestBytes();
       assert.equal(_value, _testBytes);
       // console.log(`getTestBytes : ${_value}`);
 
-      const _testString = 'testtesttest';
-      const _testStringBytes = web3Utils.fromUtf8(_testString); // web3EthAbi.encodeParameter('string', _testString);
-
-      // console.log(`abi.encodeParameter : ${web3EthAbi.encodeParameter('string', _testString)}`);
-      // ;
       _result = await testEnvStorage.setTestStringByBytes(_testStringBytes, { value: 0, from: govAddr });
       _value = await testEnvStorage.getTestString();
       assert.equal(_value, _testString);
@@ -111,106 +118,65 @@ contract('EnvStorage', accounts => {
     });
 
     it('Canot Set block per variable(not govAddr)', async () => {
-      const BLOCK_PER_VALUE_Bytes = '0x0000000000000000000000000000000000000000000000000000000000000064';
-      const BLOCK_PER_VALUE = new web3.BigNumber(100);
-      await reverting(testEnvStorage.setBlockPerByBytes(BLOCK_PER_VALUE_Bytes), { value: 0, from: creator });
-      await reverting(testEnvStorage.setBlockPer(BLOCK_PER_VALUE), { value: 0, from: creator });
+      await reverting(testEnvStorage.setBlockPerByBytes(_blockPerBytes), { value: 0, from: creator });
+      await reverting(testEnvStorage.setBlockPer(_blockPerBytes), { value: 0, from: creator });
     });
 
-    // it('Add block per variable with VariableAdded Event', async () => {
-    //   // let _testUIntBytes = web3EthAbi.encodeParameter('uint256',1000000);
-    //   const _result = await testEnvStorage.setBlockPer(BLOCK_PER_VALUE, { value: 0, from: govAddr });
-    //   truffleAssert.eventEmitted(_result, 'VarableChanged', (ev) => {
-    //     return ev._name === web3.sha3('blockPer') && ev._value === BLOCK_PER_VALUE;
-    //   });
-    //   const [_type, _value] = await testEnvStorage.getBlockPer();
-
-    //   _type.should.be.bignumber.equal(2);
-    //   assert.equal(_value, BLOCK_PER_VALUE);
-    //   const _ttype = await testEnvStorage.getBlockPerType();
-    //   const _tvalue = await testEnvStorage.getBlockPerValue();
-    //   _ttype.should.be.bignumber.equal(2);
-    //   assert.equal(_tvalue, BLOCK_PER_VALUE);
-    // });
-
     it('Update block per String variable  with VariableChange Event', async () => {
-      // Update BlockPer variable
-      const _blockPerValueBytes = '0x0000000000000000000000000000000000000000000000000000000000000064';
-      const _blockPerValue = new web3.BigNumber(100);
-
-      const _result = await testEnvStorage.setBlockPerByBytes(_blockPerValueBytes, { value: 0, from: govAddr });
+      const _result = await testEnvStorage.setBlockPerByBytes(_blockPerBytes, { value: 0, from: govAddr });
       // truffleAssert.eventEmitted(_result, 'UintVarableChanged', (ev) => {
-      //   return ev._name === web3.sha3('blockPer') && ev._value == _blockPerValue;
+      //   return ev._name === web3.sha3('blockPer') && ev._value == _blockPer;
       // });
       const _value = await testEnvStorage.getBlockPer();
-      _value.should.be.bignumber.equal(_blockPerValue);
+      _value.should.be.bignumber.equal(_blockPer);
     });
 
     it('Update block per uint variable  with VariableChange Event', async () => {
-      // Update BlockPer variable
-      const _blockPerValueStr = '100';
-      const _blockPerValue = new web3.BigNumber(100);
-      const _result = await testEnvStorage.setBlockPer(_blockPerValue, { value: 0, from: govAddr });
+      const _result = await testEnvStorage.setBlockPer(_blockPer, { value: 0, from: govAddr });
       // truffleAssert.eventEmitted(_result, 'UintVarableChanged', (ev) => {
-      //   return ev._name === web3.sha3('blockPer') && ev._value == _blockPerValue;
+      //   return ev._name === web3.sha3('blockPer') && ev._value == _blockPer;
       // });
       const _value = await testEnvStorage.getBlockPer();
-      _value.should.be.bignumber.equal(_blockPerValue);
+      _value.should.be.bignumber.equal(_blockPer);
     });
 
     it('Update BallotDurationMin String variable  with VariableChange Event', async () => {
-      const _BallotDurationMinBytes = '0x00000000000000000000000000000000000000000000000000000000000003e8';
-      const _BallotDurationMin = new web3.BigNumber(1000);
-      // Update BallotDurationMin variable
-      const _result = await testEnvStorage.setBallotDurationMinByBytes(_BallotDurationMinBytes, { value: 0, from: govAddr });
+      const _result = await testEnvStorage.setBallotDurationMinByBytes(_ballotDurationMinBytes, { value: 0, from: govAddr });
       // truffleAssert.eventEmitted(_result, 'UintVarableChanged', (ev) => {
-      //   return ev._name === web3.sha3('ballotDurationMin') && ev._value == _BallotDurationMin;
+      //   return ev._name === web3.sha3('ballotDurationMin') && ev._value == _ballotDurationMin;
       // });
       const _value = await testEnvStorage.getBallotDurationMin();
-      _value.should.be.bignumber.equal(_BallotDurationMin);
+      _value.should.be.bignumber.equal(_ballotDurationMin);
     });
 
     it('Update BallotDurationMin Uint variable  with VariableChange Event', async () => {
-      const _BallotDurationMin = new web3.BigNumber(1000);
-
-      // Update BallotDurationMin variable
-      const _result = await testEnvStorage.setBallotDurationMin(_BallotDurationMin, { value: 0, from: govAddr });
+      const _result = await testEnvStorage.setBallotDurationMin(_ballotDurationMin, { value: 0, from: govAddr });
       // truffleAssert.eventEmitted(_result, 'UintVarableChanged', (ev) => {
-      //   return ev._name === web3.sha3('ballotDurationMin') && ev._value == _BallotDurationMin;
+      //   return ev._name === web3.sha3('ballotDurationMin') && ev._value == _ballotDurationMin;
       // });
       const _value = await testEnvStorage.getBallotDurationMin();
-      _value.should.be.bignumber.equal(_BallotDurationMin);
+      _value.should.be.bignumber.equal(_ballotDurationMin);
     });
 
     it('Update BallotDurationMax string variable  with VariableChange Event', async () => {
-      const _BallotDurationMaxBytes = '0x0000000000000000000000000000000000000000000000000000000000007530';
-      const _BallotDurationMax = new web3.BigNumber(30000);
-      // Update BallotDurationMax variable
-      const _result = await testEnvStorage.setBallotDurationMaxByBytes(_BallotDurationMaxBytes, { value: 0, from: govAddr });
+      const _result = await testEnvStorage.setBallotDurationMaxByBytes(_ballotDurationMaxBytes, { value: 0, from: govAddr });
       // truffleAssert.eventEmitted(_result, 'UintVarableChanged', (ev) => {
-      //   return ev._name === web3.sha3('ballotDurationMax') && ev._value == _BallotDurationMax;
+      //   return ev._name === web3.sha3('ballotDurationMax') && ev._value == _ballotDurationMax;
       // });
       const _value = await testEnvStorage.getBallotDurationMax();
-      _value.should.be.bignumber.equal(_BallotDurationMax);
+      _value.should.be.bignumber.equal(_ballotDurationMax);
     });
 
     it('Update BallotDurationMax int variable  with VariableChange Event', async () => {
-      const _BallotDurationMax = new web3.BigNumber(30000);
-
-      // Update BallotDurationMax variable
-      const _result = await testEnvStorage.setBallotDurationMax(_BallotDurationMax, { value: 0, from: govAddr });
+      const _result = await testEnvStorage.setBallotDurationMax(_ballotDurationMax, { value: 0, from: govAddr });
       // truffleAssert.eventEmitted(_result, 'UintVarableChanged', (ev) => {
-      //   return ev._name === web3.sha3('ballotDurationMax') && ev._value == _BallotDurationMax;
+      //   return ev._name === web3.sha3('ballotDurationMax') && ev._value == _ballotDurationMax;
       // });
       const _value = await testEnvStorage.getBallotDurationMax();
-      _value.should.be.bignumber.equal(_BallotDurationMax);
+      _value.should.be.bignumber.equal(_ballotDurationMax);
     });
 
     it('Update StakingMin variable  with VariableChange Event', async () => {
-      const _stakingMinBytes = '0x000000000000000000000000000000000000000000000000000000003b9aca00';
-      const _stakingMin = new web3.BigNumber(1000000000);
-
-      // Update BallotDurationMin variable
       const _result = await testEnvStorage.setStakingMinByBytes(_stakingMinBytes, { value: 0, from: govAddr });
       // truffleAssert.eventEmitted(_result, 'UintVarableChanged', (ev) => {
       //   return ev._name === web3.sha3('stakingMin') && ev._value == _stakingMin;
@@ -220,8 +186,6 @@ contract('EnvStorage', accounts => {
     });
 
     it('Update StakingMin variable  with VariableChange Event', async () => {
-      const _stakingMin = new web3.BigNumber(1000000000);
-      // Update BallotDurationMin variable
       const _result = await testEnvStorage.setStakingMin(_stakingMin, { value: 0, from: govAddr });
       // truffleAssert.eventEmitted(_result, 'UintVarableChanged', (ev) => {
       //   return ev._name === web3.sha3('stakingMin') && ev._value == _stakingMin;
@@ -231,9 +195,6 @@ contract('EnvStorage', accounts => {
     });
 
     it('Update StakingMax variable  with VariableChange Event', async () => {
-      const _stakingMaxBytes = '0x00000000000000000000000000000000000000000000000000000006fc23ac00';
-      const _stakingMax = new web3.BigNumber(30000000000);
-      // Update BallotDurationMax variable
       const _result = await testEnvStorage.setStakingMaxByBytes(_stakingMaxBytes, { value: 0, from: govAddr });
       // truffleAssert.eventEmitted(_result, 'UintVarableChanged', (ev) => {
       //   return ev._name === web3.sha3('stakingMax') && ev._value == _stakingMax;
@@ -243,8 +204,6 @@ contract('EnvStorage', accounts => {
     });
 
     it('Update StakingMax variable  with VariableChange Event', async () => {
-      const _stakingMax = new web3.BigNumber(30000000000);
-      // Update BallotDurationMax variable
       const _result = await testEnvStorage.setStakingMax(_stakingMax, { value: 0, from: govAddr });
       // truffleAssert.eventEmitted(_result, 'UintVarableChanged', (ev) => {
       //   return ev._name === web3.sha3('stakingMax') && ev._value == _stakingMax;

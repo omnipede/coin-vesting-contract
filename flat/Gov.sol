@@ -129,37 +129,13 @@ contract Ownable {
   }
 }
 
-contract ReentrancyGuard {
-
-  /// @dev counter to allow mutex lock with only one SSTORE operation
-  uint256 private _guardCounter;
-
-  constructor() internal {
-    // The counter starts at one to prevent changing it from zero to a non-zero
-    // value, which is a more expensive operation.
-    _guardCounter = 1;
-  }
-
-  /**
-   * @dev Prevents a contract from calling itself, directly or indirectly.
-   * Calling a `nonReentrant` function from another `nonReentrant`
-   * function is not supported. It is possible to prevent this from happening
-   * by making the `nonReentrant` function external, and make it call a
-   * `private` function that does the actual work.
-   */
-  modifier nonReentrant() {
-    _guardCounter += 1;
-    uint256 localCounter = _guardCounter;
-    _;
-    require(localCounter == _guardCounter);
-  }
-
-}
-
 contract GovChecker is Ownable {
 
-    Registry public REG;
-    bytes32 public GOV_NAME ="GovernanceContract";
+    IRegistry public reg;
+    bytes32 public constant GOV_NAME ="GovernanceContract";
+    bytes32 public constant STAKING_NAME ="Staking";
+    bytes32 public constant BALLOT_STORAGE_NAME ="BallotStorage";
+    bytes32 public constant ENV_STORAGE_NAME ="EnvStorage";
 
     /**
      * @dev Function to set registry address. Contract that wants to use registry should setRegistry first.
@@ -167,194 +143,63 @@ contract GovChecker is Ownable {
      * @return A boolean that indicates if the operation was successful.
      */
     function setRegistry(address _addr) public onlyOwner {
-        REG = Registry(_addr);
+        reg = IRegistry(_addr);
     }
     
     modifier onlyGov() {
-        require(REG.getContractAddress(GOV_NAME) == msg.sender, "No Permission");
+        require(getContractAddress(GOV_NAME) == msg.sender, "No Permission");
         _;
     }
 
     modifier onlyGovMem() {
-        address addr = REG.getContractAddress(GOV_NAME);
+        address addr = reg.getContractAddress(GOV_NAME);
         require(addr != address(0), "No Governance");
-        require(Gov(addr).isMember(msg.sender), "No Permission");
+        require(IGov(addr).isMember(msg.sender), "No Permission");
         _;
     }
 
+    function getContractAddress(bytes32 name) internal view returns (address) {
+        return reg.getContractAddress(name);
+    }
+
+    function getStakingAddress() internal view returns (address) {
+        return getContractAddress(STAKING_NAME);
+    }
+
+    function getBallotStorageAddress() internal view returns (address) {
+        return getContractAddress(BALLOT_STORAGE_NAME);
+    }
+
+    function getEnvStorageAddress() internal view returns (address) {
+        return getContractAddress(ENV_STORAGE_NAME);
+    }
 }
 
-contract Registry is Ownable {
-    mapping(bytes32=>address) public contracts;
-    mapping(bytes32=>mapping(address=>bool)) public permissions;
-
-    event SetContractDomain(address setter, bytes32 indexed name, address indexed addr);
-    event SetPermission(bytes32 indexed _contract, address indexed granted, bool status);
-
-    /**
-    * @dev Function to set contract(can be general address) domain
-    * Only owner can use this function
-    * @param _name name
-    * @param _addr address
-    * @return A boolean that indicates if the operation was successful.
-    */
-    function setContractDomain(bytes32 _name, address _addr) public onlyOwner returns (bool success) {
-        require(_addr != address(0x0), "address should be non-zero");
-        contracts[_name] = _addr;
-
-        emit SetContractDomain(msg.sender, _name, _addr);
-
-        return true;
-    }
-
-    /**
-    * @dev Function to get contract(can be general address) address
-    * Anyone can use this function
-    * @param _name _name
-    * @return An address of the _name
-    */
-    function getContractAddress(bytes32 _name) public view returns (address addr) {
-        require(contracts[_name] != address(0x0), "address should be non-zero");
-        return contracts[_name];
-    }
-    
-    /**
-    * @dev Function to set permission on contract
-    * contract using modifier 'permissioned' references mapping variable 'permissions'
-    * Only owner can use this function
-    * @param _contract contract name
-    * @param _granted granted address
-    * @param _status true = can use, false = cannot use. default is false
-    * @return A boolean that indicates if the operation was successful.
-    */
-    function setPermission(bytes32 _contract, address _granted, bool _status) public onlyOwner returns (bool success) {
-        require(_granted != address(0x0), "address should be non-zero");
-        permissions[_contract][_granted] = _status;
-
-        emit SetPermission(_contract, _granted, _status);
-        
-        return true;
-    }
-
-    /**
-    * @dev Function to get permission on contract
-    * contract using modifier 'permissioned' references mapping variable 'permissions'
-    * @param _contract contract name
-    * @param _granted granted address
-    * @return permission result
-    */
-    function getPermission(bytes32 _contract, address _granted) public view returns (bool found) {
-        return permissions[_contract][_granted];
-    }
-    
+interface IGov {
+    function isMember(address) external view returns (bool);
+    function getMember(uint256) external view returns (address);
+    function getMemberLength() external view returns (uint256);
+    function getNodeIdxFromMember(address) external view returns (uint256);
+    function getMemberFromNodeIdx(uint256) external view returns (address);
+    function getNodeLength() external view returns (uint256);
+    function getNode(uint256) external view returns (bytes, bytes, uint);
+    function getBallotInVoting() external view returns (uint256);
 }
 
-contract Staking is GovChecker, ReentrancyGuard {
-    using SafeMath for uint256;
+interface IRegistry {
+    function getContractAddress(bytes32) external view returns (address);
+}
 
-    mapping(address => uint256) private balance;
-    mapping(address => uint256) private lockedBalance;
-    uint256 private totalLockedBalance;
-    
-    event Staked(address indexed payee, uint256 amount, uint256 total, uint256 available);
-    event Unstaked(address indexed payee, uint256 amount, uint256 total, uint256 available);
-    event Locked(address indexed payee, uint256 amount, uint256 total, uint256 available);
-    event Unlocked(address indexed payee, uint256 amount, uint256 total, uint256 available);
-
-    constructor(address registry) public {
-        totalLockedBalance = 0;
-        setRegistry(registry);
-    }
-
-    function balanceOf(address payee) public view returns (uint256) {
-        return balance[payee];
-    }
-
-    function lockedBalanceOf(address payee) public view returns (uint256) {
-        return lockedBalance[payee];
-    }
-
-    function availableBalance(address payee) public view returns (uint256) {
-        return balance[payee].sub(lockedBalance[payee]);
-    }
-
-    /**
-    * @dev Calculate voting weight which range between 0 and 100.
-    * @param payee The address whose funds were locked.
-    */
-    function calcVotingWeight(address payee) public view returns (uint256) {
-        return calcVotingWeightWithScaleFactor(payee, 1e2);
-    }
-
-    /**
-    * @dev Calculate voting weight with a scale factor.
-    * @param payee The address whose funds were locked.
-    * @param factor The scale factor for weight. For instance:
-    *               if 1e1, result range is between 0 ~ 10
-    *               if 1e2, result range is between 0 ~ 100
-    *               if 1e3, result range is between 0 ~ 1000
-    */
-    function calcVotingWeightWithScaleFactor(address payee, uint32 factor) public view returns (uint256) {
-        if (lockedBalance[payee] == 0 || factor == 0) return 0;
-        return lockedBalance[payee].mul(factor).div(totalLockedBalance);
-    }
-
-    function () external payable {
-        revert();
-    }
-
-    /**
-    * @dev Deposit from a sender.
-    */
-    function deposit() external nonReentrant payable {
-        require(msg.value > 0, "Deposit amount should be greater than zero");
-
-        balance[msg.sender] = balance[msg.sender].add(msg.value);
-
-        emit Staked(msg.sender, msg.value, balance[msg.sender], availableBalance(msg.sender));
-    }
-
-    /**
-    * @dev Withdraw for a sender.
-    * @param amount The amount of funds will be withdrawn and transferred to.
-    */
-    function withdraw(uint256 amount) external nonReentrant {
-        require(amount <= availableBalance(msg.sender), "Withdraw amount should be equal or less than balance");
-
-        balance[msg.sender] = balance[msg.sender].sub(amount);
-        msg.sender.transfer(amount);
-
-        emit Unstaked(msg.sender, amount, balance[msg.sender], availableBalance(msg.sender));
-    }
-
-    /**
-    * @dev Lock fund
-    * @param payee The address whose funds will be locked.
-    * @param lockAmount The amount of funds will be locked.
-    */
-    function lock(address payee, uint256 lockAmount) external onlyGov {
-        require(balance[payee] >= lockAmount, "Lock amount should be equal or less than balance");
-        require(availableBalance(payee) >= lockAmount, "Insufficient balance that can be locked");
-
-        lockedBalance[payee] = lockedBalance[payee].add(lockAmount);
-        totalLockedBalance = totalLockedBalance.add(lockAmount);
-
-        emit Locked(payee, lockAmount, balance[payee], availableBalance(payee));
-    }
-
-    /**
-    * @dev Unlock fund
-    * @param payee The address whose funds will be unlocked.
-    * @param unlockAmount The amount of funds will be unlocked.
-    */
-    function unlock(address payee, uint256 unlockAmount) external onlyGov {
-        require(lockedBalance[payee] >= unlockAmount, "Unlock amount should be equal or less than balance locked");
-
-        lockedBalance[payee] = lockedBalance[payee].sub(unlockAmount);
-        totalLockedBalance = totalLockedBalance.sub(unlockAmount);
-
-        emit Unlocked(payee, unlockAmount, balance[payee], availableBalance(payee));
-    }
+interface IStaking {
+    function deposit() external payable;
+    function withdraw(uint256) external;
+    function lock(address, uint256) external;
+    function unlock(address, uint256) external;
+    function balanceOf(address) external view returns (uint256);
+    function lockedBalanceOf(address) external view returns (uint256);
+    function availableBalance(address) external view returns (uint256);
+    function calcVotingWeight(address) external view returns (uint256);
+    function calcVotingWeightWithScaleFactor(address, uint32) external view returns (uint256);
 }
 
 contract Proxy {
@@ -362,7 +207,7 @@ contract Proxy {
     * @dev Fallback function allowing to perform a delegatecall to the given implementation.
     * This function will return whatever the implementation call returns
     */
-    function () payable public {
+    function () public payable {
         address _impl = implementation();
         require(_impl != address(0));
 
@@ -449,6 +294,7 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         bytes ip;
         uint port;
     }
+
     mapping(uint256 => Node) internal nodes;
     mapping(address => uint256) internal nodeIdxFromMember;
     mapping(uint256 => address) internal nodeToMember;
@@ -474,9 +320,11 @@ contract Gov is UpgradeabilityProxy, GovChecker {
     function getNodeIdxFromMember(address addr) public view returns (uint256) { return nodeIdxFromMember[addr]; }
     function getMemberFromNodeIdx(uint256 idx) public view returns (address) { return nodeToMember[idx]; }
     function getNodeLength() public view returns (uint256) { return nodeLength; }
+
     function getNode(uint256 idx) public view returns (bytes enode, bytes ip, uint port) {
         return (nodes[idx].enode, nodes[idx].ip, nodes[idx].port);
     }
+    
     function getBallotInVoting() public view returns (uint256) { return ballotInVoting; }
 
     function init(
@@ -495,7 +343,7 @@ contract Gov is UpgradeabilityProxy, GovChecker {
         setImplementation(implementation);
 
         // Lock
-        Staking staking = Staking(REG.getContractAddress("Staking"));
+        IStaking staking = IStaking(getStakingAddress());
         require(staking.availableBalance(msg.sender) >= lockAmount, "Insufficient staking");
         staking.lock(msg.sender, lockAmount);
 
