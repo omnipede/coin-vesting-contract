@@ -2,7 +2,7 @@ pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./interface/IRegistry.sol";
-import "./Gov.sol";
+import "./interface/IGov.sol";
 
 
 /**
@@ -34,11 +34,23 @@ contract GovChecker is Ownable {
     modifier onlyGovMem() {
         address addr = reg.getContractAddress(GOV_NAME);
         require(addr != address(0), "No Governance");
-        require(Gov(addr).isMember(msg.sender), "No Permission");
+        require(IGov(addr).isMember(msg.sender), "No Permission");
         _;
     }
 
     function getContractAddress(bytes32 name) internal view returns (address) {
         return reg.getContractAddress(name);
+    }
+
+    function getStakingAddress() internal view returns (address) {
+        return getContractAddress(STAKING_NAME);
+    }
+
+    function getBallotStorageAddress() internal view returns (address) {
+        return getContractAddress(BALLOT_STORAGE_NAME);
+    }
+
+    function getEnvStorageAddress() internal view returns (address) {
+        return getContractAddress(ENV_STORAGE_NAME);
     }
 }

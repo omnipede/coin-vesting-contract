@@ -37,7 +37,7 @@ contract('EnvStorage', accounts => {
     });
 
     it('Check Registry', async () => {
-      const _govAddr = await testEnvStorage.REG.call();
+      const _govAddr = await testEnvStorage.reg.call();
       assert.equal(_govAddr, registry.address);
     });
 
