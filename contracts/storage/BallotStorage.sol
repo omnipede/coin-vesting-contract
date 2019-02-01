@@ -104,7 +104,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     mapping(uint=>Vote) internal voteMap;
     mapping(uint=>mapping(address=>bool)) internal hasVotedMap;
 
-    address prevImp;
+    address internal previousBallotStorage;
 
     constructor(address _registry) public {
         setRegistry(_registry);
@@ -119,8 +119,17 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         _;
     }
 
+    modifier notDisabled() {
+        require(previousBallotStorage == address(0), "Is Disabled");
+        _;
+    }
+
     function getTime() public view returns(uint256) {
         return now;
+    }
+
+    function getPreviousBallotStorage() public view returns(address) {
+        return previousBallotStorage;
     }
 
     function getBallotBasic(uint256 _id) public view returns (
@@ -189,6 +198,11 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         envVariableValue = tBallot.envVariableValue;
     }
 
+    function setPreviousBallotStorage(address _address) public onlyOwner {
+        require(_address != address(0), "Invalid address");
+        previousBallotStorage = _address;
+    }
+
     //For MemberAdding/MemberRemoval/MemberSwap
     function createBallotForMemeber(
         uint256 _id,
@@ -202,6 +216,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     )
         public
         onlyGov
+        notDisabled
     {
         require(
             _areMemberBallotParamValid(
@@ -234,6 +249,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     )
         public
         onlyGov
+        notDisabled
         returns (uint256)
     {
         require(_ballotType == uint256(BallotTypes.GovernanceChange), "Invalid Ballot Type");
@@ -257,6 +273,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     )
         public
         onlyGov
+        notDisabled
         returns (uint256)
     {
         require(
@@ -282,6 +299,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     )
         public
         onlyGov
+        notDisabled
         returns (uint256)
     {
         //1. msg.sender가 member
@@ -318,6 +336,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     )
         public
         onlyGov
+        notDisabled
         onlyValidTime(_startTime, _endTime)
     {
         require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
@@ -334,7 +353,9 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         uint256 _ballotId,
         bytes _memo
     )
-        public onlyGov
+        public 
+        onlyGov
+        notDisabled
     {
         require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
         require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
@@ -346,7 +367,9 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         uint256 _ballotId,
         uint256 _duration
     )
-        public onlyGov
+        public 
+        onlyGov
+        notDisabled
     {
         require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
         require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
@@ -359,7 +382,9 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
         uint256 _ballotId,
         uint256 _lockAmount
     )
-        public onlyGov
+        public 
+        onlyGov
+        notDisabled
     {
         require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
         require(ballotMemberMap[_ballotId].id == _ballotId, "not existed BallotMember");
@@ -370,7 +395,7 @@ contract BallotStorage is  GovChecker, EnvConstants, BallotEnums {
     }
 
     // finalize ballot info.
-    function finalizeBallot(uint256 _ballotId, uint256 _ballotState) public onlyGov {
+    function finalizeBallot(uint256 _ballotId, uint256 _ballotState) public onlyGov notDisabled {
         require(ballotBasicMap[_ballotId].id == _ballotId, "not existed Ballot");
         require(ballotBasicMap[_ballotId].isFinalized == false, "already finalized");
         require((_ballotState == uint256(BallotStates.Accepted))
