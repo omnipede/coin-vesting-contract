@@ -13,20 +13,17 @@ const MetadiumToken = artifacts.require('Metadium');
 const TokenVesting = artifacts.require('MetadiumVesting');
 
 contract('TokenVesting', function ([_, owner, beneficiary]) {
-  //const INITIAL_SUPPLY = new BigNumber(2000000000 * 10**18);
-  //const INITIAL_SUPPLY = web3.eth.getBalance(owner);
+
   const _amount = 1000;
   const amount = new BigNumber(_amount);
 
   beforeEach(async function () {
-    //this.token = await MetadiumToken.new({ from: owner });
-    //await this.token.enableTransfer({from:owner});
+
     this.start = latestTime() + duration.minutes(1); // +1 minute so it starts after contract instantiation
     this.cliff = duration.years(1);
     this.duration = duration.years(2);
 
     this.vesting = await TokenVesting.new(beneficiary, this.start, this.cliff, this.duration, true, { from: owner });
-    //await this.token.transfer(this.vesting.address, amount, { from: owner });
 
     /* call fallback function. */
     await this.vesting.sendTransaction({
