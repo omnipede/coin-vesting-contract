@@ -10,9 +10,9 @@ require('chai')
   .should();
 
 const MetadiumToken = artifacts.require('Metadium');
-const TokenVesting = artifacts.require('MetadiumVesting');
+const CoinVesting = artifacts.require('MetadiumVesting');
 
-contract('TokenVesting', function ([_, owner, beneficiary]) {
+contract('CoinVesting', function ([_, owner, beneficiary]) {
 
   const _amount = 1000;
   const amount = new BigNumber(_amount);
@@ -23,7 +23,7 @@ contract('TokenVesting', function ([_, owner, beneficiary]) {
     this.cliff = duration.years(1);
     this.duration = duration.years(2);
 
-    this.vesting = await TokenVesting.new(beneficiary, this.start, this.cliff, this.duration, true, { from: owner });
+    this.vesting = await CoinVesting.new(beneficiary, this.start, this.cliff, this.duration, true, { from: owner });
 
     /* call fallback function. */
     await this.vesting.sendTransaction({
@@ -94,7 +94,7 @@ contract('TokenVesting', function ([_, owner, beneficiary]) {
   });
 
   it('should fail to be revoked by owner if revocable not set', async function () {
-    const vesting = await TokenVesting.new(beneficiary, this.start, this.cliff, this.duration, false, { from: owner });
+    const vesting = await CoinVesting.new(beneficiary, this.start, this.cliff, this.duration, false, { from: owner });
     await vesting.revoke({ from: owner }).should.be.rejectedWith(EVMRevert);
   });
 
