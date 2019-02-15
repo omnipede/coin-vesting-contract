@@ -1,5 +1,5 @@
-# governance-contract
-Governance contract
+# coin-vesting-contract
+Coin vesting contract
 
 ## Preequiste
 
