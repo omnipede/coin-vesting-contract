@@ -4,17 +4,17 @@ Governance contract
 ## Preequiste
 
 1. Docker
-   
+
    Install at https://docs.docker.com/install
 
 2. Install solc 0.4.24
 
-``` 
+```
     $ docker pull ethereum/solc:0.4.24
     $ cp dockers/solc /usr/local/bin/solc
 ```
 
-## Install 
+## Install
 
 1. Libraries
 
@@ -46,10 +46,4 @@ $ npm run test
 
 ```
 $ npm run coverage
-```
-
-### Flatten
-
-```
-$ npm run flatten
 ```

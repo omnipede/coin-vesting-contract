@@ -13,6 +13,6 @@ contract MetadiumVesting is CoinVesting {
     function MetadiumVesting(address _beneficiary, uint256 _start, uint256 _cliff, uint256 _duration, bool _revocable) public
     CoinVesting(_beneficiary, _start, _cliff, _duration, _revocable)
     {
-
+      
     }
 }
